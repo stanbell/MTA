@@ -7,12 +7,25 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>schedule</ion-title>
+    <ion-title>My Schedule</ion-title>
   </ion-navbar>
 
 </ion-header>
-
+<!--  do a popup for the month view -->
 
 <ion-content padding>
+<ion-grid>
+<ion-row *ngFor="let e of calEvents">
+  <ion-col col-2>
+    <p> {{ e.dayOfMonth }} </p>
+    <p> {{ e.dayName }} </p>
+  </ion-col>
+  <ion-col col-8>
+    <ion-list no-lines>
+      <ion-item *ngFor="let a of e.appts"> d.</ion-item>
+    </ion-list>
+  </ion-col>
+</ion-row>
+</ion-grid>
 
 </ion-content>
