@@ -6,6 +6,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
 
+import { LoginPage } from '../pages/login/login';
+import Auth0Cordova from '@auth0/cordova';
 @Component({
   templateUrl: 'app.html'
 })
@@ -21,6 +23,7 @@ export class MyApp {
 
     // used for an example of ngFor and navigation
     this.pages = [
+      { title: 'Log In', component: LoginPage },
       { title: 'My Schedule', component: HomePage },
       { title: 'My Clients', component: HomePage },
       { title: 'My Transactions', component: HomePage },
@@ -36,6 +39,10 @@ export class MyApp {
       // Here you can do any higher level native things you might need.
       this.statusBar.styleDefault();
       this.splashScreen.hide();
+      // Redirect back to app after authenticating
+      (window as any).handleOpenURL = (url: string) => {
+        Auth0Cordova.onRedirectUri(url);
+      }
     });
   }
 
