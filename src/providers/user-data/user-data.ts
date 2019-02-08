@@ -1,6 +1,5 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-// import { LocalStoreProvider } from '../local-store/local-store';
 import { MTAAPI } from '../mtaapi/mtaapi';
 import { CacheProvider } from '../cache/cache';
 import { HelpersProvider } from '../helpers/helpers';
@@ -19,7 +18,6 @@ export class UserDataProvider {
   constructor(public http: HttpClient,
     public helper: HelpersProvider,
     private cache: CacheProvider,
-    // private store: LocalStoreProvider,
     private api: MTAAPI) {
   }
 
