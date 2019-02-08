@@ -11,6 +11,13 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 // import { Storage } from '@ionic/storage';
 import { AuthProvider } from '../providers/auth/auth';
+import { UserDataProvider } from '../providers/user-data/user-data';
+import { ClientsProvider } from '../providers/clients/clients';
+import { TransactionsProvider } from '../providers/transactions/transactions';
+import { ScheduleProvider } from '../providers/schedule/schedule';
+import { DocumentsProvider } from '../providers/documents/documents';
+import { PaymentsProvider } from '../providers/payments/payments';
+import { HelpersProvider } from '../providers/helpers/helpers';
 
 @NgModule({
   declarations: [
@@ -35,6 +42,13 @@ import { AuthProvider } from '../providers/auth/auth';
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     AuthProvider,
+    UserDataProvider,
+    ClientsProvider,
+    TransactionsProvider,
+    ScheduleProvider,
+    DocumentsProvider,
+    PaymentsProvider,
+    HelpersProvider,
     // Storage
   ]
 })
