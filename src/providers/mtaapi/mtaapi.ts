@@ -1,6 +1,5 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ItemOptions } from 'ionic-angular';
 
 @Injectable()
 export class MTAAPI {
@@ -18,26 +17,39 @@ export class MTAAPI {
     MASTER_KEY = "Two roads diverged in a yellow wood,"
     // robert frost, the road not taken
 
-    getData(type: string): Promise<object> {
-        console.log('getData', type);
+    getData(route: string): Promise<string> {
+        console.log('getData', route);
+        const fullRoute = this.apiURL + route;
+        console.log('getData', fullRoute);
         return new Promise((resolve, reject) => {
-            this.http.get(type)
+            let httpHeaders = new HttpHeaders({
+                'Content-Type': 'application/json',
+                'If-Modified-Since': '1 Jan 1990',
+                'Cache-Control': 'no-cache'
+            });
+            this.http.get(fullRoute, 
+                { headers: httpHeaders, observe: 'body', responseType: 'json' })
                 // .timeout(7100)
                 .subscribe( // note just changed JSON.stringify(data) to (data) bc i think .get returns an object aleady
-                    (data) => resolve(data),
+                    (data) => resolve(JSON.stringify(data)),
                     (err) => reject(err));
         });
     }
 
-    putData(type: string, body: string): Promise<object> {
-        console.log('putData', type);
+    putData(route: string, body: string): Promise<object> {
+        console.log('putData', route);
+        const fullRoute = this.apiURL + route;
+        console.log('putData', fullRoute);
+        console.log('putData', body);
         return new Promise((resolve, reject) => {
-            // TODO get an example
-            let headers: HttpHeaders = new HttpHeaders();
-            let options = {
-
-            };
-            this.http.put(this.apiURL, body, options)
+            let httpHeaders = new HttpHeaders({
+                'Content-Type': 'application/json',
+                'Cache-Control': 'no-cache'
+            });
+            // headers = headers.set('authorization', 'Bearer ' + token);
+            // let options = { headers: httpHeaders, observe: 'body' };
+            this.http.put(fullRoute, body, 
+                { headers: httpHeaders, observe: 'body', responseType: 'json' })
                 // .timeout(7100)
                 .subscribe( // note just changed JSON.stringify(data) to (data) bc i think .put returns an object aleady
                     (data) => resolve(data),

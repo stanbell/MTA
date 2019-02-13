@@ -58,7 +58,7 @@ export class CacheProvider {
             resolve(r);
           } else {
             console.log('not in cache');
-            reject();
+            reject('not in cache');
           }
         });
       // .catch(e => reject => console.log("error: " + e));

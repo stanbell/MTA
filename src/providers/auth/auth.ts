@@ -10,7 +10,7 @@ export class AuthProvider {
   Auth0 = new auth0.WebAuth(AUTH_CONFIG);
   Client = new Auth0Cordova(AUTH_CONFIG);
   accessToken: string;
-  user: any;
+  userProfile: any;
   loggedIn: boolean;
   loading = true;
 
@@ -53,7 +53,7 @@ export class AuthProvider {
           throw err;
         }
         // this.storage.set('profile', profile).then(val =>
-          // this.zone.run(() => this.user = profile)
+          // this.zone.run(() => this.userProfile = profile)
         // );
       });
     });
@@ -64,7 +64,7 @@ export class AuthProvider {
     // this.storage.remove('access_token');
     // this.storage.remove('expires_at');
     this.accessToken = null;
-    this.user = null;
+    this.userProfile = null;
     this.loggedIn = false;
   }
 }

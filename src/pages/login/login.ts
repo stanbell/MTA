@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController } from 'ionic-angular';
 import { AuthProvider } from '../../providers/auth/auth';
+import { UserDataProvider } from '../../providers/user-data/user-data';
 
 
 @IonicPage()
@@ -10,12 +11,22 @@ import { AuthProvider } from '../../providers/auth/auth';
 })
 export class LoginPage {
 
-  constructor(public navCtrl: NavController, 
-    public auth: AuthProvider) {
+  constructor(public navCtrl: NavController,
+    public auth: AuthProvider,
+    public ud: UserDataProvider) {
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad LoginPage');
+  logIn() {
+    this.auth.login();
+    this.navCtrl.pop();
+  }
+
+  async mockLogIn() {
+    this.ud.userId = 'mary';
+    await this.ud.readIdNumber();
+    await this.ud.readData();
+    console.log('got', this.ud.userData);
+    this.navCtrl.pop();
   }
 
 }

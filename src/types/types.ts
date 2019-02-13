@@ -41,14 +41,14 @@ interface TransactionType {
   type: string,  // revenue (my services), service charges (i paid)
   description: string,
   amount: number,
-  date: Date,
+  date: string,
   reconciled: boolean,
-  partyType: string, // client or service provider (ie, bank, cc processor)
+  partyType: string, // client or service provider (ie, bank, cc processor="pp")
   party: TransPartyType,
 }
 
 interface ClientType {
-    id: string,
+    nn: string,
     name: string,
     address: AddressType,
     contacts: ContactInfoType[],
@@ -59,12 +59,12 @@ interface ClientType {
 }
 
 interface ScheduleItemType {
-    id: string,  // of the individual event
+    nn: string,  // of the individual event
     calendar: string,
     provider: string, // ical or google?
     providerItemId: string, // of the event
-    start: Date,
-    end: Date,
+    start: string,
+    end: string,
     completed: boolean,
     revenue: number,
     pd: boolean
@@ -75,6 +75,7 @@ interface AppActivityType {
 }
 
 interface UserDataType {
+    _id: string,
     user: UserInfoType,
     appActivity: AppActivityType,
     clients: ClientType[],

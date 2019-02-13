@@ -1,18 +1,34 @@
 <ion-header>
+
   <ion-navbar>
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Therapy Assistant</ion-title>
+    <ion-title>Home</ion-title>
   </ion-navbar>
+
 </ion-header>
 
+<!-- make dependencies on auth.xxx state values -->
 <ion-content padding>
-  <h3>Ionic Menu Starter</h3>
-
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will show you the way.
-  </p>
-
-  <button ion-button secondary menuToggle>Toggle Menu</button>
+  <ion-grid>
+    <ion-row justify-content-center>
+      <!-- <ion-item no-lines center > -->
+        <h2 class="pageTitle" align="center">My Massage Therapy Assistant</h2>
+      <!-- </ion-item> -->
+    </ion-row>
+    <ion-row justify-content-center>
+      <ion-item no-lines>
+        <img src="./assets/imgs/orangetree.png" />
+      </ion-item>
+    </ion-row>
+    <ion-row justify-content-center>
+      <!-- <ion-item no-lines> -->
+        <button ion-button (click)="login()">Log In</button>
+      <!-- </ion-item> -->
+    </ion-row>
+    <ion-row justify-content-center>
+        <button ion-button (click)="login()">Log Out</button>
+    </ion-row>
+  </ion-grid>
 </ion-content>

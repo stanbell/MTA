@@ -1,4 +1,3 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { UserDataProvider } from '../user-data/user-data';
 import { HelpersProvider } from '../helpers/helpers';

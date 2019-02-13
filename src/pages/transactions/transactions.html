@@ -1,18 +1,53 @@
-<!--
-  Generated template for the TransactionsPage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
-
   <ion-navbar>
-    <ion-title>transactions</ion-title>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>My Transactions</ion-title>
   </ion-navbar>
-
 </ion-header>
 
-
 <ion-content padding>
+  <!-- <ion-toolbar color=primary>
+    <ion-searchbar class="search" [(ngModel)]="searchTerm" debounce=750 placeholder="Search" (ionInput)="getList()">
+    </ion-searchbar>
+  </ion-toolbar> -->
+
+  <div *ngIf="itemsList">
+    <ion-grid>
+      <!-- header -->
+      <ion-row>
+        <ion-col col-3>
+          <div class="myHeader">Date</div>
+        </ion-col>
+        <ion-col col-5>
+          <div class="myHeader">Desc</div>
+        </ion-col>
+        <ion-col col-3>
+          <div class="myHeader" float-right>Amt</div>
+        </ion-col>
+        <ion-col col-1>
+          <div class="myHeader">R</div>
+        </ion-col>
+      </ion-row>
+      <!-- <div ion-item no-lines *ngFor="let z of itemsList"> -->
+      <ion-row *ngFor="let z of itemsList" (click)="choose(z)">
+        <ion-col col-3>
+          <p>{{z.shortDate}}</p>
+        </ion-col>
+        <ion-col col-5>
+          <p>{{z.description}}</p>
+        </ion-col>
+        <ion-col col-3>
+          <p float-right>{{z.formattedAmount}}</p>
+        </ion-col>
+        <ion-col col-1>
+          <!-- <ion-icon [name]="z.reconciledIcon" [color]="project.likedBy ? 'danger' : 'dark'"></ion-icon> -->
+          <ion-icon [name]="z.reconciledIcon"></ion-icon>
+        </ion-col>
+      </ion-row>
+      <!-- </div> -->
+    </ion-grid>
+  </div>
 
 </ion-content>

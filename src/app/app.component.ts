@@ -3,11 +3,14 @@ import { Nav, Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
+import { Auth0Cordova } from '@auth0/cordova';
+import { SchedulePage } from '../pages/schedule/schedule';
+import { ClientsPage } from '../pages/clients/clients';
+import { TransactionsPage } from '../pages/transactions/transactions';
+import { BusinessPage } from '../pages/business/business';
+import { SettingsPage } from '../pages/settings/settings';
 import { HomePage } from '../pages/home/home';
-import { ListPage } from '../pages/list/list';
-
-import { LoginPage } from '../pages/login/login';
-import Auth0Cordova from '@auth0/cordova';
+import { UserDataProvider } from '../providers/user-data/user-data';
 @Component({
   templateUrl: 'app.html'
 })
@@ -18,17 +21,20 @@ export class MyApp {
 
   pages: Array<{title: string, component: any}>;
 
-  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen) {
+  constructor(public platform: Platform, 
+      public statusBar: StatusBar, 
+      public splashScreen: SplashScreen,
+      public ud: UserDataProvider) {
     this.initializeApp();
 
     // used for an example of ngFor and navigation
     this.pages = [
-      { title: 'Log In', component: LoginPage },
-      { title: 'My Schedule', component: HomePage },
-      { title: 'My Clients', component: HomePage },
-      { title: 'My Transactions', component: HomePage },
-      { title: 'My Business', component: HomePage },
-      { title: 'Settings', component: ListPage }
+      { title: 'Home', component: HomePage },
+      { title: 'My Schedule', component: SchedulePage },
+      { title: 'My Clients', component: ClientsPage },
+      { title: 'My Transactions', component: TransactionsPage },
+      { title: 'My Business', component: BusinessPage },
+      { title: 'Settings', component: SettingsPage }
     ];
 
   }
@@ -39,6 +45,10 @@ export class MyApp {
       // Here you can do any higher level native things you might need.
       this.statusBar.styleDefault();
       this.splashScreen.hide();
+
+      // initialize primary data store
+      this.ud.initData();
+
       // Redirect back to app after authenticating
       (window as any).handleOpenURL = (url: string) => {
         Auth0Cordova.onRedirectUri(url);

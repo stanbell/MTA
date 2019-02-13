@@ -14,3 +14,33 @@
 // To declare rules for a specific mode, create a child rule
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
+
+.content {
+    background-color: color($colors, background);
+}
+
+.item {
+    background-color: color($colors, background);
+}
+
+
+.button {
+    background-color: color($colors, secondary);
+    color: color($colors, primary);
+}
+
+.myHeader {
+    text-decoration: underline;
+}
+
+.pageTitle {
+    color: color($colors, primary);
+    word-break: break-word;
+    white-space: normal;
+}
+p {
+    margin-top: 0;
+    margin-bottom: 0;
+    word-break: break-word;
+    white-space: normal;
+}
