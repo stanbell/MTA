@@ -96,4 +96,8 @@
     </plugin>
     <engine name="ios" spec="4.5.5" />
     <engine name="android" spec="7.1.4" />
+    <plugin name="cordova-plugin-calendar" spec="5.1.4">
+        <variable name="CALENDAR_USAGE_DESCRIPTION" value="Enables you to make MTA appointments in your calendar." />
+        <variable name="CONTACTS_USAGE_DESCRIPTION" value="Does not use contacts." />
+    </plugin>
 </widget>

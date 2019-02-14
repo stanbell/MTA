@@ -25,6 +25,7 @@ export class LoginPage {
     this.ud.userId = 'mary';
     await this.ud.readIdNumber();
     await this.ud.readData();
+    this.auth.loggedIn = true;
     console.log('got', this.ud.userData);
     this.navCtrl.pop();
   }

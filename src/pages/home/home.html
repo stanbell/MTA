@@ -19,15 +19,16 @@
     </ion-row>
     <ion-row justify-content-center>
       <ion-item no-lines>
-        <img src="./assets/imgs/orangetree.png" />
+        <img src="./assets/imgs/orangetree3.png" />
       </ion-item>
     </ion-row>
-    <ion-row justify-content-center>
-      <!-- <ion-item no-lines> -->
+    <ion-row *ngIf="!auth.loggedIn" justify-content-center>
         <button ion-button (click)="login()">Log In</button>
-      <!-- </ion-item> -->
     </ion-row>
-    <ion-row justify-content-center>
+    <ion-row  *ngIf="auth.loggedIn" justify-content-center>
+        <h3 class="pageTitle" align="center">Welcome Back!</h3>
+    </ion-row>
+    <ion-row  *ngIf="auth.loggedIn" justify-content-center>
         <button ion-button (click)="login()">Log Out</button>
     </ion-row>
   </ion-grid>

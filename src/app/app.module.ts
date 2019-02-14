@@ -6,6 +6,7 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { Calendar, CalendarOriginal } from '@ionic-native/calendar';
 
 
 import { MyApp } from './app.component';
@@ -21,44 +22,48 @@ import { CacheProvider } from '../providers/cache/cache';
 import { LocalStoreProvider } from '../providers/local-store/local-store';
 
 import { LoginPage } from '../pages/login/login';
-import { WelcomePage } from '../pages/welcome/welcome';
 import { SchedulePage } from '../pages/schedule/schedule';
 import { ClientsPage } from '../pages/clients/clients';
 import { TransactionsPage } from '../pages/transactions/transactions';
 import { SettingsPage } from '../pages/settings/settings';
 import { BusinessPage } from '../pages/business/business';
 import { HomePage } from '../pages/home/home';
-import { MenuProvider } from '../providers/menu/menu';
+import { ClientPage } from '../pages/client/client';
+import { CalendarPage } from '../pages/calendar/calendar';
+import { CalendarProvider } from '../providers/calendar/calendar';
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
     LoginPage,
-    WelcomePage,
     SchedulePage,
     ClientsPage,
+    ClientPage,
     TransactionsPage,
     SettingsPage,
-    BusinessPage
+    BusinessPage,
+    CalendarPage,
   ],
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
     IonicStorageModule.forRoot(),
     HttpClientModule,
+    CalendarOriginal,
   ],
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
     HomePage,
     LoginPage,
-    WelcomePage,
     SchedulePage,
     ClientsPage,
+    ClientPage,
     TransactionsPage,
     SettingsPage,
-    BusinessPage 
+    BusinessPage,
+    CalendarPage,
   ],
   providers: [
     StatusBar,
@@ -75,7 +80,7 @@ import { MenuProvider } from '../providers/menu/menu';
     CacheProvider,
     LocalStoreProvider,
     Storage,
-    MenuProvider
+    CalendarProvider,
   ]
 })
 export class AppModule {}

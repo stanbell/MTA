@@ -18,7 +18,7 @@ export class MTAAPI {
     // robert frost, the road not taken
 
     getData(route: string): Promise<string> {
-        console.log('getData', route);
+        // console.log('getData', route);
         const fullRoute = this.apiURL + route;
         console.log('getData', fullRoute);
         return new Promise((resolve, reject) => {
@@ -37,10 +37,10 @@ export class MTAAPI {
     }
 
     putData(route: string, body: string): Promise<object> {
-        console.log('putData', route);
+        // console.log('putData', route);
         const fullRoute = this.apiURL + route;
         console.log('putData', fullRoute);
-        console.log('putData', body);
+        // console.log('putData', body);
         return new Promise((resolve, reject) => {
             let httpHeaders = new HttpHeaders({
                 'Content-Type': 'application/json',

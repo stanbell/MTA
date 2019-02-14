@@ -3,13 +3,6 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { TransactionsProvider } from '../../providers/transactions/transactions';
 import { HelpersProvider } from '../../providers/helpers/helpers';
 
-/**
- * Generated class for the TransactionsPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-
 @IonicPage()
 @Component({
   selector: 'page-transactions',

@@ -63,7 +63,7 @@ export class UserDataProvider {
     } else {
       this.userData = this.helper.deepCopy(serverData);
     }
-    console.log('userData', this.userData);
+    // console.log('userData', this.userData);
     // refresh
     this.writeData();
   }
@@ -72,7 +72,7 @@ export class UserDataProvider {
     // read from local cache
     try {
       let locallyRead: string = await this.cache.read(CACHE_ID + '_' + this.userIdNumber);
-      console.log('readLocal', locallyRead);
+      // console.log('readLocal', locallyRead);
       // what if locallyRead doesn't parse well?
       let locallyReadData: UserDataType = JSON.parse(locallyRead);
       // to simplify matching object elements, merge in what we find
@@ -95,8 +95,8 @@ export class UserDataProvider {
       // console.log('readServer ', serverReadData);
       // console.log('readServer ', serverReadObject);
       // note might be empty, so may stay empty after read
-      const t = { ...this.emptyUserData, ...serverReadObject };
-      console.log(t);
+      // const t = { ...this.emptyUserData, ...serverReadObject };
+      // console.log(t);
       return { ...this.emptyUserData, ...serverReadObject };
     }
     catch (err) {
@@ -128,9 +128,9 @@ export class UserDataProvider {
 
   writeServer(data: UserDataType) {
     try {
-      console.log('writeServer', data);
+      // console.log('writeServer', data);
       this.api.putData(SERVER_ROUTE + '/' + this.userIdNumber, JSON.stringify(data))
-        .then((d) => { console.log('wrote ', d); });
+        // .then((d) => { console.log('wrote ', d); });
       console.log('wrote ' + SERVER_ROUTE + '/' + this.userIdNumber);
     }
     catch (err) {

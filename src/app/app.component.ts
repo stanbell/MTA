@@ -11,6 +11,7 @@ import { BusinessPage } from '../pages/business/business';
 import { SettingsPage } from '../pages/settings/settings';
 import { HomePage } from '../pages/home/home';
 import { UserDataProvider } from '../providers/user-data/user-data';
+import { CalendarPage } from '../pages/calendar/calendar';
 @Component({
   templateUrl: 'app.html'
 })
@@ -30,11 +31,11 @@ export class MyApp {
     // used for an example of ngFor and navigation
     this.pages = [
       { title: 'Home', component: HomePage },
-      { title: 'My Schedule', component: SchedulePage },
+      { title: 'My Schedule', component: CalendarPage },
       { title: 'My Clients', component: ClientsPage },
       { title: 'My Transactions', component: TransactionsPage },
       { title: 'My Business', component: BusinessPage },
-      { title: 'Settings', component: SettingsPage }
+      { title: 'Settings', component: SettingsPage },
     ];
 
   }

@@ -3,21 +3,6 @@ import { UserDataProvider } from '../user-data/user-data';
 import { HelpersProvider } from '../helpers/helpers';
 import '../../types/types';
 
-// interface TransPartyType {
-//   id: string,
-//   description: string
-// }
-
-// interface TransactionsType {
-//   type: string,  // revenue (my services), service charges (i paid)
-//   description: string,
-//   amount: number,
-//   date: Date,
-//   reconciled: boolean,
-//   partyType: string, // client or service provider (ie, bank, cc processor)
-//   party: TransPartyType,
-// }
-
 @Injectable()
 export class TransactionsProvider {
 
