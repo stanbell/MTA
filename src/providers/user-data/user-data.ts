@@ -159,7 +159,17 @@ export class UserDataProvider {
         provider: '',
         connectionInfo: '',
         owner: '',
-      }
+      },
+      defaultApptTitle: '',
+      clientSchedule: false,
+      listActive: "1m",
+      sortClientsBy: "last",
+      useCalendar: 'app',
+      chargeCC: 'self',
+      whoSchedule: 'user',
+      whoIntake: 'user',
+      emailSchedule: '',
+      autoLogOut: 'no'
     },
     appActivity: {
       lastUpdate: "01/01/1968"  // pretty old date

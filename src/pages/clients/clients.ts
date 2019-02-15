@@ -39,31 +39,36 @@ export class ClientsPage {
 
   populateItems() {
     this.itemsList = [];
-    let ttl: number = 0;
+    // let ttl: number = 0;
+
+    // TODO:  filter to search term
     for (let i = 0; i < this.clients.clients.length; i++) {
       this.itemsList.push(this.clients.clients[i]);
-      let d = new Date(this.itemsList[i].date);
-      let y = d.getFullYear().toString();
-      y = y.substr(2, 2);
-      this.itemsList[i]['formattedSch'] = this.itemsList[i].scheduledAppts.toFixed(0);
-      this.itemsList[i]['formattedNoS'] = this.itemsList[i].noShowAppts.toFixed(0);
-      this.itemsList[i]['formattedPrv'] = this.itemsList[i].previousAppts.toFixed(0);
-      this.itemsList[i]['recurringIcon'] =
-        (this.itemsList[i].recurringScheduled)
-          ? 'checkmark-circle'
-          : 'none';
-      ttl += this.itemsList[i].scheduledAppts;
+      // let d = new Date(this.itemsList[i].date);
+      // let y = d.getFullYear().toString();
+      // y = y.substr(2, 2);
+      // this.itemsList[i]['formattedSch'] = this.itemsList[i].scheduledAppts.toFixed(0);
+      // this.itemsList[i]['formattedNoS'] = this.itemsList[i].noShowAppts.toFixed(0);
+      // this.itemsList[i]['formattedPrv'] = this.itemsList[i].previousAppts.toFixed(0);
+      // this.itemsList[i]['recurringIcon'] =
+      //   (this.itemsList[i].recurringScheduled)
+      //     ? 'checkmark-circle'
+      //     : 'none';
+      // ttl += this.itemsList[i].scheduledAppts;
     }
-    this.itemsList.push({
-      name: 'Total Scheduled',
-      formattedSch: ttl.toFixed(0),
-      formattedNoS: '',
-      formattedPrv: '',
-      recurringIcon: 'none'
-    })
+    // this.itemsList.push({
+    //   name: 'Total Scheduled',
+    //   formattedSch: ttl.toFixed(0),
+    //   formattedNoS: '',
+    //   formattedPrv: '',
+    //   recurringIcon: 'none'
+    // })
+  }
+  
+  getList() {
+    
   }
 }
-
 /* <!--nn: string,
   name: string,
     address: AddressType,

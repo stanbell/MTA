@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { UserDataProvider } from '../../providers/user-data/user-data';
 
 /**
  * Generated class for the SettingsPage page.
@@ -15,11 +16,20 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class SettingsPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-  }
+  clientSchedule: boolean = false;
+  listActive: string = "1m";
+  sortClientsBy: string = "last";
+  useCalendar: string = 'app';
+  chargeCC: string = 'self';
+  whoSchedule: string = 'user';
+  whoIntake: string = 'user';
+  defaultApptTitle: string = 'Massage';
+  emailSchedule: string = '';
+  autoLogOut: string = 'no';
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad SettingsPage');
+  constructor(public navCtrl: NavController, 
+    public navParams: NavParams,
+    public ud: UserDataProvider) {
   }
 
 }

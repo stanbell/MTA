@@ -20,12 +20,22 @@ interface UserInfoType {
     businessName: string,
     address: AddressType,
     contacts: ContactInfoType[],
-    calendar: CalendarType
+    calendar: CalendarType,
+    defaultApptTitle: string,
+    clientSchedule: boolean,
+    listActive: string,
+    sortClientsBy: string,
+    useCalendar: string,
+    chargeCC: string,
+    whoSchedule: string,
+    whoIntake: string,
+    emailSchedule: string,
+    autoLogOut: string
 }
 
 interface CalendarType {
     id: string, //maybe
-    name: string,
+    name: string,  // the calendarName used to create, into which appts will go
     provider: string, // ical or google
     connectionInfo: string, // TODO change when i learn what this needs to be
     owner: string, // userid or whatever for that native calendar

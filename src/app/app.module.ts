@@ -3,11 +3,10 @@ import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { IonicStorageModule } from '@ionic/storage';
 import { HttpClientModule } from '@angular/common/http';
+import { Calendar } from '@ionic-native/calendar';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-import { Calendar, CalendarOriginal } from '@ionic-native/calendar';
-
 
 import { MyApp } from './app.component';
 import { AuthProvider } from '../providers/auth/auth';
@@ -31,6 +30,7 @@ import { HomePage } from '../pages/home/home';
 import { ClientPage } from '../pages/client/client';
 import { CalendarPage } from '../pages/calendar/calendar';
 import { CalendarProvider } from '../providers/calendar/calendar';
+import { EventPage } from '../pages/event/event';
 
 @NgModule({
   declarations: [
@@ -44,13 +44,13 @@ import { CalendarProvider } from '../providers/calendar/calendar';
     SettingsPage,
     BusinessPage,
     CalendarPage,
+    EventPage
   ],
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
     IonicStorageModule.forRoot(),
     HttpClientModule,
-    CalendarOriginal,
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -81,6 +81,9 @@ import { CalendarProvider } from '../providers/calendar/calendar';
     LocalStoreProvider,
     Storage,
     CalendarProvider,
+    Calendar,
+    EventPage,
+    DocumentsProvider
   ]
 })
 export class AppModule {}

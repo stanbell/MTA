@@ -9,10 +9,10 @@
 
 
 <ion-content padding>
-  <!-- <ion-toolbar color=primary>
+  <ion-toolbar color=primary>
     <ion-searchbar class="search" [(ngModel)]="searchTerm" debounce=750 placeholder="Search" (ionInput)="getList()">
     </ion-searchbar>
-  </ion-toolbar> -->
+  </ion-toolbar>
 
   <div *ngIf="itemsList">
     <ion-grid>
@@ -25,7 +25,7 @@
         </ion-col>
       </ion-row> -->
       <!-- header -->
-      <ion-row>
+      <!-- <ion-row>
         <ion-col col-5>
           <div class="myHeader">Name</div>
         </ion-col>
@@ -41,13 +41,13 @@
         <ion-col col-1>
           <div class="myHeader">R</div>
         </ion-col>
-      </ion-row>
+      </ion-row> -->
       <!-- <p ion-item no-lines *ngFor="let z of itemsList"> -->
       <ion-row *ngFor="let z of itemsList; let i = index" (click)="choose(i)">
-        <ion-col col-5>
-          <p>{{z.name}}</p>
+        <ion-col col-10>
+          <button ion-button>{{z.name}}</button>
         </ion-col>
-        <ion-col col-2>
+        <!-- <ion-col col-2>
           <p float-right>{{z.formattedSch}}</p>
         </ion-col>
         <ion-col col-2>
@@ -58,9 +58,8 @@
         </ion-col>
         <ion-col col-1>
           <ion-icon [name]="z.recurringIcon"></ion-icon>
-        </ion-col>
+        </ion-col> -->
       </ion-row>
-      <!-- </div> -->
     </ion-grid>
   </div>
 

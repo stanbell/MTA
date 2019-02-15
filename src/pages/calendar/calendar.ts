@@ -1,10 +1,13 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
+import { Calendar } from '@ionic-native/calendar';
+import { EventPage } from '../event/event';
+import { UserDataProvider } from '../../providers/user-data/user-data';
 
 const normalDaysInMonths: number[] = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 const leapDaysInMonths: number[] = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
-const monthNames: string[] = ["January", "February", "March", "April", "May", "June", "July", 
-                                      "August", "September", "October", "November", "December"]
+const monthNames: string[] = ["January", "February", "March", "April", "May", "June", "July",
+  "August", "September", "October", "November", "December"]
 
 
 @IonicPage()
@@ -34,10 +37,84 @@ export class CalendarPage {
 
   // constructor(public navCtrl: NavController, public navParams: NavParams) {
   constructor(public navCtrl: NavController,
-    public navParams: NavParams) {
+    public navParams: NavParams,
+    private plt: Platform,
+    private cal: Calendar,
+    public ud: UserDataProvider) {
     (navParams.get('date')) ? this.setSelectedDate(navParams.get('date')) : this.setSelectedDate(this.getToday());
     (navParams.get('title')) ? this.title = navParams.get('title') : this.title = 'My Schedule';
     this.buildCalendarDays(this.selectedDate);
+    this.calVisible = true;
+    // if (this.plt.is('cordova')) {
+    //   this.plt.ready().then(() => {
+    //     this.getDateEventsFromNative();
+    //   })
+    // } else {
+      this.getDateEvents();
+    // }
+  }
+
+  // use calendar name from settings
+  //    if absent, ask for it from list (with dialog)
+  //      this.cal.listCalendars().then(data => { 
+  // put these into a list for selection 
+  // or allow add new? })
+  // might be better to hardcode a new one
+  //    once captured, put in to userdata.userinfo.calendar
+  // this page to have 
+  //    -add appt:  
+  //        add event to calendar,
+  //        add appt to user.schedule,
+  //        add 1 to clients.scheduledAppts,
+  //        add event to calendar,
+  //    -nav to the appt/visit
+  //        start/finish 
+
+  private defaultTitle: string = (!!this.ud.userData.user.defaultApptTitle) ? this.ud.userData.user.defaultApptTitle : 'Massage';
+  private defaultLocation: string =
+    (!!this.ud.userData.user.address.label) ? this.ud.userData.user.address.label : 'Office';
+
+  addEvent(cal) {
+    this.navCtrl.push(EventPage, {
+      mode: 'add',
+      title: this.defaultTitle, // set default in settings
+      location: this.defaultLocation, // set in settings
+      startDate: this.selectedDate
+    })
+  }
+
+  cancelEvent(cal) {
+
+  }
+
+  calVisible: boolean = true;
+
+  toggleCalendar() {
+    const el = document.getElementById('wholeCalendar');
+    el.hidden = (!el.hidden);
+    this.calVisible = (!this.calVisible);
+  }
+
+  eventList: any;
+
+
+  private getDateEvents() {
+    // filter my schedule to just today
+    let sd = new Date(this.selectedDate).setHours(0, 0, 0, 0);
+    this.eventList =
+      this.ud.userData.schedule
+        .filter(x => (new Date(x.start).setHours(0, 0, 0, 0) === sd));
+    this.eventList.forEach(item => {
+      item['startTime'] = this.formatTime(item['start']);
+    });
+  }
+
+  private formatTime(item: string): string {
+    const ts = new Date(item).toTimeString();
+    const hr = parseInt(ts.slice(0, 2));
+    const hrs = (hr > 12) ? (hr - 12) : hr;
+    const ampm = (hr > 12) ? 'pm' : 'am';
+    return hrs.toString() + ':' + ts.slice(3, 5) + ampm;
   }
 
   goToPrevMonth() {
@@ -56,7 +133,11 @@ export class CalendarPage {
     this.setSelectedDate((this.displayingDate.getMonth() + 1) + '/' + day + '/' + this.displayingDate.getFullYear());
     this.clearSelectedDayMarker();
     this.setSelectedDayMarker(event.target);
+    this.getDateEvents();
   }
+
+  private firstOfMonthDate: Date;
+  private lastOfMonthDate: Date;
 
   private buildCalendarDays(forDate: Date) {
     // 0-based month
@@ -75,15 +156,15 @@ export class CalendarPage {
     this.daysInThisMonth = new Array();
     for (let i = 0; i < this.daysInMonths[thisMonth]; i++) { this.daysInThisMonth.push(i + 1); }
     // days in previous month
-    const firstOfMonthDate = (forDate.getMonth() + 1) + '/1/' + forDate.getFullYear();
-    const firstOfMonthDoW = new Date(firstOfMonthDate).getDay();
+    this.firstOfMonthDate = new Date((forDate.getMonth() + 1) + '/1/' + forDate.getFullYear());
+    const firstOfMonthDoW = this.firstOfMonthDate.getDay();
     this.daysFromLastMonth = new Array();
     for (let i = 0; i < firstOfMonthDoW; i++) { this.daysFromLastMonth.push(0); }
     for (let i = 0; i < this.daysFromLastMonth.length; i++) { this.daysFromLastMonth[i] = this.daysInMonths[lastMonth] - i; }
     this.daysFromLastMonth.reverse();
 
-    const lastOfMonthDate = (forDate.getMonth() + 1) + '/' + this.daysInMonths[forDate.getMonth()] + '/' + forDate.getFullYear();
-    const lastOfMonthDoW = new Date(lastOfMonthDate).getDay();
+    this.lastOfMonthDate = new Date((forDate.getMonth() + 1) + '/' + this.daysInMonths[forDate.getMonth()] + '/' + forDate.getFullYear());
+    const lastOfMonthDoW = this.lastOfMonthDate.getDay();
     this.daysFromNextMonth = new Array();
     for (let i = 0; i < (6 - lastOfMonthDoW); i++) { this.daysFromNextMonth.push(i + 1); }
     if (this.displayingMonth === this.selectedMonth
@@ -120,7 +201,94 @@ export class CalendarPage {
     return (today.getMonth() + 1) + '/' + today.getDate() + '/' + today.getFullYear();
   }
 
+  getDateEventsFromNative() {
+    this.eventList = new Array();
+    let startDate: Date = new Date(this.selectedDate);
+    startDate.setTime(0);
+    let endDate: Date = new Date(this.selectedDate);
+    endDate.setTime((24 * 60 * 60 * 1000) - 1);
+
+    this.cal.listEventsInRange(startDate, endDate).then(
+      (msg) => {
+        msg.forEach(item => {
+          item['startTime'] = this.formatTime(item['startDate']);
+          this.eventList.push(item);
+        });
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
+  }
+
 }
 
 // original calendar display code from https://www.djamware.com/post/5a0bb8f780aca75eadc12d6b/build-ionic-3-angular-5-calendar-ui-with-event-integration
 
+// this code alternate way to get events, starting with native calendar and
+// finding corresponding event in userData.schedule
+// goes in/replaces getDateEvents
+
+// this.eventList = [
+//   {
+//     calendar: "MTA",
+//     endDate: "2019-02-20 08:29:59",
+//     startDate: "2019-02-20 08:00:00",
+//     id: "0F9990EB-05A7-40DB-B082-424A85B59F90",
+//     lastModifiedDate: "2019-02-15 09:14:02",
+//     location: "",
+//     message: "Massage 30",
+//     title: "Alice Adams"
+//   },
+//   {
+//     calendar: "MTA",
+//     endDate: "2019-02-20 09:59:59",
+//     startDate: "2019-02-20 09:00:00",
+//     id: "0F9990EB-05A7-40DB-B082-424A85B59F91",
+//     lastModifiedDate: "2019-02-15 09:14:02",
+//     location: "",
+//     message: "Massage 60",
+//     title: "Bob Barker"
+//   },
+//   {
+//     calendar: "MTA",
+//     endDate: "2019-02-20 13:59:59",
+//     startDate: "2019-02-20 13:00:00",
+//     id: "0F9990EB-05A7-40DB-B082-424A85B59F92",
+//     lastModifiedDate: "2019-02-15 09:14:02",
+//     location: "",
+//     message: "Massage 60",
+//     title: "Cathy Cohen"
+//   },
+// ]
+
+  //   // or
+  //   //  filter the events to those for which i have a stored schedule[].providerItemId
+  //   //    use values from there
+  //   let mtaAppts = new Array();
+  //   this.ud.userData.schedule.forEach(item => {
+  //     mtaAppts.push(item['id']);
+  //   });
+  //   let el = this.eventList.filter(x => mtaAppts.indexOf(x['providerItemId']) !== -1)
+  //   el.forEach(item => {
+  //     item['startTime'] = this.formatTime(item['startDate']);
+  //     var found = this.getMatchingAppt(item, this.ud.userData.schedule);
+  //     item = { ...item, ...found };
+  //     console.log(item);
+  //     // item['clientName'] = found['clientName'];
+  //     // item['serviceDescription'] = found['serviceDescription'];
+  //   });
+  // }
+
+  // private getMatchingAppt(item: any, arr: any): any {
+  //   var found = { clientName: 'none', serviceDescription: 'none' };
+  //   arr.forEach(i => {
+  //     if (item === i.providerItemId) {
+  //       found = {
+  //         clientName: i['clientName'],
+  //         serviceDescription: i['serviceDescription']
+  //       }
+  //     }
+  //   });
+  //   return found;
+  // }

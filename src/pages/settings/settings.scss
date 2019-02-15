@@ -1,3 +1,9 @@
 page-settings {
-
+    ion-label {
+        word-break: break-word;
+        white-space: normal;
+    }
+    ion-input {
+        background-color: color($colors, secondary);
+    }
 }
