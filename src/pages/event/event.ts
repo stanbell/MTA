@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { UserDataProvider } from '../../providers/user-data/user-data';
 import '../../types/types';
+import { HelpersProvider } from '../../providers/helpers/helpers';
 
 @IonicPage()
 @Component({
@@ -19,18 +20,24 @@ export class EventPage {
   displayEnd: string;
   location: string;
   eventDate: Date;
-  transactions: TransactionType[];
+  initialTransactions: TransactionType[];
+  transactions: any[];
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
+    public helper: HelpersProvider,
     public ud: UserDataProvider) {
       // this.mode = navParams.get('mode');
       this.event = navParams.get('event');
       this.displayDate = (new Date(this.event.start).toLocaleDateString());
       this.displayStart = (new Date(this.event.start).toLocaleTimeString());
       this.displayEnd = (new Date(this.event.end).toLocaleTimeString());
-      this.transactions = this.matchTransactions(this.event.transactions, this.ud.userData.transactions);
-      this.transactions.forEach(e => e.type = this.upshiftInitial(e.type));
+      this.initialTransactions = this.matchTransactions(this.event.transactions, this.ud.userData.transactions);
+      this.initialTransactions.forEach(e => e.type = this.upshiftInitial(e.type));
+      this.transactions = helper.deepCopy(this.initialTransactions);
+      this.transactions.forEach((e) => {
+        e['formattedAmount'] = (e.amount >= 0) ? e.amount.toFixed(2) : "(" + (0 - e.amount).toFixed(2) + ")";
+      });
       this.eventDate = new Date(this.event.start);
       this.future = (this.eventDate.valueOf() > Date.now());  // future, can edit
   }

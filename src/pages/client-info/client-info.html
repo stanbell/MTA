@@ -1,0 +1,80 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Client</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <p class="helpful">Changing Client Details</p>
+  <br>
+  <ion-item>
+    <ion-label color="primary">Name</ion-label>
+    <ion-input type="text" [(ngModel)]="client.name">
+    </ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label color="primary">Address</ion-label>
+    <ion-input type="text" [(ngModel)]="client.address.label">
+    </ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label color="primary">Street</ion-label>
+  </ion-item>
+  <ion-item>
+    <ion-input type="text" [(ngModel)]="client.address.street1">
+    </ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-input type="text" [(ngModel)]="client.address.street2">
+    </ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label color="primary">City</ion-label>
+    <ion-input type="text" [(ngModel)]="client.address.city">
+    </ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label color="primary">State/Province</ion-label>
+    <ion-input type="text" [(ngModel)]="client.address.state">
+    </ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label color="primary">Postal Code</ion-label>
+    <ion-input type="text" [(ngModel)]="client.address.zip">
+    </ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label color="primary">Contacts</ion-label>
+    <ion-icon color="primary" name="circle-add" (click)="addContact()"></ion-icon>
+  </ion-item>
+  <ion-grid>
+    <div class="listInBox">
+      <ion-row *ngFor="let z of client.contacts">
+        <!-- <ion-col col-3>
+        <p>{{z.type}}</p>
+      </ion-col> -->
+      <div (click)="editContact(z)">
+        <ion-col col-3>
+          <p>{{z.label}}</p>
+        </ion-col>
+        <ion-col col-6>
+          <p>{{z.contact}}</p>
+        </ion-col>
+        <ion-col col-3>
+          <div *ngIf="z.type==='phone'">
+            <p *ngIf="z.okToText">Text OK</p>
+            <p *ngIf="!z.okToText">No Text</p>
+          </div>
+          <!-- <ion-checkbox [(ngModel)]="z.okToText"></ion-checkbox> -->
+        </ion-col>
+        </div>
+      </ion-row>
+    </div>
+  </ion-grid>
+
+  <button ion-button [disabled]="!client.name" (click)="save()">Save</button>
+  <button ion-button (click)="cancel()">Cancel</button>
+</ion-content>

@@ -1,10 +1,10 @@
 <ion-header>
 
   <ion-navbar>
-    <button ion-button menuToggle>
+    <!-- <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
-    </button>
-    <ion-title>Home</ion-title>
+    </button> -->
+    <ion-title>MTA</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -17,16 +17,19 @@
         <h2 class="pageTitle" align="center">My Massage Therapy Assistant</h2>
       <!-- </ion-item> -->
     </ion-row>
-    <ion-row justify-content-center>
-      <ion-item no-lines>
+    <ion-row justify-content-center align-items-center>
+      <div>
         <img src="./assets/imgs/orangetree3.png" />
-      </ion-item>
+      </div>
     </ion-row>
     <ion-row *ngIf="!auth.loggedIn" justify-content-center>
         <button ion-button (click)="login()">Log In</button>
     </ion-row>
     <ion-row  *ngIf="auth.loggedIn" justify-content-center>
         <h3 class="pageTitle" align="center">Welcome Back!</h3>
+      </ion-row>
+      <ion-row  *ngIf="auth.loggedIn" justify-content-center>
+          <button ion-button (click)="start()">Tap to Enter</button>
     </ion-row>
     <ion-row  *ngIf="auth.loggedIn" justify-content-center>
         <button ion-button (click)="login()">Log Out</button>

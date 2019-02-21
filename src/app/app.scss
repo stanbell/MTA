@@ -55,6 +55,23 @@
     border-color: color($colors, boxborder);
     border-width: 1px;
 }
+.listInBox {
+    padding: 2px;
+    width: 100%;
+    background-color: color($colors, secondary);
+    border-style: solid;
+    border-color: color($colors, boxborder);
+    border-width: 1px;
+}
+.boxInList {
+    padding: 2px;
+    width: 100%;
+    background-color: color($colors, secondary);
+    border-style: solid;
+    border-color: color($colors, boxborder);
+    border-width: 1px;
+    text-align: center;
+}
 
 p {
     color: color($colors, darkText) !important;

@@ -60,7 +60,8 @@ export class AppointmentsPage {
 
   private formatDate(dt: string): string {
     const d = new Date(dt);
-    return ShortMonths[d.getMonth()] + ' ' + d.getDate() + ', ' + d.getFullYear();
+    return ShortMonths[d.getMonth()] + ' ' + d.getDate();
+    // return ShortMonths[d.getMonth()] + ' ' + d.getDate() + ', ' + d.getFullYear();
   }
 
   private formatTime(dt: string): string {

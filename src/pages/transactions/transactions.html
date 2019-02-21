@@ -24,36 +24,46 @@
         </ion-col>
       </ion-row>
       <!-- header -->
+      <div class="box">
       <ion-row>
-        <ion-col col-3>
-          <div class="myHeader">Date</div>
-        </ion-col>
-        <ion-col col-5>
-          <div class="myHeader">Desc</div>
+        <ion-col col-2>
+          <p>Date</p>
         </ion-col>
         <ion-col col-3>
-          <div class="myHeader" float-right>Amt</div>
+          <p>Client</p>
+        </ion-col>
+        <ion-col col-3>
+          <p>Desc</p>
+        </ion-col>
+        <ion-col col-3>
+          <p float-right>Amt</p>
         </ion-col>
         <ion-col col-1>
-          <div class="myHeader">R</div>
+          <p>R</p>
         </ion-col>
       </ion-row>
+      </div>
       <!-- <div ion-item no-lines *ngFor="let z of itemsList"> -->
+        <div class="listInBox">
       <ion-row *ngFor="let z of itemsList" (click)="choose(z)">
-        <ion-col col-3>
+        <ion-col class="transList" col-2>
           <p>{{z.shortDate}}</p>
         </ion-col>
-        <ion-col col-5>
+        <ion-col class="transList" col-3>
+          <p>{{z.clientName}}</p>
+        </ion-col>
+        <ion-col class="transList" col-3>
           <p>{{z.description}}</p>
         </ion-col>
         <ion-col col-3>
           <p float-right>{{z.formattedAmount}}</p>
         </ion-col>
-        <ion-col col-1>
+        <ion-col class="transList" col-1>
           <!-- <ion-icon [name]="z.reconciledIcon" [color]="project.likedBy ? 'danger' : 'dark'"></ion-icon> -->
           <ion-icon [name]="z.reconciledIcon"></ion-icon>
         </ion-col>
       </ion-row>
+      </div>
       <!-- </div> -->
     </ion-grid>
   </div>

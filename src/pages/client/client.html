@@ -9,10 +9,10 @@
 
 <ion-content padding>
   <ion-grid>
-    <ion-row align-items-center>
+    <ion-row align-items-center (click)="navTo('client')">
       <ion-col col-1></ion-col>
       <ion-col col-10 align-self-center>
-        <div class="box">
+        <div class="boxInList">
           <p>{{item.name}}</p>
         </div>
       </ion-col>
@@ -21,7 +21,7 @@
     <ion-row align-items-center>
       <ion-col col-1></ion-col>
       <ion-col col-10 align-self-center (click)="navTo('appt')">
-        <div class="box"> 
+        <div class="boxInList"> 
           <p>Appointments</p>
         </div>
       </ion-col>
@@ -30,7 +30,7 @@
     <ion-row align-items-center>
       <ion-col col-1></ion-col>
       <ion-col col-10 align-self-center (click)="navTo('trans')">
-        <div class="box">
+        <div class="boxInList">
           <p>Transactions/Payments</p>
         </div>
       </ion-col>
@@ -39,7 +39,7 @@
     <ion-row align-items-center>
       <ion-col col-1></ion-col>
       <ion-col col-10 align-self-center (click)="navTo('intake')">
-        <div class="box">
+        <div class="boxInList">
           <p>Intake/History</p>
         </div>
       </ion-col>
@@ -48,7 +48,7 @@
     <ion-row align-items-center>
       <ion-col col-1></ion-col>
       <ion-col col-10 align-self-center (click)="navTo('docs')">
-        <div class="box">
+        <div class="boxInList">
           <p>Visit Documents</p>
         </div>
       </ion-col>
@@ -57,18 +57,48 @@
     <ion-row align-items-center>
       <ion-col col-1></ion-col>
       <ion-col col-10 align-self-center (click)="navTo('prefs')">
-        <div class="box">
+        <div class="boxInList">
           <p>Preferences</p>
         </div>
       </ion-col>
       <ion-col col-1></ion-col>
     </ion-row>
-    <!-- <ion-row align-items-center>
+    <ion-row align-items-center>
       <ion-col col-1></ion-col>
-      <ion-col col-10  align-self-center>
-        <button ion-button>Other</button>
+      <ion-col col-10 align-self-center (click)="toggleMetrics()">
+        <div class="boxInList">
+          <p>Metrics</p>
+        </div>
       </ion-col>
       <ion-col col-1></ion-col>
-    </ion-row> -->
+    </ion-row>
+    <ion-row *ngIf="metrics" align-items-center>
+      <ion-col col-2></ion-col>
+      <ion-col col-8 align-self-center>
+        <div class="boxInList">
+          <p>Previous Appts  {{item.previousAppts}}</p>
+        </div>
+      </ion-col>
+      <ion-col col-2></ion-col>
+    </ion-row>
+    <ion-row *ngIf="metrics" align-items-center>
+      <ion-col col-2></ion-col>
+      <ion-col col-8 align-self-center>
+        <div class="boxInList">
+          <p>Scheduled Appts  {{item.scheduledAppts}}</p>
+        </div>
+      </ion-col>
+      <ion-col col-2></ion-col>
+    </ion-row>
+    <ion-row *ngIf="metrics" align-items-center>
+      <ion-col col-2></ion-col>
+      <ion-col col-8 align-self-center>
+        <div class="boxInList">
+          <p>No Show Appts  {{item.noShowAppts}}</p>
+        </div>
+      </ion-col>
+      <ion-col col-2></ion-col>
+    </ion-row>
+
   </ion-grid>
 </ion-content>

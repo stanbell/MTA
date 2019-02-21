@@ -1,3 +1,12 @@
 page-transactions {
-
+    p {
+        // text-align: center;
+        font-size: smaller;
+    }
+    .transList {
+        // font-size: smaller !important;
+        text-align: start !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+  }
 }

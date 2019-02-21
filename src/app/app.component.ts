@@ -20,7 +20,7 @@ export class MyApp {
 
   rootPage: any = HomePage;
 
-  pages: Array<{title: string, component: any}>;
+  // pages: Array<{title: string, component: any}>;
 
   constructor(public platform: Platform, 
       public statusBar: StatusBar, 
@@ -28,15 +28,15 @@ export class MyApp {
       public ud: UserDataProvider) {
     this.initializeApp();
 
-    // used for an example of ngFor and navigation
-    this.pages = [
-      { title: 'Home', component: HomePage },
-      { title: 'My Schedule', component: CalendarPage },
-      { title: 'My Clients', component: ClientsPage },
-      { title: 'My Transactions', component: TransactionsPage },
-      { title: 'My Business', component: BusinessPage },
-      { title: 'Settings', component: SettingsPage },
-    ];
+    // // used for an example of ngFor and navigation
+    // this.pages = [
+    //   { title: 'Home', component: HomePage },
+    //   { title: 'My Schedule', component: CalendarPage },
+    //   { title: 'My Clients', component: ClientsPage },
+    //   { title: 'My Transactions', component: TransactionsPage },
+    //   { title: 'My Business', component: BusinessPage },
+    //   { title: 'Settings', component: SettingsPage },
+    // ];
 
   }
 
@@ -49,17 +49,20 @@ export class MyApp {
 
       // initialize primary data store
       this.ud.initData();
+      // TODO: see if user already/previously logged in
+      // this.auth.
 
       // Redirect back to app after authenticating
       (window as any).handleOpenURL = (url: string) => {
         Auth0Cordova.onRedirectUri(url);
       }
+      this.nav.setRoot(HomePage);
     });
   }
 
-  openPage(page) {
-    // Reset the content nav to have just this page
-    // we wouldn't want the back button to show in this scenario
-    this.nav.setRoot(page.component);
-  }
+  // openPage(page) {
+  //   // Reset the content nav to have just this page
+  //   // we wouldn't want the back button to show in this scenario
+  //   this.nav.setRoot(page.component);
+  // }
 }

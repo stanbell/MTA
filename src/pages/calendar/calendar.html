@@ -66,7 +66,7 @@
         {{selectedMonth}} {{selectedDayOfMonth}}, {{selectedYear}}
       </p>
     </ion-row>
-    <div class="box" *ngIf="eventList.length > 0">
+    <div class="listInBox" *ngIf="eventList.length > 0">
       <div *ngFor="let z of eventList">
         <ion-row (click)="selectEvent(z)">
           <!-- <ion-col class="eventList" col-1>

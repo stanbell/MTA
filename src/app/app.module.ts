@@ -32,6 +32,9 @@ import { CalendarPage } from '../pages/calendar/calendar';
 import { CalendarProvider } from '../providers/calendar/calendar';
 import { EventPage } from '../pages/event/event';
 import { AppointmentsPage } from '../pages/appointments/appointments';
+import { NavoptionsPage } from '../pages/navoptions/navoptions';
+import { ClientInfoPage } from '../pages/client-info/client-info';
+import { DocumentPage } from '../pages/document/document';
 
 @NgModule({
   declarations: [
@@ -46,7 +49,10 @@ import { AppointmentsPage } from '../pages/appointments/appointments';
     BusinessPage,
     CalendarPage,
     EventPage,
-    AppointmentsPage
+    AppointmentsPage,
+    NavoptionsPage,
+    ClientInfoPage,
+    DocumentPage,
   ],
   imports: [
     BrowserModule,
@@ -67,7 +73,10 @@ import { AppointmentsPage } from '../pages/appointments/appointments';
     BusinessPage,
     CalendarPage,
     EventPage,
-    AppointmentsPage
+    AppointmentsPage,
+    NavoptionsPage,
+    ClientInfoPage,
+    DocumentPage,
   ],
   providers: [
     StatusBar,

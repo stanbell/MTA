@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import '../../types/types';
 import { ClientsProvider } from '../../providers/clients/clients';
 import { HelpersProvider } from '../../providers/helpers/helpers';
 import { AppointmentsPage } from '../appointments/appointments';
+import { ClientInfoPage } from '../client-info/client-info';
+import '../../types/types';
 
 @IonicPage()
 @Component({
@@ -14,6 +15,7 @@ export class ClientPage {
 
   item: ClientType;  // ??
   itemIndex: number;
+  metrics: boolean = false;
 
   constructor(public navCtrl: NavController, 
     public navParams: NavParams,
@@ -21,6 +23,7 @@ export class ClientPage {
     public clients: ClientsProvider) {
       this.itemIndex = navParams.get('item');
       this.item = helper.deepCopy(clients.clients[this.itemIndex]);
+      console.log(this.item);
   }
 
   ionViewDidLoad() {
@@ -28,18 +31,14 @@ export class ClientPage {
   }
 
 
-  cancel() {
-    this.navCtrl.pop();
-  }
-
-  save() {
-    this.clients.clients[this.itemIndex] = this.helper.deepCopy(this.item);
-    this.navCtrl.pop();
-  }
-
   navTo(where: string): void {
     const FifteenDays = 15 * 24 * 60 * 60 * 1000;
     switch (where) {
+      case 'client':
+        this.navCtrl.push(ClientInfoPage, {
+          client: this.item,
+        });
+        break;
       case 'appt':
         this.navCtrl.push(AppointmentsPage, {
           client: this.item,
@@ -51,5 +50,9 @@ export class ClientPage {
       default:
         break;
     }
+  }
+
+  toggleMetrics() {
+    this.metrics = !this.metrics;
   }
 }
