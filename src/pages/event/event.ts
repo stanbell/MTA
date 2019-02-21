@@ -1,12 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-
-/**
- * Generated class for the EventPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { UserDataProvider } from '../../providers/user-data/user-data';
+import '../../types/types';
 
 @IonicPage()
 @Component({
@@ -15,22 +10,50 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class EventPage {
 
-  mode: string;
+  future: boolean;
+  event: ScheduleItemType;
+  scheduleItemIndex: number;
   title: string;
+  displayDate: string;
+  displayStart: string;
+  displayEnd: string;
   location: string;
-  clientName: string;  // concat for title of appt
-  startDate: Date;
+  eventDate: Date;
+  transactions: TransactionType[];
 
   constructor(public navCtrl: NavController,
-    public navParams: NavParams) {
-    this.mode = navParams.get('mode');
-    this.title = navParams.get('title');
-    this.location = navParams.get('location');
-    this.startDate = navParams.get('startDate');
+    public navParams: NavParams,
+    public ud: UserDataProvider) {
+      // this.mode = navParams.get('mode');
+      this.event = navParams.get('event');
+      this.displayDate = (new Date(this.event.start).toLocaleDateString());
+      this.displayStart = (new Date(this.event.start).toLocaleTimeString());
+      this.displayEnd = (new Date(this.event.end).toLocaleTimeString());
+      this.transactions = this.matchTransactions(this.event.transactions, this.ud.userData.transactions);
+      this.transactions.forEach(e => e.type = this.upshiftInitial(e.type));
+      this.eventDate = new Date(this.event.start);
+      this.future = (this.eventDate.valueOf() > Date.now());  // future, can edit
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad EventPage');
+  }
+
+  pay() {
+    console.log('pay');
+  }
+
+
+  private matchTransactions(trans: any[], source: any[]): any[] {
+    var t: string[] = new Array();
+    trans.forEach(i => t.push(i.uniqueId));
+    return source.filter(x => t.indexOf(x.uniqueId) !== -1);
+    // var filteredTrans = source.filter(x => t.indexOf(x.uniqueId) !== -1);
+    // return filteredTrans;
+  }
+
+  private upshiftInitial(str: string): string {
+    return str.slice(0, 1).toUpperCase() + str.slice(1);
   }
 
 }

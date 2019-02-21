@@ -21,7 +21,7 @@ import { CacheProvider } from '../providers/cache/cache';
 import { LocalStoreProvider } from '../providers/local-store/local-store';
 
 import { LoginPage } from '../pages/login/login';
-import { SchedulePage } from '../pages/schedule/schedule';
+// import { SchedulePage } from '../pages/schedule/schedule';
 import { ClientsPage } from '../pages/clients/clients';
 import { TransactionsPage } from '../pages/transactions/transactions';
 import { SettingsPage } from '../pages/settings/settings';
@@ -31,20 +31,22 @@ import { ClientPage } from '../pages/client/client';
 import { CalendarPage } from '../pages/calendar/calendar';
 import { CalendarProvider } from '../providers/calendar/calendar';
 import { EventPage } from '../pages/event/event';
+import { AppointmentsPage } from '../pages/appointments/appointments';
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
     LoginPage,
-    SchedulePage,
+    // SchedulePage,
     ClientsPage,
     ClientPage,
     TransactionsPage,
     SettingsPage,
     BusinessPage,
     CalendarPage,
-    EventPage
+    EventPage,
+    AppointmentsPage
   ],
   imports: [
     BrowserModule,
@@ -57,13 +59,15 @@ import { EventPage } from '../pages/event/event';
     MyApp,
     HomePage,
     LoginPage,
-    SchedulePage,
+    // SchedulePage,
     ClientsPage,
     ClientPage,
     TransactionsPage,
     SettingsPage,
     BusinessPage,
     CalendarPage,
+    EventPage,
+    AppointmentsPage
   ],
   providers: [
     StatusBar,

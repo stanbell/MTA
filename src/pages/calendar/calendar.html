@@ -9,14 +9,15 @@
 
 <ion-content padding>
   <div>{{title}}
-    <button *ngIf="calVisible" (click)="toggleCalendar()">
+    <!--     <button *ngIf="calVisible" (click)="toggleCalendar()">
       <ion-icon name="arrow-dropdown"></ion-icon>
     </button>
     <button *ngIf="!calVisible" (click)="toggleCalendar()">
       <ion-icon name="arrow-dropup"></ion-icon>
-    </button>
+    </button> -->
   </div>
-  <div id="wholeCalendar" [hidden]="!calVisible">
+  <!-- <div id="wholeCalendar" [hidden]="!calVisible"> -->
+  <div>
     <div class="calendar-header">
       <ion-row class="calendar-month">
         <ion-col col-2 (click)="goToPrevMonth()">
@@ -29,6 +30,7 @@
       </ion-row>
     </div>
     <div class="calendar-body">
+      <!-- <div class="calendar-body" id="wholeCalendar" [hidden]="!calVisible"> -->
       <ion-grid>
         <ion-row class="calendar-weekday">
           <ion-col>Su</ion-col>
@@ -55,21 +57,33 @@
     </div>
   </div>
   <!-- list of appts on selected day -->
-  <div *ngIf="eventList">
-    <ion-grid class="verticalLine">
-      <div ion-item no-lines *ngFor="let z of eventList">
-        <ion-row (click)="choose(z)">
-          <ion-col col-3>
+  <!-- <div *ngIf="eventList"> -->
+  <ion-grid *ngIf="selectedMonth==displayingMonth && selectedYear==displayingYear">
+    <!-- <ion-grid> -->
+    <ion-row justify-content-center>
+      <!-- <p [ngClass]="(selectedMonth==displayingMonth && selectedYear==displayingYear)?'sameMonth':'diffMonth'"> -->
+      <p class="box" style="text-align: center">
+        {{selectedMonth}} {{selectedDayOfMonth}}, {{selectedYear}}
+      </p>
+    </ion-row>
+    <div class="box" *ngIf="eventList.length > 0">
+      <div *ngFor="let z of eventList">
+        <ion-row (click)="selectEvent(z)">
+          <!-- <ion-col class="eventList" col-1>
+            <ion-icon name="create"></ion-icon>
+          </ion-col> -->
+          <ion-col class="eventList" col-2>
             <p>{{z.startTime}}</p>
           </ion-col>
-          <ion-col col-4>
+          <ion-col class="eventList" col-5>
             <p>{{z.clientName}}</p>
           </ion-col>
-          <ion-col col-5>
+          <ion-col class="eventList" col-5>
             <p>{{z.serviceDescription}}</p>
           </ion-col>
         </ion-row>
       </div>
-    </ion-grid>
-  </div>
+    </div>
+  </ion-grid>
+  <!-- </div> -->
 </ion-content>

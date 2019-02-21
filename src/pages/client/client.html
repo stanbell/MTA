@@ -10,53 +10,65 @@
 <ion-content padding>
   <ion-grid>
     <ion-row align-items-center>
-      <ion-col col-2></ion-col>
-      <ion-col col-8  align-self-center>
-        {{item.name}}
+      <ion-col col-1></ion-col>
+      <ion-col col-10 align-self-center>
+        <div class="box">
+          <p>{{item.name}}</p>
+        </div>
       </ion-col>
-      <ion-col col-2></ion-col>
+      <ion-col col-1></ion-col>
     </ion-row>
     <ion-row align-items-center>
-      <ion-col col-2></ion-col>
-      <ion-col col-8  align-self-center>
-        <button ion-button>Appointments</button>
+      <ion-col col-1></ion-col>
+      <ion-col col-10 align-self-center (click)="navTo('appt')">
+        <div class="box"> 
+          <p>Appointments</p>
+        </div>
       </ion-col>
-      <ion-col col-2></ion-col>
+      <ion-col col-1></ion-col>
     </ion-row>
     <ion-row align-items-center>
-      <ion-col col-2></ion-col>
-      <ion-col col-8  align-self-center>
-        <button ion-button>Transactions/Payment</button>
+      <ion-col col-1></ion-col>
+      <ion-col col-10 align-self-center (click)="navTo('trans')">
+        <div class="box">
+          <p>Transactions/Payments</p>
+        </div>
       </ion-col>
-      <ion-col col-2></ion-col>
+      <ion-col col-1></ion-col>
     </ion-row>
     <ion-row align-items-center>
-      <ion-col col-2></ion-col>
-      <ion-col col-8  align-self-center>
-        <button ion-button>Intake/History</button>
+      <ion-col col-1></ion-col>
+      <ion-col col-10 align-self-center (click)="navTo('intake')">
+        <div class="box">
+          <p>Intake/History</p>
+        </div>
       </ion-col>
-      <ion-col col-2></ion-col>
+      <ion-col col-1></ion-col>
     </ion-row>
     <ion-row align-items-center>
-      <ion-col col-2></ion-col>
-      <ion-col col-8  align-self-center>
-        <button ion-button>Visit Documents</button>
+      <ion-col col-1></ion-col>
+      <ion-col col-10 align-self-center (click)="navTo('docs')">
+        <div class="box">
+          <p>Visit Documents</p>
+        </div>
       </ion-col>
-      <ion-col col-2></ion-col>
+      <ion-col col-1></ion-col>
     </ion-row>
     <ion-row align-items-center>
-      <ion-col col-2></ion-col>
-      <ion-col col-8  align-self-center>
-        <button ion-button>Preferences</button>
+      <ion-col col-1></ion-col>
+      <ion-col col-10 align-self-center (click)="navTo('prefs')">
+        <div class="box">
+          <p>Preferences</p>
+        </div>
       </ion-col>
-      <ion-col col-2></ion-col>
+      <ion-col col-1></ion-col>
     </ion-row>
     <!-- <ion-row align-items-center>
-      <ion-col col-2></ion-col>
-      <ion-col col-8  align-self-center>
+      <ion-col col-1></ion-col>
+      <ion-col col-10  align-self-center>
         <button ion-button>Other</button>
       </ion-col>
-      <ion-col col-2></ion-col>
+      <ion-col col-1></ion-col>
     </ion-row> -->
   </ion-grid>
 </ion-content>

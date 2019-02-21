@@ -64,4 +64,21 @@ page-calendar {
       border-bottom: solid 1px #1a732d;
     }
   }
+  .sameMonth {
+    font-style: normal;
+    font-weight: normal;
+  }
+  .diffMonth {
+    font-style: italic;
+    font-weight: bold;
+    color: color($colors, lightText) !important;
+  }
+  // p {
+    // }
+  .eventList {
+    font-size: smaller !important;
+    text-align: start !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
 }

@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import '../../types/types';
 import { ClientsProvider } from '../../providers/clients/clients';
 import { HelpersProvider } from '../../providers/helpers/helpers';
+import { AppointmentsPage } from '../appointments/appointments';
 
 @IonicPage()
 @Component({
@@ -34,5 +35,21 @@ export class ClientPage {
   save() {
     this.clients.clients[this.itemIndex] = this.helper.deepCopy(this.item);
     this.navCtrl.pop();
+  }
+
+  navTo(where: string): void {
+    const FifteenDays = 15 * 24 * 60 * 60 * 1000;
+    switch (where) {
+      case 'appt':
+        this.navCtrl.push(AppointmentsPage, {
+          client: this.item,
+              // TODO this needs to be calculated from the users's preferred date range
+          start: new Date(Date.now()-FifteenDays).toISOString()
+        });
+        break;
+    
+      default:
+        break;
+    }
   }
 }

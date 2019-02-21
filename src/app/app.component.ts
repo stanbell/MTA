@@ -4,7 +4,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { Auth0Cordova } from '@auth0/cordova';
-import { SchedulePage } from '../pages/schedule/schedule';
+// import { SchedulePage } from '../pages/schedule/schedule';
 import { ClientsPage } from '../pages/clients/clients';
 import { TransactionsPage } from '../pages/transactions/transactions';
 import { BusinessPage } from '../pages/business/business';

@@ -43,8 +43,21 @@
         height: 18px;
 }
 
+.number {
+    text-align: right;
+}
+
+.box {
+    padding: 2px;
+    width: 100%;
+    background-color: color($colors, secondary);
+    border-style: solid;
+    border-color: color($colors, boxborder);
+    border-width: 1px;
+}
+
 p {
-    color: color($colors, primary);
+    color: color($colors, darkText) !important;
     margin-top: 0;
     margin-bottom: 0;
     word-break: break-word;

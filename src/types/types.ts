@@ -20,6 +20,7 @@ interface UserInfoType {
     businessName: string,
     address: AddressType,
     contacts: ContactInfoType[],
+        // following are settings
     calendar: CalendarType,
     defaultApptTitle: string,
     clientSchedule: boolean,
@@ -48,6 +49,7 @@ interface TransPartyType {
 }
 
 interface TransactionType {
+  uniqueId: string,
   type: string,  // revenue (my services), service charges (i paid)
   description: string,
   amount: number,
@@ -75,11 +77,18 @@ interface ScheduleItemType {
     providerItemId: string, // of the event
     start: string,
     end: string,
+    clientName: string,
+    serviceDescription: string,
     completed: boolean,
     revenue: number,
-    pd: boolean
+    pd: boolean,
+    visitNote: string,  // actual, or foreignkey reference?
+    transactions: ScheduleItemTransType[]
 }
 
+interface ScheduleItemTransType {
+    uniqueId: string
+}
 interface AppActivityType {
     lastUpdate: string
 }

@@ -20,19 +20,23 @@ export class CalendarPage {
   title: any = 'Schedule';  // whose calendar is it?  title on page
 
   selectedDate: any;  // determines red highlight, changed by click on date
+  selectedDayOfMonth: any;
   selectedMonth: any;
   selectedYear: any;
-
+  
   displayingDate: any;
   daysInThisMonth: any;
   daysFromLastMonth: any;
   daysFromNextMonth: any;
-
-
+  
+  
   displayingDayOfMonth: any;
   displayingMonth: any;
   displayingYear: any;
-
+  
+  calVisible: boolean = true;
+  eventList: ScheduleItemType[];  // if error, might have to revert this to "any", but initial testing no problem
+  
   private daysInMonths: number[];
 
   // constructor(public navCtrl: NavController, public navParams: NavParams) {
@@ -87,16 +91,20 @@ export class CalendarPage {
 
   }
 
-  calVisible: boolean = true;
+  selectEvent(event: any) {
+    // pick this event, go to appt details
+    this.navCtrl.push(EventPage, {
+      event: event,
+      // mode: 'edit'
+    })
+  }
+
 
   toggleCalendar() {
     const el = document.getElementById('wholeCalendar');
     el.hidden = (!el.hidden);
     this.calVisible = (!this.calVisible);
   }
-
-  eventList: any;
-
 
   private getDateEvents() {
     // filter my schedule to just today
@@ -179,6 +187,7 @@ export class CalendarPage {
     this.selectedDate = new Date(d);
     this.selectedMonth = monthNames[this.selectedDate.getMonth()];
     this.selectedYear = this.selectedDate.getFullYear();
+    this.selectedDayOfMonth = this.selectedDate.getDate();
   }
 
   private setSelectedDayMarker(target: any) {
