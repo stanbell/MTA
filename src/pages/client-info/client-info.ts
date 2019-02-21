@@ -33,13 +33,18 @@ export class ClientInfoPage {
   }
 
   addContact() {
-
-  }
-
-  editContact() {
-
+    console.log('addContact');
   }
   
+  editContact() {
+    console.log('editContact');
+
+  }
+
+  toggleTextOK(z: ContactInfoType) {
+    z.okToText = !z.okToText;
+  }
+
   private findItem(): number {
     // this.
     return 0;
