@@ -26,10 +26,12 @@ export class SettingsPage {
   defaultApptTitle: string = 'Massage';
   emailSchedule: string = '';
   autoLogOut: string = 'no';
+  biz: UserInfoType;
 
   constructor(public navCtrl: NavController, 
     public navParams: NavParams,
     public ud: UserDataProvider) {
+    this.biz = ud.userData.user;
   }
 
 }

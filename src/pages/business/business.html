@@ -8,5 +8,65 @@
 </ion-header>
 
 <ion-content padding>
+  <ion-item>
+    <ion-label color="primary">Name</ion-label>
+    <ion-input type="text" [(ngModel)]="biz.businessName">
+    </ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label color="primary">Address</ion-label>
+    <ion-input type="text" [(ngModel)]="biz.address.label">
+    </ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label color="primary">Street</ion-label>
+    <ion-input type="text" [(ngModel)]="biz.address.street1"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label color="primary">Street</ion-label>
+    <ion-input type="text" [(ngModel)]="biz.address.street2"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label color="primary">City</ion-label>
+    <ion-input type="text" [(ngModel)]="biz.address.city">
+    </ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label color="primary">State/Province</ion-label>
+    <ion-input type="text" [(ngModel)]="biz.address.state">
+    </ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label color="primary">Postal Code</ion-label>
+    <ion-input type="text" [(ngModel)]="biz.address.zip">
+    </ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label color="primary">Contacts</ion-label>
+  </ion-item>
+  <ion-grid>
+    <div class="listInBox">
+      <ion-row *ngFor="let z of biz.contacts">
+        <ion-col col-3 (click)="editContact(z)">
+          <p>{{z.label}}</p>
+        </ion-col>
+        <ion-col col-5 (click)="editContact(z)">
+          <p>{{z.contact}}</p>
+        </ion-col>
+        <ion-col col-3>
+          <div *ngIf="z.type==='phone'">
+            <p *ngIf="z.okToText" (click)="toggleTextOK(z)">Text OK</p>
+            <p *ngIf="!z.okToText" (click)="toggleTextOK(z)">No Text</p>
+          </div>
+        </ion-col>
+      </ion-row>
+    </div>
+  </ion-grid>
+  <p>
+    <ion-icon color="primary" name="add-circle" (click)="addContact()"></ion-icon> Add Contact
+  </p>
 
+  <button ion-button [disabled]="!biz.businessName" (click)="settings()">Settings</button>
+  <button ion-button [disabled]="!biz.businessName" (click)="save()">Save</button>
+  <button ion-button (click)="cancel()">Cancel</button>
 </ion-content>

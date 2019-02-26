@@ -16,7 +16,7 @@
           <ion-label>
             Who may complete intake/history?
           </ion-label>
-          <ion-select [(ngModel)]="whoIntake">
+          <ion-select [(ngModel)]="biz.whoIntake">
             <ion-option value="client">Allow clients</ion-option>
             <ion-option value="user">Therapist only</ion-option>
           </ion-select>
@@ -29,7 +29,7 @@
           <ion-label>
             List clients active within
           </ion-label>
-          <ion-select [(ngModel)]="listActive">
+          <ion-select [(ngModel)]="biz.listActive">
             <ion-option value="1m">1 Month</ion-option>
             <ion-option value="6m">6 Months</ion-option>
             <ion-option value="1y">1 Year</ion-option>
@@ -43,7 +43,7 @@
           <ion-label>
             Sort client list by
           </ion-label>
-          <ion-select [(ngModel)]="sortClientsBy">
+          <ion-select [(ngModel)]="biz.sortClientsBy">
             <ion-option value="first">First Name</ion-option>
             <ion-option value="last">Last Name</ion-option>
           </ion-select>
@@ -56,33 +56,21 @@
           <ion-label>
             Use Calendar
           </ion-label>
-          <ion-select [(ngModel)]="useCalendar">
+          <ion-select [(ngModel)]="biz.useCalendar">
             <ion-option value="native">Native (iOS or Google)</ion-option>
             <ion-option value="app">In-App Calendar</ion-option>
           </ion-select>
         </ion-item>
       </ion-col>
     </ion-row>
-    <ion-row>
-      <ion-col col-12>
-        <ion-item>
-          <ion-label>
-            Charge Credit Cards
-          </ion-label>
-          <ion-select [(ngModel)]="chargeCC">
-            <ion-option value="square">with Square</ion-option>
-            <ion-option value="self">Input card info myself</ion-option>
-          </ion-select>
-        </ion-item>
-      </ion-col>
-    </ion-row>
+
     <ion-row>
       <ion-col col-12>
         <ion-item>
           <ion-label>
             Who can schedule?
           </ion-label>
-          <ion-select [(ngModel)]="whoSchedule">
+          <ion-select [(ngModel)]="biz.whoSchedule">
             <ion-option value="client">Clients can self-schedle</ion-option>
             <ion-option value="user">Therapist only</ion-option>
           </ion-select>
@@ -95,7 +83,7 @@
           <ion-label>
             Automatically Log Out
           </ion-label>
-          <ion-select [(ngModel)]="autoLogOut">
+          <ion-select [(ngModel)]="biz.autoLogOut">
             <ion-option value="yes">Log out after 2 hours idle</ion-option>
             <ion-option value="no">Don't auto log out</ion-option>
           </ion-select>
@@ -105,13 +93,13 @@
     <ion-row>
       <ion-col col-12>
         <ion-label fixed>email daily schedule to: </ion-label>
-        <ion-input type="text" [(ngModel)]="emailSchedule"></ion-input>
+        <ion-input type="text" [(ngModel)]="biz.emailSchedule"></ion-input>
       </ion-col>
     </ion-row>
     <ion-row>
       <ion-col col-12>
         <ion-label fixed>default title for new appts: </ion-label>
-        <ion-input type="text" [(ngModel)]="defaultApptTitle"></ion-input>
+        <ion-input type="text" [(ngModel)]="biz.defaultApptTitle"></ion-input>
       </ion-col>
     </ion-row>
     <ion-row>
@@ -124,9 +112,59 @@
     </ion-row>
     <ion-row>
       <ion-col col-12>
-        <button ion-button>Save</button>
-        <button ion-button>Cancel</button>
+        <ion-item>
+          <ion-label>
+            Accept Payments in App
+          </ion-label>
+          <ion-select [(ngModel)]="biz.acceptPayments">
+            <ion-option value="stripe">with Stripe</ion-option>
+            <ion-option value="paypal">with PayPal</ion-option>
+            <ion-option value="self">My own merchant account</ion-option>
+            <ion-option value="none">No, not in the app</ion-option>
+          </ion-select>
+        </ion-item>
       </ion-col>
     </ion-row>
   </ion-grid>
+  <ion-item>
+    <ion-label color="primary">External Calendar</ion-label>
+  </ion-item>
+  
+  <ion-list radio-group [(ngModel)]="biz.calendar.provider">
+    <ion-item>
+      <ion-label>Apple iCal</ion-label>
+      <ion-radio value="iCal"></ion-radio>
+    </ion-item>
+    <ion-item>
+      <ion-label>Google</ion-label>
+      <ion-radio value="google"></ion-radio>
+    </ion-item>
+    <ion-item>
+      <ion-label>None, use app calendar only</ion-label>
+      <ion-radio value=""></ion-radio>
+    </ion-item>
+  </ion-list>
+  <div *ngIf="biz.calendar.provider!=''">
+    <ion-item>
+      <ion-label color="primary">Name</ion-label>
+      <ion-input type="text" [(ngModel)]="biz.calendar.name"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label color="primary">Connection Info</ion-label>
+      <ion-checkbox [(ngModel)]="biz.calendar.connectionInfo"></ion-checkbox>
+    </ion-item>
+  </div>
+  <div *ngIf="biz.calendar.acceptPayments!='none'">
+    <ion-item>
+      <ion-label color="primary">Stripe Publishable Key</ion-label>
+      <ion-input type="text" [(ngModel)]="biz.stripe.publishableKey"></ion-input>
+    </ion-item>
+  </div>
+    <ion-row>
+      <ion-col col-12>
+    <button ion-button (click)="save()">Save</button>
+    <button ion-button (click)="cancel()">Cancel</button>
+      </ion-col>
+    </ion-row>
+    <!-- <button ion-button [disabled]="!biz.businessName" (click)="save()">Save</button> -->
 </ion-content>
