@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
 import { Calendar } from '@ionic-native/calendar';
 import { EventPage } from '../event/event';
 import { UserDataProvider } from '../../providers/user-data/user-data';
+import { ScheduleProvider } from '../../providers/schedule/schedule';
 
 const normalDaysInMonths: number[] = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 const leapDaysInMonths: number[] = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
@@ -34,7 +35,6 @@ export class CalendarPage {
   displayingMonth: any;
   displayingYear: any;
   
-  calVisible: boolean = true;
   eventList: ScheduleItemType[];  // if error, might have to revert this to "any", but initial testing no problem
   
   private daysInMonths: number[];
@@ -44,11 +44,11 @@ export class CalendarPage {
     public navParams: NavParams,
     private plt: Platform,
     private cal: Calendar,
+    public sched: ScheduleProvider,
     public ud: UserDataProvider) {
     (navParams.get('date')) ? this.setSelectedDate(navParams.get('date')) : this.setSelectedDate(this.getToday());
     (navParams.get('title')) ? this.title = navParams.get('title') : this.title = 'My Schedule';
     this.buildCalendarDays(this.selectedDate);
-    this.calVisible = true;
     // if (this.plt.is('cordova')) {
     //   this.plt.ready().then(() => {
     //     this.getDateEventsFromNative();
@@ -74,36 +74,12 @@ export class CalendarPage {
   //    -nav to the appt/visit
   //        start/finish 
 
-  private defaultTitle: string = (!!this.ud.userData.user.defaultApptTitle) ? this.ud.userData.user.defaultApptTitle : 'Massage';
-  private defaultLocation: string =
-    (!!this.ud.userData.user.address.label) ? this.ud.userData.user.address.label : 'Office';
-
-  addEvent(cal) {
-    this.navCtrl.push(EventPage, {
-      mode: 'add',
-      title: this.defaultTitle, // set default in settings
-      location: this.defaultLocation, // set in settings
-      startDate: this.selectedDate
-    })
-  }
-
-  cancelEvent(cal) {
-
-  }
-
   selectEvent(event: any) {
     // pick this event, go to appt details
     this.navCtrl.push(EventPage, {
       event: event,
       // mode: 'edit'
     })
-  }
-
-
-  toggleCalendar() {
-    const el = document.getElementById('wholeCalendar');
-    el.hidden = (!el.hidden);
-    this.calVisible = (!this.calVisible);
   }
 
   private getDateEvents() {
@@ -300,4 +276,15 @@ export class CalendarPage {
   //     }
   //   });
   //   return found;
+  // }
+
+
+  // following used the bad idea in schedule provider
+    // private getDateEvents() {
+  //   // filter my schedule to just today
+  //   this.sched.readDates(this.selectedDate);
+  //   this.eventList = this.sched.scheduleItems;
+  //   this.eventList.forEach(item => {
+  //     item['startTime'] = this.formatTime(item['start']);
+  //   });
   // }
