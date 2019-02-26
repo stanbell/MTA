@@ -14,6 +14,15 @@ interface ContactInfoType {
     okToText: boolean
 }
 
+interface StripePaymentsType {
+    publishableKey: string
+}
+interface PayPalPaymentsType {
+    key: string
+}
+interface MerchantAcctType {
+    acct: string
+}
 interface UserInfoType {
     id: string,
     pwd: string,
@@ -23,15 +32,17 @@ interface UserInfoType {
         // following are settings
     calendar: CalendarType,
     defaultApptTitle: string,
-    clientSchedule: boolean,
     listActive: string,
     sortClientsBy: string,
     useCalendar: string,
-    chargeCC: string,
     whoSchedule: string,
     whoIntake: string,
     emailSchedule: string,
-    autoLogOut: string
+    autoLogOut: string,
+    acceptPayments: string,
+    stripe: StripePaymentsType,
+    paypal: PayPalPaymentsType,
+    merch: MerchantAcctType
 }
 
 interface CalendarType {

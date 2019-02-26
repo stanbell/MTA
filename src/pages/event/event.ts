@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { UserDataProvider } from '../../providers/user-data/user-data';
-import '../../types/types';
 import { HelpersProvider } from '../../providers/helpers/helpers';
+import { PaymentPage } from '../payment/payment';
+import '../../types/types';
 
 @IonicPage()
 @Component({
@@ -48,6 +49,9 @@ export class EventPage {
 
   pay() {
     console.log('pay');
+    this.navCtrl.push(PaymentPage, {
+      event: this.event
+    });
   }
 
 
@@ -63,4 +67,22 @@ export class EventPage {
     return str.slice(0, 1).toUpperCase() + str.slice(1);
   }
 
+  // private defaultTitle: string = (!!this.ud.userData.user.defaultApptTitle) ? this.ud.userData.user.defaultApptTitle : 'Massage';
+  // private defaultLocation: string =
+  //   (!!this.ud.userData.user.address.label) ? this.ud.userData.user.address.label : 'Office';
+  // addEvent(cal) {
+  //   this.navCtrl.push(EventPage, {
+  //     mode: 'add',
+  //     title: this.defaultTitle, // set default in settings
+  //     location: this.defaultLocation, // set in settings
+  //     startDate: this.selectedDate
+  //   })
+
+  // // also sync to native calendar 
+  // }
+  
+  // cancelEvent(cal) {
+    // // also sync to native calendar 
+
+  // }
 }

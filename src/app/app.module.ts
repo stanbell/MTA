@@ -19,6 +19,7 @@ import { HelpersProvider } from '../providers/helpers/helpers';
 import { MTAAPI } from '../providers/mtaapi/mtaapi';
 import { CacheProvider } from '../providers/cache/cache';
 import { LocalStoreProvider } from '../providers/local-store/local-store';
+import { Stripe } from '@ionic-native/stripe/ngx';
 
 import { LoginPage } from '../pages/login/login';
 // import { SchedulePage } from '../pages/schedule/schedule';
@@ -29,12 +30,12 @@ import { BusinessPage } from '../pages/business/business';
 import { HomePage } from '../pages/home/home';
 import { ClientPage } from '../pages/client/client';
 import { CalendarPage } from '../pages/calendar/calendar';
-import { CalendarProvider } from '../providers/calendar/calendar';
 import { EventPage } from '../pages/event/event';
 import { AppointmentsPage } from '../pages/appointments/appointments';
 import { NavoptionsPage } from '../pages/navoptions/navoptions';
 import { ClientInfoPage } from '../pages/client-info/client-info';
 import { DocumentPage } from '../pages/document/document';
+import { PaymentPage } from '../pages/payment/payment';
 
 @NgModule({
   declarations: [
@@ -53,6 +54,7 @@ import { DocumentPage } from '../pages/document/document';
     NavoptionsPage,
     ClientInfoPage,
     DocumentPage,
+    PaymentPage,    
   ],
   imports: [
     BrowserModule,
@@ -77,6 +79,7 @@ import { DocumentPage } from '../pages/document/document';
     NavoptionsPage,
     ClientInfoPage,
     DocumentPage,
+    PaymentPage,
   ],
   providers: [
     StatusBar,
@@ -93,10 +96,10 @@ import { DocumentPage } from '../pages/document/document';
     CacheProvider,
     LocalStoreProvider,
     Storage,
-    CalendarProvider,
     Calendar,
     EventPage,
-    DocumentsProvider
+    DocumentsProvider,
+    Stripe,
   ]
 })
 export class AppModule {}

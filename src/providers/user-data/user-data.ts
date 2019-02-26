@@ -161,15 +161,23 @@ export class UserDataProvider {
         owner: '',
       },
       defaultApptTitle: '',
-      clientSchedule: false,
       listActive: "1m",
       sortClientsBy: "last",
       useCalendar: 'app',
-      chargeCC: 'self',
+      acceptPayments: 'self',
       whoSchedule: 'user',
       whoIntake: 'user',
       emailSchedule: '',
-      autoLogOut: 'no'
+      autoLogOut: 'no',
+      stripe: {
+        publishableKey: ""
+      },
+      paypal: {
+        key: ""
+      },
+      merch: {
+        acct: ""
+      }
     },
     appActivity: {
       lastUpdate: "01/01/1968"  // pretty old date

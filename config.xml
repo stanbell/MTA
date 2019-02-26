@@ -100,4 +100,5 @@
         <variable name="CALENDAR_USAGE_DESCRIPTION" value="Enables you to make MTA appointments in your calendar." />
         <variable name="CONTACTS_USAGE_DESCRIPTION" value="Does not use contacts." />
     </plugin>
+    <plugin name="cordova-plugin-stripe" spec="1.5.3" />
 </widget>
