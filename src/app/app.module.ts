@@ -4,6 +4,7 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { IonicStorageModule } from '@ionic/storage';
 import { HttpClientModule } from '@angular/common/http';
 import { Calendar } from '@ionic-native/calendar';
+import { InAppBrowser } from '@ionic-native/in-app-browser';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -17,9 +18,10 @@ import { ScheduleProvider } from '../providers/schedule/schedule';
 import { DocumentsProvider } from '../providers/documents/documents';
 import { HelpersProvider } from '../providers/helpers/helpers';
 import { MTAAPI } from '../providers/mtaapi/mtaapi';
+import { CCAPI } from '../providers/ccapi/ccapi';
 import { CacheProvider } from '../providers/cache/cache';
 import { LocalStoreProvider } from '../providers/local-store/local-store';
-import { Stripe } from '@ionic-native/stripe/ngx';
+// import { Stripe } from '@ionic-native/stripe/ngx';
 
 import { LoginPage } from '../pages/login/login';
 // import { SchedulePage } from '../pages/schedule/schedule';
@@ -35,7 +37,7 @@ import { AppointmentsPage } from '../pages/appointments/appointments';
 import { NavoptionsPage } from '../pages/navoptions/navoptions';
 import { ClientInfoPage } from '../pages/client-info/client-info';
 import { DocumentPage } from '../pages/document/document';
-import { PaymentPage } from '../pages/payment/payment';
+import { StripePaymentPage } from '../pages/stripe-payment/stripe-payment';
 
 @NgModule({
   declarations: [
@@ -54,7 +56,7 @@ import { PaymentPage } from '../pages/payment/payment';
     NavoptionsPage,
     ClientInfoPage,
     DocumentPage,
-    PaymentPage,    
+    StripePaymentPage,    
   ],
   imports: [
     BrowserModule,
@@ -79,7 +81,7 @@ import { PaymentPage } from '../pages/payment/payment';
     NavoptionsPage,
     ClientInfoPage,
     DocumentPage,
-    PaymentPage,
+    StripePaymentPage,
   ],
   providers: [
     StatusBar,
@@ -93,13 +95,14 @@ import { PaymentPage } from '../pages/payment/payment';
     DocumentsProvider,
     HelpersProvider,
     MTAAPI,
+    CCAPI,
     CacheProvider,
     LocalStoreProvider,
     Storage,
     Calendar,
     EventPage,
     DocumentsProvider,
-    Stripe,
+    InAppBrowser,
   ]
 })
 export class AppModule {}

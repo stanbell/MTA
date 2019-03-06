@@ -156,8 +156,12 @@
   </div>
   <div *ngIf="biz.calendar.acceptPayments!='none'">
     <ion-item>
-      <ion-label color="primary">Stripe Publishable Key</ion-label>
-      <ion-input type="text" [(ngModel)]="biz.stripe.publishableKey"></ion-input>
+      <ion-label color="primary">Merchant Key</ion-label>
+      <ion-input type="text" [(ngModel)]="biz.stripe.secretKey"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label color="primary">Transaction Fee (%)</ion-label>
+      <ion-input type="text" [(ngModel)]="biz.stripe.fee"></ion-input>
     </ion-item>
   </div>
     <ion-row>

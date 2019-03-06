@@ -15,9 +15,6 @@ export class MTAAPI {
     // no longer valid ip apiURL = 'http://34.229.7.109:22000/CarePlan/';
     // old instance apiURL = 'http://ec2-34-229-7-109.compute-1.amazonaws.com:22000/CarePlan/';
 
-    MASTER_KEY = "Two roads diverged in a yellow wood,"
-    // robert frost, the road not taken
-
     getData(route: string): Promise<string> {
         // console.log('getData', route);
         const fullRoute = this.apiURL + route;

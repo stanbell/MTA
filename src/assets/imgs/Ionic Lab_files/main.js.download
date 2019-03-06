@@ -1,0 +1,2914 @@
+webpackJsonp([16],{
+
+/***/ 117:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ClientsProvider; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__user_data_user_data__ = __webpack_require__(21);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__helpers_helpers__ = __webpack_require__(26);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__types_types__ = __webpack_require__(27);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__types_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__types_types__);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+var ClientsProvider = /** @class */ (function () {
+    function ClientsProvider(ud, helper) {
+        this.ud = ud;
+        this.helper = helper;
+        // "read" and "write" to userData.clients;
+        this.clients = [];
+    }
+    ClientsProvider.prototype.init = function () {
+        this.clients = [];
+    };
+    ClientsProvider.prototype.read = function () {
+        this.clients = this.ud.userData.clients;
+    };
+    ClientsProvider.prototype.write = function () {
+        this.ud.userData.clients = this.clients;
+    };
+    ClientsProvider.prototype.add = function (t) {
+        this.clients.push(t);
+    };
+    ClientsProvider.prototype.remove = function (i) {
+        this.clients.splice(i, 1);
+    };
+    ClientsProvider.prototype.replace = function (i, t) {
+        this.clients[i] = this.helper.deepCopy(t);
+    };
+    ClientsProvider = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["A" /* Injectable */])(),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__user_data_user_data__["a" /* UserDataProvider */],
+            __WEBPACK_IMPORTED_MODULE_2__helpers_helpers__["a" /* HelpersProvider */]])
+    ], ClientsProvider);
+    return ClientsProvider;
+}());
+
+//# sourceMappingURL=clients.js.map
+
+/***/ }),
+
+/***/ 118:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AuthProvider; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__auth_config__ = __webpack_require__(392);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__auth0_cordova__ = __webpack_require__(229);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__auth0_cordova___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__auth0_cordova__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_auth0_js__ = __webpack_require__(230);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+// import { Storage } from '@ionic/storage';
+
+
+
+var AuthProvider = /** @class */ (function () {
+    function AuthProvider(zone) {
+        this.zone = zone;
+        this.Auth0 = new __WEBPACK_IMPORTED_MODULE_3_auth0_js__["WebAuth"](__WEBPACK_IMPORTED_MODULE_1__auth_config__["a" /* AUTH_CONFIG */]);
+        this.Client = new __WEBPACK_IMPORTED_MODULE_2__auth0_cordova___default.a(__WEBPACK_IMPORTED_MODULE_1__auth_config__["a" /* AUTH_CONFIG */]);
+        this.loading = true;
+        // TODO rename this local storage key "profile" to something else
+        // this.storage.get('profile').then(user => this.user = user);
+        // this.storage.get('access_token').then(token => this.accessToken = token);
+        // this.storage.get('expires_at').then(exp => {
+        //   this.loggedIn = Date.now() < JSON.parse(exp);
+        //   this.loading = false;
+        // });
+        this.loading = false;
+    }
+    AuthProvider.prototype.login = function () {
+        var _this = this;
+        this.loading = true;
+        var options = {
+            scope: 'openid profile offline_access'
+        };
+        // Authorize login request with Auth0: open login page and get auth results
+        this.Client.authorize(options, function (err, authResult) {
+            if (err) {
+                throw err;
+            }
+            // Set Access Token
+            // this.storage.set('access_token', authResult.accessToken);
+            _this.accessToken = authResult.accessToken;
+            // Set Access Token expiration
+            var expiresAt = JSON.stringify((authResult.expiresIn * 1000) + new Date().getTime());
+            // this.storage.set('expires_at', expiresAt);
+            // Set logged in
+            _this.loading = false;
+            _this.loggedIn = true;
+            // Fetch user's profile info
+            _this.Auth0.client.userInfo(_this.accessToken, function (err, profile) {
+                if (err) {
+                    throw err;
+                }
+                // this.storage.set('profile', profile).then(val =>
+                // this.zone.run(() => this.userProfile = profile)
+                // );
+            });
+        });
+    };
+    AuthProvider.prototype.logout = function () {
+        // this.storage.remove('profile');
+        // this.storage.remove('access_token');
+        // this.storage.remove('expires_at');
+        this.accessToken = null;
+        this.userProfile = null;
+        this.loggedIn = false;
+    };
+    AuthProvider = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["A" /* Injectable */])(),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_0__angular_core__["M" /* NgZone */]])
+    ], AuthProvider);
+    return AuthProvider;
+}());
+
+//# sourceMappingURL=auth.js.map
+
+/***/ }),
+
+/***/ 153:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppointmentsPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_user_data_user_data__ = __webpack_require__(21);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_helpers_helpers__ = __webpack_require__(26);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__event_event__ = __webpack_require__(85);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__types_types__ = __webpack_require__(27);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__types_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__types_types__);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+
+var ShortMonths = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Dec'];
+var AppointmentsPage = /** @class */ (function () {
+    function AppointmentsPage(navCtrl, navParams, helper, ud) {
+        this.navCtrl = navCtrl;
+        this.navParams = navParams;
+        this.helper = helper;
+        this.ud = ud;
+        this.eventList = [];
+        this.client = navParams.get('client'); // get the parms,
+        this.start = navParams.get('start'); // get the parms,
+        // get the list filtered by the parms
+        this.getClientEvents();
+        this.decorateClientEvents();
+    }
+    AppointmentsPage.prototype.ionViewDidLoad = function () {
+        console.log('ionViewDidLoad AppointmentsPage');
+    };
+    AppointmentsPage.prototype.selectEvent = function (event) {
+        // pick this event, go to appt details
+        this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_4__event_event__["a" /* EventPage */], {
+            event: event,
+        });
+    };
+    AppointmentsPage.prototype.getClientEvents = function () {
+        var _this = this;
+        // filter the ud..schedule to those for this client
+        this.initialList =
+            this.ud.userData.schedule
+                .filter(function (x) { return (_this.client.name === x.clientName); });
+    };
+    AppointmentsPage.prototype.decorateClientEvents = function () {
+        var _this = this;
+        this.initialList.forEach(function (e) {
+            var o = _this.helper.deepCopy(e);
+            o['startTime'] = _this.formatTime(e.start);
+            // o['startTime'] += ((d.getHours() > 12) ? 'pm' : 'am');
+            o['startDate'] = _this.formatDate(e.start);
+            _this.eventList.push(o);
+        });
+    };
+    AppointmentsPage.prototype.formatDate = function (dt) {
+        var d = new Date(dt);
+        return ShortMonths[d.getMonth()] + ' ' + d.getDate();
+        // return ShortMonths[d.getMonth()] + ' ' + d.getDate() + ', ' + d.getFullYear();
+    };
+    AppointmentsPage.prototype.formatTime = function (dt) {
+        var d = new Date(dt);
+        // strip the seconds from the time
+        var mins = '0' + d.getMinutes().toString(); // pad w 0
+        mins = mins.substr(mins.length - 2); // last 2 chars ensures leading 0
+        var ampm = ((d.getHours() > 12) ? 'pm' : 'am');
+        var hrs = (ampm === 'pm') ? (d.getHours() - 12).toString() : d.getHours().toString();
+        return hrs + ':' + mins + ampm;
+    };
+    AppointmentsPage = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
+            selector: 'page-appointments',template:/*ion-inline-start:"F:\Projects\DS\MTA\src\pages\appointments\appointments.html"*/'<ion-header>\n\n  <ion-navbar>\n    <ion-title>Appointments</ion-title>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content padding>\n  <div *ngIf="eventList">\n    <ion-grid>\n    <ion-row align-items-center>\n      <ion-col col-1></ion-col>\n      <ion-col col-10 align-self-center>\n        <div class="boxInList">\n          <p>{{client.name}}</p>\n        </div>\n      </ion-col>\n      <ion-col col-1></ion-col>\n    </ion-row>\n      <div class="boxInList">\n      <ion-row *ngFor="let z of eventList" (click)="selectEvent(z)">\n          <!-- <ion-col col-1>\n            <ion-icon name="create"></ion-icon>\n          </ion-col> -->\n          <ion-col col-4>\n            <p>{{z.startDate}}</p>\n          </ion-col>\n          <ion-col col-2>\n            <p>{{z.startTime}}</p>\n          </ion-col>\n          <ion-col col-5>\n            <p>{{z.serviceDescription}}</p>\n          </ion-col>\n        </ion-row>\n      </div>\n    </ion-grid>\n  </div>\n</ion-content>'/*ion-inline-end:"F:\Projects\DS\MTA\src\pages\appointments\appointments.html"*/,
+        }),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavParams */],
+            __WEBPACK_IMPORTED_MODULE_3__providers_helpers_helpers__["a" /* HelpersProvider */],
+            __WEBPACK_IMPORTED_MODULE_2__providers_user_data_user_data__["a" /* UserDataProvider */]])
+    ], AppointmentsPage);
+    return AppointmentsPage;
+}());
+
+//# sourceMappingURL=appointments.js.map
+
+/***/ }),
+
+/***/ 154:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return StripePaymentPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_common_http__ = __webpack_require__(62);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_user_data_user_data__ = __webpack_require__(21);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_ccapi_ccapi__ = __webpack_require__(224);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__types_types__ = __webpack_require__(27);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__types_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__types_types__);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+
+var CC_SERVER_ROUTE = 'payments';
+var CRYPTO_KEY = "Twas brillig, and the slithy toves Did gyre and gimble in the wabe: All mimsy were the borogoves, And the mome raths outgrabe.";
+var StripePaymentPage = /** @class */ (function () {
+    function StripePaymentPage(navCtrl, navParams, api, ud) {
+        this.navCtrl = navCtrl;
+        this.navParams = navParams;
+        this.api = api;
+        this.ud = ud;
+        this.ccName = '';
+        this.ccNumber = '4242424242424242';
+        this.ccExpireMM = 2;
+        this.ccExpireYY = 22;
+        this.ccCVC = 889;
+        this.ccDataValid = false;
+        this.event = this.navParams.get('event');
+        // set form default
+        this.ccName = this.event.clientName;
+        // TODO add address later to reduce liability on card charge
+    }
+    StripePaymentPage.prototype.verify = function () {
+        this.ccDataValid = this.checkCCDataValid();
+    };
+    StripePaymentPage.prototype.submit = function () {
+        var _this = this;
+        this.ccDataValid = this.checkCCDataValid();
+        if (this.ccDataValid) {
+            // go to our pmt processing api?
+            console.log('submit');
+            console.log('methodData', this.ud.userData.user[this.ud.userData.user.acceptPayments]);
+            var charge_1 = {
+                accountId: this.ud.userData._id,
+                client: this.event.clientName,
+                service: this.event.serviceDescription,
+                statementDescription: this.ud.userData.user.businessName + ' ' + this.event.serviceDescription,
+                transId: '',
+                method: this.ud.userData.user.acceptPayments,
+                methodData: this.ud.userData.user[this.ud.userData.user.acceptPayments],
+                amount: this.event.revenue,
+                card: {
+                    number: this.ccNumber,
+                    expMonth: this.ccExpireMM.toString(),
+                    expYear: (2000 + this.ccExpireYY).toString(),
+                    cvc: this.ccCVC.toString()
+                },
+                cardNonce: '' // not used with stripe
+            };
+            // TODO:  package and encrypt before send
+            console.log('charge', charge_1);
+            try {
+                console.log('writing ' + CC_SERVER_ROUTE);
+                var httpHeaders = new __WEBPACK_IMPORTED_MODULE_2__angular_common_http__["c" /* HttpHeaders */]({
+                    'Content-Type': 'application/json',
+                    'Cache-Control': 'no-cache',
+                    'Authorization': 'Bearer ' + charge_1.methodData['secretKey'] // stripe specific==========
+                });
+                this.api.putData(CC_SERVER_ROUTE, httpHeaders, charge_1)
+                    .then(function (returnedCharge) {
+                    console.log('returned ', returnedCharge);
+                    if (returnedCharge.paid) {
+                        // if paid, compute the transactions
+                        var trans = _this.composeTrans(returnedCharge, charge_1.methodData['fee']);
+                        console.log(trans);
+                        trans.forEach(function (t) {
+                            // add the transactions to the client, and...
+                            _this.ud.userData.transactions.push(t);
+                            // ...add the transactions' unique id to the appt
+                            _this.event.transactions.push({ uniqueId: t.uniqueId });
+                        });
+                        _this.event.pd = true;
+                        alert('Payment request completed');
+                    }
+                    else {
+                        alert('transaction failed with stripe failure code ' + returnedCharge.failure_code + ' ' + returnedCharge.failure_message);
+                    }
+                    _this.navCtrl.pop();
+                });
+            }
+            catch (err) {
+                // card charge problem, or
+                // api http etc problem
+                console.log('writeLocal mtaapi.putData error', err);
+            }
+        }
+    };
+    StripePaymentPage.prototype.composeTrans = function (charge, fee) {
+        console.log(fee);
+        var feeAmount = 0 - (charge.amount * fee);
+        var chgRemainder = 0 - (charge.amount + feeAmount);
+        var d = new Date(charge.created * 1000).toLocaleDateString();
+        // let td = (d.getMonth + 1).toString() + '/' + d.getDate().toString() + '/' + d.getFullYear().toString(); 
+        var revTrans = {
+            uniqueId: charge.id + '_R',
+            apptId: this.event.id,
+            type: 'rev',
+            description: charge.description,
+            amount: charge.amount,
+            date: d,
+            reconciled: false,
+            partyType: "client",
+            party: {
+                id: '',
+                description: ''
+            }
+        };
+        var feeTrans = {
+            uniqueId: charge.id + '_F',
+            apptId: this.event.id,
+            type: 'fee',
+            description: this.ud.userData.user.acceptPayments + ' fee',
+            amount: feeAmount,
+            date: d,
+            reconciled: false,
+            partyType: "stripe",
+            party: {
+                id: 'fee',
+                description: ''
+            }
+        };
+        var creditTrans = {
+            uniqueId: charge.id + '_P',
+            apptId: this.event.id,
+            type: 'pmt',
+            // description: 'net credit',
+            description: this.ud.userData.user.acceptPayments + ' ' + charge.id,
+            amount: chgRemainder,
+            date: d,
+            reconciled: false,
+            partyType: "CC",
+            party: {
+                id: 'CC',
+                description: charge.processorId
+            }
+        };
+        return [revTrans, feeTrans, creditTrans];
+    };
+    StripePaymentPage.prototype.cancel = function () {
+        this.navCtrl.pop();
+    };
+    StripePaymentPage.prototype.checkCCDataValid = function () {
+        var valid = true;
+        if (this.ccName.length < 1) {
+            valid = false;
+        }
+        if (this.ccNumber.length !== 16) {
+            valid = false;
+        }
+        if (this.ccExpireMM < 1 || this.ccExpireMM > 12) {
+            valid = false;
+        }
+        if (this.ccExpireYY < 19 || this.ccExpireYY > 30) {
+            valid = false;
+        }
+        console.log(valid);
+        return valid;
+    };
+    StripePaymentPage = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
+            selector: 'page-payment',template:/*ion-inline-start:"F:\Projects\DS\MTA\src\pages\stripe-payment\stripe-payment.html"*/'<ion-header>\n\n  <ion-navbar>\n    <ion-title>payment</ion-title>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content padding>\n  <ion-grid>\n    <ion-row>\n      <ion-col col-12>\n        <ion-item>\n          <ion-label>Credit Card Payment</ion-label>\n        </ion-item>\n      </ion-col>\n    </ion-row>\n    <ion-row>\n      <ion-col col-12>\n        <ion-item no-lines>\n          <ion-label stacked>Name on card</ion-label>\n          <ion-input type="text" [(ngModel)]="ccName" (ngModelChange)="checkCCDataValid()"></ion-input>\n        </ion-item>\n      </ion-col>\n    </ion-row>\n    <ion-row>\n      <ion-col col-12>\n        <ion-item no-lines>\n          <ion-label stacked>Card Number</ion-label>\n          <ion-input type="text" [(ngModel)]="ccNumber" (ngModelChange)="checkCCDataValid()"></ion-input>\n        </ion-item>\n      </ion-col>\n    </ion-row>\n    <ion-row>\n      <ion-col col-12>\n        <ion-item no-lines>\n          <ion-label stacked>Expiration</ion-label>\n        </ion-item>\n      </ion-col>\n    </ion-row>\n    <ion-row>\n      <ion-col col-2></ion-col>\n      <ion-col col-4>\n        <ion-item no-lines>\n          <!-- <ion-input type="number" [(ngModel)]="ccExpireMM" [min]="1" [max]="12" (ngModelChange)="checkCCDataValid()"></ion-input>\n            <ion-input type="number" [(ngModel)]="ccExpireYY" [min]="19" [max]="30" (ngModelChange)="checkCCDataValid()"></ion-input> -->\n          <ion-input type="number" [(ngModel)]="ccExpireMM" [min]="1" [max]="12" (ngModelChange)="checkCCDataValid()">\n          </ion-input>\n        </ion-item>\n      </ion-col>\n      <ion-col col-4>\n        <ion-item no-lines>\n          <ion-input type="number" [(ngModel)]="ccExpireYY" [min]="19" [max]="30" (ngModelChange)="checkCCDataValid()">\n          </ion-input>\n        </ion-item>\n      </ion-col>\n      <ion-col col-2></ion-col>\n    </ion-row>\n    <ion-row>\n      <ion-col col-12>\n        <ion-item no-lines>\n          <ion-label stacked>Security Code (CVC/CVV)</ion-label>\n          <ion-input type="number" [(ngModel)]="ccCVC" [min]="1" [max]="999" (ngModelChange)="checkCCDataValid()">\n          </ion-input>\n        </ion-item>\n      </ion-col>\n    </ion-row>\n  </ion-grid>\n\n  <button ion-button ion-button (click)="verify()">Verify</button>\n  <button ion-button [disabled]="!ccDataValid" ion-button (click)="submit()">Submit</button>\n  <button ion-button (click)="cancel()">Cancel</button>\n</ion-content>\n\n<!-- Credit Card Payment\n  Name on Account\n  Card Number\n  Expiration MM DD\n  Security Code (CVC/CVV)\n  --optional--\n  Street 1\n  Street 2\n  City\n  State/Province\n  Country US\n  Postal Code\n  Currency USD -->'/*ion-inline-end:"F:\Projects\DS\MTA\src\pages\stripe-payment\stripe-payment.html"*/,
+        }),
+        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavParams */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_4__providers_ccapi_ccapi__["a" /* CCAPI */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__providers_ccapi_ccapi__["a" /* CCAPI */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_3__providers_user_data_user_data__["a" /* UserDataProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__providers_user_data_user_data__["a" /* UserDataProvider */]) === "function" && _d || Object])
+    ], StripePaymentPage);
+    return StripePaymentPage;
+    var _a, _b, _c, _d;
+}());
+
+// let card = {
+//   number: '4242424242424242',
+//   expMonth: 12,
+//   expYear: 2020,
+//   cvc: '220'
+// } 
+//# sourceMappingURL=stripe-payment.js.map
+
+/***/ }),
+
+/***/ 155:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return BusinessPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_user_data_user_data__ = __webpack_require__(21);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_helpers_helpers__ = __webpack_require__(26);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__types_types__ = __webpack_require__(27);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__types_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__types_types__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__settings_settings__ = __webpack_require__(86);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+
+var BusinessPage = /** @class */ (function () {
+    function BusinessPage(navCtrl, navParams, helper, ud) {
+        this.navCtrl = navCtrl;
+        this.navParams = navParams;
+        this.helper = helper;
+        this.ud = ud;
+        this.biz = ud.userData.user;
+    }
+    BusinessPage.prototype.ionViewDidLoad = function () {
+        console.log('ionViewDidLoad BusinessPage');
+    };
+    BusinessPage.prototype.cancel = function () {
+        this.navCtrl.pop();
+    };
+    BusinessPage.prototype.settings = function () {
+        this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_5__settings_settings__["a" /* SettingsPage */]);
+    };
+    BusinessPage.prototype.save = function () {
+        this.ud.userData.user = this.helper.deepCopy(this.biz);
+        this.navCtrl.pop();
+    };
+    BusinessPage.prototype.addContact = function () {
+        console.log('addContact');
+    };
+    BusinessPage.prototype.editContact = function () {
+        console.log('editContact');
+    };
+    BusinessPage.prototype.toggleTextOK = function (z) {
+        z.okToText = !z.okToText;
+    };
+    BusinessPage = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
+            selector: 'page-business',template:/*ion-inline-start:"F:\Projects\DS\MTA\src\pages\business\business.html"*/'<ion-header>\n  <ion-navbar>\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>My Business</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n  <ion-item>\n    <ion-label color="primary">Name</ion-label>\n    <ion-input type="text" [(ngModel)]="biz.businessName">\n    </ion-input>\n  </ion-item>\n  <ion-item>\n    <ion-label color="primary">Address</ion-label>\n    <ion-input type="text" [(ngModel)]="biz.address.label">\n    </ion-input>\n  </ion-item>\n  <ion-item>\n    <ion-label color="primary">Street</ion-label>\n    <ion-input type="text" [(ngModel)]="biz.address.street1"></ion-input>\n  </ion-item>\n  <ion-item>\n    <ion-label color="primary">Street</ion-label>\n    <ion-input type="text" [(ngModel)]="biz.address.street2"></ion-input>\n  </ion-item>\n  <ion-item>\n    <ion-label color="primary">City</ion-label>\n    <ion-input type="text" [(ngModel)]="biz.address.city">\n    </ion-input>\n  </ion-item>\n  <ion-item>\n    <ion-label color="primary">State/Province</ion-label>\n    <ion-input type="text" [(ngModel)]="biz.address.state">\n    </ion-input>\n  </ion-item>\n  <ion-item>\n    <ion-label color="primary">Postal Code</ion-label>\n    <ion-input type="text" [(ngModel)]="biz.address.zip">\n    </ion-input>\n  </ion-item>\n  <ion-item>\n    <ion-label color="primary">Contacts</ion-label>\n  </ion-item>\n  <ion-grid>\n    <div class="listInBox">\n      <ion-row *ngFor="let z of biz.contacts">\n        <ion-col col-3 (click)="editContact(z)">\n          <p>{{z.label}}</p>\n        </ion-col>\n        <ion-col col-5 (click)="editContact(z)">\n          <p>{{z.contact}}</p>\n        </ion-col>\n        <ion-col col-3>\n          <div *ngIf="z.type===\'phone\'">\n            <p *ngIf="z.okToText" (click)="toggleTextOK(z)">Text OK</p>\n            <p *ngIf="!z.okToText" (click)="toggleTextOK(z)">No Text</p>\n          </div>\n        </ion-col>\n      </ion-row>\n    </div>\n  </ion-grid>\n  <p>\n    <ion-icon color="primary" name="add-circle" (click)="addContact()"></ion-icon> Add Contact\n  </p>\n\n  <button ion-button [disabled]="!biz.businessName" (click)="settings()">Settings</button>\n  <button ion-button [disabled]="!biz.businessName" (click)="save()">Save</button>\n  <button ion-button (click)="cancel()">Cancel</button>\n</ion-content>'/*ion-inline-end:"F:\Projects\DS\MTA\src\pages\business\business.html"*/,
+        }),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavParams */],
+            __WEBPACK_IMPORTED_MODULE_3__providers_helpers_helpers__["a" /* HelpersProvider */],
+            __WEBPACK_IMPORTED_MODULE_2__providers_user_data_user_data__["a" /* UserDataProvider */]])
+    ], BusinessPage);
+    return BusinessPage;
+}());
+
+//# sourceMappingURL=business.js.map
+
+/***/ }),
+
+/***/ 156:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CalendarPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_calendar__ = __webpack_require__(227);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__event_event__ = __webpack_require__(85);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_user_data_user_data__ = __webpack_require__(21);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_schedule_schedule__ = __webpack_require__(228);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+
+var normalDaysInMonths = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+var leapDaysInMonths = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+var monthNames = ["January", "February", "March", "April", "May", "June", "July",
+    "August", "September", "October", "November", "December"];
+var CalendarPage = /** @class */ (function () {
+    // constructor(public navCtrl: NavController, public navParams: NavParams) {
+    function CalendarPage(navCtrl, navParams, plt, cal, sched, ud) {
+        this.navCtrl = navCtrl;
+        this.navParams = navParams;
+        this.plt = plt;
+        this.cal = cal;
+        this.sched = sched;
+        this.ud = ud;
+        this.title = 'Schedule'; // whose calendar is it?  title on page
+        (navParams.get('date')) ? this.setSelectedDate(navParams.get('date')) : this.setSelectedDate(this.getToday());
+        (navParams.get('title')) ? this.title = navParams.get('title') : this.title = 'My Schedule';
+        this.buildCalendarDays(this.selectedDate);
+        // if (this.plt.is('cordova')) {
+        //   this.plt.ready().then(() => {
+        //     this.getDateEventsFromNative();
+        //   })
+        // } else {
+        this.getDateEvents();
+        // }
+    }
+    // use calendar name from settings
+    //    if absent, ask for it from list (with dialog)
+    //      this.cal.listCalendars().then(data => { 
+    // put these into a list for selection 
+    // or allow add new? })
+    // might be better to hardcode a new one
+    //    once captured, put in to userdata.userinfo.calendar
+    // this page to have 
+    //    -add appt:  
+    //        add event to calendar,
+    //        add appt to user.schedule,
+    //        add 1 to clients.scheduledAppts,
+    //        add event to calendar,
+    //    -nav to the appt/visit
+    //        start/finish 
+    CalendarPage.prototype.selectEvent = function (event) {
+        // pick this event, go to appt details
+        this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_3__event_event__["a" /* EventPage */], {
+            event: event,
+        });
+    };
+    CalendarPage.prototype.getDateEvents = function () {
+        var _this = this;
+        // filter my schedule to just today
+        var sd = new Date(this.selectedDate).setHours(0, 0, 0, 0);
+        this.eventList =
+            this.ud.userData.schedule
+                .filter(function (x) { return (new Date(x.start).setHours(0, 0, 0, 0) === sd); });
+        this.eventList.forEach(function (item) {
+            item['startTime'] = _this.formatTime(item['start']);
+        });
+    };
+    CalendarPage.prototype.formatTime = function (item) {
+        var ts = new Date(item).toTimeString();
+        var hr = parseInt(ts.slice(0, 2));
+        var hrs = (hr > 12) ? (hr - 12) : hr;
+        var ampm = (hr > 12) ? 'pm' : 'am';
+        return hrs.toString() + ':' + ts.slice(3, 5) + ampm;
+    };
+    CalendarPage.prototype.goToPrevMonth = function () {
+        this.clearSelectedDayMarker();
+        this.displayingDate = new Date(this.displayingDate.getFullYear(), this.displayingDate.getMonth(), 0);
+        this.buildCalendarDays(this.displayingDate);
+    };
+    CalendarPage.prototype.goToNextMonth = function () {
+        this.clearSelectedDayMarker();
+        this.displayingDate = new Date(this.displayingDate.getFullYear(), this.displayingDate.getMonth() + 2, 0);
+        this.buildCalendarDays(this.displayingDate);
+    };
+    CalendarPage.prototype.selectDay = function (event, day) {
+        this.setSelectedDate((this.displayingDate.getMonth() + 1) + '/' + day + '/' + this.displayingDate.getFullYear());
+        this.clearSelectedDayMarker();
+        this.setSelectedDayMarker(event.target);
+        this.getDateEvents();
+    };
+    CalendarPage.prototype.buildCalendarDays = function (forDate) {
+        // 0-based month
+        this.displayingDate = new Date(forDate);
+        var thisMonth = forDate.getMonth();
+        var thisYear = forDate.getFullYear();
+        this.displayingMonth = monthNames[thisMonth];
+        this.displayingYear = thisYear;
+        var lastMonth = forDate.getMonth() - 1;
+        if (lastMonth === -1)
+            lastMonth = 11;
+        var nextMonth = forDate.getMonth();
+        if (nextMonth === 12)
+            nextMonth = 0;
+        // for leap years, ignores century
+        this.daysInMonths = (thisMonth === 1 && ((thisYear % 4) === 0)) ? leapDaysInMonths : normalDaysInMonths;
+        this.daysInThisMonth = new Array();
+        for (var i = 0; i < this.daysInMonths[thisMonth]; i++) {
+            this.daysInThisMonth.push(i + 1);
+        }
+        // days in previous month
+        this.firstOfMonthDate = new Date((forDate.getMonth() + 1) + '/1/' + forDate.getFullYear());
+        var firstOfMonthDoW = this.firstOfMonthDate.getDay();
+        this.daysFromLastMonth = new Array();
+        for (var i = 0; i < firstOfMonthDoW; i++) {
+            this.daysFromLastMonth.push(0);
+        }
+        for (var i = 0; i < this.daysFromLastMonth.length; i++) {
+            this.daysFromLastMonth[i] = this.daysInMonths[lastMonth] - i;
+        }
+        this.daysFromLastMonth.reverse();
+        this.lastOfMonthDate = new Date((forDate.getMonth() + 1) + '/' + this.daysInMonths[forDate.getMonth()] + '/' + forDate.getFullYear());
+        var lastOfMonthDoW = this.lastOfMonthDate.getDay();
+        this.daysFromNextMonth = new Array();
+        for (var i = 0; i < (6 - lastOfMonthDoW); i++) {
+            this.daysFromNextMonth.push(i + 1);
+        }
+        if (this.displayingMonth === this.selectedMonth
+            && this.displayingYear === this.selectedYear) {
+            this.displayingDayOfMonth = this.selectedDate.getDate();
+        }
+        else {
+            this.displayingDayOfMonth = 999;
+        }
+    };
+    CalendarPage.prototype.setSelectedDate = function (d) {
+        this.selectedDate = new Date(d);
+        this.selectedMonth = monthNames[this.selectedDate.getMonth()];
+        this.selectedYear = this.selectedDate.getFullYear();
+        this.selectedDayOfMonth = this.selectedDate.getDate();
+    };
+    CalendarPage.prototype.setSelectedDayMarker = function (target) {
+        // target is a DOM element
+        // set style on the new selected day
+        target.classList.remove('otherDate');
+        target.classList.add('currentDate');
+    };
+    CalendarPage.prototype.clearSelectedDayMarker = function () {
+        var source = document.getElementsByClassName('currentDate').item(0);
+        if (!!source) {
+            source.classList.remove('currentDate');
+            source.classList.add('otherDate');
+        }
+    };
+    CalendarPage.prototype.getToday = function () {
+        var today = new Date(Date.now());
+        return (today.getMonth() + 1) + '/' + today.getDate() + '/' + today.getFullYear();
+    };
+    CalendarPage.prototype.getDateEventsFromNative = function () {
+        var _this = this;
+        this.eventList = new Array();
+        var startDate = new Date(this.selectedDate);
+        startDate.setTime(0);
+        var endDate = new Date(this.selectedDate);
+        endDate.setTime((24 * 60 * 60 * 1000) - 1);
+        this.cal.listEventsInRange(startDate, endDate).then(function (msg) {
+            msg.forEach(function (item) {
+                item['startTime'] = _this.formatTime(item['startDate']);
+                _this.eventList.push(item);
+            });
+        }, function (err) {
+            console.log(err);
+        });
+    };
+    CalendarPage = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
+            selector: 'page-calendar',template:/*ion-inline-start:"F:\Projects\DS\MTA\src\pages\calendar\calendar.html"*/'<ion-header>\n  <ion-navbar>\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>Calendar</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n  <div>{{title}}\n  </div>\n  <div>\n    <div class="calendar-header">\n      <ion-row class="calendar-month">\n        <ion-col col-2 (click)="goToPrevMonth()">\n          <ion-icon name="arrow-back"></ion-icon>\n        </ion-col>\n        <ion-col col-8>{{displayingMonth}} {{displayingYear}}</ion-col>\n        <ion-col col-2 (click)="goToNextMonth()">\n          <ion-icon name="arrow-forward"></ion-icon>\n        </ion-col>\n      </ion-row>\n    </div>\n    <div class="calendar-body">\n      <ion-grid>\n        <ion-row class="calendar-weekday">\n          <ion-col>Su</ion-col>\n          <ion-col>Mo</ion-col>\n          <ion-col>Tu</ion-col>\n          <ion-col>We</ion-col>\n          <ion-col>Th</ion-col>\n          <ion-col>Fr</ion-col>\n          <ion-col>Sa</ion-col>\n        </ion-row>\n        <ion-row class="calendar-date">\n          <ion-col col-1 *ngFor="let lastDay of daysFromLastMonth" class="last-month">{{lastDay}}</ion-col>\n          <ion-col col-1 *ngFor="let day of daysInThisMonth" (click)="selectDay($event, day)">\n            <span class="currentDate"\n              *ngIf="displayingDayOfMonth === day && displayingMonth === selectedMonth && displayingYear === selectedYear">{{day}}</span>\n            <span class="otherDate" *ngIf="displayingDayOfMonth !== day">{{day}}</span>\n          </ion-col>\n          <ion-col col-1 *ngFor="let nextDay of daysFromNextMonth" class="next-month">{{nextDay}}</ion-col>\n        </ion-row>\n      </ion-grid>\n    </div>\n  </div>\n  <!-- list of appts on selected day -->\n  <ion-grid *ngIf="selectedMonth==displayingMonth && selectedYear==displayingYear">\n    <ion-row justify-content-center>\n      <p class="box" style="text-align: center">\n        {{selectedMonth}} {{selectedDayOfMonth}}, {{selectedYear}}\n      </p>\n    </ion-row>\n    <div class="listInBox" *ngIf="eventList.length > 0">\n      <div *ngFor="let z of eventList">\n        <ion-row (click)="selectEvent(z)">\n          <!-- <ion-col class="eventList" col-1>\n            <ion-icon name="create"></ion-icon>\n          </ion-col> -->\n          <ion-col class="eventList" col-2>\n            <p>{{z.startTime}}</p>\n          </ion-col>\n          <ion-col class="eventList" col-5>\n            <p>{{z.clientName}}</p>\n          </ion-col>\n          <ion-col class="eventList" col-5>\n            <p>{{z.serviceDescription}}</p>\n          </ion-col>\n        </ion-row>\n      </div>\n    </div>\n  </ion-grid>\n</ion-content>'/*ion-inline-end:"F:\Projects\DS\MTA\src\pages\calendar\calendar.html"*/,
+        }),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavParams */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* Platform */],
+            __WEBPACK_IMPORTED_MODULE_2__ionic_native_calendar__["a" /* Calendar */],
+            __WEBPACK_IMPORTED_MODULE_5__providers_schedule_schedule__["a" /* ScheduleProvider */],
+            __WEBPACK_IMPORTED_MODULE_4__providers_user_data_user_data__["a" /* UserDataProvider */]])
+    ], CalendarPage);
+    return CalendarPage;
+}());
+
+// original calendar display code from https://www.djamware.com/post/5a0bb8f780aca75eadc12d6b/build-ionic-3-angular-5-calendar-ui-with-event-integration
+// this code alternate way to get events, starting with native calendar and
+// finding corresponding event in userData.schedule
+// goes in/replaces getDateEvents
+// this.eventList = [
+//   {
+//     calendar: "MTA",
+//     endDate: "2019-02-20 08:29:59",
+//     startDate: "2019-02-20 08:00:00",
+//     id: "0F9990EB-05A7-40DB-B082-424A85B59F90",
+//     lastModifiedDate: "2019-02-15 09:14:02",
+//     location: "",
+//     message: "Massage 30",
+//     title: "Alice Adams"
+//   },
+//   {
+//     calendar: "MTA",
+//     endDate: "2019-02-20 09:59:59",
+//     startDate: "2019-02-20 09:00:00",
+//     id: "0F9990EB-05A7-40DB-B082-424A85B59F91",
+//     lastModifiedDate: "2019-02-15 09:14:02",
+//     location: "",
+//     message: "Massage 60",
+//     title: "Bob Barker"
+//   },
+//   {
+//     calendar: "MTA",
+//     endDate: "2019-02-20 13:59:59",
+//     startDate: "2019-02-20 13:00:00",
+//     id: "0F9990EB-05A7-40DB-B082-424A85B59F92",
+//     lastModifiedDate: "2019-02-15 09:14:02",
+//     location: "",
+//     message: "Massage 60",
+//     title: "Cathy Cohen"
+//   },
+// ]
+//   // or
+//   //  filter the events to those for which i have a stored schedule[].providerItemId
+//   //    use values from there
+//   let mtaAppts = new Array();
+//   this.ud.userData.schedule.forEach(item => {
+//     mtaAppts.push(item['id']);
+//   });
+//   let el = this.eventList.filter(x => mtaAppts.indexOf(x['providerItemId']) !== -1)
+//   el.forEach(item => {
+//     item['startTime'] = this.formatTime(item['startDate']);
+//     var found = this.getMatchingAppt(item, this.ud.userData.schedule);
+//     item = { ...item, ...found };
+//     console.log(item);
+//     // item['clientName'] = found['clientName'];
+//     // item['serviceDescription'] = found['serviceDescription'];
+//   });
+// }
+// private getMatchingAppt(item: any, arr: any): any {
+//   var found = { clientName: 'none', serviceDescription: 'none' };
+//   arr.forEach(i => {
+//     if (item === i.providerItemId) {
+//       found = {
+//         clientName: i['clientName'],
+//         serviceDescription: i['serviceDescription']
+//       }
+//     }
+//   });
+//   return found;
+// }
+// following used the bad idea in schedule provider
+// private getDateEvents() {
+//   // filter my schedule to just today
+//   this.sched.readDates(this.selectedDate);
+//   this.eventList = this.sched.scheduleItems;
+//   this.eventList.forEach(item => {
+//     item['startTime'] = this.formatTime(item['start']);
+//   });
+// } 
+//# sourceMappingURL=calendar.js.map
+
+/***/ }),
+
+/***/ 157:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ClientPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_clients_clients__ = __webpack_require__(117);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_helpers_helpers__ = __webpack_require__(26);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__appointments_appointments__ = __webpack_require__(153);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__client_info_client_info__ = __webpack_require__(158);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__types_types__ = __webpack_require__(27);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__types_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__types_types__);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+
+
+var ClientPage = /** @class */ (function () {
+    function ClientPage(navCtrl, navParams, helper, clients) {
+        this.navCtrl = navCtrl;
+        this.navParams = navParams;
+        this.helper = helper;
+        this.clients = clients;
+        this.metrics = false;
+        this.itemIndex = navParams.get('item');
+        this.item = helper.deepCopy(clients.clients[this.itemIndex]);
+        console.log(this.item);
+    }
+    ClientPage.prototype.ionViewDidLoad = function () {
+        console.log('ionViewDidLoad ClientPage');
+    };
+    ClientPage.prototype.navTo = function (where) {
+        var FifteenDays = 15 * 24 * 60 * 60 * 1000;
+        switch (where) {
+            case 'client':
+                this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_5__client_info_client_info__["a" /* ClientInfoPage */], {
+                    client: this.item,
+                });
+                break;
+            case 'appt':
+                this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_4__appointments_appointments__["a" /* AppointmentsPage */], {
+                    client: this.item,
+                    // TODO this needs to be calculated from the users's preferred date range
+                    start: new Date(Date.now() - FifteenDays).toISOString()
+                });
+                break;
+            default:
+                break;
+        }
+    };
+    ClientPage.prototype.toggleMetrics = function () {
+        this.metrics = !this.metrics;
+    };
+    ClientPage = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
+            selector: 'page-client',template:/*ion-inline-start:"F:\Projects\DS\MTA\src\pages\client\client.html"*/'<ion-header>\n\n  <ion-navbar>\n    <ion-title>Client</ion-title>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content padding>\n  <ion-grid>\n    <ion-row align-items-center (click)="navTo(\'client\')">\n      <ion-col col-1></ion-col>\n      <ion-col col-10 align-self-center>\n        <div class="boxInList">\n          <p>{{item.name}}</p>\n        </div>\n      </ion-col>\n      <ion-col col-1></ion-col>\n    </ion-row>\n    <ion-row align-items-center>\n      <ion-col col-1></ion-col>\n      <ion-col col-10 align-self-center (click)="navTo(\'appt\')">\n        <div class="boxInList"> \n          <p>Appointments</p>\n        </div>\n      </ion-col>\n      <ion-col col-1></ion-col>\n    </ion-row>\n    <ion-row align-items-center>\n      <ion-col col-1></ion-col>\n      <ion-col col-10 align-self-center (click)="navTo(\'trans\')">\n        <div class="boxInList">\n          <p>Transactions/Payments</p>\n        </div>\n      </ion-col>\n      <ion-col col-1></ion-col>\n    </ion-row>\n    <ion-row align-items-center>\n      <ion-col col-1></ion-col>\n      <ion-col col-10 align-self-center (click)="navTo(\'intake\')">\n        <div class="boxInList">\n          <p>Intake/History</p>\n        </div>\n      </ion-col>\n      <ion-col col-1></ion-col>\n    </ion-row>\n    <ion-row align-items-center>\n      <ion-col col-1></ion-col>\n      <ion-col col-10 align-self-center (click)="navTo(\'docs\')">\n        <div class="boxInList">\n          <p>Visit Documents</p>\n        </div>\n      </ion-col>\n      <ion-col col-1></ion-col>\n    </ion-row>\n    <ion-row align-items-center>\n      <ion-col col-1></ion-col>\n      <ion-col col-10 align-self-center (click)="navTo(\'prefs\')">\n        <div class="boxInList">\n          <p>Preferences</p>\n        </div>\n      </ion-col>\n      <ion-col col-1></ion-col>\n    </ion-row>\n    <ion-row align-items-center>\n      <ion-col col-1></ion-col>\n      <ion-col col-10 align-self-center (click)="toggleMetrics()">\n        <div class="boxInList">\n          <p>Metrics</p>\n        </div>\n      </ion-col>\n      <ion-col col-1></ion-col>\n    </ion-row>\n    <ion-row *ngIf="metrics" align-items-center>\n      <ion-col col-2></ion-col>\n      <ion-col col-8 align-self-center>\n        <div class="boxInList">\n          <p>Previous Appts  {{item.previousAppts}}</p>\n        </div>\n      </ion-col>\n      <ion-col col-2></ion-col>\n    </ion-row>\n    <ion-row *ngIf="metrics" align-items-center>\n      <ion-col col-2></ion-col>\n      <ion-col col-8 align-self-center>\n        <div class="boxInList">\n          <p>Scheduled Appts  {{item.scheduledAppts}}</p>\n        </div>\n      </ion-col>\n      <ion-col col-2></ion-col>\n    </ion-row>\n    <ion-row *ngIf="metrics" align-items-center>\n      <ion-col col-2></ion-col>\n      <ion-col col-8 align-self-center>\n        <div class="boxInList">\n          <p>No Show Appts  {{item.noShowAppts}}</p>\n        </div>\n      </ion-col>\n      <ion-col col-2></ion-col>\n    </ion-row>\n\n  </ion-grid>\n</ion-content>'/*ion-inline-end:"F:\Projects\DS\MTA\src\pages\client\client.html"*/,
+        }),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavParams */],
+            __WEBPACK_IMPORTED_MODULE_3__providers_helpers_helpers__["a" /* HelpersProvider */],
+            __WEBPACK_IMPORTED_MODULE_2__providers_clients_clients__["a" /* ClientsProvider */]])
+    ], ClientPage);
+    return ClientPage;
+}());
+
+//# sourceMappingURL=client.js.map
+
+/***/ }),
+
+/***/ 158:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ClientInfoPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__types_types__ = __webpack_require__(27);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__types_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__types_types__);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+var ClientInfoPage = /** @class */ (function () {
+    function ClientInfoPage(navCtrl, navParams) {
+        this.navCtrl = navCtrl;
+        this.navParams = navParams;
+        this.client = navParams.get('client');
+        this.itemIndex = this.findItem();
+    }
+    ClientInfoPage.prototype.ionViewDidLoad = function () {
+        console.log('ionViewDidLoad ClientInfoPage');
+    };
+    ClientInfoPage.prototype.cancel = function () {
+        this.navCtrl.pop();
+    };
+    ClientInfoPage.prototype.save = function () {
+        // this.clients.clients[this.itemIndex] = this.helper.deepCopy(this.item);
+        this.navCtrl.pop();
+    };
+    ClientInfoPage.prototype.addContact = function () {
+        console.log('addContact');
+    };
+    ClientInfoPage.prototype.editContact = function () {
+        console.log('editContact');
+    };
+    ClientInfoPage.prototype.toggleTextOK = function (z) {
+        z.okToText = !z.okToText;
+    };
+    ClientInfoPage.prototype.findItem = function () {
+        // this.
+        return 0;
+    };
+    ClientInfoPage = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
+            selector: 'page-client-info',template:/*ion-inline-start:"F:\Projects\DS\MTA\src\pages\client-info\client-info.html"*/'<ion-header>\n\n  <ion-navbar>\n    <ion-title>Client</ion-title>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content padding>\n  <p class="helpful">Changing Client Details</p>\n  <br>\n  <!-- <ion-grid>\n    <ion-row>\n      <ion-col col-5>\n        Name\n        <p>Name</p>\n      </ion-col>\n      <ion-col col-6>\n<ion-input type="text" [(ngModel)]="client.name"></ion-input>\n      </ion-col>\n    </ion-row>\n    <ion-row>\n      <ion-col col-4>\n        <p>Address</p>\n      </ion-col>\n      <ion-col col-6>\n<ion-input type="text" [(ngModel)]="client.address.label"></ion-input>\n      </ion-col>\n    </ion-row>\n    <ion-row>\n      <ion-col col-4>\n        <p>Street</p>\n      </ion-col>\n      <ion-col col-6>\n<ion-input type="text" [(ngModel)]="client.address.street1"></ion-input>\n      </ion-col>\n    </ion-row>\n    <ion-row>\n      <ion-col col-4>\n        <p> </p>\n      </ion-col>\n      <ion-col col-6>\n<ion-input type="text" [(ngModel)]="client.address.street2"></ion-input>\n      </ion-col>\n    </ion-row>\n    <ion-row>\n      <ion-col col-4>\n        <p>City</p>\n      </ion-col>\n      <ion-col col-6>\n<ion-input type="text" [(ngModel)]="client.address.city"></ion-input>\n      </ion-col>\n    </ion-row>\n    <ion-row>\n      <ion-col col-4>\n        <p>State/Province</p>\n      </ion-col>\n      <ion-col col-6>\n<ion-input type="text" [(ngModel)]="client.address.state"></ion-input>\n      </ion-col>\n    </ion-row>\n    <ion-row>\n      <ion-col col-4>\n        <p>Postal Code</p>\n      </ion-col>\n      <ion-col col-6>\n<ion-input type="text" [(ngModel)]="client.address.zip"></ion-input>\n      </ion-col>\n    </ion-row>\n    <ion-row>\n      <ion-col col-4>\n        <p>Contacts</p>\n      </ion-col>\n      <ion-col col-6>\n\n      </ion-col>\n    </ion-row>\n  </ion-grid> -->\n\n  <ion-item>\n    <ion-label color="primary">Name</ion-label>\n    <ion-input type="text" [(ngModel)]="client.name">\n    </ion-input>\n  </ion-item>\n  <ion-item>\n    <ion-label color="primary">Address</ion-label>\n    <ion-input type="text" [(ngModel)]="client.address.label">\n    </ion-input>\n  </ion-item>\n  <ion-item>\n    <ion-label color="primary">Street</ion-label>\n    <ion-input type="text" [(ngModel)]="client.address.street1"></ion-input>\n  </ion-item>\n  <ion-item>\n      <ion-label color="primary">Street</ion-label>\n    <ion-input type="text" [(ngModel)]="client.address.street2"></ion-input>\n  </ion-item>\n  <ion-item>\n    <ion-label color="primary">City</ion-label>\n    <ion-input type="text" [(ngModel)]="client.address.city">\n    </ion-input>\n  </ion-item>\n  <ion-item>\n    <ion-label color="primary">State/Province</ion-label>\n    <ion-input type="text" [(ngModel)]="client.address.state">\n    </ion-input>\n  </ion-item>\n  <ion-item>\n    <ion-label color="primary">Postal Code</ion-label>\n    <ion-input type="text" [(ngModel)]="client.address.zip">\n    </ion-input>\n  </ion-item>\n  <ion-item>\n    <ion-label color="primary">Contacts</ion-label>\n  </ion-item>\n  <ion-grid>\n    <div class="listInBox">\n      <ion-row *ngFor="let z of client.contacts">\n        <ion-col col-3 (click)="editContact(z)">\n          <p>{{z.label}}</p>\n        </ion-col>\n        <ion-col col-5 (click)="editContact(z)">\n          <p>{{z.contact}}</p>\n        </ion-col>\n        <ion-col col-3>\n          <div *ngIf="z.type===\'phone\'">\n            <p *ngIf="z.okToText" (click)="toggleTextOK(z)">Text OK</p>\n            <p *ngIf="!z.okToText" (click)="toggleTextOK(z)">No Text</p>\n          </div>\n        </ion-col>\n      </ion-row>\n    </div>\n  </ion-grid>\n  <p><ion-icon color="primary" name="add-circle" (click)="addContact()"></ion-icon>  Add Contact</p>\n\n  <button ion-button [disabled]="!client.name" (click)="save()">Save</button>\n  <button ion-button (click)="cancel()">Cancel</button>\n</ion-content>'/*ion-inline-end:"F:\Projects\DS\MTA\src\pages\client-info\client-info.html"*/,
+        }),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavParams */]])
+    ], ClientInfoPage);
+    return ClientInfoPage;
+}());
+
+//# sourceMappingURL=client-info.js.map
+
+/***/ }),
+
+/***/ 159:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ClientsPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_helpers_helpers__ = __webpack_require__(26);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_clients_clients__ = __webpack_require__(117);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__client_client__ = __webpack_require__(157);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+var ClientsPage = /** @class */ (function () {
+    function ClientsPage(navCtrl, navParams, helper, clients) {
+        this.navCtrl = navCtrl;
+        this.navParams = navParams;
+        this.helper = helper;
+        this.clients = clients;
+        clients.read();
+    }
+    ClientsPage.prototype.ionViewDidLoad = function () {
+        console.log('ionViewDidLoad ClientsPage');
+        console.log('clients', this.clients.clients);
+        this.populateItems();
+    };
+    ClientsPage.prototype.ionViewWillLeave = function () {
+        console.log('ionViewWillLeave ClientsPage');
+        // this.saveItems()  ???
+        this.clients.write();
+    };
+    ClientsPage.prototype.selectItem = function (item) {
+        this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_4__client_client__["a" /* ClientPage */], {
+            item: item
+        });
+    };
+    ClientsPage.prototype.populateItems = function () {
+        this.itemsList = [];
+        // TODO:  filter to search term
+        for (var i = 0; i < this.clients.clients.length; i++) {
+            this.itemsList.push(this.clients.clients[i]);
+        }
+    };
+    ClientsPage.prototype.addClient = function () {
+        console.log('addClient');
+    };
+    ClientsPage = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
+            selector: 'page-clients',template:/*ion-inline-start:"F:\Projects\DS\MTA\src\pages\clients\clients.html"*/'<ion-header>\n  <ion-navbar>\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>My Clients</ion-title>\n  </ion-navbar>\n</ion-header>\n\n\n<ion-content padding>\n  <ion-toolbar color=primary>\n    <ion-searchbar class="search" [(ngModel)]="searchTerm" debounce=750 placeholder="Search" (ionInput)="populateItems()">\n    </ion-searchbar>\n  </ion-toolbar>\n\n  <div *ngIf="itemsList">\n    <ion-grid>\n      <ion-row *ngFor="let z of itemsList; let i = index" (click)="selectItem(i)" justify-content-start>\n        <ion-col col-12>\n          <div class="box">\n            <p>{{z.name}}</p>\n          </div>\n        </ion-col>\n      </ion-row>\n      <ion-row (click)="addClient()" justify-content-start>\n        <ion-col col-12>\n          <div class="box" style="text-align: center">\n            <p>Add Client</p>\n          </div>\n        </ion-col>\n      </ion-row>\n    </ion-grid>\n  </div>\n\n</ion-content>'/*ion-inline-end:"F:\Projects\DS\MTA\src\pages\clients\clients.html"*/,
+        }),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavParams */],
+            __WEBPACK_IMPORTED_MODULE_2__providers_helpers_helpers__["a" /* HelpersProvider */],
+            __WEBPACK_IMPORTED_MODULE_3__providers_clients_clients__["a" /* ClientsProvider */]])
+    ], ClientsPage);
+    return ClientsPage;
+}());
+
+//# sourceMappingURL=clients.js.map
+
+/***/ }),
+
+/***/ 160:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return HomePage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__login_login__ = __webpack_require__(161);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_auth_auth__ = __webpack_require__(118);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__navoptions_navoptions__ = __webpack_require__(162);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+var HomePage = /** @class */ (function () {
+    function HomePage(navCtrl, navParams, auth) {
+        this.navCtrl = navCtrl;
+        this.navParams = navParams;
+        this.auth = auth;
+    }
+    HomePage.prototype.login = function () {
+        this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_2__login_login__["a" /* LoginPage */]);
+    };
+    HomePage.prototype.start = function () {
+        this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_4__navoptions_navoptions__["a" /* NavoptionsPage */]);
+    };
+    HomePage.prototype.logout = function () {
+        this.auth.logout();
+    };
+    HomePage = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
+            selector: 'page-home',template:/*ion-inline-start:"F:\Projects\DS\MTA\src\pages\home\home.html"*/'<ion-header>\n\n  <ion-navbar>\n    <!-- <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button> -->\n    <ion-title>MTA</ion-title>\n  </ion-navbar>\n\n</ion-header>\n\n<!-- make dependencies on auth.xxx state values -->\n<ion-content padding>\n  <ion-grid>\n    <ion-row justify-content-center>\n      <!-- <ion-item no-lines center > -->\n        <h2 class="pageTitle" align="center">My Massage Therapy Assistant</h2>\n      <!-- </ion-item> -->\n    </ion-row>\n    <ion-row justify-content-center align-items-center>\n      <div>\n        <img src="./assets/imgs/orangetree3.png" />\n      </div>\n    </ion-row>\n    <ion-row *ngIf="!auth.loggedIn" justify-content-center>\n        <button ion-button (click)="login()">Log In</button>\n    </ion-row>\n    <ion-row  *ngIf="auth.loggedIn" justify-content-center>\n        <h3 class="pageTitle" align="center">Welcome Back!</h3>\n      </ion-row>\n      <ion-row  *ngIf="auth.loggedIn" justify-content-center>\n          <button ion-button (click)="start()">Tap to Enter</button>\n    </ion-row>\n    <ion-row  *ngIf="auth.loggedIn" justify-content-center>\n        <button ion-button (click)="login()">Log Out</button>\n    </ion-row>\n  </ion-grid>\n</ion-content>'/*ion-inline-end:"F:\Projects\DS\MTA\src\pages\home\home.html"*/,
+        }),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavParams */],
+            __WEBPACK_IMPORTED_MODULE_3__providers_auth_auth__["a" /* AuthProvider */]])
+    ], HomePage);
+    return HomePage;
+}());
+
+//# sourceMappingURL=home.js.map
+
+/***/ }),
+
+/***/ 161:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return LoginPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_auth_auth__ = __webpack_require__(118);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_user_data_user_data__ = __webpack_require__(21);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __generator = (this && this.__generator) || function (thisArg, body) {
+    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+    function verb(n) { return function (v) { return step([n, v]); }; }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (_) try {
+            if (f = 1, y && (t = y[op[0] & 2 ? "return" : op[0] ? "throw" : "next"]) && !(t = t.call(y, op[1])).done) return t;
+            if (y = 0, t) op = [0, t.value];
+            switch (op[0]) {
+                case 0: case 1: t = op; break;
+                case 4: _.label++; return { value: op[1], done: false };
+                case 5: _.label++; y = op[1]; op = [0]; continue;
+                case 7: op = _.ops.pop(); _.trys.pop(); continue;
+                default:
+                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
+                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
+                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
+                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
+                    if (t[2]) _.ops.pop();
+                    _.trys.pop(); continue;
+            }
+            op = body.call(thisArg, _);
+        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
+        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
+    }
+};
+
+
+
+
+var LoginPage = /** @class */ (function () {
+    function LoginPage(navCtrl, auth, ud) {
+        this.navCtrl = navCtrl;
+        this.auth = auth;
+        this.ud = ud;
+    }
+    LoginPage.prototype.logIn = function () {
+        this.auth.login();
+        this.navCtrl.pop();
+    };
+    LoginPage.prototype.mockLogIn = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        this.ud.userId = 'mary';
+                        return [4 /*yield*/, this.ud.readIdNumber()];
+                    case 1:
+                        _a.sent();
+                        return [4 /*yield*/, this.ud.readData()];
+                    case 2:
+                        _a.sent();
+                        this.auth.loggedIn = true;
+                        console.log('got', this.ud.userData);
+                        this.navCtrl.pop();
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    LoginPage = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
+            selector: 'page-login',template:/*ion-inline-start:"F:\Projects\DS\MTA\src\pages\login\login.html"*/'<!-- src/pages/home/home.html -->\n\n<ion-header>\n  <ion-navbar>\n    <ion-title>Login</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n  <button ion-button block color="secondary" (click)="mockLogIn()">Mock Log In</button>\n  <p *ngIf="auth.loading" text-center>Loading...</p>\n  <ng-template [ngIf]="!auth.loading">\n    <!-- Not loading, not logged in: show login button -->\n    <button ion-button block color="secondary" *ngIf="!auth.loggedIn" (click)="auth.login()">Log In</button>\n    <!-- Not loading, logged in: show profile and logout button -->\n    <ng-template [ngIf]="auth.loggedIn">\n      <ion-card *ngIf="auth.user">\n        <img [src]="auth.user.picture">\n        <ion-card-content>\n          <ion-card-title>{{ auth.user.name }}</ion-card-title>\n          <pre>{{ auth.user | json }}</pre>\n        </ion-card-content>\n      </ion-card>\n      <button ion-button block color="danger" (click)="auth.logout()">Log Out</button>\n    </ng-template>\n  </ng-template>\n</ion-content>'/*ion-inline-end:"F:\Projects\DS\MTA\src\pages\login\login.html"*/,
+        }),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */],
+            __WEBPACK_IMPORTED_MODULE_2__providers_auth_auth__["a" /* AuthProvider */],
+            __WEBPACK_IMPORTED_MODULE_3__providers_user_data_user_data__["a" /* UserDataProvider */]])
+    ], LoginPage);
+    return LoginPage;
+}());
+
+//# sourceMappingURL=login.js.map
+
+/***/ }),
+
+/***/ 162:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return NavoptionsPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__settings_settings__ = __webpack_require__(86);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__calendar_calendar__ = __webpack_require__(156);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__clients_clients__ = __webpack_require__(159);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__transactions_transactions__ = __webpack_require__(163);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__business_business__ = __webpack_require__(155);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+
+
+var NavoptionsPage = /** @class */ (function () {
+    function NavoptionsPage(navCtrl, navParams) {
+        this.navCtrl = navCtrl;
+        this.navParams = navParams;
+    }
+    NavoptionsPage.prototype.ionViewDidLoad = function () {
+        console.log('ionViewDidLoad NavoptionsPage');
+    };
+    NavoptionsPage.prototype.navTo = function (where) {
+        switch (where) {
+            case 'sched':
+                this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_3__calendar_calendar__["a" /* CalendarPage */]);
+                break;
+            case 'clients':
+                this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_4__clients_clients__["a" /* ClientsPage */]);
+                break;
+            case 'trans':
+                this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_5__transactions_transactions__["a" /* TransactionsPage */]);
+                break;
+            case 'biz':
+                this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_6__business_business__["a" /* BusinessPage */]);
+                break;
+            case 'sets':
+                this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_2__settings_settings__["a" /* SettingsPage */]);
+                break;
+            default:
+                break;
+        }
+    };
+    NavoptionsPage = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
+            selector: 'page-navoptions',template:/*ion-inline-start:"F:\Projects\DS\MTA\src\pages\navoptions\navoptions.html"*/'<ion-header>\n\n  <ion-navbar>\n    <ion-title>MTA</ion-title>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content padding>\n  <ion-grid>\n    <ion-row align-items-center justify-content-center>\n<h2 class="pageTitle" align="center">My Massage Therapy Assistant</h2>\n    </ion-row>\n    <ion-row align-items-center justify-content-center>\n<h2 class="box" align="center">How may I help you?</h2>\n    </ion-row>\n\n    <ion-row align-items-center>\n      <ion-col col-1></ion-col>\n      <ion-col col-10 align-self-center (click)="navTo(\'sched\')">\n        <div class="boxInList">\n          <p>My Schedule</p>\n        </div>\n      </ion-col>\n      <ion-col col-1></ion-col>\n    </ion-row>\n    <ion-row align-items-center>\n      <ion-col col-1></ion-col>\n      <ion-col col-10 align-self-center (click)="navTo(\'clients\')">\n        <div class="boxInList">\n          <p>My Clients</p>\n        </div>\n      </ion-col>\n      <ion-col col-1></ion-col>\n    </ion-row>\n    <ion-row align-items-center>\n      <ion-col col-1></ion-col>\n      <ion-col col-10 align-self-center (click)="navTo(\'trans\')">\n        <div class="boxInList">\n          <p>My Transactions</p>\n        </div>\n      </ion-col>\n      <ion-col col-1></ion-col>\n    </ion-row>\n    <ion-row align-items-center>\n      <ion-col col-1></ion-col>\n      <ion-col col-10 align-self-center (click)="navTo(\'biz\')">\n        <div class="boxInList">\n          <p>My Business</p>\n        </div>\n      </ion-col>\n      <ion-col col-1></ion-col>\n    </ion-row>\n    <!-- <ion-row align-items-center>\n      <ion-col col-1></ion-col>\n      <ion-col col-10 align-self-center (click)="navTo(\'sets\')">\n        <div class="boxInList">\n          <p>Settings</p>\n        </div>\n      </ion-col>\n      <ion-col col-1></ion-col>\n    </ion-row> -->\n\n  </ion-grid>\n</ion-content>\n'/*ion-inline-end:"F:\Projects\DS\MTA\src\pages\navoptions\navoptions.html"*/,
+        }),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavParams */]])
+    ], NavoptionsPage);
+    return NavoptionsPage;
+}());
+
+//# sourceMappingURL=navoptions.js.map
+
+/***/ }),
+
+/***/ 163:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return TransactionsPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_transactions_transactions__ = __webpack_require__(266);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_helpers_helpers__ = __webpack_require__(26);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_user_data_user_data__ = __webpack_require__(21);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+var TransactionsPage = /** @class */ (function () {
+    function TransactionsPage(navCtrl, navParams, helper, trans, ud) {
+        this.navCtrl = navCtrl;
+        this.navParams = navParams;
+        this.helper = helper;
+        this.trans = trans;
+        this.ud = ud;
+        trans.read();
+    }
+    TransactionsPage.prototype.ionViewDidLoad = function () {
+        console.log('ionViewDidLoad TransactionsPage');
+        console.log('trans', this.trans.transactions);
+        this.populateItems();
+    };
+    TransactionsPage.prototype.ionViewWillLeave = function () {
+        console.log('ionViewWillLeave TransactionsPage');
+        // this.saveItems()  ???
+        this.trans.write();
+    };
+    TransactionsPage.prototype.choose = function (item) {
+    };
+    TransactionsPage.prototype.populateItems = function () {
+        this.itemsList = [];
+        var ttl = 0;
+        for (var i = 0; i < this.trans.transactions.length; i++) {
+            this.itemsList.push(this.trans.transactions[i]);
+            this.itemsList[i]['clientName'] = this.findClientName(this.itemsList[i].apptId);
+            var d = new Date(this.itemsList[i].date);
+            var y = d.getFullYear().toString();
+            y = y.substr(2, 2);
+            this.itemsList[i]['shortDate'] = (d.getMonth() + 1) + '/' + y;
+            this.itemsList[i]['formattedAmount'] = (this.itemsList[i].amount >= 0)
+                ? this.itemsList[i].amount.toFixed(2)
+                : "(" + (0 - this.itemsList[i].amount).toFixed(2) + ")";
+            this.itemsList[i]['reconciledIcon'] = (this.itemsList[i].reconciled)
+                ? 'checkmark-circle'
+                : 'remove-circle-outline';
+            if (this.itemsList[i].amount > 0)
+                ttl += this.itemsList[i].amount;
+        }
+        this.itemsList.push({ shortDate: '', description: 'Total', formattedAmount: ttl.toFixed(2), reconciledIcon: 'none' });
+    };
+    TransactionsPage.prototype.findClientName = function (apptId) {
+        var result = this.ud.userData.schedule.filter(function (obj) {
+            return obj.id === apptId;
+        });
+        return result[0].clientName;
+    };
+    TransactionsPage = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
+            selector: 'page-transactions',template:/*ion-inline-start:"F:\Projects\DS\MTA\src\pages\transactions\transactions.html"*/'<ion-header>\n  <ion-navbar>\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>My Transactions</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n  <!-- <ion-toolbar color=primary>\n    <ion-searchbar class="search" [(ngModel)]="searchTerm" debounce=750 placeholder="Search" (ionInput)="getList()">\n    </ion-searchbar>\n  </ion-toolbar> -->\n\n  <div *ngIf="itemsList">\n    <ion-grid>\n\n      <ion-row>\n        <ion-col col-9>\n        </ion-col>\n        <ion-col col-3>\n          <button class="editButton" ion-button>Edit</button>\n        </ion-col>\n      </ion-row>\n      <!-- header -->\n      <div class="box">\n      <ion-row>\n        <ion-col col-2>\n          <p>Date</p>\n        </ion-col>\n        <ion-col col-3>\n          <p>Client</p>\n        </ion-col>\n        <ion-col col-3>\n          <p>Desc</p>\n        </ion-col>\n        <ion-col col-3>\n          <p float-right>Amt</p>\n        </ion-col>\n        <ion-col col-1>\n          <p>R</p>\n        </ion-col>\n      </ion-row>\n      </div>\n      <!-- <div ion-item no-lines *ngFor="let z of itemsList"> -->\n        <div class="listInBox">\n      <ion-row *ngFor="let z of itemsList" (click)="choose(z)">\n        <ion-col class="transList" col-2>\n          <p>{{z.shortDate}}</p>\n        </ion-col>\n        <ion-col class="transList" col-3>\n          <p>{{z.clientName}}</p>\n        </ion-col>\n        <ion-col class="transList" col-3>\n          <p>{{z.description}}</p>\n        </ion-col>\n        <ion-col col-3>\n          <p float-right>{{z.formattedAmount}}</p>\n        </ion-col>\n        <ion-col class="transList" col-1>\n          <!-- <ion-icon [name]="z.reconciledIcon" [color]="project.likedBy ? \'danger\' : \'dark\'"></ion-icon> -->\n          <ion-icon [name]="z.reconciledIcon"></ion-icon>\n        </ion-col>\n      </ion-row>\n      </div>\n      <!-- </div> -->\n    </ion-grid>\n  </div>\n\n</ion-content>'/*ion-inline-end:"F:\Projects\DS\MTA\src\pages\transactions\transactions.html"*/,
+        }),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavParams */],
+            __WEBPACK_IMPORTED_MODULE_3__providers_helpers_helpers__["a" /* HelpersProvider */],
+            __WEBPACK_IMPORTED_MODULE_2__providers_transactions_transactions__["a" /* TransactionsProvider */],
+            __WEBPACK_IMPORTED_MODULE_4__providers_user_data_user_data__["a" /* UserDataProvider */]])
+    ], TransactionsPage);
+    return TransactionsPage;
+}());
+
+//# sourceMappingURL=transactions.js.map
+
+/***/ }),
+
+/***/ 174:
+/***/ (function(module, exports) {
+
+function webpackEmptyAsyncContext(req) {
+	// Here Promise.resolve().then() is used instead of new Promise() to prevent
+	// uncatched exception popping up in devtools
+	return Promise.resolve().then(function() {
+		throw new Error("Cannot find module '" + req + "'.");
+	});
+}
+webpackEmptyAsyncContext.keys = function() { return []; };
+webpackEmptyAsyncContext.resolve = webpackEmptyAsyncContext;
+module.exports = webpackEmptyAsyncContext;
+webpackEmptyAsyncContext.id = 174;
+
+/***/ }),
+
+/***/ 21:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return UserDataProvider; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__mtaapi_mtaapi__ = __webpack_require__(217);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__cache_cache__ = __webpack_require__(218);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__helpers_helpers__ = __webpack_require__(26);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__types_types__ = __webpack_require__(27);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__types_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__types_types__);
+var __assign = (this && this.__assign) || Object.assign || function(t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+        s = arguments[i];
+        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+            t[p] = s[p];
+    }
+    return t;
+};
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __generator = (this && this.__generator) || function (thisArg, body) {
+    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+    function verb(n) { return function (v) { return step([n, v]); }; }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (_) try {
+            if (f = 1, y && (t = y[op[0] & 2 ? "return" : op[0] ? "throw" : "next"]) && !(t = t.call(y, op[1])).done) return t;
+            if (y = 0, t) op = [0, t.value];
+            switch (op[0]) {
+                case 0: case 1: t = op; break;
+                case 4: _.label++; return { value: op[1], done: false };
+                case 5: _.label++; y = op[1]; op = [0]; continue;
+                case 7: op = _.ops.pop(); _.trys.pop(); continue;
+                default:
+                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
+                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
+                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
+                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
+                    if (t[2]) _.ops.pop();
+                    _.trys.pop(); continue;
+            }
+            op = body.call(thisArg, _);
+        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
+        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
+    }
+};
+
+
+
+
+
+var CACHE_ID = 'MTA_DATA';
+var SERVER_ROUTE = 'contents';
+// TODO: encrypt/decrypt package/unpackage before reads/wrires
+var MASTER_KEY = "Two roads diverged in a yellow wood,";
+// robert frost, the road not taken
+// login get user name  (temp, replace with authentication service to get user #)
+// login look up user id #
+// user-data get user data w/id #
+var UserDataProvider = /** @class */ (function () {
+    function UserDataProvider(helper, cache, api) {
+        this.helper = helper;
+        this.cache = cache;
+        this.api = api;
+        this.emptyUserData = {
+            _id: '',
+            user: {
+                id: '',
+                pwd: '',
+                businessName: '',
+                address: {
+                    label: '',
+                    street1: '',
+                    street2: '',
+                    city: '',
+                    state: '',
+                    zip: ''
+                },
+                contacts: [],
+                calendar: {
+                    id: '',
+                    name: '',
+                    provider: '',
+                    connectionInfo: '',
+                    owner: '',
+                },
+                defaultApptTitle: '',
+                listActive: "1m",
+                sortClientsBy: "last",
+                useCalendar: 'app',
+                acceptPayments: 'self',
+                whoSchedule: 'user',
+                whoIntake: 'user',
+                emailSchedule: '',
+                autoLogOut: 'no',
+                stripe: {
+                    secretKey: "",
+                    fee: 0
+                },
+                paypal: {
+                    key: ""
+                },
+                merch: {
+                    acct: ""
+                }
+            },
+            appActivity: {
+                lastUpdate: "01/01/1968" // pretty old date
+            },
+            clients: [],
+            transactions: [],
+            schedule: []
+        };
+    }
+    UserDataProvider.prototype.initData = function () {
+        this.userData = this.emptyUserData;
+    };
+    UserDataProvider.prototype.clearData = function () {
+        this.userData = this.emptyUserData;
+    };
+    UserDataProvider.prototype.readIdNumber = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var serverReadData, serverReadObject;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.api.getData('mtausers/' + this.userId)];
+                    case 1:
+                        serverReadData = _a.sent();
+                        console.log(serverReadData);
+                        serverReadObject = JSON.parse(serverReadData);
+                        this.userIdNumber = serverReadObject['contentsId'];
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    UserDataProvider.prototype.readData = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var localData, serverData, l, s, _a, err_1;
+            return __generator(this, function (_b) {
+                switch (_b.label) {
+                    case 0:
+                        localData = this.emptyUserData;
+                        serverData = this.emptyUserData;
+                        _b.label = 1;
+                    case 1:
+                        _b.trys.push([1, 3, , 4]);
+                        return [4 /*yield*/, this.readLocal()];
+                    case 2:
+                        localData = _b.sent();
+                        l = new Date(localData.appActivity.lastUpdate).valueOf();
+                        console.log('readData l=', l);
+                        return [3 /*break*/, 4];
+                    case 3:
+                        _a = _b.sent();
+                        l = 0;
+                        return [3 /*break*/, 4];
+                    case 4:
+                        _b.trys.push([4, 6, , 7]);
+                        return [4 /*yield*/, this.readServer()];
+                    case 5:
+                        serverData = _b.sent();
+                        s = new Date(serverData.appActivity.lastUpdate).valueOf();
+                        console.log('readData s=', s);
+                        return [3 /*break*/, 7];
+                    case 6:
+                        err_1 = _b.sent();
+                        s = 0;
+                        return [3 /*break*/, 7];
+                    case 7:
+                        // NOTE: write updates userData.appActivity--make sure a re-read doesn't over-write
+                        if (l >= s) {
+                            this.userData = this.helper.deepCopy(localData);
+                        }
+                        else {
+                            this.userData = this.helper.deepCopy(serverData);
+                        }
+                        // console.log('userData', this.userData);
+                        // refresh
+                        this.writeData();
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    UserDataProvider.prototype.readLocal = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var locallyRead, locallyReadData, err_2;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 2, , 3]);
+                        return [4 /*yield*/, this.cache.read(CACHE_ID + '_' + this.userIdNumber)];
+                    case 1:
+                        locallyRead = _a.sent();
+                        locallyReadData = JSON.parse(locallyRead);
+                        // to simplify matching object elements, merge in what we find
+                        // locallyReadData might be empty, resulting in localData staying empty
+                        return [2 /*return*/, __assign({}, this.emptyUserData, locallyReadData)];
+                    case 2:
+                        err_2 = _a.sent();
+                        console.log('readLocal error ', err_2);
+                        return [2 /*return*/, this.emptyUserData];
+                    case 3: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    UserDataProvider.prototype.readServer = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var serverReadData, serverReadObject, err_3;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        serverReadData = '';
+                        _a.label = 1;
+                    case 1:
+                        _a.trys.push([1, 3, , 4]);
+                        return [4 /*yield*/, this.api.getData(SERVER_ROUTE + '/' + this.userIdNumber)];
+                    case 2:
+                        serverReadData = _a.sent(); // TODO needs a value for the getData parameter
+                        serverReadObject = JSON.parse(serverReadData);
+                        // console.log('readServer ', serverReadData);
+                        // console.log('readServer ', serverReadObject);
+                        // note might be empty, so may stay empty after read
+                        // const t = { ...this.emptyUserData, ...serverReadObject };
+                        // console.log(t);
+                        return [2 /*return*/, __assign({}, this.emptyUserData, serverReadObject)];
+                    case 3:
+                        err_3 = _a.sent();
+                        console.log('readServer error ', err_3);
+                        return [2 /*return*/, this.emptyUserData];
+                    case 4: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    UserDataProvider.prototype.writeData = function () {
+        // both of these are async, but don't wait
+        // set lastUpdate
+        this.userData.appActivity.lastUpdate = new Date(Date.now()).toISOString();
+        console.log('new activity', this.userData.appActivity.lastUpdate);
+        // identical, unless you saved from a different device,
+        //    then local & server might be different
+        this.writeLocal(this.userData);
+        this.writeServer(this.userData);
+    };
+    UserDataProvider.prototype.writeLocal = function (data) {
+        try {
+            this.cache.write(CACHE_ID + '_' + this.userIdNumber, JSON.stringify(data));
+            console.log('wrote ' + CACHE_ID + '_' + this.userIdNumber);
+        }
+        catch (err) {
+            console.log('writeLocal cache.write error', err);
+        }
+    };
+    UserDataProvider.prototype.writeServer = function (data) {
+        try {
+            // console.log('writeServer', data);
+            this.api.putData(SERVER_ROUTE + '/' + this.userIdNumber, JSON.stringify(data));
+            // .then((d) => { console.log('wrote ', d); });
+            console.log('wrote ' + SERVER_ROUTE + '/' + this.userIdNumber);
+        }
+        catch (err) {
+            console.log('writeLocal mtaapi.putData error', err);
+        }
+    };
+    UserDataProvider = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["A" /* Injectable */])(),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_3__helpers_helpers__["a" /* HelpersProvider */],
+            __WEBPACK_IMPORTED_MODULE_2__cache_cache__["a" /* CacheProvider */],
+            __WEBPACK_IMPORTED_MODULE_1__mtaapi_mtaapi__["a" /* MTAAPI */]])
+    ], UserDataProvider);
+    return UserDataProvider;
+}());
+
+//# sourceMappingURL=user-data.js.map
+
+/***/ }),
+
+/***/ 216:
+/***/ (function(module, exports, __webpack_require__) {
+
+var map = {
+	"../pages/appointments/appointments.module": [
+		509,
+		15
+	],
+	"../pages/appt-info/appt-info.module": [
+		510,
+		1
+	],
+	"../pages/business/business.module": [
+		511,
+		14
+	],
+	"../pages/calendar/calendar.module": [
+		512,
+		13
+	],
+	"../pages/client-info/client-info.module": [
+		514,
+		12
+	],
+	"../pages/client/client.module": [
+		513,
+		11
+	],
+	"../pages/clients/clients.module": [
+		515,
+		10
+	],
+	"../pages/document/document.module": [
+		516,
+		9
+	],
+	"../pages/event/event.module": [
+		520,
+		8
+	],
+	"../pages/home/home.module": [
+		517,
+		7
+	],
+	"../pages/login/login.module": [
+		518,
+		6
+	],
+	"../pages/navoptions/navoptions.module": [
+		519,
+		5
+	],
+	"../pages/schedule/schedule.module": [
+		521,
+		0
+	],
+	"../pages/settings/settings.module": [
+		523,
+		4
+	],
+	"../pages/stripe-payment/stripe-payment.module": [
+		522,
+		3
+	],
+	"../pages/transactions/transactions.module": [
+		524,
+		2
+	]
+};
+function webpackAsyncContext(req) {
+	var ids = map[req];
+	if(!ids)
+		return Promise.reject(new Error("Cannot find module '" + req + "'."));
+	return __webpack_require__.e(ids[1]).then(function() {
+		return __webpack_require__(ids[0]);
+	});
+};
+webpackAsyncContext.keys = function webpackAsyncContextKeys() {
+	return Object.keys(map);
+};
+webpackAsyncContext.id = 216;
+module.exports = webpackAsyncContext;
+
+/***/ }),
+
+/***/ 217:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MTAAPI; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_common_http__ = __webpack_require__(62);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+var MTAAPI = /** @class */ (function () {
+    function MTAAPI(http) {
+        this.http = http;
+        // apiURL = 'http://api.cpmez.com:22000/CarePlan/';
+        // apiURL = 'http://127.0.0.1:18000/MTA/';
+        this.apiURL = 'http://54.191.45.45:18000/MTA/';
+        console.log('Constructor MTAAPI Provider');
+    }
+    // local apiURL = 'http://127.0.0.1:18000/MTA/';
+    // elastice ip apiURL = 'http://ec2-34-195-4-230.compute-1.amazonaws.com:22000/CarePlan/';
+    // no longer valid ip apiURL = 'http://34.229.7.109:22000/CarePlan/';
+    // old instance apiURL = 'http://ec2-34-229-7-109.compute-1.amazonaws.com:22000/CarePlan/';
+    MTAAPI.prototype.getData = function (route) {
+        var _this = this;
+        // console.log('getData', route);
+        var fullRoute = this.apiURL + route;
+        console.log('getData', fullRoute);
+        return new Promise(function (resolve, reject) {
+            var httpHeaders = new __WEBPACK_IMPORTED_MODULE_0__angular_common_http__["c" /* HttpHeaders */]({
+                'Content-Type': 'application/json',
+                'If-Modified-Since': '1 Jan 1990',
+                'Cache-Control': 'no-cache'
+            });
+            _this.http.get(fullRoute, { headers: httpHeaders, observe: 'body', responseType: 'json' })
+                .subscribe(// note just changed JSON.stringify(data) to (data) bc i think .get returns an object aleady
+            function (data) { return resolve(JSON.stringify(data)); }, function (err) { return reject(err); });
+        });
+    };
+    MTAAPI.prototype.putData = function (route, body) {
+        var _this = this;
+        // console.log('putData', route);
+        var fullRoute = this.apiURL + route;
+        console.log('putData', fullRoute);
+        // console.log('putData', body);
+        return new Promise(function (resolve, reject) {
+            var httpHeaders = new __WEBPACK_IMPORTED_MODULE_0__angular_common_http__["c" /* HttpHeaders */]({
+                'Content-Type': 'application/json',
+                'Cache-Control': 'no-cache'
+            });
+            // headers = headers.set('authorization', 'Bearer ' + token);
+            // let options = { headers: httpHeaders, observe: 'body' };
+            _this.http.put(fullRoute, body, { headers: httpHeaders, observe: 'body', responseType: 'json' })
+                .subscribe(// note just changed JSON.stringify(data) to (data) bc i think .put returns an object aleady
+            function (data) { return resolve(data); }, function (err) { return reject(err); });
+        });
+    };
+    MTAAPI = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["A" /* Injectable */])(),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_0__angular_common_http__["a" /* HttpClient */]])
+    ], MTAAPI);
+    return MTAAPI;
+}());
+
+//# sourceMappingURL=mtaapi.js.map
+
+/***/ }),
+
+/***/ 218:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CacheProvider; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__local_store_local_store__ = __webpack_require__(219);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_crypto_js__ = __webpack_require__(361);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_crypto_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_crypto_js__);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+var ENCRYPT_KEY = 'And having perhaps the better claim, Because it was grassy and wanted wear,'; // robert frost, the road not taken
+// TODO:  cache uses passed-in key for encryption
+var CacheProvider = /** @class */ (function () {
+    function CacheProvider(LSP) {
+        this.LSP = LSP;
+        console.log('Constructor Cache Provider');
+    }
+    CacheProvider.prototype.remove = function (type) {
+        console.log('removing from cache', type);
+        this.LSP.remove(type);
+    };
+    CacheProvider.prototype.clearCache = function () {
+        var _this = this;
+        console.log('clearing cache');
+        this.LSP.keys()
+            .then(function (k) {
+            for (var t in k) {
+                if (k.hasOwnProperty(t)) {
+                    // remove everything except session and plans
+                    // if (k[t] !== "mta_session"
+                    //   && k[t] !== "plans") {
+                    console.log('clearing ', k[t]);
+                    _this.LSP.remove(k[t]);
+                    // } else {
+                    //   console.log('not clearing ', k[t]);
+                    // }
+                }
+            }
+        });
+    };
+    CacheProvider.prototype.write = function (type, input) {
+        console.log('caching ' + type);
+        var p = this.encrypt(this.package(type, input), ENCRYPT_KEY);
+        this.LSP.set(type, p)
+            .then(function (result) { return console.log("saved to cache"); })
+            .catch(function (e) { return console.log("error: " + e); });
+    };
+    CacheProvider.prototype.read = function (type) {
+        var _this = this;
+        console.log('reading cache for ' + type);
+        return new Promise(function (resolve, reject) {
+            _this.LSP.get(type)
+                .then(function (data) {
+                if (data) {
+                    console.log('got cache');
+                    var r = _this.unPackage(type, _this.decrypt(data, ENCRYPT_KEY));
+                    resolve(r);
+                }
+                else {
+                    console.log('not in cache');
+                    reject('not in cache');
+                }
+            });
+            // .catch(e => reject => console.log("error: " + e));
+        });
+    };
+    CacheProvider.prototype.package = function (type, input) {
+        // { type: { cached: '1/1/1', contents: { input } } }
+        var p = {};
+        p[type] = {
+            cached: Date.now().valueOf(),
+            contents: input
+        };
+        return JSON.stringify(p);
+    };
+    CacheProvider.prototype.unPackage = function (type, input) {
+        // strip off container and date
+        // { type: { cached: '1/1/1', contents: { input } } }
+        var p = JSON.parse(input);
+        return p[type].contents;
+    };
+    CacheProvider.prototype.encrypt = function (data, key) {
+        // console.log("encrypting");
+        // console.log("key", key);
+        return __WEBPACK_IMPORTED_MODULE_2_crypto_js___default.a.AES.encrypt(data, key).toString();
+    };
+    CacheProvider.prototype.decrypt = function (data, key) {
+        // console.log('decrypting');
+        // console.log("key", key);
+        var bytes = __WEBPACK_IMPORTED_MODULE_2_crypto_js___default.a.AES.decrypt(data, key);
+        return bytes.toString(__WEBPACK_IMPORTED_MODULE_2_crypto_js___default.a.enc.Utf8);
+    };
+    CacheProvider = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["A" /* Injectable */])(),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__local_store_local_store__["a" /* LocalStoreProvider */]])
+    ], CacheProvider);
+    return CacheProvider;
+}());
+
+//# sourceMappingURL=cache.js.map
+
+/***/ }),
+
+/***/ 219:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return LocalStoreProvider; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__ionic_storage__ = __webpack_require__(220);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __generator = (this && this.__generator) || function (thisArg, body) {
+    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+    function verb(n) { return function (v) { return step([n, v]); }; }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (_) try {
+            if (f = 1, y && (t = y[op[0] & 2 ? "return" : op[0] ? "throw" : "next"]) && !(t = t.call(y, op[1])).done) return t;
+            if (y = 0, t) op = [0, t.value];
+            switch (op[0]) {
+                case 0: case 1: t = op; break;
+                case 4: _.label++; return { value: op[1], done: false };
+                case 5: _.label++; y = op[1]; op = [0]; continue;
+                case 7: op = _.ops.pop(); _.trys.pop(); continue;
+                default:
+                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
+                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
+                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
+                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
+                    if (t[2]) _.ops.pop();
+                    _.trys.pop(); continue;
+            }
+            op = body.call(thisArg, _);
+        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
+        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
+    }
+};
+
+
+var LocalStoreProvider = /** @class */ (function () {
+    function LocalStoreProvider(storage) {
+        this.storage = storage;
+        console.log('Constructor LocalStoreProvider Provider');
+    }
+    LocalStoreProvider.prototype.set = function (key, value) {
+        return __awaiter(this, void 0, void 0, function () {
+            var result, err_1;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 2, , 3]);
+                        return [4 /*yield*/, this.storage.set(key, value)];
+                    case 1:
+                        result = _a.sent();
+                        return [2 /*return*/, result];
+                    case 2:
+                        err_1 = _a.sent();
+                        console.log('storage set failed ', err_1);
+                        return [3 /*break*/, 3];
+                    case 3: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    LocalStoreProvider.prototype.get = function (key) {
+        return __awaiter(this, void 0, void 0, function () {
+            var err_2;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 2, , 3]);
+                        return [4 /*yield*/, this.storage.get(key)];
+                    case 1: return [2 /*return*/, _a.sent()];
+                    case 2:
+                        err_2 = _a.sent();
+                        console.log('storage get failed ', err_2);
+                        return [2 /*return*/, ''];
+                    case 3: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    // get(key: string): Promise<any> {
+    //   return new Promise((resolve, reject) => {
+    //     this.storage.get(key)
+    //       .then(result => resolve(result))
+    //       .catch((reason) => {
+    //         console.info(reason);
+    //         reject(reason);
+    //       });
+    //   })
+    // }
+    LocalStoreProvider.prototype.remove = function (key) {
+        this.storage.remove(key);
+    };
+    LocalStoreProvider.prototype.clear = function () {
+        this.storage.clear();
+    };
+    LocalStoreProvider.prototype.keys = function () {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            _this.storage.keys()
+                .then(function (result) { return resolve(result); })
+                .catch(function (reason) {
+                console.info(reason);
+                reject(reason);
+            });
+        });
+    };
+    LocalStoreProvider = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["A" /* Injectable */])(),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__ionic_storage__["b" /* Storage */]])
+    ], LocalStoreProvider);
+    return LocalStoreProvider;
+}());
+
+//# sourceMappingURL=local-store.js.map
+
+/***/ }),
+
+/***/ 224:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CCAPI; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_common_http__ = __webpack_require__(62);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__types_types__ = __webpack_require__(27);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__types_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__types_types__);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+var CCAPI = /** @class */ (function () {
+    function CCAPI(http) {
+        this.http = http;
+        // apiURL = 'http://api.cpmez.com:22000/CarePlan/';
+        this.apiURL = 'http://127.0.0.1:48000/mtacc/';
+        console.log('Constructor CCAPI Provider');
+    }
+    CCAPI.prototype.putData = function (route, headers, body) {
+        var _this = this;
+        // console.log('putData', route);
+        var fullRoute = this.apiURL + route;
+        console.log('putData', fullRoute);
+        // console.log('putData', JSON.stringify(body));
+        console.log('putData', body);
+        // console.log('putData', body);
+        return new Promise(function (resolve, reject) {
+            // headers = headers.set('authorization', 'Bearer ' + token);
+            // let options = { headers: httpHeaders, observe: 'body' };
+            _this.http.post(fullRoute, body, { headers: headers, observe: 'body', responseType: 'json' })
+                .subscribe(// note just changed JSON.stringify(data) to (data) bc i think .put returns an object aleady
+            function (data) { return resolve(data); }, function (err) { return reject(err); });
+        });
+    };
+    CCAPI = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["A" /* Injectable */])(),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_0__angular_common_http__["a" /* HttpClient */]])
+    ], CCAPI);
+    return CCAPI;
+}());
+
+//# sourceMappingURL=ccapi.js.map
+
+/***/ }),
+
+/***/ 228:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ScheduleProvider; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__user_data_user_data__ = __webpack_require__(21);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__helpers_helpers__ = __webpack_require__(26);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__types_types__ = __webpack_require__(27);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__types_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__types_types__);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+var ScheduleProvider = /** @class */ (function () {
+    function ScheduleProvider(ud, helper) {
+        this.ud = ud;
+        this.helper = helper;
+        this.scheduleItems = [];
+    }
+    ScheduleProvider.prototype.init = function () {
+        this.scheduleItems = [];
+    };
+    ScheduleProvider.prototype.read = function () {
+        this.scheduleItems = this.ud.userData.schedule;
+    };
+    ScheduleProvider.prototype.write = function () {
+        this.ud.userData.schedule = this.scheduleItems;
+    };
+    ScheduleProvider.prototype.add = function (t) {
+        this.scheduleItems.push(t);
+    };
+    ScheduleProvider.prototype.remove = function (i) {
+        this.scheduleItems.splice(i, 1);
+    };
+    ScheduleProvider.prototype.replace = function (i, t) {
+        this.scheduleItems[i] = this.helper.deepCopy(t);
+    };
+    ScheduleProvider = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["A" /* Injectable */])(),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__user_data_user_data__["a" /* UserDataProvider */],
+            __WEBPACK_IMPORTED_MODULE_2__helpers_helpers__["a" /* HelpersProvider */]])
+    ], ScheduleProvider);
+    return ScheduleProvider;
+}());
+
+// following was bad idea because required selective write()
+// readAll(): ScheduleItemType[] {
+//   this.scheduleItems = this.ud.userData.schedule;
+//   return this.scheduleItems;
+// }
+// readClient(client: string) {
+//   this.scheduleItems =
+//     this.ud.userData.schedule
+//       .filter(x => (x.clientName === client));
+// }
+// readDates(start: Date, end?: Date) {
+//   let sd = new Date(start).setHours(0, 0, 0, 0);
+//   // implementation of end not currently needed, 
+//   //  NOT debugged
+//   // if (end) {
+//   //   let ed = new Date(end).setHours(23, 59, 59, 59);
+//   //   this.scheduleItems =
+//   //     this.ud.userData.schedule
+//   //       .filter(x => (new Date(x.start).setHours(0, 0, 0, 0).valueOf() >= sd.valueOf())
+//   //         && new Date(x.start).setHours(0, 0, 0, 0) <= ed.valueOf()));
+//   // }
+//   // else { // start date only supplied
+//     this.scheduleItems =
+//       this.ud.userData.schedule
+//         .filter(x => (new Date(x.start).setHours(0, 0, 0, 0) === sd));
+//   // }
+// }
+//# sourceMappingURL=schedule.js.map
+
+/***/ }),
+
+/***/ 26:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return HelpersProvider; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+var HelpersProvider = /** @class */ (function () {
+    function HelpersProvider() {
+        console.log('Hello HelpersProvider Provider');
+    }
+    HelpersProvider.prototype.deepCopy = function (obj) {
+        var copy;
+        // Handle the 3 simple types, and null or undefined
+        if (null == obj || "object" != typeof obj)
+            return obj;
+        // Handle Date
+        if (obj instanceof Date) {
+            copy = new Date();
+            copy.setTime(obj.getTime());
+            return copy;
+        }
+        // Handle Array
+        if (obj instanceof Array) {
+            copy = [];
+            for (var i = 0, len = obj.length; i < len; i++) {
+                copy[i] = this.deepCopy(obj[i]);
+            }
+            return copy;
+        }
+        // Handle Object
+        if (obj instanceof Object) {
+            copy = {};
+            for (var attr in obj) {
+                if (obj.hasOwnProperty(attr))
+                    copy[attr] = this.deepCopy(obj[attr]);
+            }
+            return copy;
+        }
+        throw new Error("Unable to copy obj! Its type isn't supported.");
+    };
+    HelpersProvider.prototype.upshiftInitial = function (str) {
+        return str.slice(0, 1).toUpperCase() + str.slice(1);
+    };
+    HelpersProvider = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["A" /* Injectable */])(),
+        __metadata("design:paramtypes", [])
+    ], HelpersProvider);
+    return HelpersProvider;
+}());
+
+//# sourceMappingURL=helpers.js.map
+
+/***/ }),
+
+/***/ 266:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return TransactionsProvider; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__user_data_user_data__ = __webpack_require__(21);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__helpers_helpers__ = __webpack_require__(26);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__types_types__ = __webpack_require__(27);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__types_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__types_types__);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+var TransactionsProvider = /** @class */ (function () {
+    function TransactionsProvider(ud, helper) {
+        this.ud = ud;
+        this.helper = helper;
+        // "read" and "write" to userData.transations;
+        this.transactions = [];
+    }
+    TransactionsProvider.prototype.init = function () {
+        this.transactions = [];
+    };
+    TransactionsProvider.prototype.read = function () {
+        this.transactions = this.ud.userData.transactions;
+    };
+    TransactionsProvider.prototype.write = function () {
+        this.ud.userData.transactions = this.transactions;
+    };
+    TransactionsProvider.prototype.add = function (t) {
+        this.transactions.push(t);
+    };
+    TransactionsProvider.prototype.remove = function (i) {
+        this.transactions.splice(i, 1);
+    };
+    TransactionsProvider.prototype.replace = function (i, t) {
+        this.transactions[i] = this.helper.deepCopy(t);
+    };
+    TransactionsProvider = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["A" /* Injectable */])(),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__user_data_user_data__["a" /* UserDataProvider */],
+            __WEBPACK_IMPORTED_MODULE_2__helpers_helpers__["a" /* HelpersProvider */]])
+    ], TransactionsProvider);
+    return TransactionsProvider;
+}());
+
+//# sourceMappingURL=transactions.js.map
+
+/***/ }),
+
+/***/ 27:
+/***/ (function(module, exports) {
+
+//# sourceMappingURL=types.js.map
+
+/***/ }),
+
+/***/ 308:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return DocumentPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(15);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+/**
+ * Generated class for the DocumentPage page.
+ *
+ * See https://ionicframework.com/docs/components/#navigation for more info on
+ * Ionic pages and navigation.
+ */
+var DocumentPage = /** @class */ (function () {
+    function DocumentPage(navCtrl, navParams) {
+        this.navCtrl = navCtrl;
+        this.navParams = navParams;
+    }
+    DocumentPage.prototype.ionViewDidLoad = function () {
+        console.log('ionViewDidLoad DocumentPage');
+    };
+    DocumentPage = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
+            selector: 'page-document',template:/*ion-inline-start:"F:\Projects\DS\MTA\src\pages\document\document.html"*/'<ion-header>\n\n  <ion-navbar>\n    <ion-title>Document</ion-title>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content padding>\n    <p>Client (and visit) identifying info</p>\n    <ion-textarea rows=8 type="text" placeholder="Document your history here" [(ngModel)]="contents">\n    </ion-textarea>\n</ion-content>\n'/*ion-inline-end:"F:\Projects\DS\MTA\src\pages\document\document.html"*/,
+        }),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavParams */]])
+    ], DocumentPage);
+    return DocumentPage;
+}());
+
+//# sourceMappingURL=document.js.map
+
+/***/ }),
+
+/***/ 309:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__ = __webpack_require__(310);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app_module__ = __webpack_require__(330);
+
+
+Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* platformBrowserDynamic */])().bootstrapModule(__WEBPACK_IMPORTED_MODULE_1__app_module__["a" /* AppModule */]);
+//# sourceMappingURL=main.js.map
+
+/***/ }),
+
+/***/ 330:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppModule; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__ = __webpack_require__(48);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_storage__ = __webpack_require__(220);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_common_http__ = __webpack_require__(62);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__ionic_native_calendar__ = __webpack_require__(227);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__ionic_native_in_app_browser__ = __webpack_require__(225);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__ionic_native_status_bar__ = __webpack_require__(306);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__ionic_native_splash_screen__ = __webpack_require__(307);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__app_component__ = __webpack_require__(507);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__providers_auth_auth__ = __webpack_require__(118);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__providers_user_data_user_data__ = __webpack_require__(21);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__providers_clients_clients__ = __webpack_require__(117);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__providers_transactions_transactions__ = __webpack_require__(266);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__providers_schedule_schedule__ = __webpack_require__(228);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__providers_documents_documents__ = __webpack_require__(508);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__providers_helpers_helpers__ = __webpack_require__(26);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__providers_mtaapi_mtaapi__ = __webpack_require__(217);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__providers_ccapi_ccapi__ = __webpack_require__(224);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__providers_cache_cache__ = __webpack_require__(218);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__providers_local_store_local_store__ = __webpack_require__(219);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__pages_login_login__ = __webpack_require__(161);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__pages_clients_clients__ = __webpack_require__(159);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__pages_transactions_transactions__ = __webpack_require__(163);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__pages_settings_settings__ = __webpack_require__(86);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__pages_business_business__ = __webpack_require__(155);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__pages_home_home__ = __webpack_require__(160);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_27__pages_client_client__ = __webpack_require__(157);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_28__pages_calendar_calendar__ = __webpack_require__(156);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_29__pages_event_event__ = __webpack_require__(85);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_30__pages_appointments_appointments__ = __webpack_require__(153);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_31__pages_navoptions_navoptions__ = __webpack_require__(162);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_32__pages_client_info_client_info__ = __webpack_require__(158);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_33__pages_document_document__ = __webpack_require__(308);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_34__pages_stripe_payment_stripe_payment__ = __webpack_require__(154);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// import { Stripe } from '@ionic-native/stripe/ngx';
+
+// import { SchedulePage } from '../pages/schedule/schedule';
+
+
+
+
+
+
+
+
+
+
+
+
+
+var AppModule = /** @class */ (function () {
+    function AppModule() {
+    }
+    AppModule = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["I" /* NgModule */])({
+            declarations: [
+                __WEBPACK_IMPORTED_MODULE_9__app_component__["a" /* MyApp */],
+                __WEBPACK_IMPORTED_MODULE_26__pages_home_home__["a" /* HomePage */],
+                __WEBPACK_IMPORTED_MODULE_21__pages_login_login__["a" /* LoginPage */],
+                // SchedulePage,
+                __WEBPACK_IMPORTED_MODULE_22__pages_clients_clients__["a" /* ClientsPage */],
+                __WEBPACK_IMPORTED_MODULE_27__pages_client_client__["a" /* ClientPage */],
+                __WEBPACK_IMPORTED_MODULE_23__pages_transactions_transactions__["a" /* TransactionsPage */],
+                __WEBPACK_IMPORTED_MODULE_24__pages_settings_settings__["a" /* SettingsPage */],
+                __WEBPACK_IMPORTED_MODULE_25__pages_business_business__["a" /* BusinessPage */],
+                __WEBPACK_IMPORTED_MODULE_28__pages_calendar_calendar__["a" /* CalendarPage */],
+                __WEBPACK_IMPORTED_MODULE_29__pages_event_event__["a" /* EventPage */],
+                __WEBPACK_IMPORTED_MODULE_30__pages_appointments_appointments__["a" /* AppointmentsPage */],
+                __WEBPACK_IMPORTED_MODULE_31__pages_navoptions_navoptions__["a" /* NavoptionsPage */],
+                __WEBPACK_IMPORTED_MODULE_32__pages_client_info_client_info__["a" /* ClientInfoPage */],
+                __WEBPACK_IMPORTED_MODULE_33__pages_document_document__["a" /* DocumentPage */],
+                __WEBPACK_IMPORTED_MODULE_34__pages_stripe_payment_stripe_payment__["a" /* StripePaymentPage */],
+            ],
+            imports: [
+                __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__["a" /* BrowserModule */],
+                __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["c" /* IonicModule */].forRoot(__WEBPACK_IMPORTED_MODULE_9__app_component__["a" /* MyApp */], {}, {
+                    links: [
+                        { loadChildren: '../pages/appointments/appointments.module#AppointmentsPageModule', name: 'AppointmentsPage', segment: 'appointments', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/appt-info/appt-info.module#ApptInfoPageModule', name: 'ApptInfoPage', segment: 'appt-info', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/business/business.module#BusinessPageModule', name: 'BusinessPage', segment: 'business', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/calendar/calendar.module#CalendarPageModule', name: 'CalendarPage', segment: 'calendar', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/client/client.module#ClientPageModule', name: 'ClientPage', segment: 'client', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/client-info/client-info.module#ClientInfoPageModule', name: 'ClientInfoPage', segment: 'client-info', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/clients/clients.module#ClientsPageModule', name: 'ClientsPage', segment: 'clients', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/document/document.module#DocumentPageModule', name: 'DocumentPage', segment: 'document', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/home/home.module#HomePageModule', name: 'HomePage', segment: 'home', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/login/login.module#LoginPageModule', name: 'LoginPage', segment: 'login', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/navoptions/navoptions.module#NavoptionsPageModule', name: 'NavoptionsPage', segment: 'navoptions', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/event/event.module#EventPageModule', name: 'EventPage', segment: 'event', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/schedule/schedule.module#SchedulePageModule', name: 'SchedulePage', segment: 'schedule', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/stripe-payment/stripe-payment.module#StripePaymentPageModule', name: 'StripePaymentPage', segment: 'stripe-payment', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/settings/settings.module#SettingsPageModule', name: 'SettingsPage', segment: 'settings', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/transactions/transactions.module#TransactionsPageModule', name: 'TransactionsPage', segment: 'transactions', priority: 'low', defaultHistory: [] }
+                    ]
+                }),
+                __WEBPACK_IMPORTED_MODULE_3__ionic_storage__["a" /* IonicStorageModule */].forRoot(),
+                __WEBPACK_IMPORTED_MODULE_4__angular_common_http__["b" /* HttpClientModule */],
+            ],
+            bootstrap: [__WEBPACK_IMPORTED_MODULE_2_ionic_angular__["a" /* IonicApp */]],
+            entryComponents: [
+                __WEBPACK_IMPORTED_MODULE_9__app_component__["a" /* MyApp */],
+                __WEBPACK_IMPORTED_MODULE_26__pages_home_home__["a" /* HomePage */],
+                __WEBPACK_IMPORTED_MODULE_21__pages_login_login__["a" /* LoginPage */],
+                // SchedulePage,
+                __WEBPACK_IMPORTED_MODULE_22__pages_clients_clients__["a" /* ClientsPage */],
+                __WEBPACK_IMPORTED_MODULE_27__pages_client_client__["a" /* ClientPage */],
+                __WEBPACK_IMPORTED_MODULE_23__pages_transactions_transactions__["a" /* TransactionsPage */],
+                __WEBPACK_IMPORTED_MODULE_24__pages_settings_settings__["a" /* SettingsPage */],
+                __WEBPACK_IMPORTED_MODULE_25__pages_business_business__["a" /* BusinessPage */],
+                __WEBPACK_IMPORTED_MODULE_28__pages_calendar_calendar__["a" /* CalendarPage */],
+                __WEBPACK_IMPORTED_MODULE_29__pages_event_event__["a" /* EventPage */],
+                __WEBPACK_IMPORTED_MODULE_30__pages_appointments_appointments__["a" /* AppointmentsPage */],
+                __WEBPACK_IMPORTED_MODULE_31__pages_navoptions_navoptions__["a" /* NavoptionsPage */],
+                __WEBPACK_IMPORTED_MODULE_32__pages_client_info_client_info__["a" /* ClientInfoPage */],
+                __WEBPACK_IMPORTED_MODULE_33__pages_document_document__["a" /* DocumentPage */],
+                __WEBPACK_IMPORTED_MODULE_34__pages_stripe_payment_stripe_payment__["a" /* StripePaymentPage */],
+            ],
+            providers: [
+                __WEBPACK_IMPORTED_MODULE_7__ionic_native_status_bar__["a" /* StatusBar */],
+                __WEBPACK_IMPORTED_MODULE_8__ionic_native_splash_screen__["a" /* SplashScreen */],
+                { provide: __WEBPACK_IMPORTED_MODULE_1__angular_core__["u" /* ErrorHandler */], useClass: __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["b" /* IonicErrorHandler */] },
+                __WEBPACK_IMPORTED_MODULE_10__providers_auth_auth__["a" /* AuthProvider */],
+                __WEBPACK_IMPORTED_MODULE_11__providers_user_data_user_data__["a" /* UserDataProvider */],
+                __WEBPACK_IMPORTED_MODULE_12__providers_clients_clients__["a" /* ClientsProvider */],
+                __WEBPACK_IMPORTED_MODULE_13__providers_transactions_transactions__["a" /* TransactionsProvider */],
+                __WEBPACK_IMPORTED_MODULE_14__providers_schedule_schedule__["a" /* ScheduleProvider */],
+                __WEBPACK_IMPORTED_MODULE_15__providers_documents_documents__["a" /* DocumentsProvider */],
+                __WEBPACK_IMPORTED_MODULE_16__providers_helpers_helpers__["a" /* HelpersProvider */],
+                __WEBPACK_IMPORTED_MODULE_17__providers_mtaapi_mtaapi__["a" /* MTAAPI */],
+                __WEBPACK_IMPORTED_MODULE_18__providers_ccapi_ccapi__["a" /* CCAPI */],
+                __WEBPACK_IMPORTED_MODULE_19__providers_cache_cache__["a" /* CacheProvider */],
+                __WEBPACK_IMPORTED_MODULE_20__providers_local_store_local_store__["a" /* LocalStoreProvider */],
+                Storage,
+                __WEBPACK_IMPORTED_MODULE_5__ionic_native_calendar__["a" /* Calendar */],
+                __WEBPACK_IMPORTED_MODULE_29__pages_event_event__["a" /* EventPage */],
+                __WEBPACK_IMPORTED_MODULE_15__providers_documents_documents__["a" /* DocumentsProvider */],
+                __WEBPACK_IMPORTED_MODULE_6__ionic_native_in_app_browser__["a" /* InAppBrowser */],
+            ]
+        })
+    ], AppModule);
+    return AppModule;
+}());
+
+//# sourceMappingURL=app.module.js.map
+
+/***/ }),
+
+/***/ 392:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AUTH_CONFIG; });
+// src/services/auth.config.ts
+var AUTH_CONFIG = {
+    // Needed for Auth0 (capitalization: ID):
+    clientID: 'KIiJdc6Akq07naDtGPlxN0uovg5mWDaY',
+    // Needed for Auth0Cordova (capitalization: Id):
+    clientId: 'KIiJdc6Akq07naDtGPlxN0uovg5mWDaY',
+    domain: 'stanbell.auth0.com',
+    packageIdentifier: 'com.dcsb.mta' // config.xml widget ID, e.g., com.auth0.ionic
+};
+//# sourceMappingURL=auth.config.js.map
+
+/***/ }),
+
+/***/ 403:
+/***/ (function(module, exports) {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ 405:
+/***/ (function(module, exports) {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ 440:
+/***/ (function(module, exports) {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ 441:
+/***/ (function(module, exports) {
+
+/* (ignored) */
+
+/***/ }),
+
+/***/ 507:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MyApp; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__ = __webpack_require__(306);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__ = __webpack_require__(307);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__auth0_cordova__ = __webpack_require__(229);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__auth0_cordova___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__auth0_cordova__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__pages_home_home__ = __webpack_require__(160);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__providers_user_data_user_data__ = __webpack_require__(21);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+
+
+var MyApp = /** @class */ (function () {
+    // pages: Array<{title: string, component: any}>;
+    function MyApp(platform, statusBar, splashScreen, ud) {
+        this.platform = platform;
+        this.statusBar = statusBar;
+        this.splashScreen = splashScreen;
+        this.ud = ud;
+        this.rootPage = __WEBPACK_IMPORTED_MODULE_5__pages_home_home__["a" /* HomePage */];
+        this.initializeApp();
+        // // used for an example of ngFor and navigation
+        // this.pages = [
+        //   { title: 'Home', component: HomePage },
+        //   { title: 'My Schedule', component: CalendarPage },
+        //   { title: 'My Clients', component: ClientsPage },
+        //   { title: 'My Transactions', component: TransactionsPage },
+        //   { title: 'My Business', component: BusinessPage },
+        //   { title: 'Settings', component: SettingsPage },
+        // ];
+    }
+    MyApp.prototype.initializeApp = function () {
+        var _this = this;
+        this.platform.ready().then(function () {
+            // Okay, so the platform is ready and our plugins are available.
+            // Here you can do any higher level native things you might need.
+            _this.statusBar.styleDefault();
+            _this.splashScreen.hide();
+            // initialize primary data store
+            _this.ud.initData();
+            // TODO: see if user already/previously logged in
+            // this.auth.
+            // Redirect back to app after authenticating
+            window.handleOpenURL = function (url) {
+                __WEBPACK_IMPORTED_MODULE_4__auth0_cordova__["Auth0Cordova"].onRedirectUri(url);
+            };
+            _this.nav.setRoot(__WEBPACK_IMPORTED_MODULE_5__pages_home_home__["a" /* HomePage */]);
+        });
+    };
+    __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_8" /* ViewChild */])(__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* Nav */]),
+        __metadata("design:type", __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* Nav */])
+    ], MyApp.prototype, "nav", void 0);
+    MyApp = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({template:/*ion-inline-start:"F:\Projects\DS\MTA\src\app\app.html"*/'<!-- <ion-menu [content]="content">\n  <ion-header>\n    <ion-toolbar>\n      <ion-title>Menu</ion-title>\n    </ion-toolbar>\n  </ion-header>\n\n  <ion-content>\n    <ion-list>\n      <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">\n        {{p.title}}\n      </button>\n    </ion-list>\n  </ion-content>\n\n</ion-menu> -->\n<!-- <ion-nav [root]="rootPage"></ion-nav> -->\n<!-- may not need to include this at all -->\n<!-- <ion-nav [root]="rootPage" #content swipeBackEnabled="true"></ion-nav> -->\n<ion-nav [root]="rootPage" swipeBackEnabled="true"></ion-nav>'/*ion-inline-end:"F:\Projects\DS\MTA\src\app\app.html"*/
+        }),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* Platform */],
+            __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__["a" /* StatusBar */],
+            __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__["a" /* SplashScreen */],
+            __WEBPACK_IMPORTED_MODULE_6__providers_user_data_user_data__["a" /* UserDataProvider */]])
+    ], MyApp);
+    return MyApp;
+}());
+
+//# sourceMappingURL=app.component.js.map
+
+/***/ }),
+
+/***/ 508:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return DocumentsProvider; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_common_http__ = __webpack_require__(62);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+/*
+  Generated class for the DocumentsProvider provider.
+
+  See https://angular.io/guide/dependency-injection for more info on providers
+  and Angular DI.
+*/
+var DocumentsProvider = /** @class */ (function () {
+    function DocumentsProvider(http) {
+        this.http = http;
+        console.log('Hello DocumentsProvider Provider');
+    }
+    DocumentsProvider = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["A" /* Injectable */])(),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_0__angular_common_http__["a" /* HttpClient */]])
+    ], DocumentsProvider);
+    return DocumentsProvider;
+}());
+
+//# sourceMappingURL=documents.js.map
+
+/***/ }),
+
+/***/ 85:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return EventPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_user_data_user_data__ = __webpack_require__(21);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_helpers_helpers__ = __webpack_require__(26);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__stripe_payment_stripe_payment__ = __webpack_require__(154);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__ionic_native_in_app_browser__ = __webpack_require__(225);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__types_types__ = __webpack_require__(27);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__types_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__types_types__);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+
+
+var EventPage = /** @class */ (function () {
+    function EventPage(navCtrl, navParams, plt, iab, helper, ud) {
+        this.navCtrl = navCtrl;
+        this.navParams = navParams;
+        this.plt = plt;
+        this.iab = iab;
+        this.helper = helper;
+        this.ud = ud;
+        // this.mode = navParams.get('mode');
+        this.event = navParams.get('event');
+        this.displayDate = (new Date(this.event.start).toLocaleDateString());
+        this.displayStart = (new Date(this.event.start).toLocaleTimeString());
+        this.displayEnd = (new Date(this.event.end).toLocaleTimeString());
+        this.eventDate = new Date(this.event.start);
+        this.future = (this.eventDate.valueOf() > Date.now()); // future, can edit
+    }
+    EventPage.prototype.ionViewDidLoad = function () {
+        console.log('ionViewDidLoad EventPage');
+    };
+    EventPage.prototype.ionViewDidEnter = function () {
+        var _this = this;
+        console.log('ionViewDidEnter EventPage');
+        this.initialTransactions = this.matchTransactions(this.event.transactions, this.ud.userData.transactions);
+        this.initialTransactions.forEach(function (e) { return e.type = _this.helper.upshiftInitial(e.type); });
+        this.transactions = this.helper.deepCopy(this.initialTransactions);
+        this.transactions.forEach(function (e) {
+            e['formattedAmount'] = (e.amount >= 0) ? e.amount.toFixed(2) : "(" + (0 - e.amount).toFixed(2) + ")";
+        });
+    };
+    EventPage.prototype.pay = function () {
+        console.log('pay');
+        switch (this.ud.userData.user.acceptPayments) {
+            case 'stripe':
+                this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_4__stripe_payment_stripe_payment__["a" /* StripePaymentPage */], {
+                    event: this.event
+                });
+                break;
+            case 'square':
+                break;
+            case 'paypal':
+                break;
+            case 'self':
+                // just let them key in amount paid?
+                break;
+            default:
+                break;
+        }
+    };
+    EventPage.prototype.matchTransactions = function (trans, source) {
+        var t = new Array();
+        trans.forEach(function (i) { return t.push(i.uniqueId); });
+        return source.filter(function (x) { return t.indexOf(x.uniqueId) !== -1; });
+        // var filteredTrans = source.filter(x => t.indexOf(x.uniqueId) !== -1);
+        // return filteredTrans;
+    };
+    EventPage.prototype.paySquare = function () {
+        console.log('paySquare');
+        if (this.plt.is('cordova')) {
+            alert('cordova');
+            var browser_1 = this.iab.create('../../assets/pages/sqpaymentform.html', '_blank', 'location=no');
+            // const browser = this.iab.create('http://stanbell.com', '_blank', 'location=no');
+            this.ls = browser_1.on('loadstop').subscribe(function (x) {
+                alert('loaded');
+                console.log('loaded');
+                browser_1.insertCSS({ file: '../../assets/pages/sqpaymentform-basic.css' });
+                // browser.executeScript({code: 'paymentForm.build();'}).then(() => alert('paymentForm BUILT'));
+                browser_1.executeScript({ code: 'force();' }).then(function () { return alert('forced'); });
+                // browser.executeScript({code: 'alert("code");'}).then(() => alert('return'));
+            });
+        }
+        else {
+            alert('window');
+            window.open('../../assets/pages/sqpaymentform.html', '_blank');
+        }
+    };
+    EventPage = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
+            selector: 'page-event',template:/*ion-inline-start:"F:\Projects\DS\MTA\src\pages\event\event.html"*/'\n<ion-header>\n  <ion-navbar>\n    <ion-title>Appointment</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n  <p>{{event.providerItemId}}</p>\n  <ion-grid>\n    <div class="box">\n      <ion-row justify-content-center>\n        <p>{{displayDate}}</p>\n      </ion-row>\n      <ion-row justify-content-center>\n        <p>{{displayStart}} to {{displayEnd}}</p>\n      </ion-row>\n      <ion-row justify-content-center>\n        <p>Client: {{event.clientName}}</p>\n      </ion-row>\n      <ion-row justify-content-center>\n        <p>Service: {{event.serviceDescription}}</p>\n      </ion-row>\n    </div>\n    <ion-row><br></ion-row>\n    <div class="listInBox">\n      <ion-row justify-content-center>\n        <p>Note</p>\n      </ion-row>\n      <ion-row justify-content-center>\n        <p>{{event.visitNote}}</p>\n      </ion-row>\n    </div>\n    <ion-row><br></ion-row>\n    <div class="listInBox">\n      <ion-row justify-content-center>\n        <p>Transaction</p>\n      </ion-row>\n      <ion-row class="revenue">\n        <ion-col col-3 align-self-start>\n          <p>Revenue</p>\n        </ion-col>\n        <ion-col col-5 align-self-center>\n          <p *ngIf="event.pd">\n            <ion-icon name="checkmark-circle"></ion-icon> Paid\n          </p>\n          <p *ngIf="!event.pd" (click)="pay()" style="color: black !important;" >\n            <ion-icon name="card" ></ion-icon> Pay Now\n          </p>\n        </ion-col>\n        <ion-col col-3 align-self-end>\n          <p class="number">{{event.revenue.toFixed(2)}}</p>\n        </ion-col>\n      </ion-row>\n      <ion-row *ngFor="let t of transactions">\n        <ion-col col-2>\n          <p>{{t.type}}</p>\n        </ion-col>\n        <ion-col col-7>\n          <p>{{t.description}}</p>\n        </ion-col>\n        <ion-col col-3>\n          <p class="number">{{t.formattedAmount}}</p>\n        </ion-col>\n      </ion-row>\n    </div>\n  </ion-grid>\n</ion-content>'/*ion-inline-end:"F:\Projects\DS\MTA\src\pages\event\event.html"*/,
+        }),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavParams */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* Platform */],
+            __WEBPACK_IMPORTED_MODULE_5__ionic_native_in_app_browser__["a" /* InAppBrowser */],
+            __WEBPACK_IMPORTED_MODULE_3__providers_helpers_helpers__["a" /* HelpersProvider */],
+            __WEBPACK_IMPORTED_MODULE_2__providers_user_data_user_data__["a" /* UserDataProvider */]])
+    ], EventPage);
+    return EventPage;
+}());
+
+//# sourceMappingURL=event.js.map
+
+/***/ }),
+
+/***/ 86:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SettingsPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_user_data_user_data__ = __webpack_require__(21);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+/**
+ * Generated class for the SettingsPage page.
+ *
+ * See https://ionicframework.com/docs/components/#navigation for more info on
+ * Ionic pages and navigation.
+ */
+var SettingsPage = /** @class */ (function () {
+    function SettingsPage(navCtrl, navParams, ud) {
+        this.navCtrl = navCtrl;
+        this.navParams = navParams;
+        this.ud = ud;
+        this.biz = ud.userData.user;
+    }
+    SettingsPage = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
+            selector: 'page-settings',template:/*ion-inline-start:"F:\Projects\DS\MTA\src\pages\settings\settings.html"*/'<ion-header>\n  <ion-navbar>\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>Settings</ion-title>\n  </ion-navbar>\n</ion-header>\n\n\n<ion-content padding>\n  <ion-grid>\n    <ion-row>\n      <ion-col col-12>\n        <ion-item>\n          <ion-label>\n            Who may complete intake/history?\n          </ion-label>\n          <ion-select [(ngModel)]="biz.whoIntake">\n            <ion-option value="client">Allow clients</ion-option>\n            <ion-option value="user">Therapist only</ion-option>\n          </ion-select>\n        </ion-item>\n      </ion-col>\n    </ion-row>\n    <ion-row>\n      <ion-col col-12>\n        <ion-item>\n          <ion-label>\n            List clients active within\n          </ion-label>\n          <ion-select [(ngModel)]="biz.listActive">\n            <ion-option value="1m">1 Month</ion-option>\n            <ion-option value="6m">6 Months</ion-option>\n            <ion-option value="1y">1 Year</ion-option>\n          </ion-select>\n        </ion-item>\n      </ion-col>\n    </ion-row>\n    <ion-row>\n      <ion-col col-12>\n        <ion-item>\n          <ion-label>\n            Sort client list by\n          </ion-label>\n          <ion-select [(ngModel)]="biz.sortClientsBy">\n            <ion-option value="first">First Name</ion-option>\n            <ion-option value="last">Last Name</ion-option>\n          </ion-select>\n        </ion-item>\n      </ion-col>\n    </ion-row>\n    <ion-row>\n      <ion-col col-12>\n        <ion-item>\n          <ion-label>\n            Use Calendar\n          </ion-label>\n          <ion-select [(ngModel)]="biz.useCalendar">\n            <ion-option value="native">Native (iOS or Google)</ion-option>\n            <ion-option value="app">In-App Calendar</ion-option>\n          </ion-select>\n        </ion-item>\n      </ion-col>\n    </ion-row>\n\n    <ion-row>\n      <ion-col col-12>\n        <ion-item>\n          <ion-label>\n            Who can schedule?\n          </ion-label>\n          <ion-select [(ngModel)]="biz.whoSchedule">\n            <ion-option value="client">Clients can self-schedle</ion-option>\n            <ion-option value="user">Therapist only</ion-option>\n          </ion-select>\n        </ion-item>\n      </ion-col>\n    </ion-row>\n    <ion-row>\n      <ion-col col-12>\n        <ion-item>\n          <ion-label>\n            Automatically Log Out\n          </ion-label>\n          <ion-select [(ngModel)]="biz.autoLogOut">\n            <ion-option value="yes">Log out after 2 hours idle</ion-option>\n            <ion-option value="no">Don\'t auto log out</ion-option>\n          </ion-select>\n        </ion-item>\n      </ion-col>\n    </ion-row>\n    <ion-row>\n      <ion-col col-12>\n        <ion-label fixed>email daily schedule to: </ion-label>\n        <ion-input type="text" [(ngModel)]="biz.emailSchedule"></ion-input>\n      </ion-col>\n    </ion-row>\n    <ion-row>\n      <ion-col col-12>\n        <ion-label fixed>default title for new appts: </ion-label>\n        <ion-input type="text" [(ngModel)]="biz.defaultApptTitle"></ion-input>\n      </ion-col>\n    </ion-row>\n    <ion-row>\n      <ion-col col-6>\n        <div>Service Types</div>\n      </ion-col>\n      <ion-col col-6>\n        <div>Duration</div>\n      </ion-col>\n    </ion-row>\n    <ion-row>\n      <ion-col col-12>\n        <ion-item>\n          <ion-label>\n            Accept Payments in App\n          </ion-label>\n          <ion-select [(ngModel)]="biz.acceptPayments">\n            <ion-option value="stripe">with Stripe</ion-option>\n            <ion-option value="paypal">with PayPal</ion-option>\n            <ion-option value="self">My own merchant account</ion-option>\n            <ion-option value="none">No, not in the app</ion-option>\n          </ion-select>\n        </ion-item>\n      </ion-col>\n    </ion-row>\n  </ion-grid>\n  <ion-item>\n    <ion-label color="primary">External Calendar</ion-label>\n  </ion-item>\n  \n  <ion-list radio-group [(ngModel)]="biz.calendar.provider">\n    <ion-item>\n      <ion-label>Apple iCal</ion-label>\n      <ion-radio value="iCal"></ion-radio>\n    </ion-item>\n    <ion-item>\n      <ion-label>Google</ion-label>\n      <ion-radio value="google"></ion-radio>\n    </ion-item>\n    <ion-item>\n      <ion-label>None, use app calendar only</ion-label>\n      <ion-radio value=""></ion-radio>\n    </ion-item>\n  </ion-list>\n  <div *ngIf="biz.calendar.provider!=\'\'">\n    <ion-item>\n      <ion-label color="primary">Name</ion-label>\n      <ion-input type="text" [(ngModel)]="biz.calendar.name"></ion-input>\n    </ion-item>\n    <ion-item>\n      <ion-label color="primary">Connection Info</ion-label>\n      <ion-checkbox [(ngModel)]="biz.calendar.connectionInfo"></ion-checkbox>\n    </ion-item>\n  </div>\n  <div *ngIf="biz.calendar.acceptPayments!=\'none\'">\n    <ion-item>\n      <ion-label color="primary">Merchant Key</ion-label>\n      <ion-input type="text" [(ngModel)]="biz.stripe.secretKey"></ion-input>\n    </ion-item>\n    <ion-item>\n      <ion-label color="primary">Transaction Fee (%)</ion-label>\n      <ion-input type="text" [(ngModel)]="biz.stripe.fee"></ion-input>\n    </ion-item>\n  </div>\n    <ion-row>\n      <ion-col col-12>\n    <button ion-button (click)="save()">Save</button>\n    <button ion-button (click)="cancel()">Cancel</button>\n      </ion-col>\n    </ion-row>\n    <!-- <button ion-button [disabled]="!biz.businessName" (click)="save()">Save</button> -->\n</ion-content>'/*ion-inline-end:"F:\Projects\DS\MTA\src\pages\settings\settings.html"*/,
+        }),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavParams */],
+            __WEBPACK_IMPORTED_MODULE_2__providers_user_data_user_data__["a" /* UserDataProvider */]])
+    ], SettingsPage);
+    return SettingsPage;
+}());
+
+//# sourceMappingURL=settings.js.map
+
+/***/ })
+
+},[309]);
+//# sourceMappingURL=main.js.map

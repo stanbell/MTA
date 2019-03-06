@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { TransactionsProvider } from '../../providers/transactions/transactions';
 import { HelpersProvider } from '../../providers/helpers/helpers';
+import { UserDataProvider } from '../../providers/user-data/user-data';
 
 @IonicPage()
 @Component({
@@ -15,7 +16,8 @@ export class TransactionsPage {
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
     public helper: HelpersProvider,
-    public trans: TransactionsProvider) {
+    public trans: TransactionsProvider,
+    public ud: UserDataProvider) {
     trans.read();
   }
   
@@ -40,6 +42,7 @@ export class TransactionsPage {
     let ttl: number = 0;
     for (let i = 0; i<this.trans.transactions.length; i++) {
       this.itemsList.push(this.trans.transactions[i]);
+      this.itemsList[i]['clientName'] = this.findClientName(this.itemsList[i].apptId);
       let d = new Date(this.itemsList[i].date);
       let y = d.getFullYear().toString();
       y = y.substr(2, 2);
@@ -54,4 +57,12 @@ export class TransactionsPage {
     }
     this.itemsList.push({shortDate:'', description: 'Total', formattedAmount: ttl.toFixed(2), reconciledIcon: 'none'})
   }
+
+  findClientName(apptId: string): string {
+    var result: ScheduleItemType[] = this.ud.userData.schedule.filter(obj => {
+      return obj.id === apptId
+    })
+    return result[0].clientName;
+  }
+
 }

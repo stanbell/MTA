@@ -16,16 +16,16 @@ import { UserDataProvider } from '../../providers/user-data/user-data';
 })
 export class SettingsPage {
 
-  clientSchedule: boolean = false;
-  listActive: string = "1m";
-  sortClientsBy: string = "last";
-  useCalendar: string = 'app';
-  chargeCC: string = 'self';
-  whoSchedule: string = 'user';
-  whoIntake: string = 'user';
-  defaultApptTitle: string = 'Massage';
-  emailSchedule: string = '';
-  autoLogOut: string = 'no';
+  // clientSchedule: boolean = false;
+  // listActive: string = "1m";
+  // sortClientsBy: string = "last";
+  // useCalendar: string = 'app';
+  // chargeCC: string = 'self';
+  // whoSchedule: string = 'user';
+  // whoIntake: string = 'user';
+  // defaultApptTitle: string = 'Massage';
+  // emailSchedule: string = '';
+  // autoLogOut: string = 'no';
   biz: UserInfoType;
 
   constructor(public navCtrl: NavController, 

@@ -35,4 +35,8 @@ export class HelpersProvider {
     }
     throw new Error("Unable to copy obj! Its type isn't supported.");
   }
+
+  upshiftInitial(str: string): string {
+    return str.slice(0, 1).toUpperCase() + str.slice(1);
+  }
 }

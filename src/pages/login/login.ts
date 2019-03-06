@@ -22,7 +22,7 @@ export class LoginPage {
   }
 
   async mockLogIn() {
-    this.ud.userId = 'mary';
+    this.ud.userId = 'joe';
     await this.ud.readIdNumber();
     await this.ud.readData();
     this.auth.loggedIn = true;

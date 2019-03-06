@@ -7,6 +7,10 @@ import '../../types/types';
 const CACHE_ID = 'MTA_DATA';
 const SERVER_ROUTE = 'contents';
 
+// TODO: encrypt/decrypt package/unpackage before reads/wrires
+const MASTER_KEY = "Two roads diverged in a yellow wood,"
+// robert frost, the road not taken
+
 // login get user name  (temp, replace with authentication service to get user #)
 // login look up user id #
 // user-data get user data w/id #
@@ -18,7 +22,7 @@ export class UserDataProvider {
   userIdNumber: string;
   userData: UserDataType;
 
-   constructor(
+  constructor(
     public helper: HelpersProvider,
     private cache: CacheProvider,
     private api: MTAAPI) {
@@ -130,7 +134,7 @@ export class UserDataProvider {
     try {
       // console.log('writeServer', data);
       this.api.putData(SERVER_ROUTE + '/' + this.userIdNumber, JSON.stringify(data))
-        // .then((d) => { console.log('wrote ', d); });
+      // .then((d) => { console.log('wrote ', d); });
       console.log('wrote ' + SERVER_ROUTE + '/' + this.userIdNumber);
     }
     catch (err) {
@@ -170,7 +174,8 @@ export class UserDataProvider {
       emailSchedule: '',
       autoLogOut: 'no',
       stripe: {
-        publishableKey: ""
+        secretKey: "",
+        fee: 0
       },
       paypal: {
         key: ""

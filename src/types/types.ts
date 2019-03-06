@@ -15,7 +15,8 @@ interface ContactInfoType {
 }
 
 interface StripePaymentsType {
-    publishableKey: string
+    secretKey: string,
+    fee: number
 }
 interface PayPalPaymentsType {
     key: string
@@ -29,7 +30,7 @@ interface UserInfoType {
     businessName: string,
     address: AddressType,
     contacts: ContactInfoType[],
-        // following are settings
+    // following are settings
     calendar: CalendarType,
     defaultApptTitle: string,
     listActive: string,
@@ -54,20 +55,55 @@ interface CalendarType {
 }
 
 interface TransPartyType {
-  id: string,  // client or service provider
-  description: string,
-  // sum of $$ over time?  no, save that for reporting
+    id: string,  // client or service provider
+    description: string,
+    // sum of $$ over time?  no, save that for reporting
+}
+
+interface CCardType {
+    number: string,
+    expMonth: string,
+    expYear: string,
+    cvc: string
+}
+
+interface PaymentRequestType {
+    accountId: string,
+    client: string,
+    service: string,
+    statementDescription: string,
+    transId: string,
+    method: string,
+    methodData: {},
+    amount: number,
+    card: CCardType,
+    cardNonce: string
+}
+
+interface PaymentRequestResponseType {
+    id: string,
+    processorId: string,
+    amount: number,
+    created: number,
+    currency: string,
+    description: string,
+    failure_code: string,
+    failure_message: string,
+    paid: boolean,
+    // statement_descriptor: string,
+    status: string
 }
 
 interface TransactionType {
-  uniqueId: string,
-  type: string,  // revenue (my services), service charges (i paid)
-  description: string,
-  amount: number,
-  date: string,
-  reconciled: boolean,
-  partyType: string, // client or service provider (ie, bank, cc processor="pp")
-  party: TransPartyType,
+    uniqueId: string,
+    apptId: string,
+    type: string,  // revenue (my services), service charges (i paid)
+    description: string,
+    amount: number,
+    date: string,
+    reconciled: boolean,
+    partyType: string, // client or service provider (ie, bank, cc processor="pp")
+    party: TransPartyType,
 }
 
 interface ClientType {
@@ -82,7 +118,7 @@ interface ClientType {
 }
 
 interface ScheduleItemType {
-    nn: string,  // of the individual event
+    id: string,  // of the individual event
     calendar: string,
     provider: string, // ical or google?
     providerItemId: string, // of the event
