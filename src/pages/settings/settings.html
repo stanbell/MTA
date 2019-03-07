@@ -110,6 +110,43 @@
         <div>Duration</div>
       </ion-col>
     </ion-row>
+
+    <ion-row>
+      <ion-item>
+        <ion-label color="primary">External Calendar</ion-label>
+      </ion-item>
+    </ion-row>
+    <ion-row>
+      <ion-list radio-group [(ngModel)]="biz.calendar.provider">
+        <ion-item>
+          <ion-label>Apple iCal</ion-label>
+          <ion-radio value="iCal"></ion-radio>
+        </ion-item>
+        <ion-item>
+          <ion-label>Google</ion-label>
+          <ion-radio value="google"></ion-radio>
+        </ion-item>
+        <ion-item>
+          <ion-label>None, use app calendar only</ion-label>
+          <ion-radio value=""></ion-radio>
+        </ion-item>
+      </ion-list>
+    </ion-row>
+
+    <div *ngIf="biz.calendar.provider!=''">
+      <ion-row>
+        <ion-item>
+          <ion-label color="primary">Name</ion-label>
+          <ion-input type="text" [(ngModel)]="biz.calendar.name"></ion-input>
+        </ion-item>
+      </ion-row>
+      <ion-row>
+        <ion-item>
+          <ion-label color="primary">Connection Info</ion-label>
+          <ion-checkbox [(ngModel)]="biz.calendar.connectionInfo"></ion-checkbox>
+        </ion-item>
+      </ion-row>
+    </div>
     <ion-row>
       <ion-col col-12>
         <ion-item>
@@ -118,6 +155,7 @@
           </ion-label>
           <ion-select [(ngModel)]="biz.acceptPayments">
             <ion-option value="stripe">with Stripe</ion-option>
+            <ion-option value="square">with Square</ion-option>
             <ion-option value="paypal">with PayPal</ion-option>
             <ion-option value="self">My own merchant account</ion-option>
             <ion-option value="none">No, not in the app</ion-option>
@@ -126,35 +164,7 @@
       </ion-col>
     </ion-row>
   </ion-grid>
-  <ion-item>
-    <ion-label color="primary">External Calendar</ion-label>
-  </ion-item>
-  
-  <ion-list radio-group [(ngModel)]="biz.calendar.provider">
-    <ion-item>
-      <ion-label>Apple iCal</ion-label>
-      <ion-radio value="iCal"></ion-radio>
-    </ion-item>
-    <ion-item>
-      <ion-label>Google</ion-label>
-      <ion-radio value="google"></ion-radio>
-    </ion-item>
-    <ion-item>
-      <ion-label>None, use app calendar only</ion-label>
-      <ion-radio value=""></ion-radio>
-    </ion-item>
-  </ion-list>
-  <div *ngIf="biz.calendar.provider!=''">
-    <ion-item>
-      <ion-label color="primary">Name</ion-label>
-      <ion-input type="text" [(ngModel)]="biz.calendar.name"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label color="primary">Connection Info</ion-label>
-      <ion-checkbox [(ngModel)]="biz.calendar.connectionInfo"></ion-checkbox>
-    </ion-item>
-  </div>
-  <div *ngIf="biz.calendar.acceptPayments!='none'">
+  <div *ngIf="biz.acceptPayments=='stripe'">
     <ion-item>
       <ion-label color="primary">Merchant Key</ion-label>
       <ion-input type="text" [(ngModel)]="biz.stripe.secretKey"></ion-input>
@@ -164,11 +174,29 @@
       <ion-input type="text" [(ngModel)]="biz.stripe.fee"></ion-input>
     </ion-item>
   </div>
-    <ion-row>
-      <ion-col col-12>
-    <button ion-button (click)="save()">Save</button>
-    <button ion-button (click)="cancel()">Cancel</button>
-      </ion-col>
-    </ion-row>
-    <!-- <button ion-button [disabled]="!biz.businessName" (click)="save()">Save</button> -->
+  <div *ngIf="biz.acceptPayments=='square'">
+    <ion-item>
+      <ion-label color="primary">Application ID</ion-label>
+      <ion-input type="text" [(ngModel)]="biz.square.applicationId"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label color="primary">Access Token</ion-label>
+      <ion-input type="text" [(ngModel)]="biz.square.accessToken"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label color="primary">Location ID</ion-label>
+      <ion-input type="text" [(ngModel)]="biz.square.locationId"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label color="primary">Transaction Fee (%)</ion-label>
+      <ion-input type="text" [(ngModel)]="biz.square.fee"></ion-input>
+    </ion-item>
+  </div>
+  <ion-row>
+    <ion-col col-12>
+      <button ion-button (click)="save()">Save</button>
+      <button ion-button (click)="cancel()">Cancel</button>
+    </ion-col>
+  </ion-row>
+  <!-- <button ion-button [disabled]="!biz.businessName" (click)="save()">Save</button> -->
 </ion-content>
