@@ -18,6 +18,12 @@ interface StripePaymentsType {
     secretKey: string,
     fee: number
 }
+interface SquarePaymentsType {
+    applicationId: string,
+    accessToken: string,
+    locationId: string,
+    fee: number
+}
 interface PayPalPaymentsType {
     key: string
 }
@@ -42,6 +48,7 @@ interface UserInfoType {
     autoLogOut: string,
     acceptPayments: string,
     stripe: StripePaymentsType,
+    square: SquarePaymentsType,
     paypal: PayPalPaymentsType,
     merch: MerchantAcctType
 }

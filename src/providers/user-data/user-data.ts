@@ -31,19 +31,25 @@ export class UserDataProvider {
   initData() {
     this.userData = this.emptyUserData;
   }
-
+  
   clearData() {
     this.userData = this.emptyUserData;
   }
-
+  
   async readIdNumber() {
     let serverReadData = await this.api.getData('mtausers/' + this.userId);
     console.log(serverReadData);
     let serverReadObject = JSON.parse(serverReadData);
     this.userIdNumber = serverReadObject['contentsId'];
   }
-
+  
   async readData() {
+    
+    // DEBUG
+    // ******************************* remove for production*************
+    this.cache.clearCache();
+    // *****************************************
+
     // also reconciles most recent
     let localData: UserDataType = this.emptyUserData;
     let serverData: UserDataType = this.emptyUserData;
@@ -96,11 +102,6 @@ export class UserDataProvider {
     try {
       serverReadData = await this.api.getData(SERVER_ROUTE + '/' + this.userIdNumber);  // TODO needs a value for the getData parameter
       serverReadObject = JSON.parse(serverReadData);
-      // console.log('readServer ', serverReadData);
-      // console.log('readServer ', serverReadObject);
-      // note might be empty, so may stay empty after read
-      // const t = { ...this.emptyUserData, ...serverReadObject };
-      // console.log(t);
       return { ...this.emptyUserData, ...serverReadObject };
     }
     catch (err) {
@@ -175,6 +176,12 @@ export class UserDataProvider {
       autoLogOut: 'no',
       stripe: {
         secretKey: "",
+        fee: 0
+      },
+      square: {
+        applicationId: "",
+        accessToken: "",
+        locationId: "",
         fee: 0
       },
       paypal: {
