@@ -10,7 +10,7 @@ import { UserDataProvider } from '../../providers/user-data/user-data';
   templateUrl: 'transactions.html',
 })
 export class TransactionsPage {
-
+  filter: any;
   itemsList: any;
 
   constructor(public navCtrl: NavController,
@@ -18,6 +18,7 @@ export class TransactionsPage {
     public helper: HelpersProvider,
     public trans: TransactionsProvider,
     public ud: UserDataProvider) {
+      this.filter = navParams.get('client');
     trans.read();
   }
   
@@ -38,6 +39,10 @@ export class TransactionsPage {
   }
 
   populateItems() {
+
+    // WORKING HERE:  edit to filter for one client only
+    // this.filter
+
     this.itemsList = [];
     let ttl: number = 0;
     for (let i = 0; i<this.trans.transactions.length; i++) {

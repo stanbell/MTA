@@ -16,7 +16,8 @@ export class LoginPage {
     public ud: UserDataProvider) {
   }
 
-  logIn() {
+  login() {
+    console.log('logging in');
     this.auth.login();
     this.navCtrl.pop();
   }

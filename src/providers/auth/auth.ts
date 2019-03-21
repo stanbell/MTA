@@ -32,6 +32,8 @@ export class AuthProvider {
     this.loading = true;
     const options = {
       scope: 'openid profile offline_access'
+      // initialScreen
+      // audience: 'https://${auth0Config.domain}/userInfo'
     };
     // Authorize login request with Auth0: open login page and get auth results
     this.Client.authorize(options, (err, authResult) => {

@@ -5,6 +5,7 @@ import { HelpersProvider } from '../../providers/helpers/helpers';
 import { AppointmentsPage } from '../appointments/appointments';
 import { ClientInfoPage } from '../client-info/client-info';
 import '../../types/types';
+import { TransactionsPage } from '../transactions/transactions';
 
 @IonicPage()
 @Component({
@@ -43,6 +44,15 @@ export class ClientPage {
         this.navCtrl.push(AppointmentsPage, {
           client: this.item,
               // TODO this needs to be calculated from the users's preferred date range
+          start: new Date(Date.now()-FifteenDays).toISOString()
+        });
+        break;
+      case 'trans':
+        this.navCtrl.push(TransactionsPage, {
+          // sending a filter value to show only this client's trans
+          client: this.item,
+              // TODO this needs to be calculated from the users's preferred date range
+              // maybe or maybe not need this for trans
           start: new Date(Date.now()-FifteenDays).toISOString()
         });
         break;

@@ -7,14 +7,10 @@ export class MTAAPI {
         console.log('Constructor MTAAPI Provider');
     }
 
-    // apiURL = 'http://api.cpmez.com:22000/CarePlan/';
     // apiURL = 'http://127.0.0.1:18000/MTA/';
     // apiURL = 'http://35.162.31.157:18000/MTA/';  // elastic ip
-    apiURL = 'http://api.dcsbdn.us:18000/MTA/'; // domain
+    apiURL = 'https://api.dcsbdn.us:18000/MTA/'; // domain
     // local apiURL = 'http://127.0.0.1:18000/MTA/';
-    // elastice ip apiURL = 'http://ec2-34-195-4-230.compute-1.amazonaws.com:22000/CarePlan/';
-    // no longer valid ip apiURL = 'http://34.229.7.109:22000/CarePlan/';
-    // old instance apiURL = 'http://ec2-34-229-7-109.compute-1.amazonaws.com:22000/CarePlan/';
 
     getData(route: string): Promise<string> {
         // console.log('getData', route);

@@ -11,7 +11,8 @@
   <p *ngIf="auth.loading" text-center>Loading...</p>
   <ng-template [ngIf]="!auth.loading">
     <!-- Not loading, not logged in: show login button -->
-    <button ion-button block color="secondary" *ngIf="!auth.loggedIn" (click)="auth.login()">Log In</button>
+    <!-- <button ion-button block color="secondary" *ngIf="!auth.loggedIn" (click)="auth.login()">Log In</button> -->
+    <button ion-button block color="secondary" *ngIf="!auth.loggedIn" (click)="login()">Log In</button>
     <!-- Not loading, logged in: show profile and logout button -->
     <ng-template [ngIf]="auth.loggedIn">
       <ion-card *ngIf="auth.user">
