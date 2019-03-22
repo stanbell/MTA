@@ -10,6 +10,7 @@ page-calendar {
   .col {
     text-align: center;
     padding: 5px;
+    font-size: 1.5rem;
   }
   .last-month, .next-month {
     color: #999999;
@@ -76,7 +77,7 @@ page-calendar {
   // p {
     // }
   .eventList {
-    font-size: smaller !important;
+    font-size: 1.2rem !important;
     text-align: start !important;
     padding-left: 0 !important;
     padding-right: 0 !important;
