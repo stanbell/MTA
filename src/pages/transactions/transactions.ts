@@ -52,11 +52,9 @@ export class TransactionsPage {
       const cName = this.findClientName(this.trans.transactions[i].apptId);
       if (filter) {  // if filtering
         if (cName !== filter) {  // skip if doesn't match
-          console.log('doesnt match ', cName);
           continue;
         }
       }
-      console.log('should match ', cName);
       this.itemsList.push(this.trans.transactions[i]);
       const j = this.itemsList.length - 1;  // last one added
       this.itemsList[j]['clientName'] = cName;
