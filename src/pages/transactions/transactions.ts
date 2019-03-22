@@ -13,12 +13,14 @@ export class TransactionsPage {
   mainTransPage: boolean = true;
   filter: ClientType;
   itemsList: any;
+  transStartDate: any;
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
     public helper: HelpersProvider,
     public trans: TransactionsProvider,
     public ud: UserDataProvider) {
+      // TODO:  get user prefs and set transStartDate
     this.filter = navParams.get('client');
     this.mainTransPage = (!!this.filter) ? false : true; 
     trans.read();
@@ -26,8 +28,6 @@ export class TransactionsPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad TransactionsPage');
-    // console.log('trans', this.trans.transactions);
-    // console.log((this.filter) ? this.filter.name : 'no filter');
     (this.filter) ? this.populateItems(this.filter.name) : this.populateItems();
     // console.log(this.itemsList);
     
@@ -43,6 +43,7 @@ export class TransactionsPage {
 
   }
 
+  // TODO:  also filter to user preferences for transStartDate
   populateItems(filter?: string) {
 
     this.itemsList = [];

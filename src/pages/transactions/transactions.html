@@ -15,55 +15,71 @@
 
   <div *ngIf="itemsList">
     <ion-grid>
-
+      <ion-row>
+        <ion-col col-9>
+          Transactions since {{transStartDate}}
+        </ion-col>
+        <ion-col col-3>
+        </ion-col>
+      </ion-row>
       <ion-row *ngIf="mainTransPage">
         <ion-col col-9>
         </ion-col>
         <ion-col col-3>
-          <button class="editButton" ion-button>Edit</button>
+          <button class="editButton" ion-button (click)="editingNow=!editingNow">Edit</button>
         </ion-col>
       </ion-row>
       <!-- header -->
       <div class="box">
-      <ion-row>
-        <ion-col col-2>
-          <p>Date</p>
-        </ion-col>
-        <ion-col col-3>
-          <p>Client</p>
-        </ion-col>
-        <ion-col col-3>
-          <p>Desc</p>
-        </ion-col>
-        <ion-col col-3>
-          <p float-right>Amt</p>
-        </ion-col>
-        <ion-col col-1>
-          <p>R</p>
-        </ion-col>
-      </ion-row>
+        <ion-row>
+          <ion-col col-2>
+            <p>Date</p>
+          </ion-col>
+          <ion-col col-3>
+            <p>Client</p>
+          </ion-col>
+          <ion-col col-3>
+            <p>Desc</p>
+          </ion-col>
+          <ion-col col-3>
+            <p float-right>Amt</p>
+          </ion-col>
+          <ion-col col-1>
+            <p>R</p>
+          </ion-col>
+        </ion-row>
       </div>
       <!-- <div ion-item no-lines *ngFor="let z of itemsList"> -->
-        <div class="listInBox">
-      <ion-row *ngFor="let z of itemsList" (click)="choose(z)">
-        <ion-col class="transList" col-2>
-          <p>{{z.shortDate}}</p>
-        </ion-col>
-        <ion-col class="transList" col-3>
-          <p>{{z.clientName}}</p>
-        </ion-col>
-        <ion-col class="transList" col-3>
-          <p>{{z.description}}</p>
+      <div class="listInBox">
+        <ion-row *ngFor="let z of itemsList" (click)="choose(z)">
+          <ion-col class="transList" col-2>
+            <p>{{z.shortDate}}</p>
+          </ion-col>
+          <ion-col class="transList" col-3>
+            <p>{{z.clientName}}</p>
+          </ion-col>
+          <ion-col class="transList" col-3>
+            <p>{{z.description}}</p>
+          </ion-col>
+          <ion-col col-3>
+            <p float-right>{{z.formattedAmount}}</p>
+          </ion-col>
+          <ion-col *ngIf="editingNow" class="transList" col-1>
+            <ion-checkbox [(ngModel)]="z.reconciled"></ion-checkbox>
+            <!-- <label class="ptext goal"><em>{{g.term}}</em> {{g.text}}</label> -->
+          </ion-col>
+          <ion-col *ngIf="!editingNow" class="transList" col-1>
+            <ion-icon [name]="z.reconciledIcon"></ion-icon>
+          </ion-col>
+        </ion-row>
+      </div>
+      <ion-row *ngIf="editingNow">
+        <ion-col col-9>
         </ion-col>
         <ion-col col-3>
-          <p float-right>{{z.formattedAmount}}</p>
-        </ion-col>
-        <ion-col class="transList" col-1>
-          <!-- <ion-icon [name]="z.reconciledIcon" [color]="project.likedBy ? 'danger' : 'dark'"></ion-icon> -->
-          <ion-icon [name]="z.reconciledIcon"></ion-icon>
+          <button class="editButton" ion-button (click)="save()">Save</button>
         </ion-col>
       </ion-row>
-      </div>
       <!-- </div> -->
     </ion-grid>
   </div>
