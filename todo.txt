@@ -1,0 +1,10 @@
+consolidate intake form client name/addr/etc with client info page
+    probably drop elements from intake, or else copy from intake to client
+
+show calendar days with appt's different bkgrnd than standard days
+
+add appt
+
+add client
+
+client sep first and last name
