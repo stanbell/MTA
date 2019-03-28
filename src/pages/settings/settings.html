@@ -9,99 +9,215 @@
 
 
 <ion-content padding>
-  <ion-grid>
-    <ion-row>
-      <ion-col col-12>
-        <ion-item>
-          <ion-label>
-            Who may complete intake/history?
-          </ion-label>
-          <ion-select [(ngModel)]="biz.whoIntake">
-            <ion-option value="client">Allow clients</ion-option>
-            <ion-option value="user">Therapist only</ion-option>
-          </ion-select>
-        </ion-item>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col col-12>
-        <ion-item>
-          <ion-label>
-            List clients active within
-          </ion-label>
-          <ion-select [(ngModel)]="biz.listActive">
-            <ion-option value="1m">1 Month</ion-option>
-            <ion-option value="6m">6 Months</ion-option>
-            <ion-option value="1y">1 Year</ion-option>
-          </ion-select>
-        </ion-item>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col col-12>
-        <ion-item>
-          <ion-label>
-            Sort client list by
-          </ion-label>
-          <ion-select [(ngModel)]="biz.sortClientsBy">
-            <ion-option value="first">First Name</ion-option>
-            <ion-option value="last">Last Name</ion-option>
-          </ion-select>
-        </ion-item>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col col-12>
-        <ion-item>
-          <ion-label>
-            Use Calendar
-          </ion-label>
-          <ion-select [(ngModel)]="biz.useCalendar">
-            <ion-option value="native">Native (iOS or Google)</ion-option>
-            <ion-option value="app">In-App Calendar</ion-option>
-          </ion-select>
-        </ion-item>
-      </ion-col>
-    </ion-row>
 
-    <ion-row>
-      <ion-col col-12>
-        <ion-item>
-          <ion-label>
-            Who can schedule?
-          </ion-label>
-          <ion-select [(ngModel)]="biz.whoSchedule">
-            <ion-option value="client">Clients can self-schedle</ion-option>
-            <ion-option value="user">Therapist only</ion-option>
-          </ion-select>
-        </ion-item>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col col-12>
-        <ion-item>
-          <ion-label>
-            Automatically Log Out
-          </ion-label>
-          <ion-select [(ngModel)]="biz.autoLogOut">
-            <ion-option value="yes">Log out after 2 hours idle</ion-option>
-            <ion-option value="no">Don't auto log out</ion-option>
-          </ion-select>
-        </ion-item>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col col-12>
-        <ion-label fixed>email daily schedule to: </ion-label>
-        <ion-input type="text" [(ngModel)]="biz.emailSchedule"></ion-input>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col col-12>
-        <ion-label fixed>default title for new appts: </ion-label>
-        <ion-input type="text" [(ngModel)]="biz.defaultApptTitle"></ion-input>
-      </ion-col>
-    </ion-row>
+  <ion-item no-lines>
+    <ion-label class="checkOption">List clients active within</ion-label>
+  </ion-item>
+  <ion-list radio-group [(ngModel)]="biz.listActive">
+    <ion-item>
+      <ion-label class="checkOption">1 Month</ion-label>
+      <ion-radio value="1m" checked></ion-radio>
+    </ion-item>
+    <ion-item>
+      <ion-label class="checkOption">6 Months</ion-label>
+      <ion-radio value="6m"></ion-radio>
+    </ion-item>
+    <ion-item>
+      <ion-label class="checkOption">1 Year</ion-label>
+      <ion-radio value="1y"></ion-radio>
+    </ion-item>
+  </ion-list>
+
+  <ion-item no-lines>
+    <ion-label class="checkOption">Sort client list by</ion-label>
+  </ion-item>
+  <ion-list radio-group [(ngModel)]="biz.sortClientsBy">
+    <ion-item>
+      <ion-label class="checkOption">First Name</ion-label>
+      <ion-radio value="first" checked></ion-radio>
+    </ion-item>
+    <ion-item>
+      <ion-label class="checkOption">Last Name</ion-label>
+      <ion-radio value="last"></ion-radio>
+    </ion-item>
+  </ion-list>
+
+  <ion-item no-lines>
+    <ion-label class="checkOption">Automatically log out</ion-label>
+  </ion-item>
+  <ion-list radio-group [(ngModel)]="biz.autoLogOut">
+    <ion-item>
+      <ion-label class="checkOption">After 2 hours idle</ion-label>
+      <ion-radio value="yes" checked></ion-radio>
+    </ion-item>
+    <ion-item>
+      <ion-label class="checkOption">Never</ion-label>
+      <ion-radio value="no"></ion-radio>
+    </ion-item>
+  </ion-list>
+
+  <ion-item no-lines>
+    <ion-label class="checkOption">Who may complete the intake form?</ion-label>
+  </ion-item>
+  <ion-list radio-group [(ngModel)]="biz.whoIntake">
+    <ion-item>
+      <ion-label class="checkOption">Therapist only</ion-label>
+      <ion-radio value="user" checked></ion-radio>
+    </ion-item>
+    <ion-item>
+      <ion-label class="checkOption">Allow clients</ion-label>
+      <ion-radio value="client"></ion-radio>
+    </ion-item>
+  </ion-list>
+
+  <ion-item no-lines>
+    <ion-label class="checkOption">Who can schedule?</ion-label>
+  </ion-item>
+  <ion-list radio-group [(ngModel)]="biz.whoSchedule">
+    <ion-item>
+      <ion-label class="checkOption">Therapist only</ion-label>
+      <ion-radio value="user" checked></ion-radio>
+    </ion-item>
+    <ion-item>
+      <ion-label class="checkOption">Clients can self-schedule</ion-label>
+      <ion-radio value="client"></ion-radio>
+    </ion-item>
+  </ion-list>
+
+  <ion-item>
+    <ion-label fixed>email daily schedule to: </ion-label>
+  </ion-item>
+  <ion-item no-lines>
+    <ion-input type="text" [(ngModel)]="biz.emailSchedule"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label fixed>default title for new appts: </ion-label>
+  </ion-item>
+  <ion-item no-lines>
+    <ion-input type="text" [(ngModel)]="biz.defaultApptTitle"></ion-input>
+  </ion-item>
+  <ion-item></ion-item>
+  <ion-item no-lines>
+    <ion-label class="checkOption">Use calendar</ion-label>
+  </ion-item>
+  <ion-list radio-group [(ngModel)]="biz.useCalendar">
+    <ion-item>
+      <ion-label class="checkOption">In-App Calendar</ion-label>
+      <ion-radio value="in-app" checked></ion-radio>
+    </ion-item>
+    <ion-item>
+      <ion-label class="checkOption">Apple/iCal</ion-label>
+      <ion-radio value="apple"></ion-radio>
+    </ion-item>
+    <ion-item>
+      <ion-label class="checkOption">Google/gmail</ion-label>
+      <ion-radio value="google"></ion-radio>
+    </ion-item>
+  </ion-list>
+
+  <div *ngIf="biz.useCalendar!='in-app'">
+    <ion-item>
+      <!-- <ion-label hidden [(ngModel)]="biz.calendar.provider">{{biz.useCalendar}}</ion-label> -->
+      <ion-label class="checkOption">Name</ion-label>
+    </ion-item>
+    <ion-item no-lines>
+      <ion-input type="text" [(ngModel)]="biz.calendar.name"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label class="checkOption">Id</ion-label>
+    </ion-item>
+    <ion-item no-lines>
+      <ion-input type="text" [(ngModel)]="biz.calendar.id"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label class="checkOption">Owner</ion-label>
+    </ion-item>
+    <ion-item no-lines>
+      <ion-input type="text" [(ngModel)]="biz.calendar.owner"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label class="checkOption">Connection Info</ion-label>
+    </ion-item>
+    <ion-item no-lines>
+      <ion-input type="text" [(ngModel)]="biz.calendar.connectionInfo"></ion-input>
+    </ion-item>
+  </div>
+  <ion-item></ion-item>
+  <ion-item no-lines>
+    <ion-label class="checkOption">Accept Payments in App</ion-label>
+  </ion-item>
+  <ion-list radio-group [(ngModel)]="biz.acceptPayments">
+    <ion-item>
+      <ion-label class="checkOption">No, not in the app</ion-label>
+      <ion-radio value="none" checked></ion-radio>
+    </ion-item>
+    <ion-item>
+      <ion-label class="checkOption">Yes, with Stripe</ion-label>
+      <ion-radio value="stripe"></ion-radio>
+    </ion-item>
+    <ion-item>
+      <ion-label class="checkOption">Yes, with Square</ion-label>
+      <ion-radio value="square"></ion-radio>
+    </ion-item>
+    <ion-item>
+      <ion-label class="checkOption">Yes, with Paypal</ion-label>
+      <ion-radio value="paypal"></ion-radio>
+    </ion-item>
+    <!-- <ion-item>
+        <ion-label class="checkOption">My own cc processor merchant acct</ion-label>
+        <ion-radio value="self"></ion-radio> -->
+    <!-- </ion-item> -->
+  </ion-list>
+
+  <div *ngIf="biz.acceptPayments=='stripe'">
+    <ion-item>
+      <ion-label class="checkOption">Stripe Connection Info</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label class="checkOption">Merchant Key</ion-label>
+    </ion-item>
+    <ion-item no-lines>
+      <ion-input type="text" [(ngModel)]="biz.stripe.secretKey"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label class="checkOption">Transaction Fee (%)</ion-label>
+    </ion-item>
+    <ion-item no-lines>
+      <ion-input type="text" [(ngModel)]="biz.stripe.fee"></ion-input>
+    </ion-item>
+  </div>
+  <div *ngIf="biz.acceptPayments=='square'">
+    <ion-item>
+      <ion-label class="checkOption">Square Connection Info</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label class="checkOption">Application ID</ion-label>
+    </ion-item>
+    <ion-item no-lines>
+      <ion-input type="text" [(ngModel)]="biz.square.applicationId"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label class="checkOption">Access Token</ion-label>
+    </ion-item>
+    <ion-item no-lines>
+      <ion-input type="text" [(ngModel)]="biz.square.accessToken"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label class="checkOption">Location ID</ion-label>
+    </ion-item>
+    <ion-item no-lines>
+      <ion-input type="text" [(ngModel)]="biz.square.locationId"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label class="checkOption">Transaction Fee (%)</ion-label>
+    </ion-item>
+    <ion-item no-lines>
+      <ion-input type="text" [(ngModel)]="biz.square.fee"></ion-input>
+    </ion-item>
+  </div>
+
+  <ion-item>Your Services</ion-item>
+  <ion-grid>
     <ion-row>
       <ion-col col-6>
         <div>Service Types</div>
@@ -110,93 +226,8 @@
         <div>Duration</div>
       </ion-col>
     </ion-row>
-
-    <ion-row>
-      <ion-item>
-        <ion-label color="primary">External Calendar</ion-label>
-      </ion-item>
-    </ion-row>
-    <ion-row>
-      <ion-list radio-group [(ngModel)]="biz.calendar.provider">
-        <ion-item>
-          <ion-label>Apple iCal</ion-label>
-          <ion-radio value="iCal"></ion-radio>
-        </ion-item>
-        <ion-item>
-          <ion-label>Google</ion-label>
-          <ion-radio value="google"></ion-radio>
-        </ion-item>
-        <ion-item>
-          <ion-label>None, use app calendar only</ion-label>
-          <ion-radio value=""></ion-radio>
-        </ion-item>
-      </ion-list>
-    </ion-row>
-
-    <div *ngIf="biz.calendar.provider!=''">
-      <ion-row>
-        <ion-item>
-          <ion-label color="primary">Name</ion-label>
-          <ion-input type="text" [(ngModel)]="biz.calendar.name"></ion-input>
-        </ion-item>
-      </ion-row>
-      <ion-row>
-        <ion-item>
-          <ion-label color="primary">Connection Info</ion-label>
-          <ion-checkbox [(ngModel)]="biz.calendar.connectionInfo"></ion-checkbox>
-        </ion-item>
-      </ion-row>
-    </div>
-    <ion-row>
-      <ion-col col-12>
-        <ion-item>
-          <ion-label>
-            Accept Payments in App
-          </ion-label>
-          <ion-select [(ngModel)]="biz.acceptPayments">
-            <ion-option value="stripe">with Stripe</ion-option>
-            <ion-option value="square">with Square</ion-option>
-            <ion-option value="paypal">with PayPal</ion-option>
-            <ion-option value="self">My own merchant account</ion-option>
-            <ion-option value="none">No, not in the app</ion-option>
-          </ion-select>
-        </ion-item>
-      </ion-col>
-    </ion-row>
   </ion-grid>
-  <div *ngIf="biz.acceptPayments=='stripe'">
-    <ion-item>
-      <ion-label color="primary">Merchant Key</ion-label>
-      <ion-input type="text" [(ngModel)]="biz.stripe.secretKey"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label color="primary">Transaction Fee (%)</ion-label>
-      <ion-input type="text" [(ngModel)]="biz.stripe.fee"></ion-input>
-    </ion-item>
-  </div>
-  <div *ngIf="biz.acceptPayments=='square'">
-    <ion-item>
-      <ion-label color="primary">Application ID</ion-label>
-      <ion-input type="text" [(ngModel)]="biz.square.applicationId"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label color="primary">Access Token</ion-label>
-      <ion-input type="text" [(ngModel)]="biz.square.accessToken"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label color="primary">Location ID</ion-label>
-      <ion-input type="text" [(ngModel)]="biz.square.locationId"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label color="primary">Transaction Fee (%)</ion-label>
-      <ion-input type="text" [(ngModel)]="biz.square.fee"></ion-input>
-    </ion-item>
-  </div>
-  <ion-row>
-    <ion-col col-12>
-      <button ion-button (click)="save()">Save</button>
-      <button ion-button (click)="cancel()">Cancel</button>
-    </ion-col>
-  </ion-row>
-  <!-- <button ion-button [disabled]="!biz.businessName" (click)="save()">Save</button> -->
+
+  <button ion-button (click)="save()">Save</button>
+  <!-- <button ion-button (click)="cancel()">Cancel</button> -->
 </ion-content>

@@ -16,8 +16,8 @@ export class ClientInfoPage {
   constructor(public navCtrl: NavController, 
     public navParams: NavParams,
     public ud: UserDataProvider) {
-      this.client = navParams.get('client');
-      this.itemIndex = this.findItem();
+      this.client = navParams.get('client');  // keeps a reference, ie edits apply directly
+      // this.itemIndex = this.findItem();
   }
 
   ionViewDidLoad() {
@@ -47,8 +47,8 @@ export class ClientInfoPage {
     z.okToText = !z.okToText;
   }
 
-  private findItem(): number {
-    // this.
-    return 0;
-  }
+  // private findItem(): number {
+  //   // this.
+  //   return 0;
+  // }
 }

@@ -503,11 +503,11 @@
     <ion-label class="checkOption">Family History</ion-label>
   </ion-item>
   <ion-item>
-    <ion-label class="checkOption" >Cardiovascular Conditions</ion-label>
+    <ion-label class="checkOption">Cardiovascular Conditions</ion-label>
     <ion-checkbox [(ngModel)]="intake.famHist.cardio"></ion-checkbox>
   </ion-item>
   <ion-item>
-    <ion-label class="checkOption" >Respiratory Conditions</ion-label>
+    <ion-label class="checkOption">Respiratory Conditions</ion-label>
     <ion-checkbox [(ngModel)]="intake.famHist.respiratory"></ion-checkbox>
   </ion-item>
   <ion-item>
@@ -609,8 +609,6 @@
     <ion-checkbox [(ngModel)]="intake.misc.surgical"></ion-checkbox>
     <ion-label class="checkOption">Surgical Pins or Wires</ion-label>
   </ion-item>
-
-
   <ion-item>
     <ion-label class="checkOption">Neurological</ion-label>
   </ion-item>
@@ -648,6 +646,8 @@
   </ion-item>
   <ion-item>
     <ion-label class="checkOption">Allergies and other conditions your provider should be aware of?</ion-label>
+  </ion-item>
+  <ion-item no-lines>
     <ion-input type="text" [(ngModel)]="intake.allergiesOther"></ion-input>
   </ion-item>
   <ion-item>
@@ -655,6 +655,8 @@
   </ion-item>
   <ion-item>
     <ion-label class="checkOption">Please list any medications or drugs you are currently on.</ion-label>
+  </ion-item>
+  <ion-item no-lines>
     <ion-input type="text" [(ngModel)]="intake.meds"></ion-input>
   </ion-item>
   <ion-item>
@@ -662,17 +664,24 @@
   </ion-item>
   <ion-item>
     <ion-label class="checkOption">Please list any past surgeries and when they took place.</ion-label>
+  </ion-item>
+  <ion-item no-lines>
     <ion-input type="text" [(ngModel)]="intake.surgeries"></ion-input>
   </ion-item>
   <ion-item>
-    <ion-label class="checkOption">Please list any skin irritations (warts, fever blister, rash, open cuts or wounds, burns,
+    <ion-label class="checkOption">Please list any skin irritations (warts, fever blister, rash, open cuts or wounds,
+      burns,
       bruising,
       etc.)</ion-label>
+  </ion-item>
+  <ion-item no-lines>
     <ion-input type="text" [(ngModel)]="intake.skinIrritations"></ion-input>
   </ion-item>
   <ion-item>
     <ion-label class="checkOption">Have you been sick with fever within the last 5 days? if yes, please explain.
     </ion-label>
+  </ion-item>
+  <ion-item no-lines>
     <ion-input type="text" [(ngModel)]="intake.sick"></ion-input>
   </ion-item>
   <button ion-button (click)="save()">Save</button>
