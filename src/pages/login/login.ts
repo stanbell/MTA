@@ -16,11 +16,11 @@ export class LoginPage {
     public ud: UserDataProvider) {
   }
 
-  login() {
-    console.log('logging in');
-    this.auth.login();
-    this.navCtrl.pop();
-  }
+  // login() {
+  //   console.log('logging in');
+  //   this.auth.login();
+  //   this.navCtrl.pop();
+  // }
 
   async mockLogIn() {
     this.ud.userId = 'joe';

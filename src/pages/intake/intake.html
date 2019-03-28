@@ -1,0 +1,681 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Intake</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<!-- WORKING HERE:  "no value accessor"  have to put 'value' items in, probably in the checkboxes or radiobuttons -->
+
+<ion-content padding>
+  <!-- <ion-grid>
+    <ion-row>
+      <ion-col col-12>
+      </ion-col>
+    </ion-row>
+  </ion-grid> -->
+
+  <h5>Personal Information</h5>
+  <ion-item>
+    <ion-label stacked>First Name</ion-label>
+    <ion-input type="text" [(ngModel)]="intake.first"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label stacked>Last Name</ion-label>
+    <ion-input type="text" [(ngModel)]="intake.last"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label stacked>Date of Birth</ion-label>
+    <ion-input type="text" [(ngModel)]="intake.dob"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label stacked>Gender</ion-label>
+    <!-- <ion-label fixed>male/female/not specified</ion-label> -->
+    <ion-input type="text" [(ngModel)]="intake.sex"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label stacked>Occupation</ion-label>
+    <ion-input type="text" [(ngModel)]="intake.occupation"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label stacked>eMail</ion-label>
+    <ion-input type="text" [(ngModel)]="intake.email"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label stacked>Phone</ion-label>
+    <ion-input type="text" [(ngModel)]="intake.phone"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label stacked>Address</ion-label>
+    <ion-input type="text" [(ngModel)]="intake.street1"></ion-input>
+    <ion-input type="text" [(ngModel)]="intake.street2"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label stacked>City</ion-label>
+    <ion-input type="text" [(ngModel)]="intake.city"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label stacked>State</ion-label>
+    <ion-input type="text" [(ngModel)]="intake.state"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label stacked>Zip</ion-label>
+    <ion-input type="text" [(ngModel)]="intake.zip"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label stacked>Emergency Contact</ion-label>
+    <ion-input type="text" [(ngModel)]="intake.ecName"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label stacked>Phone</ion-label>
+    <ion-input type="text" [(ngModel)]="intake.ecPhone"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label stacked>Relationship</ion-label>
+    <ion-input type="text" [(ngModel)]="intake.ecRelationship"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label stacked>Physician</ion-label>
+    <ion-input type="text" [(ngModel)]="intake.physName"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label stacked>Phone</ion-label>
+    <ion-input type="text" [(ngModel)]="intake.physPhone"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label stacked>Cause of injury or concern?</ion-label>
+    <ion-input type="text" [(ngModel)]="intake.cause"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label stacked>How long since first noticed?</ion-label>
+    <ion-input type="text" [(ngModel)]="intake.firstNoticed"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label stacked>Describe treatment goals.</ion-label>
+    <ion-input type="text" [(ngModel)]="intake.goals"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label stacked>Past treatment</ion-label>
+    <ion-input type="text" [(ngModel)]="intake.pastTreatment"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label stacked>How would you rate your daily stress level?</ion-label>
+    <ion-input type="text" [(ngModel)]="intake.dailyStress"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label stacked>Have you recieved a massage before?</ion-label>
+    <ion-input type="text" [(ngModel)]="intake.massageBefore"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label stacked>What type of massage do you prefer?</ion-label>
+  </ion-item>
+  <ion-item>
+    <ion-checkbox [(ngModel)]="intake.massage.therapeutic"></ion-checkbox>
+    <ion-label class="checkOption">Therapeutic</ion-label>
+  </ion-item>
+  <ion-item>
+    <ion-checkbox [(ngModel)]="intake.massage.relaxation"></ion-checkbox>
+    <ion-label class="checkOption">Relaxation</ion-label>
+  </ion-item>
+  <ion-item no-lines>
+    <ion-label stacked>What amount of pressure do you prefer?</ion-label>
+  </ion-item>
+  <ion-list radio-group [(ngModel)]="intake.pressure">
+    <ion-item>
+      <ion-label class="checkOption">Light</ion-label>
+      <ion-radio value="light"></ion-radio>
+    </ion-item>
+    <ion-item>
+      <ion-label class="checkOption">Moderate</ion-label>
+      <ion-radio value="moderate"></ion-radio>
+    </ion-item>
+    <ion-item>
+      <ion-label class="checkOption">Deep</ion-label>
+      <ion-radio value="deep"></ion-radio>
+    </ion-item>
+  </ion-list>
+  <h5>Existing Conditions</h5>
+  <ion-item>
+    <ion-label class="checkOption">Respiratory</ion-label>
+  </ion-item>
+  <ion-item>
+    <ion-checkbox [(ngModel)]="intake.respiratory.asthma"></ion-checkbox>
+    <ion-label class="checkOption">Asthma</ion-label>
+  </ion-item>
+  <ion-item>
+    <ion-checkbox [(ngModel)]="intake.respiratory.bronchitis"></ion-checkbox>
+    <ion-label class="checkOption">Bronchitis</ion-label>
+  </ion-item>
+  <ion-item>
+    <ion-checkbox [(ngModel)]="intake.respiratory.chronicCough"></ion-checkbox>
+    <ion-label class="checkOption">Chronic Cough</ion-label>
+  </ion-item>
+  <ion-item>
+    <ion-checkbox [(ngModel)]="intake.respiratory.sob"></ion-checkbox>
+    <ion-label class="checkOption">Shortness of Breath</ion-label>
+  </ion-item>
+  <ion-item>
+    <ion-label class="checkOption">Cardiovascular</ion-label>
+  </ion-item>
+  <ion-item>
+    <ion-checkbox [(ngModel)]="intake.cardiovascular.clots"></ion-checkbox>
+    <ion-label class="checkOption">Blood Clots</ion-label>
+  </ion-item>
+  <ion-item>
+    <ion-checkbox [(ngModel)]="intake.cardiovascular.cva1"></ion-checkbox>
+    <ion-label class="checkOption">Cardiovascular Accident</ion-label>
+  </ion-item>
+  <ion-item>
+    <ion-checkbox [(ngModel)]="intake.cardiovascular.cva2"></ion-checkbox>
+    <ion-label class="checkOption">Cerebral-vascular Accident</ion-label>
+  </ion-item>
+  <ion-item>
+    <ion-checkbox [(ngModel)]="intake.cardiovascular.coldFeet"></ion-checkbox>
+    <ion-label class="checkOption">Cold Feet</ion-label>
+  </ion-item>
+  <ion-item>
+    <ion-checkbox [(ngModel)]="intake.cardiovascular.coldHands"></ion-checkbox>
+    <ion-label class="checkOption">Cold Hands</ion-label>
+  </ion-item>
+  <ion-item>
+    <ion-checkbox [(ngModel)]="intake.cardiovascular.chf"></ion-checkbox>
+    <ion-label class="checkOption">Congestive Heart Failure</ion-label>
+  </ion-item>
+  <ion-item>
+    <ion-checkbox [(ngModel)]="intake.cardiovascular.heartDisease"></ion-checkbox>
+    <ion-label class="checkOption">Heart Disease</ion-label>
+  </ion-item>
+  <ion-item>
+    <ion-checkbox [(ngModel)]="intake.cardiovascular.hbp"></ion-checkbox>
+    <ion-label class="checkOption">High Blood Pressure</ion-label>
+  </ion-item>
+  <ion-item>
+    <ion-checkbox [(ngModel)]="intake.cardiovascular.lbp"></ion-checkbox>
+    <ion-label class="checkOption">Low Blood Pressure</ion-label>
+  </ion-item>
+  <ion-item>
+    <ion-checkbox [(ngModel)]="intake.cardiovascular.heartAttack"></ion-checkbox>
+    <ion-label class="checkOption">Heart Attack</ion-label>
+  </ion-item>
+  <ion-item>
+    <ion-checkbox [(ngModel)]="intake.cardiovascular.mi"></ion-checkbox>
+    <ion-label class="checkOption">Myocardial Infarction</ion-label>
+  </ion-item>
+  <ion-item>
+    <ion-checkbox [(ngModel)]="intake.cardiovascular.pacemaker"></ion-checkbox>
+    <ion-label class="checkOption">Pacemaker</ion-label>
+  </ion-item>
+  <ion-item>
+    <ion-checkbox [(ngModel)]="intake.cardiovascular.phlebitis"></ion-checkbox>
+    <ion-label class="checkOption">Phlebitis</ion-label>
+  </ion-item>
+  <ion-item>
+    <ion-checkbox [(ngModel)]="intake.cardiovascular.lymphedema"></ion-checkbox>
+    <ion-label class="checkOption">Lymphedema</ion-label>
+  </ion-item>
+  <ion-item>
+    <ion-checkbox [(ngModel)]="intake.cardiovascular.trombosis"></ion-checkbox>
+    <ion-label class="checkOption">Thrombosis/Embolism</ion-label>
+  </ion-item>
+  <ion-item>
+    <ion-checkbox [(ngModel)]="intake.cardiovascular.varicose"></ion-checkbox>
+    <ion-label class="checkOption">Varicose Veins</ion-label>
+  </ion-item>
+  <ion-item>
+    <ion-checkbox [(ngModel)]="intake.cardiovascular.stroke"></ion-checkbox>
+    <ion-label class="checkOption">Stroke</ion-label>
+  </ion-item>
+  <ion-item>
+    <ion-label class="checkOption">Skin</ion-label>
+  </ion-item>
+  <ion-item>
+    <ion-checkbox [(ngModel)]="intake.skin.bruise"></ion-checkbox>
+    <ion-label class="checkOption">Bruise Easily</ion-label>
+  </ion-item>
+  <ion-item>
+    <ion-checkbox [(ngModel)]="intake.skin.hyper"></ion-checkbox>
+    <ion-label class="checkOption">Hypersensitive Reaction</ion-label>
+  </ion-item>
+  <ion-item>
+    <ion-checkbox [(ngModel)]="intake.skin.melanoma"></ion-checkbox>
+    <ion-label class="checkOption">Melanoma</ion-label>
+  </ion-item>
+  <ion-item>
+    <ion-checkbox [(ngModel)]="intake.skin.conditions"></ion-checkbox>
+    <ion-label class="checkOption">Skin Conditions</ion-label>
+  </ion-item>
+  <ion-item>
+    <ion-checkbox [(ngModel)]="intake.skin.irritations"></ion-checkbox>
+    <ion-label class="checkOption">Skin Irritations</ion-label>
+  </ion-item>
+  <ion-item>
+    <ion-label class="checkOption">Head & Neck</ion-label>
+  </ion-item>
+  <ion-item>
+    <ion-checkbox [(ngModel)]="intake.headNeck.ear"></ion-checkbox>
+    <ion-label class="checkOption">Ear Problems</ion-label>
+  </ion-item>
+  <ion-item>
+    <ion-checkbox [(ngModel)]="intake.headNeck.headache"></ion-checkbox>
+    <ion-label class="checkOption">Headaches</ion-label>
+  </ion-item>
+  <ion-item>
+    <ion-checkbox [(ngModel)]="intake.headNeck.hearing"></ion-checkbox>
+    <ion-label class="checkOption">Hearing Loss</ion-label>
+  </ion-item>
+  <ion-item>
+    <ion-checkbox [(ngModel)]="intake.headNeck.jawPain"></ion-checkbox>
+    <ion-label class="checkOption">Jaw Pain (TMJD)</ion-label>
+  </ion-item>
+  <ion-item>
+    <ion-checkbox [(ngModel)]="intake.headNeck.migraines"></ion-checkbox>
+    <ion-label class="checkOption">Migraines</ion-label>
+  </ion-item>
+  <ion-item>
+    <ion-checkbox [(ngModel)]="intake.headNeck.sinus"></ion-checkbox>
+    <ion-label class="checkOption">Sinus Problems</ion-label>
+  </ion-item>
+  <ion-item>
+    <ion-checkbox [(ngModel)]="intake.headNeck.visionLoss"></ion-checkbox>
+    <ion-label class="checkOption">Vision Loss</ion-label>
+  </ion-item>
+  <ion-item>
+    <ion-checkbox [(ngModel)]="intake.headNeck.visionProb"></ion-checkbox>
+    <ion-label class="checkOption">Vision Problems</ion-label>
+  </ion-item>
+  <ion-item>
+    <ion-label class="checkOption">Infectious Conditions</ion-label>
+  </ion-item>
+  <ion-item>
+    <ion-checkbox [(ngModel)]="intake.infectious.athletes"></ion-checkbox>
+    <ion-label class="checkOption">Athlete's Foot</ion-label>
+  </ion-item>
+  <ion-item>
+    <ion-checkbox [(ngModel)]="intake.infectious.hepatitis"></ion-checkbox>
+    <ion-label class="checkOption">Hepatitis</ion-label>
+  </ion-item>
+  <ion-item>
+    <ion-checkbox [(ngModel)]="intake.infectious.herpes"></ion-checkbox>
+    <ion-label class="checkOption">Herpes</ion-label>
+  </ion-item>
+  <ion-item>
+    <ion-checkbox [(ngModel)]="intake.infectious.hiv"></ion-checkbox>
+    <ion-label class="checkOption">HIV</ion-label>
+  </ion-item>
+  <ion-item>
+    <ion-checkbox [(ngModel)]="intake.infectious.respiratory"></ion-checkbox>
+    <ion-label class="checkOption">Respiratory Conditions</ion-label>
+  </ion-item>
+  <ion-item>
+    <ion-checkbox [(ngModel)]="intake.infectious.skin"></ion-checkbox>
+    <ion-label class="checkOption">Skin Conditions</ion-label>
+  </ion-item>
+  <ion-item>
+    <ion-label class="checkOption">Women</ion-label>
+  </ion-item>
+  <ion-item>
+    <ion-checkbox [(ngModel)]="intake.women.gyno"></ion-checkbox>
+    <ion-label class="checkOption">Gynecological Conditions</ion-label>
+  </ion-item>
+  <ion-item>
+    <ion-checkbox [(ngModel)]="intake.women.pregnancy"></ion-checkbox>
+    <ion-label class="checkOption">Pregnancy</ion-label>
+  </ion-item>
+  <ion-item>
+    <ion-label class="checkOption">Soft Tissue/Joint Dysfunction</ion-label>
+  </ion-item>
+  <ion-grid>
+    <ion-row>
+      <ion-col col-8>
+      </ion-col>
+      <ion-col col-2 justify-content-center>
+        <ion-item no-lines no-padding>
+          <ion-label class="checkOption">L</ion-label>
+        </ion-item>
+      </ion-col>
+      <ion-col col-2 justify-content-center>
+        <ion-item no-lines no-padding>
+          <ion-label class="checkOption">R</ion-label>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col col-8 justify-content-end>
+        <div class="checkOption">
+          Ankles
+        </div>
+      </ion-col>
+      <ion-col col-2 justify-content-center>
+        <ion-checkbox [(ngModel)]="intake.softJoint.ankles.left"></ion-checkbox>
+      </ion-col>
+      <ion-col col-2 justify-content-center>
+        <ion-checkbox [(ngModel)]="intake.softJoint.ankles.right"></ion-checkbox>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col col-8 justify-content-end>
+        <div class="checkOption">
+          Arms
+        </div>
+      </ion-col>
+      <ion-col col-2 justify-content-center>
+        <ion-checkbox [(ngModel)]="intake.softJoint.arms.left"></ion-checkbox>
+      </ion-col>
+      <ion-col col-2 justify-content-center>
+        <ion-checkbox [(ngModel)]="intake.softJoint.arms.right"></ion-checkbox>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col col-8 justify-content-end>
+        <div class="checkOption">
+          Feet
+        </div>
+      </ion-col>
+      <ion-col col-2 justify-content-center>
+        <ion-checkbox [(ngModel)]="intake.softJoint.feet.left"></ion-checkbox>
+      </ion-col>
+      <ion-col col-2 justify-content-center>
+        <ion-checkbox [(ngModel)]="intake.softJoint.feet.right"></ion-checkbox>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col col-8 justify-content-end>
+        <div class="checkOption">
+          Hands
+        </div>
+      </ion-col>
+      <ion-col col-2 justify-content-center>
+        <ion-checkbox [(ngModel)]="intake.softJoint.hands.left"></ion-checkbox>
+      </ion-col>
+      <ion-col col-2 justify-content-center>
+        <ion-checkbox [(ngModel)]="intake.softJoint.hands.right"></ion-checkbox>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col col-8 justify-content-end>
+        <div class="checkOption">
+          Hips
+        </div>
+      </ion-col>
+      <ion-col col-2 justify-content-center>
+        <ion-checkbox [(ngModel)]="intake.softJoint.hips.left"></ion-checkbox>
+      </ion-col>
+      <ion-col col-2 justify-content-center>
+        <ion-checkbox [(ngModel)]="intake.softJoint.hips.right"></ion-checkbox>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col col-8 justify-content-end>
+        <div class="checkOption">
+          Knees
+        </div>
+      </ion-col>
+      <ion-col col-2 justify-content-center>
+        <ion-checkbox [(ngModel)]="intake.softJoint.knees.left"></ion-checkbox>
+      </ion-col>
+      <ion-col col-2 justify-content-center>
+        <ion-checkbox [(ngModel)]="intake.softJoint.knees.right"></ion-checkbox>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col col-8 justify-content-end>
+        <div class="checkOption">
+          Legs
+        </div>
+      </ion-col>
+      <ion-col col-2 justify-content-center>
+        <ion-checkbox [(ngModel)]="intake.softJoint.legs.left"></ion-checkbox>
+      </ion-col>
+      <ion-col col-2 justify-content-center>
+        <ion-checkbox [(ngModel)]="intake.softJoint.legs.right"></ion-checkbox>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col col-8 justify-content-end>
+        <div class="checkOption">
+          Lower Back
+        </div>
+      </ion-col>
+      <ion-col col-2 justify-content-center>
+        <ion-checkbox [(ngModel)]="intake.softJoint.lowerBack.left"></ion-checkbox>
+      </ion-col>
+      <ion-col col-2 justify-content-center>
+        <ion-checkbox [(ngModel)]="intake.softJoint.lowerBack.right"></ion-checkbox>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col col-8 justify-content-end>
+        <div class="checkOption">
+          Mid Back
+        </div>
+      </ion-col>
+      <ion-col col-2 justify-content-center>
+        <ion-checkbox [(ngModel)]="intake.softJoint.midBack.left"></ion-checkbox>
+      </ion-col>
+      <ion-col col-2 justify-content-center>
+        <ion-checkbox [(ngModel)]="intake.softJoint.midBack.right"></ion-checkbox>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col col-8 justify-content-end>
+        <div class="checkOption">
+          Neck
+        </div>
+      </ion-col>
+      <ion-col col-2 justify-content-center>
+        <ion-checkbox [(ngModel)]="intake.softJoint.neck.left"></ion-checkbox>
+      </ion-col>
+      <ion-col col-2 justify-content-center>
+        <ion-checkbox [(ngModel)]="intake.softJoint.neck.right"></ion-checkbox>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col col-8 justify-content-end>
+        <div class="checkOption">
+          Shoulders
+        </div>
+      </ion-col>
+      <ion-col col-2 justify-content-center>
+        <ion-checkbox [(ngModel)]="intake.softJoint.shoulders.left"></ion-checkbox>
+      </ion-col>
+      <ion-col col-2 justify-content-center>
+        <ion-checkbox [(ngModel)]="intake.softJoint.shoulders.right"></ion-checkbox>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col col-8 justify-content-end>
+        <div class="checkOption">
+          Upper Back
+        </div>
+      </ion-col>
+      <ion-col col-2 justify-content-center>
+        <ion-checkbox [(ngModel)]="intake.softJoint.upperBack.left"></ion-checkbox>
+      </ion-col>
+      <ion-col col-2 justify-content-center>
+        <ion-checkbox [(ngModel)]="intake.softJoint.upperBack.right"></ion-checkbox>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-item>
+    <ion-label class="checkOption">Family History</ion-label>
+  </ion-item>
+  <ion-item>
+    <ion-label class="checkOption" >Cardiovascular Conditions</ion-label>
+    <ion-checkbox [(ngModel)]="intake.famHist.cardio"></ion-checkbox>
+  </ion-item>
+  <ion-item>
+    <ion-label class="checkOption" >Respiratory Conditions</ion-label>
+    <ion-checkbox [(ngModel)]="intake.famHist.respiratory"></ion-checkbox>
+  </ion-item>
+  <ion-item>
+    <ion-label class="checkOption">Miscellaneous</ion-label>
+  </ion-item>
+  <ion-item>
+    <ion-checkbox [(ngModel)]="intake.misc.allergies"></ion-checkbox>
+    <ion-label class="checkOption">Allergies</ion-label>
+  </ion-item>
+  <ion-item>
+    <ion-checkbox [(ngModel)]="intake.misc.anaphylaxis"></ion-checkbox>
+    <ion-label class="checkOption">Anaphylaxis</ion-label>
+  </ion-item>
+  <ion-item>
+    <ion-checkbox [(ngModel)]="intake.misc.joints"></ion-checkbox>
+    <ion-label class="checkOption">Artificial Joints/Special Equipmentf</ion-label>
+  </ion-item>
+  <ion-item>
+    <ion-checkbox [(ngModel)]="intake.misc.arthritis"></ion-checkbox>
+    <ion-label class="checkOption">Arthritis</ion-label>
+  </ion-item>
+  <ion-item>
+    <ion-checkbox [(ngModel)]="intake.misc.crohns"></ion-checkbox>
+    <ion-label class="checkOption">Crohn's Disease</ion-label>
+  </ion-item>
+  <ion-item>
+    <ion-checkbox [(ngModel)]="intake.misc.diabetes"></ion-checkbox>
+    <ion-label class="checkOption">Diabetes</ion-label>
+  </ion-item>
+  <ion-item>
+    <ion-checkbox [(ngModel)]="intake.misc.digestive"></ion-checkbox>
+    <ion-label class="checkOption">Digestive Conditions</ion-label>
+  </ion-item>
+  <ion-item>
+    <ion-checkbox [(ngModel)]="intake.misc.dizziness"></ion-checkbox>
+    <ion-label class="checkOption">Dizziness</ion-label>
+  </ion-item>
+  <ion-item>
+    <ion-checkbox [(ngModel)]="intake.misc.epilepsy"></ion-checkbox>
+    <ion-label class="checkOption">Epilepsy</ion-label>
+  </ion-item>
+  <ion-item>
+    <ion-checkbox [(ngModel)]="intake.misc.gout"></ion-checkbox>
+    <ion-label class="checkOption">Gout</ion-label>
+  </ion-item>
+  <ion-item>
+    <ion-checkbox [(ngModel)]="intake.misc.hemophylia"></ion-checkbox>
+    <ion-label class="checkOption">Hemophylia</ion-label>
+  </ion-item>
+  <ion-item>
+    <ion-checkbox [(ngModel)]="intake.misc.insomnia"></ion-checkbox>
+    <ion-label class="checkOption">Insomnia</ion-label>
+  </ion-item>
+  <ion-item>
+    <ion-checkbox [(ngModel)]="intake.misc.fibromyalgia"></ion-checkbox>
+    <ion-label class="checkOption">Fibromyalgia</ion-label>
+  </ion-item>
+  <ion-item>
+    <ion-checkbox [(ngModel)]="intake.misc.lupus"></ion-checkbox>
+    <ion-label class="checkOption">Lupus</ion-label>
+  </ion-item>
+  <ion-item>
+    <ion-checkbox [(ngModel)]="intake.misc.mental"></ion-checkbox>
+    <ion-label class="checkOption">Mental Illness</ion-label>
+  </ion-item>
+  <ion-item>
+    <ion-checkbox [(ngModel)]="intake.misc.osteoarthritis"></ion-checkbox>
+    <ion-label class="checkOption">Osteo Arthritis</ion-label>
+  </ion-item>
+  <ion-item>
+    <ion-checkbox [(ngModel)]="intake.misc.sensation"></ion-checkbox>
+    <ion-label class="checkOption">Loss of Sensation</ion-label>
+  </ion-item>
+  <ion-item>
+    <ion-checkbox [(ngModel)]="intake.misc.otherDiag"></ion-checkbox>
+    <ion-label class="checkOption">Other Diagnosed Diseases</ion-label>
+  </ion-item>
+  <ion-item>
+    <ion-checkbox [(ngModel)]="intake.misc.otherMed"></ion-checkbox>
+    <ion-label class="checkOption">Other Medical Conditions</ion-label>
+  </ion-item>
+  <ion-item>
+    <ion-checkbox [(ngModel)]="intake.misc.rheumatoid"></ion-checkbox>
+    <ion-label class="checkOption">Rheumatoid Arthritis</ion-label>
+  </ion-item>
+  <ion-item>
+    <ion-checkbox [(ngModel)]="intake.misc.osteoporosis"></ion-checkbox>
+    <ion-label class="checkOption">Osteoporosis</ion-label>
+  </ion-item>
+  <ion-item>
+    <ion-checkbox [(ngModel)]="intake.misc.shingles"></ion-checkbox>
+    <ion-label class="checkOption">Shingles</ion-label>
+  </ion-item>
+  <ion-item>
+    <ion-checkbox [(ngModel)]="intake.misc.stress"></ion-checkbox>
+    <ion-label class="checkOption">Stress</ion-label>
+  </ion-item>
+  <ion-item>
+    <ion-checkbox [(ngModel)]="intake.misc.surgical"></ion-checkbox>
+    <ion-label class="checkOption">Surgical Pins or Wires</ion-label>
+  </ion-item>
+
+
+  <ion-item>
+    <ion-label class="checkOption">Neurological</ion-label>
+  </ion-item>
+  <ion-item>
+    <ion-checkbox [(ngModel)]="intake.neuro.burning"></ion-checkbox>
+    <ion-label class="checkOption">Burning</ion-label>
+  </ion-item>
+  <ion-item>
+    <ion-checkbox [(ngModel)]="intake.neuro.palsy"></ion-checkbox>
+    <ion-label class="checkOption">Cerebral Palsy</ion-label>
+  </ion-item>
+  <ion-item>
+    <ion-checkbox [(ngModel)]="intake.neuro.disc"></ion-checkbox>
+    <ion-label class="checkOption">Herniated Disc</ion-label>
+  </ion-item>
+  <ion-item>
+    <ion-checkbox [(ngModel)]="intake.neuro.ms"></ion-checkbox>
+    <ion-label class="checkOption">Multiple Sclerosis</ion-label>
+  </ion-item>
+  <ion-item>
+    <ion-checkbox [(ngModel)]="intake.neuro.numbness"></ion-checkbox>
+    <ion-label class="checkOption">Numbness</ion-label>
+  </ion-item>
+  <ion-item>
+    <ion-checkbox [(ngModel)]="intake.neuro.parkinsons"></ion-checkbox>
+    <ion-label class="checkOption">Parkinsons</ion-label>
+  </ion-item>
+  <ion-item>
+    <ion-checkbox [(ngModel)]="intake.neuro.stabbing"></ion-checkbox>
+    <ion-label class="checkOption">Stabbing Pain</ion-label>
+  </ion-item>
+  <ion-item>
+    <ion-checkbox [(ngModel)]="intake.neuro.tingling"></ion-checkbox>
+    <ion-label class="checkOption">Tingling</ion-label>
+  </ion-item>
+  <ion-item>
+    <ion-label class="checkOption">Allergies and other conditions your provider should be aware of?</ion-label>
+    <ion-input type="text" [(ngModel)]="intake.allergiesOther"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label class="checkOption">Medications</ion-label>
+  </ion-item>
+  <ion-item>
+    <ion-label class="checkOption">Please list any medications or drugs you are currently on.</ion-label>
+    <ion-input type="text" [(ngModel)]="intake.meds"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label class="checkOption">Additional Questions</ion-label>
+  </ion-item>
+  <ion-item>
+    <ion-label class="checkOption">Please list any past surgeries and when they took place.</ion-label>
+    <ion-input type="text" [(ngModel)]="intake.surgeries"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label class="checkOption">Please list any skin irritations (warts, fever blister, rash, open cuts or wounds, burns,
+      bruising,
+      etc.)</ion-label>
+    <ion-input type="text" [(ngModel)]="intake.skinIrritations"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label class="checkOption">Have you been sick with fever within the last 5 days? if yes, please explain.
+    </ion-label>
+    <ion-input type="text" [(ngModel)]="intake.sick"></ion-input>
+  </ion-item>
+  <button ion-button (click)="save()">Save</button>
+</ion-content>
+<!-- waiver
+--see the doc in dedee's mail -->

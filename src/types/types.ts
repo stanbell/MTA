@@ -118,12 +118,20 @@ interface ClientType {
     name: string,
     address: AddressType,
     contacts: ContactInfoType[],
+    preferences: string,
     previousAppts: number,
     noShowAppts: number,
     scheduledAppts: number,
-    recurringScheduled: boolean
+    recurringScheduled: boolean,
+    intake: IntakeType
 }
 
+interface VisitNoteType {
+    Subjective: string,
+    Objective: string,
+    Assessment: string,
+    Plan: string
+}
 interface ScheduleItemType {
     id: string,  // of the individual event
     calendar: string,
@@ -136,7 +144,7 @@ interface ScheduleItemType {
     completed: boolean,
     revenue: number,
     pd: boolean,
-    visitNote: string,  // actual, or foreignkey reference?
+    visitNote: VisitNoteType,
     transactions: ScheduleItemTransType[]
 }
 
@@ -154,4 +162,184 @@ interface UserDataType {
     clients: ClientType[],
     transactions: TransactionType[],
     schedule: ScheduleItemType[],
+}
+
+interface IntakeType {
+    first: string,
+    last: string,
+    dob: string,
+    sex: string,
+    occupation: string,
+    email: string,
+    phone: string,
+    street1: string,
+    street2: string,
+    city: string,
+    state: string,
+    zip: string,
+    ecName: string,
+    ecPhone: string,
+    ecRelationship: string,
+    physName: string,
+    physPhone: string,
+    cause: string,
+    firstNoticed: string,
+    goals: string,
+    pastTreatment: string,
+    dailyStress: string,
+    massageBefore: string,
+    massage: {
+        therapeutic: boolean,
+        relaxation: boolean
+    },
+    pressure: string,
+    respiratory: {
+        asthma: boolean,
+        bronchitis: boolean,
+        chronicCough: boolean,
+        sob: boolean
+    },
+    cardiovascular: {
+        clots: boolean,
+        cva1: boolean,
+        cva2: boolean,
+        coldFeet: boolean,
+        coldHands: boolean,
+        chf: boolean,
+        heartDisease: boolean,
+        hbp: boolean,
+        lbp: boolean,
+        heartAttack: boolean,
+        mi: boolean,
+        pacemaker: boolean,
+        phlebitis: boolean,
+        lymphedema: boolean,
+        trombosis: boolean,
+        varicose: boolean,
+        stroke: boolean
+    },
+    skin: {
+        bruise: boolean,
+        hyper: boolean,
+        melanoma: boolean,
+        conditions: boolean,
+        irritations: boolean
+    },
+    headNeck: {
+        ear: boolean,
+        headache: boolean,
+        hearing: boolean,
+        jawPain: boolean,
+        migraines: boolean,
+        sinus: boolean,
+        visionLoss: boolean,
+        visionProb: boolean
+    },
+    infectious: {
+        athletes: boolean,
+        hepatitis: boolean,
+        herpes: boolean,
+        hiv: boolean,
+        respiratory: boolean,
+        skin: boolean
+    },
+    women: {
+        gyno: boolean,
+        pregnancy: boolean
+    },
+    softJoint: {
+        ankles: {
+            left: boolean,
+            right: boolean
+        },
+        arms: {
+            left: boolean,
+            right: boolean
+        },
+        feet: {
+            left: boolean,
+            right: boolean
+        },
+        hands: {
+            left: boolean,
+            right: boolean
+        },
+        hips: {
+            left: boolean,
+            right: boolean
+        },
+        knees: {
+            left: boolean,
+            right: boolean
+        },
+        legs: {
+            left: boolean,
+            right: boolean
+        },
+        lowerBack: {
+            left: boolean,
+            right: boolean
+        },
+        midBack: {
+            left: boolean,
+            right: boolean
+        },
+        neck: {
+            left: boolean,
+            right: boolean
+        },
+        shoulders: {
+            left: boolean,
+            right: boolean
+        },
+        upperBack: {
+            left: boolean,
+            right: boolean
+        }
+    },
+    famHist: {
+        cardio: boolean,
+        respiratory: boolean
+    },
+    misc: {
+        allergies: boolean,
+        anaphylaxis: boolean,
+        joints: boolean,
+        arthritis: boolean,
+        crohns: boolean,
+        diabetes: boolean,
+        digestive: boolean,
+        dizziness: boolean,
+        epilepsy: boolean,
+        gout: boolean,
+        hemophylia: boolean,
+        insomnia: boolean,
+        fibromyalgia: boolean,
+        lupus: boolean,
+        mental: boolean,
+        osteoarthritis: boolean,
+        sensation: boolean,
+        otherDiag: boolean,
+        otherMed: boolean,
+        rheumatoid: boolean,
+        osteoporosis: boolean,
+        shingles: boolean,
+        stress: boolean,
+        surgical: boolean
+    },
+    neuro: {
+        burning: boolean,
+        palsy: boolean,
+        disc: boolean,
+        ms: boolean,
+        numbness: boolean,
+        parkinsons: boolean,
+        stabbing: boolean,
+        tingling: boolean
+    },
+    allergiesOther: string,
+    meds: string,
+    surgeries: string,
+    skinIrritations: string,
+    sick: string,
 }

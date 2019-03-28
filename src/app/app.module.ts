@@ -38,6 +38,7 @@ import { NavoptionsPage } from '../pages/navoptions/navoptions';
 import { ClientInfoPage } from '../pages/client-info/client-info';
 import { DocumentPage } from '../pages/document/document';
 import { StripePaymentPage } from '../pages/stripe-payment/stripe-payment';
+import { IntakePage } from '../pages/intake/intake';
 
 @NgModule({
   declarations: [
@@ -56,7 +57,8 @@ import { StripePaymentPage } from '../pages/stripe-payment/stripe-payment';
     NavoptionsPage,
     ClientInfoPage,
     DocumentPage,
-    StripePaymentPage,    
+    StripePaymentPage,
+    IntakePage,
   ],
   imports: [
     BrowserModule,
@@ -82,6 +84,7 @@ import { StripePaymentPage } from '../pages/stripe-payment/stripe-payment';
     ClientInfoPage,
     DocumentPage,
     StripePaymentPage,
+    IntakePage,
   ],
   providers: [
     StatusBar,

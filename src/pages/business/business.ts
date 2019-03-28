@@ -24,15 +24,16 @@ export class BusinessPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad BusinessPage');
   }
-  cancel() {
-    this.navCtrl.pop();
-  }
+  // cancel() {
+  //   this.navCtrl.pop();
+  // }
   settings() {
     this.navCtrl.push(SettingsPage);
   }
 
   save() {
     this.ud.userData.user = this.helper.deepCopy(this.biz);
+    this.ud.writeData();
     this.navCtrl.pop();
   }
 

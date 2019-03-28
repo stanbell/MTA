@@ -20,6 +20,15 @@
     </ion-row>
     <ion-row align-items-center>
       <ion-col col-1></ion-col>
+      <ion-col col-10 align-self-center (click)="navTo('intake')">
+        <div class="boxInList">
+          <p>Intake/History</p>
+        </div>
+      </ion-col>
+      <ion-col col-1></ion-col>
+    </ion-row>
+    <ion-row align-items-center>
+      <ion-col col-1></ion-col>
       <ion-col col-10 align-self-center (click)="navTo('appt')">
         <div class="boxInList"> 
           <p>Appointments</p>
@@ -32,24 +41,6 @@
       <ion-col col-10 align-self-center (click)="navTo('trans')">
         <div class="boxInList">
           <p>Transactions/Payments</p>
-        </div>
-      </ion-col>
-      <ion-col col-1></ion-col>
-    </ion-row>
-    <ion-row align-items-center>
-      <ion-col col-1></ion-col>
-      <ion-col col-10 align-self-center (click)="navTo('intake')">
-        <div class="boxInList">
-          <p>Intake/History</p>
-        </div>
-      </ion-col>
-      <ion-col col-1></ion-col>
-    </ion-row>
-    <ion-row align-items-center>
-      <ion-col col-1></ion-col>
-      <ion-col col-10 align-self-center (click)="navTo('docs')">
-        <div class="boxInList">
-          <p>Visit Documents</p>
         </div>
       </ion-col>
       <ion-col col-1></ion-col>

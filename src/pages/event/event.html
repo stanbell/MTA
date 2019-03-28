@@ -1,4 +1,3 @@
-
 <ion-header>
   <ion-navbar>
     <ion-title>Appointment</ion-title>
@@ -19,16 +18,85 @@
         <p>Client: {{event.clientName}}</p>
       </ion-row>
       <ion-row justify-content-center>
-        <p>Service: {{event.serviceDescription}}</p>
+        <div *ngIf="!editingServiceNow">
+          <p>Service: {{event.serviceDescription}}
+            <ion-icon name="create" *ngIf="!editingServiceNow" (click)="editingServiceNow=true"></ion-icon>
+          </p>
+        </div>
+        <div *ngIf="editingServiceNow">
+          <ion-col col-11 justify-content-right>
+            <ion-item>
+              <ion-select [(ngModel)]="event.serviceDescription">
+                <ion-option *ngFor="let s of services" value={{s}}>{{s}}</ion-option>
+              </ion-select>
+            </ion-item>
+          </ion-col>
+          <ion-col col-1 justify-content-right>
+            <ion-icon name="checkmark" *ngIf="editingServiceNow" (click)="editingServiceNow=false; save()"></ion-icon>
+          </ion-col>
+        </div>
       </ion-row>
+
     </div>
     <ion-row><br></ion-row>
     <div class="listInBox">
-      <ion-row justify-content-center>
-        <p>Note</p>
+      <ion-row>
+        <ion-col col-9 justify-content-center>
+          <p>Note</p>
+        </ion-col>
+        <ion-col col-3 justify-content-right>
+          <!-- <button *ngIf="!editingNoteNow" class="editButton" ion-button icon-only (click)="editingNoteNow=true">Edit</button> -->
+          <button *ngIf="!editingNoteNow" class="editButton" ion-button icon-only (click)="editingNoteNow=true">
+            <ion-icon name="create"></ion-icon>
+          </button>
+          <button *ngIf="editingNoteNow" class="editButton" ion-button icon-only (click)="editingNoteNow=false; save()">
+            <ion-icon name="checkmark"></ion-icon>
+          </button>
+        </ion-col>
       </ion-row>
-      <ion-row justify-content-center>
-        <p>{{event.visitNote}}</p>
+      <ion-row justify-content-left>
+        <ion-col col-12>
+          <div *ngIf="!editingNoteNow">
+            <p>Subjective: {{event.visitNote.subjective}}</p>
+          </div>
+          <div *ngIf="editingNoteNow">
+            <ion-textarea class="editBox" type="text" rows=3 placeholder="Subjective"
+              [(ngModel)]="event.visitNote.subjective"></ion-textarea>
+          </div>
+        </ion-col>
+      </ion-row>
+      <ion-row justify-content-left>
+        <ion-col col-12>
+          <div *ngIf="!editingNoteNow">
+            <p>Objective: {{event.visitNote.objective}}</p>
+          </div>
+          <div *ngIf="editingNoteNow">
+            <ion-textarea class="editBox" type="text" rows=3 placeholder="Objective"
+              [(ngModel)]="event.visitNote.objective"></ion-textarea>
+          </div>
+        </ion-col>
+      </ion-row>
+      <ion-row justify-content-left>
+        <ion-col col-12>
+          <div *ngIf="!editingNoteNow">
+            <p>Assessment: {{event.visitNote.assessment}}</p>
+          </div>
+          <div *ngIf="editingNoteNow">
+            <ion-textarea class="editBox" type="text" rows=3 placeholder="Assessment"
+              [(ngModel)]="event.visitNote.assessment"></ion-textarea>
+          </div>
+        </ion-col>
+      </ion-row>
+      <ion-row justify-content-left>
+        <ion-col col-12>
+          <div *ngIf="!editingNoteNow">
+            <p>Plan: {{event.visitNote.plan}}</p>
+          </div>
+          <div *ngIf="editingNoteNow">
+            <ion-textarea class="editBox" type="text" rows=3 placeholder="Plan" [(ngModel)]="event.visitNote.plan">
+            </ion-textarea>
+          </div>
+        </ion-col>
       </ion-row>
     </div>
     <ion-row><br></ion-row>
@@ -44,8 +112,8 @@
           <p *ngIf="event.pd">
             <ion-icon name="checkmark-circle"></ion-icon> Paid
           </p>
-          <p *ngIf="!event.pd" (click)="pay()" style="color: black !important;" >
-            <ion-icon name="card" ></ion-icon> Pay Now
+          <p *ngIf="!event.pd" (click)="pay()" style="color: black !important;">
+            <ion-icon name="card"></ion-icon> Pay Now
           </p>
         </ion-col>
         <ion-col col-3 align-self-end>

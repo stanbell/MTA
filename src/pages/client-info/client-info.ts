@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import '../../types/types';
+import { UserDataProvider } from '../../providers/user-data/user-data';
 
 @IonicPage()
 @Component({
@@ -13,7 +14,8 @@ export class ClientInfoPage {
   itemIndex: number;
 
   constructor(public navCtrl: NavController, 
-    public navParams: NavParams) {
+    public navParams: NavParams,
+    public ud: UserDataProvider) {
       this.client = navParams.get('client');
       this.itemIndex = this.findItem();
   }
@@ -23,12 +25,12 @@ export class ClientInfoPage {
   }
 
 
-  cancel() {
-    this.navCtrl.pop();
-  }
+  // cancel() {
+  //   this.navCtrl.pop();
+  // }
 
   save() {
-    // this.clients.clients[this.itemIndex] = this.helper.deepCopy(this.item);
+    this.ud.writeData();
     this.navCtrl.pop();
   }
 

@@ -81,4 +81,8 @@ export class TransactionsPage {
     return result[0].clientName;
   }
 
+  save() {
+    
+  }
+
 }

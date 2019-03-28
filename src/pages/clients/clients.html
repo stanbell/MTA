@@ -10,19 +10,13 @@
 
 <ion-content padding>
   <ion-toolbar color=primary>
-    <ion-searchbar class="search" [(ngModel)]="searchTerm" debounce=750 placeholder="Search" (ionInput)="populateItems()">
+    <ion-searchbar class="search" [(ngModel)]="searchTerm" debounce=750 placeholder="Search"
+      (ionInput)="populateItems()">
     </ion-searchbar>
   </ion-toolbar>
 
   <div *ngIf="itemsList">
     <ion-grid>
-      <ion-row *ngFor="let z of itemsList; let i = index" (click)="selectItem(i)" justify-content-start>
-        <ion-col col-12>
-          <div class="box">
-            <p>{{z.name}}</p>
-          </div>
-        </ion-col>
-      </ion-row>
       <ion-row (click)="addClient()" justify-content-start>
         <ion-col col-12>
           <div class="box" style="text-align: center">
@@ -30,6 +24,14 @@
           </div>
         </ion-col>
       </ion-row>
+      <ion-row *ngFor="let z of itemsList; let i = index" (click)="selectItem(i)" justify-content-start>
+        <ion-col col-12>
+          <div class="box">
+            <p>{{z.name}}</p>
+          </div>
+        </ion-col>
+      </ion-row>
+
     </ion-grid>
   </div>
 

@@ -50,6 +50,8 @@ export class MyApp {
 
       // Redirect back to app after authenticating
       (window as any).handleOpenURL = (url: string) => {
+        console.log(url);
+        alert(url);
         Auth0Cordova.onRedirectUri(url);
       }
       this.nav.setRoot(HomePage);

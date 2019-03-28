@@ -45,7 +45,10 @@ html {
 .editButton {
         height: 18px;
 }
-
+.editBox {
+    color: color($colors, primary);
+    background-color: color($colors, light);
+}
 .number {
     text-align: right;
 }

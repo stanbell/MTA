@@ -27,6 +27,10 @@ export class EventPage {
   eventDate: Date;
   initialTransactions: TransactionType[];
   transactions: any[];
+  editingNoteNow: boolean = false;
+
+// temp
+  services = [ 'test 1', 'test 2', 'service 3'];
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
@@ -42,6 +46,7 @@ export class EventPage {
     this.displayEnd = (new Date(this.event.end).toLocaleTimeString());
 
     this.eventDate = new Date(this.event.start);
+    // TODO:  restrict edits for past events?
     this.future = (this.eventDate.valueOf() > Date.now());  // future, can edit
   }
 
@@ -119,6 +124,10 @@ export class EventPage {
     }
   }
 
+  save() {
+    // for now, it's only the note contents
+
+  }
 // TODO unsubscribe from browser events
 
   // private defaultTitle: string = (!!this.ud.userData.user.defaultApptTitle) ? this.ud.userData.user.defaultApptTitle : 'Massage';

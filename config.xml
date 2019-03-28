@@ -91,13 +91,11 @@
     </plugin>
     <plugin name="cordova-plugin-splashscreen" spec="~5.0.2" />
     <plugin name="cordova-plugin-customurlscheme" spec="4.3.0">
-        <variable name="URL_SCHEME" value="com.dcsbapps.mta" />
-        <variable name="ANDROID_SCHEME" value="com.dcsbapps.mta" />
+        <variable name="URL_SCHEME" value="com.dcsb.mta" />
+        <variable name="ANDROID_SCHEME" value="com.dcsb.mta" />
         <variable name="ANDROID_HOST" value="stanbell.auth0.com" />
-        <variable name="ANDROID_PATHPREFIX" value="/cordova/com.dcsbapps.mta/callback" />
+        <variable name="ANDROID_PATHPREFIX" value="/cordova/com.dcsb.mta/callback" />
     </plugin>
-    <engine name="ios" spec="4.5.5" />
-    <engine name="android" spec="7.1.4" />
     <plugin name="cordova-plugin-calendar" spec="5.1.4">
         <variable name="CALENDAR_USAGE_DESCRIPTION" value="Enables you to make MTA appointments in your calendar." />
         <variable name="CONTACTS_USAGE_DESCRIPTION" value="Does not use contacts." />
@@ -105,4 +103,6 @@
     <plugin name="cordova-plugin-stripe" spec="1.5.3" />
     <plugin name="cordova-plugin-inappbrowser" spec="3.0.0" />
     <plugin name="cordova-sqlite-storage" spec="^2.6.0" />
+    <engine name="ios" spec="4.5.5" />
+    <engine name="android" spec="7.1.4" />
 </widget>

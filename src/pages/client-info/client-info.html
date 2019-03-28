@@ -133,7 +133,11 @@
     </div>
   </ion-grid>
   <p><ion-icon color="primary" name="add-circle" (click)="addContact()"></ion-icon>  Add Contact</p>
-
+  <ion-item>
+    <ion-label color="primary">Preferences</ion-label>
+    <ion-input type="text" [(ngModel)]="client.preferences">
+    </ion-input>
+  </ion-item>
   <button ion-button [disabled]="!client.name" (click)="save()">Save</button>
-  <button ion-button (click)="cancel()">Cancel</button>
+  <!-- <button ion-button (click)="cancel()">Cancel</button> -->
 </ion-content>
