@@ -30,6 +30,13 @@ interface PayPalPaymentsType {
 interface MerchantAcctType {
     acct: string
 }
+
+interface ServiceTypes {
+    name: string,
+    duration: number, // in minutes
+    price: number
+}
+
 interface UserInfoType {
     id: string,
     pwd: string,
@@ -51,6 +58,7 @@ interface UserInfoType {
     square: SquarePaymentsType,
     paypal: PayPalPaymentsType,
     merch: MerchantAcctType
+    services: ServiceTypes[]
 }
 
 interface CalendarType {

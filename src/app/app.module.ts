@@ -39,6 +39,9 @@ import { ClientInfoPage } from '../pages/client-info/client-info';
 import { DocumentPage } from '../pages/document/document';
 import { StripePaymentPage } from '../pages/stripe-payment/stripe-payment';
 import { IntakePage } from '../pages/intake/intake';
+import { EmptiesProvider } from '../providers/empties/empties';
+import { AddEventPage } from '../pages/add-event/add-event';
+import { LookupPage } from '../pages/lookup/lookup';
 
 @NgModule({
   declarations: [
@@ -59,6 +62,8 @@ import { IntakePage } from '../pages/intake/intake';
     DocumentPage,
     StripePaymentPage,
     IntakePage,
+    AddEventPage,
+    LookupPage,
   ],
   imports: [
     BrowserModule,
@@ -85,6 +90,8 @@ import { IntakePage } from '../pages/intake/intake';
     DocumentPage,
     StripePaymentPage,
     IntakePage,
+    AddEventPage,
+    LookupPage,
   ],
   providers: [
     StatusBar,
@@ -106,6 +113,7 @@ import { IntakePage } from '../pages/intake/intake';
     EventPage,
     DocumentsProvider,
     InAppBrowser,
+    EmptiesProvider,
   ]
 })
 export class AppModule {}

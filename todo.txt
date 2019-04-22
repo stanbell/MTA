@@ -1,10 +1,26 @@
-consolidate intake form client name/addr/etc with client info page
+_ consolidate intake form client name/addr/etc with client info page
     probably drop elements from intake, or else copy from intake to client
 
-show calendar days with appt's different bkgrnd than standard days
+_ show calendar days with appt's different bkgrnd than standard days
 
-add appt
+_ add appt
+    integrate w google
+    integrate w ical (both from native plugin?)
 
-add client
+_ add client    WORKING HERE, verify
 
-client sep first and last name
+N client first and last name for sorting
+    drop this because using name to match appts and transactions
+    if user wants last or first, put names in that way when entering clients 
+
+_ when to re-sort client list vs adds & deletes?
+
+_ where to re-calc client metrics
+
+_ acknowledge a no-show
+_ acknowledge a cancellation
+    _ in-app
+    _ via external calendar?
+
+_ implement visit history timeline, include clients 1m/6m/1y
+

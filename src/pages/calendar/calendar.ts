@@ -4,12 +4,16 @@ import { Calendar } from '@ionic-native/calendar';
 import { EventPage } from '../event/event';
 import { UserDataProvider } from '../../providers/user-data/user-data';
 import { ScheduleProvider } from '../../providers/schedule/schedule';
+import { EmptiesProvider } from '../../providers/empties/empties';
+import { HelpersProvider } from '../../providers/helpers/helpers';
+import { AddEventPage } from '../add-event/add-event';
 
 const normalDaysInMonths: number[] = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 const leapDaysInMonths: number[] = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 const monthNames: string[] = ["January", "February", "March", "April", "May", "June", "July",
-  "August", "September", "October", "November", "December"]
+  "August", "September", "October", "November", "December"];
 
+const HOUR_VALUE = 1000 * 60 * 60;
 
 @IonicPage()
 @Component({
@@ -44,8 +48,10 @@ export class CalendarPage {
     public navParams: NavParams,
     private plt: Platform,
     private cal: Calendar,
+    public helper: HelpersProvider,
     public sched: ScheduleProvider,
-    public ud: UserDataProvider) {
+    public ud: UserDataProvider, 
+    public empties: EmptiesProvider) {
     (navParams.get('date')) ? this.setSelectedDate(navParams.get('date')) : this.setSelectedDate(this.getToday());
     (navParams.get('title')) ? this.title = navParams.get('title') : this.title = 'My Schedule';
     this.buildCalendarDays(this.selectedDate);
@@ -58,27 +64,51 @@ export class CalendarPage {
     // }
   }
 
-  // use calendar name from settings
-  //    if absent, ask for it from list (with dialog)
-  //      this.cal.listCalendars().then(data => { 
-  // put these into a list for selection 
-  // or allow add new? })
-  // might be better to hardcode a new one
-  //    once captured, put in to userdata.userinfo.calendar
+  deleteCancelAppt() {
+    // send cancellation notice to native, if any
+    // delete from calendar "schedule" member of ud
+  }
+
+  addAppt() {
+    console.log('addAppt');
+
+    var newAppt: ScheduleItemType = this.empties.getEmptyScheduleItem();
+    newAppt.id = this.helper.newGuid();
+    var defaultDate = new Date(this.selectedDate);
+    defaultDate.setHours(11);  // default to 11  // maybe TODO set to current time, so not in past if "today"
+    newAppt.start = this.helper.formatDateTime24(defaultDate);
+    defaultDate.setHours(11,59,59);  // default 1 hour less 1 second
+    newAppt.end = this.helper.formatDateTime24(defaultDate);  // initial default 1 hour
+    this.ud.userData.schedule.push(newAppt);
   // this page to have 
   //    -add appt:  
-  //        add event to calendar,
+  //        add (empty except defaults) event to calendar "schedule" member of ud,
   //        add appt to user.schedule,
   //        add 1 to clients.scheduledAppts,
-  //        add event to calendar,
-  //    -nav to the appt/visit
+  //    -nav to the event/visit page for details
+  //          sync to native from there?
+                  // use calendar name from settings
+                  //    if absent, ask for it from list (with dialog)
+                  //      this.cal.listCalendars().then(data => { 
+                  // put these into a list for selection 
+                  // or allow add new? })
+                  // might be better to hardcode a new one
+                  //    once captured, put in to userdata.userinfo.calendar
   //        start/finish 
+    // now go to the page to edit the event
+    // this.selectEvent(newAppt);
+    console.log(newAppt);
+    this.navCtrl.push(AddEventPage, {
+      event: newAppt,
+      // mode: 'edit'    
+    })
+  }
 
   selectEvent(event: any) {
     // pick this event, go to appt details
     this.navCtrl.push(EventPage, {
       event: event,
-      // mode: 'edit'
+      // mode: 'edit'    
     })
   }
 
@@ -89,16 +119,8 @@ export class CalendarPage {
       this.ud.userData.schedule
         .filter(x => (new Date(x.start).setHours(0, 0, 0, 0) === sd));
     this.eventList.forEach(item => {
-      item['startTime'] = this.formatTime(item['start']);
+      item['startTime'] = this.helper.formatTime(item['start']);
     });
-  }
-
-  private formatTime(item: string): string {
-    const ts = new Date(item).toTimeString();
-    const hr = parseInt(ts.slice(0, 2));
-    const hrs = (hr > 12) ? (hr - 12) : hr;
-    const ampm = (hr > 12) ? 'pm' : 'am';
-    return hrs.toString() + ':' + ts.slice(3, 5) + ampm;
   }
 
   goToPrevMonth() {
@@ -183,7 +205,7 @@ export class CalendarPage {
 
   private getToday(): string {
     const today = new Date(Date.now());
-    return (today.getMonth() + 1) + '/' + today.getDate() + '/' + today.getFullYear();
+    return this.helper.formatDate(today);
   }
 
   getDateEventsFromNative() {
@@ -196,7 +218,7 @@ export class CalendarPage {
     this.cal.listEventsInRange(startDate, endDate).then(
       (msg) => {
         msg.forEach(item => {
-          item['startTime'] = this.formatTime(item['startDate']);
+          item['startTime'] = this.helper.formatTime(item['startDate']);
           this.eventList.push(item);
         });
       },
@@ -256,7 +278,7 @@ export class CalendarPage {
   //   });
   //   let el = this.eventList.filter(x => mtaAppts.indexOf(x['providerItemId']) !== -1)
   //   el.forEach(item => {
-  //     item['startTime'] = this.formatTime(item['startDate']);
+  //     item['startTime'] = helpers.formatTime(item['startDate']);
   //     var found = this.getMatchingAppt(item, this.ud.userData.schedule);
   //     item = { ...item, ...found };
   //     console.log(item);
@@ -285,6 +307,6 @@ export class CalendarPage {
   //   this.sched.readDates(this.selectedDate);
   //   this.eventList = this.sched.scheduleItems;
   //   this.eventList.forEach(item => {
-  //     item['startTime'] = this.formatTime(item['start']);
+  //     item['startTime'] = helpers.formatTime(item['start']);
   //   });
   // }

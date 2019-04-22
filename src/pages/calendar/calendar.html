@@ -45,6 +45,11 @@
       </ion-grid>
     </div>
   </div>
+  <ion-grid>
+    <ion-row (click)="addAppt()" justify-content-start>
+          <p class="box" style="text-align: center">New Appointment</p>
+    </ion-row>
+  </ion-grid>
   <!-- list of appts on selected day -->
   <ion-grid *ngIf="selectedMonth==displayingMonth && selectedYear==displayingYear">
     <ion-row justify-content-center>

@@ -1,6 +1,9 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
+
+// routes:  mtauser/alpha-id, contents/_id (numeric)
+
 @Injectable()
 export class MTAAPI {
     constructor(private http: HttpClient) {

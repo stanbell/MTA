@@ -1,0 +1,54 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>New Appt</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <ion-grid>
+    <ion-row justify-content-left>
+      <ion-col col-4>
+        <ion-label>Client</ion-label>
+      </ion-col>
+        <ion-col col-1>
+        <ion-icon name="search" class="tool" (click)="lookup('client')"></ion-icon>
+      </ion-col>
+      <ion-col col-7>
+        <ion-input type="text" [(ngModel)]="event.clientName">
+        </ion-input>
+      </ion-col>
+    </ion-row>
+    <ion-row justify-content-left>
+      <ion-col col-4>
+        <ion-label>Start</ion-label>
+      </ion-col>
+      <ion-col col-8>
+        <ion-datetime displayFormat="MM/DD/YYYY HH:mm" [(ngModel)]="startDate"></ion-datetime>
+      </ion-col>
+    </ion-row>
+    <ion-row justify-content-left>
+      <ion-col col-4>
+        <ion-label>End</ion-label>
+      </ion-col>
+      <ion-col col-8>
+        <ion-datetime displayFormat="MM/DD/YYYY HH:mm" [(ngModel)]="endDate"></ion-datetime>
+      </ion-col>
+    </ion-row>
+
+    <ion-row justify-content-left>
+      <ion-col col-4>
+        <ion-label>Service</ion-label>
+      </ion-col>
+      <ion-col col-1>
+        <ion-icon name="search" class="tool" (click)="lookup('service')"></ion-icon>
+      </ion-col>
+      <ion-col col-7>
+        <ion-input type="text" [(ngModel)]="event.serviceDescription">
+        </ion-input>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

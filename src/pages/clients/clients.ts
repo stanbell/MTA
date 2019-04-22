@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { HelpersProvider } from '../../providers/helpers/helpers';
 import { ClientsProvider } from '../../providers/clients/clients';
 import { ClientPage } from '../client/client';
+import { EmptiesProvider } from '../../providers/empties/empties';
 @IonicPage()
 @Component({
   selector: 'page-clients',
@@ -16,6 +17,7 @@ export class ClientsPage {
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
     public helper: HelpersProvider,
+    public mt: EmptiesProvider,
     public clients: ClientsProvider) {
     clients.read();
   }
@@ -49,6 +51,10 @@ export class ClientsPage {
 
   addClient() {
     console.log('addClient');
+    const i = this.clients.add();
+    this.navCtrl.push(ClientPage, {
+      item: i
+    })
   }
 
 }

@@ -40,7 +40,11 @@ export class EventPage {
     public helper: HelpersProvider,
     public ud: UserDataProvider) {
     // this.mode = navParams.get('mode');
+    // we just edit, we've already created an empty/defaulted one if adding
+
     this.event = navParams.get('event');
+    console.log(this.event.start);
+    console.log(this.event.end);
     this.displayDate = (new Date(this.event.start).toLocaleDateString());
     this.displayStart = (new Date(this.event.start).toLocaleTimeString());
     this.displayEnd = (new Date(this.event.end).toLocaleTimeString());

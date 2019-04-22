@@ -3,6 +3,7 @@ import { MTAAPI } from '../mtaapi/mtaapi';
 import { CacheProvider } from '../cache/cache';
 import { HelpersProvider } from '../helpers/helpers';
 import '../../types/types';
+import { EmptiesProvider } from '../empties/empties';
 
 const CACHE_ID = 'MTA_DATA';
 const SERVER_ROUTE = 'contents';
@@ -21,19 +22,22 @@ export class UserDataProvider {
   userId: string;
   userIdNumber: string;
   userData: UserDataType;
+  emptyUserData: UserDataType;
 
   constructor(
     public helper: HelpersProvider,
     private cache: CacheProvider,
-    private api: MTAAPI) {
+    private api: MTAAPI,
+    public mt: EmptiesProvider) {
+      this.emptyUserData = this.helper.deepCopy(this.mt.getEmptyUserData);
   }
 
   initData() {
-    this.userData = this.emptyUserData;
+    this.userData = this.helper.deepCopy(this.mt.getEmptyUserData());
   }
   
   clearData() {
-    this.userData = this.emptyUserData;
+    this.userData = this.helper.deepCopy(this.mt.getEmptyUserData());
   }
   
   async readIdNumber() {
@@ -51,8 +55,8 @@ export class UserDataProvider {
     // *****************************************
 
     // also reconciles most recent
-    let localData: UserDataType = this.emptyUserData;
-    let serverData: UserDataType = this.emptyUserData;
+    let localData: UserDataType = this.helper.deepCopy(this.mt.getEmptyUserData());
+    let serverData: UserDataType = this.helper.deepCopy(this.mt.getEmptyUserData());
     let l: number, s: number;
     try {
       localData = await this.readLocal();
@@ -143,60 +147,5 @@ export class UserDataProvider {
     }
   }
 
-  private emptyUserData: UserDataType = {
-    _id: '',
-    user: {
-      id: '',
-      pwd: '',
-      businessName: '',
-      address: {
-        label: '',
-        street1: '',
-        street2: '',
-        city: '',
-        state: '',
-        zip: ''
-      },
-      contacts: [],
-      calendar: {
-        id: '',
-        name: '',
-        provider: '',
-        connectionInfo: '',
-        owner: '',
-      },
-      defaultApptTitle: '',
-      listActive: "1m",
-      sortClientsBy: "last",
-      useCalendar: 'app',
-      acceptPayments: 'self',
-      whoSchedule: 'user',
-      whoIntake: 'user',
-      emailSchedule: '',
-      autoLogOut: 'no',
-      stripe: {
-        secretKey: "",
-        fee: 0
-      },
-      square: {
-        applicationId: "",
-        accessToken: "",
-        locationId: "",
-        fee: 0
-      },
-      paypal: {
-        key: ""
-      },
-      merch: {
-        acct: ""
-      }
-    },
-    appActivity: {
-      lastUpdate: "01/01/1968"  // pretty old date
-    },
-    clients: [],
-    transactions: [],
-    schedule: []
-  }
 
 }

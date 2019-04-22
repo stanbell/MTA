@@ -4,6 +4,7 @@ import { HttpHeaders } from '@angular/common/http';
 import { UserDataProvider } from '../../providers/user-data/user-data';
 import { CCAPI } from '../../providers/ccapi/ccapi';
 import '../../types/types';
+import { HelpersProvider } from '../../providers/helpers/helpers';
 
 const CC_SERVER_ROUTE = 'payments';
 const CRYPTO_KEY = "Twas brillig, and the slithy toves Did gyre and gimble in the wabe: All mimsy were the borogoves, And the mome raths outgrabe."
@@ -26,6 +27,7 @@ export class StripePaymentPage {
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
+    public helpers: HelpersProvider,
     private api: CCAPI,
     public ud: UserDataProvider) {
     this.event = this.navParams.get('event');
@@ -51,7 +53,7 @@ export class StripePaymentPage {
         client: this.event.clientName,
         service: this.event.serviceDescription,
         statementDescription: this.ud.userData.user.businessName + ' ' + this.event.serviceDescription,
-        transId: '',  // TODO insert guid here
+        transId: this.helpers.newGuid(),
         method: this.ud.userData.user.acceptPayments,
         methodData: this.ud.userData.user[this.ud.userData.user.acceptPayments],
         amount: this.event.revenue,
