@@ -37,16 +37,15 @@ export class ClientsPage {
   selectItem(item: any) {
     this.navCtrl.push(ClientPage, {
       item: item
-     })
+    })
   }
 
   populateItems() {
-    this.itemsList = [];
-    // TODO:  filter to search term
-    for (let i = 0; i < this.clients.clients.length; i++) {
-      this.itemsList.push(this.clients.clients[i]);
-    }
-
+    // this.itemsList = [];
+    this.itemsList = (!!this.searchTerm)
+      ? this.itemsList = this.clients.clients
+        .filter(x => x.name.toLowerCase().indexOf(this.searchTerm.toLowerCase()) !== -1)
+      : this.itemsList = this.clients.clients;
   }
 
   addClient() {

@@ -13,7 +13,7 @@ N client first and last name for sorting
     drop this because using name to match appts and transactions
     if user wants last or first, put names in that way when entering clients 
 
-_ when to re-sort client list vs adds & deletes?
+N when to re-sort client list vs adds & deletes?
 
 _ where to re-calc client metrics
 
@@ -26,3 +26,6 @@ _ implement visit history timeline, include clients 1m/6m/1y
 
 _ add a revenue predictor based on scheduled appts' service prices
 
+X client search
+_ settings add service
+_ add contact
