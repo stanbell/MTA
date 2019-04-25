@@ -7,7 +7,7 @@ _ add appt
     integrate w google
     integrate w ical (both from native plugin?)
 
-_ add client    WORKING HERE, verify
+X add client 
 
 N client first and last name for sorting
     drop this because using name to match appts and transactions
@@ -23,4 +23,6 @@ _ acknowledge a cancellation
     _ via external calendar?
 
 _ implement visit history timeline, include clients 1m/6m/1y
+
+_ add a revenue predictor based on scheduled appts' service prices
 

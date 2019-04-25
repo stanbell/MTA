@@ -47,7 +47,7 @@
   </div>
   <ion-grid>
     <ion-row (click)="addAppt()" justify-content-start>
-          <p class="box" style="text-align: center">New Appointment</p>
+      <p class="box" style="text-align: center">New Appointment</p>
     </ion-row>
   </ion-grid>
   <!-- list of appts on selected day -->
@@ -60,9 +60,6 @@
     <div class="listInBox" *ngIf="eventList.length > 0">
       <div *ngFor="let z of eventList">
         <ion-row (click)="selectEvent(z)">
-          <!-- <ion-col class="eventList" col-1>
-            <ion-icon name="create"></ion-icon>
-          </ion-col> -->
           <ion-col class="eventList" col-2>
             <p>{{z.startTime}}</p>
           </ion-col>

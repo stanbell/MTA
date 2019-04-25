@@ -1,13 +1,37 @@
 import { Injectable } from '@angular/core';
+import { Platform } from 'ionic-angular';
 
 @Injectable()
 export class HelpersProvider {
 
-  constructor() {
+  constructor(public plt: Platform) {
     console.log('Hello HelpersProvider Provider');
   }
 
-  lookupSelection = null;
+  private _lookupSelection: LookupSelectionType = null;  // used to pass responses from lookups, cleared immediately after reading
+
+
+  public get lookupSelection(): LookupSelectionType {
+    const v: any = this._lookupSelection;
+    // clear after use
+    this._lookupSelection = null;
+    return v;
+}
+
+  public set lookupSelection(v: LookupSelectionType) {
+    this._lookupSelection = v;
+}
+
+  // automatically choose console.log or alert based on platform
+  signal(...args: any[]) {
+    if (this.plt.is('cordova')) {
+      args.forEach(e => {
+        alert(e);
+      });
+    } else {
+      console.log(args);
+    }
+  }
 
   newGuid() {
     return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
@@ -68,5 +92,17 @@ export class HelpersProvider {
     const dt = this.formatDate(fd);
     const ts = fd.toTimeString();
     return dt + " " + ts;
+  }
+
+  timeDiff(time1: Date, time2: Date): number {
+    const t1: number = new Date(time1).valueOf();
+    const t2: number = new Date(time2).valueOf();
+    // return Math.abs(t1 - t2);
+    return (t1 - t2);
+  }
+
+  addTimeInterval(time1: Date, interval: number): Date {
+    // interval expected in milliseconds
+    return new Date(time1.getTime() + (isNaN(interval) ? 0 : interval));
   }
 }

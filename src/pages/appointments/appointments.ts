@@ -58,6 +58,10 @@ export class AppointmentsPage {
     });
   }
 
+  addAppt() {
+    // TODO:  implement this
+  }
+
   private formatDate(dt: string): string {
     const d = new Date(dt);
     return ShortMonths[d.getMonth()] + ' ' + d.getDate();

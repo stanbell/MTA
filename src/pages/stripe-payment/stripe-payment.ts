@@ -110,8 +110,9 @@ export class StripePaymentPage {
     let chgRemainder: number = 0 - (charge.amount + feeAmount);
     let d = new Date(charge.created * 1000).toLocaleDateString();
     // let td = (d.getMonth + 1).toString() + '/' + d.getDate().toString() + '/' + d.getFullYear().toString(); 
-    const revTrans = {
+    const revTrans = {  // note the rev trans initially created in add-event.ts, but overwritten here
       uniqueId: charge.id + '_R',
+      processorId: charge.id,
       apptId: this.event.id,
       type: 'rev',
       description: charge.description,
@@ -126,6 +127,7 @@ export class StripePaymentPage {
     };
     const feeTrans = {
       uniqueId: charge.id + '_F',
+      processorId: charge.id,      
       apptId: this.event.id,
       type: 'fee',
       description: this.ud.userData.user.acceptPayments + ' fee',
@@ -140,6 +142,7 @@ export class StripePaymentPage {
     };
     const creditTrans = {
       uniqueId: charge.id + '_P',
+      processorId: '',
       apptId: this.event.id,
       type: 'pmt',
       // description: 'net credit',

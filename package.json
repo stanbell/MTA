@@ -81,8 +81,8 @@
       },
       "cordova-sqlite-storage": {},
       "cordova-plugin-calendar": {
-        "CALENDAR_USAGE_DESCRIPTION": " ",
-        "CONTACTS_USAGE_DESCRIPTION": " "
+        "CALENDAR_USAGE_DESCRIPTION": "If selected in My Business->Settings, this app will sync therapy appointments to your Apple/iOS calendar.",
+        "CONTACTS_USAGE_DESCRIPTION": "This app does not use your contacts."
       },
       "cordova-plugin-stripe": {},
       "cordova-plugin-inappbrowser": {}

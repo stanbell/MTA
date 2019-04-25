@@ -1,3 +1,9 @@
+interface LookupSelectionType {
+    what: string,
+    selected: any,
+    index: number
+}
+
 interface AddressType {
     label: string,
     street1: string,
@@ -110,8 +116,9 @@ interface PaymentRequestResponseType {
 }
 
 interface TransactionType {
-    uniqueId: string,
+    uniqueId: string,  // my generated id
     apptId: string,
+    processorId: string,  // comes from the payment processor for pmt trans
     type: string,  // revenue (my services), service charges (i paid)
     description: string,
     amount: number,
@@ -140,7 +147,7 @@ interface VisitNoteType {
     Assessment: string,
     Plan: string
 }
-interface ScheduleItemType {
+interface ScheduleItemType {  // =='event' in much of the code
     id: string,  // of the individual event
     calendar: string,
     provider: string, // ical or google?

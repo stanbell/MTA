@@ -106,14 +106,13 @@
       <ion-radio value="in-app" checked></ion-radio>
     </ion-item>
     <ion-item>
-      <ion-label class="checkOption">Apple/iCal</ion-label>
-      <ion-radio value="apple"></ion-radio>
-    </ion-item>
-    <ion-item>
-      <ion-label class="checkOption">Google/gmail</ion-label>
-      <ion-radio value="google"></ion-radio>
+      <ion-label class="checkOption">Native (Apple or Google)</ion-label>
+      <ion-radio value="native"></ion-radio>
     </ion-item>
   </ion-list>
+  <ion-item>
+    <ion-label class="checkOption">Note if you use both iOs & Android devices, only the calendar native to that device will be updated when making appointments.</ion-label>
+  </ion-item>
 
   <div *ngIf="biz.useCalendar!='in-app'">
     <ion-item>

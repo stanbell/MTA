@@ -10,17 +10,26 @@
 <ion-content padding>
   <div *ngIf="eventList">
     <ion-grid>
-    <ion-row align-items-center>
-      <ion-col col-1></ion-col>
-      <ion-col col-10 align-self-center>
-        <div class="boxInList">
-          <p>{{client.name}}</p>
-        </div>
-      </ion-col>
-      <ion-col col-1></ion-col>
-    </ion-row>
+      <ion-row align-items-center>
+        <ion-col col-1></ion-col>
+        <ion-col col-10 align-self-center>
+          <div class="boxInList">
+            <p>{{client.name}}</p>
+          </div>
+        </ion-col>
+        <ion-col col-1></ion-col>
+      </ion-row>
+      <ion-row (click)="addAppt()" align-items-center>
+        <ion-col col-1></ion-col>
+        <ion-col col-10 align-self-center>
+          <div class="boxInList">
+            <p style="text-align: center">New Appointment</p>
+          </div>
+        </ion-col>
+        <ion-col col-1></ion-col>
+      </ion-row>
       <div class="boxInList">
-      <ion-row *ngFor="let z of eventList" (click)="selectEvent(z)">
+        <ion-row *ngFor="let z of eventList" (click)="selectEvent(z)">
           <!-- <ion-col col-1>
             <ion-icon name="create"></ion-icon>
           </ion-col> -->
