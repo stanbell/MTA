@@ -16,17 +16,21 @@ export class HelpersProvider {
     // clear after use
     this._lookupSelection = null;
     return v;
-}
+  }
 
   public set lookupSelection(v: LookupSelectionType) {
     this._lookupSelection = v;
-}
+  }
 
   // automatically choose console.log or alert based on platform
   signal(...args: any[]) {
     if (this.plt.is('cordova')) {
       args.forEach(e => {
-        alert(e);
+        if (typeof e == "object") {
+          alert(JSON.stringify(e));
+        } else {
+          alert(e);
+        }
       });
     } else {
       console.log(args);

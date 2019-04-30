@@ -25,7 +25,26 @@ _ acknowledge a cancellation
 _ implement visit history timeline, include clients 1m/6m/1y
 
 _ add a revenue predictor based on scheduled appts' service prices
+    yes, 
 
 X client search
 _ settings add service
 _ add contact
+_ cancel add appt
+
+_ apply discount in transactions
+    _ manual
+    _ defined 
+    _ automate with some kind of "membership"
+        _ or buy 4 get 1 free, buy 5 card, similar
+
+_ indicate availables times per day to allow clients to self-schedule
+    _ new setting:  allow same day client self-scheduling
+        _ if set, include today's available time blocks,
+        _ if not, ignore today's and show available time blocks starting tomorrow
+_ quick add do-not-schedule-for-next-nn-minutes 
+
+
+_ for user setting 'allow client to complete intake document'
+    do 2-part form, with user part on separate page from client part
+    (or just do 2 pages, and ignore the option; remove the option cause user can just hand to client if desired)

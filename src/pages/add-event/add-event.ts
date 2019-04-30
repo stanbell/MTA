@@ -124,7 +124,7 @@ export class AddEventPage {
     if (this.plt.is('cordova')) {  // only works on real device
       this.helper.signal('addToNative');
       // if user is using native
-      if (this.ud.userData.user.useCalendar === 'in-app') return; {
+      if (this.ud.userData.user.useCalendar === 'in-app') { return; } else  {
         this.helper.signal('using native');
         // if we have permission
         if (!this.ncal.hasReadWritePermission()) {
@@ -156,7 +156,7 @@ export class AddEventPage {
 }
 
 
-// calendarOptions.id is the unuqie identifier?  or calendarOptions.calendarI    console.log(time1);
+// calendarOptions.id is the unuqie identifier?  or calendarOptions.calendar    console.log(time1);
   //                maybe only if i assign it with createEventWithOptions
   // following .findEVent & .modifyEvent are ios only
   // note when editing calendar event use calendar.findEvent(title, location, notes, startDate, endDate)
