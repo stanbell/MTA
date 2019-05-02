@@ -46,20 +46,18 @@ export class AuthProvider {
     };
     // Authorize login request with Auth0: open login page and get auth results
     this.Client.authorize(options, (err, authResult) => {
-      if (err) {
-        alert(err);
-      }
-      alert('return from client authorize');
+      alert('after .authorize ' + err);
       alert('authResult.accessToken ' + authResult.accessToken);
       this.accessToken = authResult.accessToken;
       this.loggedIn = true;
       alert('calling userInfo');
       this.Auth0.client.userInfo(this.accessToken, (err, profile) => {
-        if (err) {
-          alert(err);
-        }
+        // if (err) {
+        alert('.userInfo ' + err);
+        // }
         alert('return from client.userInfo');
-        this.zone.run(() => this.userProfile = profile)
+        // this.zone.run(() => this.userProfile = profile)
+        this.userProfile = profile;
       });
     });
     // this.Client.authorize(options, (err, authResult) => {
