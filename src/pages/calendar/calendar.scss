@@ -16,14 +16,19 @@ page-calendar {
     color: #999999;
     font-size: 90%;
   }
-  .currentDate, .otherDate {
+  .currentDate, .otherDate, .hasApptDate {
     padding: 5px;
   }
   .currentDate {
     font-weight: bold;
-    background-color: red;
+    background-color: red !important;
     color: white;
     border-radius: 30px;
+  }
+  .hasApptDate {
+    font-weight: bold;
+    color: white;
+    background-color: #1a732d;
   }
   .calendar-header {
     background-color: #1a732d;

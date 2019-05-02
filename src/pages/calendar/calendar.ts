@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Calendar } from '@ionic-native/calendar';
 import { EventPage } from '../event/event';
-import { UserDataProvider } from '../../providers/user-data/user-data';
+// import { UserDataProvider } from '../../providers/user-data/user-data';
 import { ScheduleProvider } from '../../providers/schedule/schedule';
-import { EmptiesProvider } from '../../providers/empties/empties';
+// import { EmptiesProvider } from '../../providers/empties/empties';
 import { HelpersProvider } from '../../providers/helpers/helpers';
 import { AddEventPage } from '../add-event/add-event';
 
@@ -13,7 +13,7 @@ const leapDaysInMonths: number[] = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 
 const monthNames: string[] = ["January", "February", "March", "April", "May", "June", "July",
   "August", "September", "October", "November", "December"];
 
-const HOUR_VALUE = 1000 * 60 * 60;
+// const HOUR_VALUE = 1000 * 60 * 60;
 
 @IonicPage()
 @Component({
@@ -24,7 +24,7 @@ export class CalendarPage {
 
   title: any = 'Schedule';  // whose calendar is it?  title on page
 
-  selectedDate: any;  // determines red highlight, changed by click on date
+  selectedDate: Date;  // determines red highlight, changed by click on date
   selectedDayOfMonth: any;
   selectedMonth: any;
   selectedYear: any;
@@ -33,7 +33,6 @@ export class CalendarPage {
   daysInThisMonth: any;
   daysFromLastMonth: any;
   daysFromNextMonth: any;
-
 
   displayingDayOfMonth: any;
   displayingMonth: any;
@@ -46,16 +45,15 @@ export class CalendarPage {
   // constructor(public navCtrl: NavController, public navParams: NavParams) {
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
-    private plt: Platform,
+    // private plt: Platform,
     private cal: Calendar,
     public helper: HelpersProvider,
-    public sched: ScheduleProvider,
-    public ud: UserDataProvider,
-    public empties: EmptiesProvider) {
+    public sched: ScheduleProvider) {
     (navParams.get('date')) ? this.setSelectedDate(navParams.get('date')) : this.setSelectedDate(this.getToday());
     (navParams.get('title')) ? this.title = navParams.get('title') : this.title = 'My Schedule';
-    this.buildCalendarDays(this.selectedDate);
+    this.sched.read();
     this.getDateEvents();
+    this.buildCalendarDays(this.selectedDate);
   }
 
   ionViewDidEnter() {
@@ -68,54 +66,24 @@ export class CalendarPage {
   }
 
   addAppt() {
-    console.log('addAppt');
-
-    var newAppt: ScheduleItemType = this.empties.getEmptyScheduleItem();
-    newAppt.id = this.helper.newGuid();
-    var defaultDate = new Date(this.selectedDate);
-    defaultDate.setHours(11);  // default to 11  // maybe TODO set to current time, so not in past if "today"
-    newAppt.start = this.helper.formatDateTime24(defaultDate);
-    defaultDate.setHours(11, 59, 59);  // default 1 hour less 1 second
-    newAppt.end = this.helper.formatDateTime24(defaultDate);  // initial default 1 hour
-    this.ud.userData.schedule.push(newAppt);
-    // this page to have 
-    //    -add appt:  
-    //        add (empty except defaults) event to calendar "schedule" member of ud,
-    //        add appt to user.schedule,
-    //        add 1 to clients.scheduledAppts,
-    //    -nav to the event/visit page for details
-    //          sync to native from there?
-    // use calendar name from settings
-    //    if absent, ask for it from list (with dialog)
-    //      this.cal.listCalendars().then(data => { 
-    // put these into a list for selection 
-    // or allow add new? })
-    // might be better to hardcode a new one
-    //    once captured, put in to userdata.userinfo.calendar
-    //        start/finish 
-    // now go to the page to edit the event
-    // this.selectEvent(newAppt);
-    console.log(newAppt);
     this.navCtrl.push(AddEventPage, {
-      event: newAppt,
-      // mode: 'edit'    
-    })
+      date: this.selectedDate
+    });
   }
 
   selectEvent(event: any) {
     // pick this event, go to appt details
     this.navCtrl.push(EventPage, {
       event: event,
-      // mode: 'edit'    
     })
   }
 
   private getDateEvents() {
     // filter my schedule to just today
-    let sd = new Date(this.selectedDate).setHours(0, 0, 0, 0);
-    this.eventList =
-      this.ud.userData.schedule
-        .filter(x => (new Date(x.start).setHours(0, 0, 0, 0) === sd));
+    this.eventList = this.sched.selectDate(this.selectedDate);
+    // let sd = new Date(this.selectedDate).setHours(0, 0, 0, 0);
+      // this.sched.scheduleItems   // this.ud.userData.schedule
+      //   .filter(x => (new Date(x.start).setHours(0, 0, 0, 0) === sd));
     this.eventList.forEach(item => {
       item['startTime'] = this.helper.formatTime(item['start']);
     });
@@ -158,7 +126,14 @@ export class CalendarPage {
     this.daysInMonths = (thisMonth === 1 && ((thisYear % 4) === 0)) ? leapDaysInMonths : normalDaysInMonths;
 
     this.daysInThisMonth = new Array();
-    for (let i = 0; i < this.daysInMonths[thisMonth]; i++) { this.daysInThisMonth.push(i + 1); }
+    for (let i = 0; i < this.daysInMonths[thisMonth]; i++) { 
+      // construct a corresponding date to pass to hasAppt
+      const d: Date = new Date((thisMonth + 1).toString() + "/" + (i+1).toString() + "/" + thisYear.toString());
+      this.daysInThisMonth.push({
+        day: i + 1,
+        hasAppt: this.sched.hasAppt(d) }); 
+    }
+    
     // days in previous month
     this.firstOfMonthDate = new Date((forDate.getMonth() + 1) + '/1/' + forDate.getFullYear());
     const firstOfMonthDoW = this.firstOfMonthDate.getDay();
@@ -189,7 +164,7 @@ export class CalendarPage {
   private setSelectedDayMarker(target: any) {
     // target is a DOM element
     // set style on the new selected day
-    target.classList.remove('otherDate');
+    // target.classList.remove('otherDate');
     target.classList.add('currentDate');
   }
 
@@ -197,7 +172,7 @@ export class CalendarPage {
     const source: any = document.getElementsByClassName('currentDate').item(0);
     if (!!source) {
       source.classList.remove('currentDate');
-      source.classList.add('otherDate');
+      // source.classList.add('otherDate');
     }
   }
 
