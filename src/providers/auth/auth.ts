@@ -1,5 +1,5 @@
 import { Injectable, NgZone } from '@angular/core';
-// import { Storage } from '@ionic/storage';
+import { Storage } from '@ionic/storage';
 
 import { AUTH_CONFIG } from './auth.config';
 import Auth0Cordova from '@auth0/cordova';
@@ -11,20 +11,21 @@ export class AuthProvider {
   Client = new Auth0Cordova(AUTH_CONFIG);
   accessToken: string;
   userProfile: any;
+  user: any;
   loggedIn: boolean;
   loading = true;
 
   constructor(
     public zone: NgZone,
-    // private storage: Storage
+    private storage: Storage
   ) {
     // TODO rename this local storage key "profile" to something else
-    // this.storage.get('profile').then(user => this.user = user);
-    // this.storage.get('access_token').then(token => this.accessToken = token);
-    // this.storage.get('expires_at').then(exp => {
-    //   this.loggedIn = Date.now() < JSON.parse(exp);
-    //   this.loading = false;
-    // });
+    this.storage.get('profile').then(user => this.user = user);
+    this.storage.get('access_token').then(token => this.accessToken = token);
+    this.storage.get('expires_at').then(exp => {
+      this.loggedIn = Date.now() < JSON.parse(exp);
+      this.loading = false;
+    });
     this.loading = false;
   }
 
@@ -41,11 +42,11 @@ export class AuthProvider {
         throw err;
       }
       // Set Access Token
-      // this.storage.set('access_token', authResult.accessToken);
+      this.storage.set('access_token', authResult.accessToken);
       this.accessToken = authResult.accessToken;
       // Set Access Token expiration
       const expiresAt = JSON.stringify((authResult.expiresIn * 1000) + new Date().getTime());
-      // this.storage.set('expires_at', expiresAt);
+      this.storage.set('expires_at', expiresAt);
       // Set logged in
       this.loading = false;
       this.loggedIn = true;
@@ -54,17 +55,17 @@ export class AuthProvider {
         if (err) {
           throw err;
         }
-        // this.storage.set('profile', profile).then(val =>
-          // this.zone.run(() => this.userProfile = profile)
-        // );
+        this.storage.set('profile', profile).then(val =>
+          this.zone.run(() => this.userProfile = profile)
+        );
       });
     });
   }
 
   logout() {
-    // this.storage.remove('profile');
-    // this.storage.remove('access_token');
-    // this.storage.remove('expires_at');
+    this.storage.remove('profile');
+    this.storage.remove('access_token');
+    this.storage.remove('expires_at');
     this.accessToken = null;
     this.userProfile = null;
     this.loggedIn = false;

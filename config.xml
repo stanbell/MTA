@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="com.dcsb.mta" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>MTA</name>
-    <description>Massage Therapy Assistant</description>
+    <description>My Massage Therapy Assistant</description>
     <author email="stan@stanbell.com" href="http://stanbell.com/">DCSB</author>
     <content src="index.html" />
     <access origin="*" />

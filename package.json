@@ -58,12 +58,15 @@
     "@ionic/lab": "1.0.18",
     "typescript": "~2.6.2"
   },
-  "description": "My Therapy Assistant by DCSBApps",
+  "description": "My Massage Therapy Assistant by DCSBApps",
   "cordova": {
     "plugins": {
       "cordova-plugin-safariviewcontroller": {},
       "cordova-plugin-customurlscheme": {
-        "URL_SCHEME": "com.dcsb.mta"
+        "URL_SCHEME": "com.dcsb.mta",
+        "ANDROID_SCHEME": "com.dcsb.mta",
+        "ANDROID_HOST": "stanbell.auth0.com",
+        "ANDROID_PATHPREFIX": "/cordova/com.dcsb.mta/callback"
       },
       "cordova-plugin-whitelist": {},
       "cordova-plugin-statusbar": {},

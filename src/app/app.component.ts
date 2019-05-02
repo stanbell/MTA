@@ -23,17 +23,6 @@ export class MyApp {
       public splashScreen: SplashScreen,
       public ud: UserDataProvider) {
     this.initializeApp();
-
-    // // used for an example of ngFor and navigation
-    // this.pages = [
-    //   { title: 'Home', component: HomePage },
-    //   { title: 'My Schedule', component: CalendarPage },
-    //   { title: 'My Clients', component: ClientsPage },
-    //   { title: 'My Transactions', component: TransactionsPage },
-    //   { title: 'My Business', component: BusinessPage },
-    //   { title: 'Settings', component: SettingsPage },
-    // ];
-
   }
 
   initializeApp() {
