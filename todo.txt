@@ -30,7 +30,7 @@ _ add a revenue predictor based on scheduled appts' service prices
 X client search
 _ settings add service
 _ add contact
-_ cancel add appt
+X cancel add appt
 
 _ apply discount in transactions
     _ manual

@@ -1,8 +1,8 @@
 {
   "name": "MTA",
   "version": "0.0.1",
-  "author": "Ionic Framework",
-  "homepage": "http://ionicframework.com/",
+  "author": "DCSBDN",
+  "homepage": "http://dcsbdn.us/",
   "private": true,
   "scripts": {
     "start": "ionic-app-scripts serve",
@@ -58,12 +58,12 @@
     "@ionic/lab": "1.0.18",
     "typescript": "~2.6.2"
   },
-  "description": "An Ionic project",
+  "description": "My Therapy Assistant by DCSBApps",
   "cordova": {
     "plugins": {
       "cordova-plugin-safariviewcontroller": {},
       "cordova-plugin-customurlscheme": {
-        "URL_SCHEME": "com.dcsbapps.mta"
+        "URL_SCHEME": "com.dcsb.mta"
       },
       "cordova-plugin-whitelist": {},
       "cordova-plugin-statusbar": {},
