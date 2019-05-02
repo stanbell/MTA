@@ -132,6 +132,7 @@ export class EventPage {
     // for now, it's only the note contents
 
   }
+
 // TODO unsubscribe from browser events
 
   // private defaultTitle: string = (!!this.ud.userData.user.defaultApptTitle) ? this.ud.userData.user.defaultApptTitle : 'Massage';

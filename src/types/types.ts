@@ -136,6 +136,7 @@ interface ClientType {
     preferences: string,
     previousAppts: number,
     noShowAppts: number,
+    cancelAppts: number,
     scheduledAppts: number,
     recurringScheduled: boolean,
     intake: IntakeType
@@ -156,7 +157,7 @@ interface ScheduleItemType {  // =='event' in much of the code
     end: string,
     clientName: string,
     serviceDescription: string,
-    completed: boolean,
+    completionState: string,
     revenue: number,
     pd: boolean,
     visitNote: VisitNoteType,

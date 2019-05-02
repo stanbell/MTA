@@ -17,14 +17,14 @@
 
   <div *ngIf="itemsList">
     <ion-grid>
-      <ion-row (click)="addClient()" justify-content-start>
+      <ion-row (click)="addItem()" justify-content-start>
         <ion-col col-12>
           <div class="box" style="text-align: center">
             <p>Add Client</p>
           </div>
         </ion-col>
       </ion-row>
-      <ion-row *ngFor="let z of itemsList; let i = index" (click)="selectItem(i)" justify-content-start>
+      <ion-row *ngFor="let z of itemsList" (click)="editItem(z)" justify-content-start>
         <ion-col col-12>
           <div class="box">
             <p>{{z.name}}</p>

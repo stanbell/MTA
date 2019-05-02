@@ -28,14 +28,15 @@ export class ClientsPage {
     this.populateItems();
   }
 
-  ionViewWillLeave() {
-    console.log('ionViewWillLeave ClientsPage');
-    // this.saveItems()  ???
-    this.clients.write();
-  }
+  // ionViewWillLeave() {
+  //   console.log('ionViewWillLeave ClientsPage');
+  //   // this.saveItems()  ???
+  //   this.clients.write();
+  // }
 
-  selectItem(item: any) {
+  editItem(item: ClientType) {
     this.navCtrl.push(ClientPage, {
+      mode: 'edit',
       item: item
     })
   }
@@ -48,11 +49,10 @@ export class ClientsPage {
       : this.itemsList = this.clients.clients;
   }
 
-  addClient() {
+  addItem() {
     console.log('addClient');
-    const i = this.clients.add();
     this.navCtrl.push(ClientPage, {
-      item: i
+      mode: 'add'
     })
   }
 
