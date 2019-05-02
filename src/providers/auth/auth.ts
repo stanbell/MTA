@@ -46,56 +46,35 @@ export class AuthProvider {
       scope: 'openid profile offline_access'
     };
     // Authorize login request with Auth0: open login page and get auth results
-    alert('reached client authorize');
-    try {
-      var authResult: any = await this.Client.authorize(options);
+    this.Client.authorize(options, (err, authResult) => {
+      if (err) {
+        alert(err);
+        // throw err;
+      }
       alert('return from client authorize');
       alert('authResult.accessToken' + authResult.accessToken);
+      // Set Access Token
+      this.storage.set('access_token', authResult.accessToken);
       this.accessToken = authResult.accessToken;
+      // Set Access Token expiration
+      const expiresAt = JSON.stringify((authResult.expiresIn * 1000) + new Date().getTime());
+      this.storage.set('expires_at', expiresAt);
+      // Set logged in
       this.loading = false;
       this.loggedIn = true;
+      // Fetch user's profile info
       alert('calling userInfo');
-      try {
-        var profile = await this.Auth0.client.userInfo(this.accessToken);
+      this.Auth0.client.userInfo(this.accessToken, (err, profile) => {
+        if (err) {
+          alert(err);
+          // throw err;
+        }
         alert('return from client.userInfo');
-        this.zone.run(() => this.userProfile = profile)
-      } catch (error) {
-        alert(error);
-        throw (error);
-      }
-    } catch (error) {
-      alert(error);
-      throw (error);
-    }
-    // this.Client.authorize(options, (err, authResult) => {
-    //   if (err) {
-    //     alert(err);
-    //     throw err;
-    //   }
-    //   alert('return from client authorize');
-    //   alert('authResult.accessToken' + authResult.accessToken);
-    //   // Set Access Token
-    //   this.storage.set('access_token', authResult.accessToken);
-    //   this.accessToken = authResult.accessToken;
-    //   // Set Access Token expiration
-    //   const expiresAt = JSON.stringify((authResult.expiresIn * 1000) + new Date().getTime());
-    //   this.storage.set('expires_at', expiresAt);
-    //   // Set logged in
-    //   this.loading = false;
-    //   this.loggedIn = true;
-    //   // Fetch user's profile info
-    //   alert('calling userInfo');
-    //   this.Auth0.client.userInfo(this.accessToken, (err, profile) => {
-    //     if (err) {
-    //       alert(err);
-    //       throw err;
-    //     }
-    //     alert('return from client.userInfo');
-    //     this.storage.set('profile', profile).then(val =>
-    //       this.zone.run(() => this.userProfile = profile)
-    //     );
-    //   });
-    // });
+        this.storage.set('profile', profile).then(val =>
+          this.zone.run(() => this.userProfile = profile)
+        );
+      });
+    });
   }
 
   logout() {
