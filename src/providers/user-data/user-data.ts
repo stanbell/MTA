@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { MTAAPI } from '../mtaapi/mtaapi';
 import { CacheProvider } from '../cache/cache';
 import { HelpersProvider } from '../helpers/helpers';
-import '../../types/types';
 import { EmptiesProvider } from '../empties/empties';
+import '../../types/types';
 
 const CACHE_ID = 'MTA_DATA';
 const SERVER_ROUTE = 'contents';

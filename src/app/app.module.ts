@@ -42,6 +42,8 @@ import { IntakePage } from '../pages/intake/intake';
 import { EmptiesProvider } from '../providers/empties/empties';
 import { AddEventPage } from '../pages/add-event/add-event';
 import { LookupPage } from '../pages/lookup/lookup';
+import { UserProvider } from '../providers/user/user';
+import { UserDataWriterProvider } from '../providers/user-data-writer/user-data-writer';
 
 @NgModule({
   declarations: [
@@ -114,6 +116,8 @@ import { LookupPage } from '../pages/lookup/lookup';
     DocumentsProvider,
     InAppBrowser,
     EmptiesProvider,
+    UserProvider,
+    UserDataWriterProvider,
   ]
 })
 export class AppModule {}

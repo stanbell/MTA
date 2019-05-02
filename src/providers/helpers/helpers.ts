@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Platform } from 'ionic-angular';
 
+const MINUTE = 1000 * 60;
+
 @Injectable()
 export class HelpersProvider {
 
@@ -95,7 +97,23 @@ export class HelpersProvider {
     const fd = new Date(d);
     const dt = this.formatDate(fd);
     const ts = fd.toTimeString();
+    console.log('formatDateTime24', ts);
     return dt + " " + ts;
+  }
+
+  convertToISO(d: string): string {
+    const offset: number = new Date().getTimezoneOffset() * MINUTE;
+    var workDate: Date = new Date(d);
+    workDate = new Date(workDate.valueOf() - offset);
+    return workDate.toISOString();
+  }
+
+  convertFromISO(d: string): string {
+    const offset: number = new Date().getTimezoneOffset() * MINUTE;
+    var workDate: Date = new Date(d);
+    workDate = new Date(workDate.valueOf() + offset);
+    return this.formatDateTime24(workDate);
+    // return workDate.toString();
   }
 
   timeDiff(time1: Date, time2: Date): number {

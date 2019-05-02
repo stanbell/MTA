@@ -8,6 +8,73 @@ export class EmptiesProvider {
     console.log('Hello EmptiesProvider Provider');
   }
 
+  getEmptyUser(): UserInfoType {
+    const mt: UserInfoType = {
+      id: "",
+      pwd: "",
+      businessName: "",
+      address: this.getEmptyAddress(),
+      contacts: [],
+      // following are settings
+      calendar: this.getEmptyCalendar(),
+      defaultApptTitle: "",
+      listActive: "",
+      sortClientsBy: "",
+      useCalendar: "",
+      whoSchedule: "",
+      whoIntake: "",
+      emailSchedule: "",
+      autoLogOut: "",
+      acceptPayments: "",
+      stripe: this.getEmptyStripe(),
+      square: this.getEmptySquare(),
+      paypal: this.getEmptyPaypal(),
+      merch: this.getEmptyMerchant(),
+      services: []
+    }
+    return mt;
+  }
+
+
+
+  getEmptyStripe(): StripePaymentsType {
+    const mt: StripePaymentsType = {
+      secretKey: "",
+      fee: 0
+    }
+    return mt;
+  }
+  getEmptySquare(): SquarePaymentsType {
+    const mt: SquarePaymentsType = {
+      applicationId: "",
+      accessToken: "",
+      locationId: "",
+      fee: 0
+    }
+    return mt;
+  }
+  getEmptyPaypal(): PayPalPaymentsType {
+    const mt: PayPalPaymentsType = {
+      key: ""
+    }
+    return mt;
+  }
+  getEmptyMerchant(): MerchantAcctType {
+    const mt: MerchantAcctType = {
+      acct: ""
+    }
+    return mt;
+  }
+  getEmptyCalendar(): CalendarType {
+    const mt: CalendarType = {
+      id: "", 
+      provider: "",
+      name: "", 
+      connectionInfo: "",
+      owner: "", 
+    }
+    return mt;
+  }
   getEmptyAddress(): AddressType {
     const mt: AddressType = {
       label: "",
@@ -30,7 +97,7 @@ export class EmptiesProvider {
       end: "",
       clientName: "",
       serviceDescription: "",
-      completed: false,
+      completionState: "",
       revenue: 0,
       pd: false,
       visitNote: this.getEmptyVisitNote(),
@@ -48,9 +115,7 @@ export class EmptiesProvider {
     };
     return mt;
   }
-  // getEmptyScheduleTransaction(): ScheduleItemTransType {
-  // uniqueId: string
-  // }
+
   getEmptyIntake(): IntakeType {
     const mt: IntakeType = {
       first: "",
@@ -243,6 +308,7 @@ export class EmptiesProvider {
       preferences: "",
       previousAppts: 0,
       noShowAppts: 0,
+      cancelAppts: 0,
       scheduledAppts: 0,
       recurringScheduled: false,
       intake: this.getEmptyIntake()

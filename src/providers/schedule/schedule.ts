@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { UserDataProvider } from '../user-data/user-data';
-import { HelpersProvider } from '../helpers/helpers';
 import '../../types/types';
 
 @Injectable()
@@ -8,8 +7,7 @@ export class ScheduleProvider {
 
   scheduleItems: ScheduleItemType[] = [];
 
-  constructor(public ud: UserDataProvider,
-    public helper: HelpersProvider) {
+  constructor(public ud: UserDataProvider) {
   }
 
   init() {
@@ -19,21 +17,29 @@ export class ScheduleProvider {
   read() {
     this.scheduleItems = this.ud.userData.schedule;
   }
-  
-  write() {
-    this.ud.userData.schedule = this.scheduleItems;
-  }
 
   add(t: ScheduleItemType) {
     this.scheduleItems.push(t);
   }
 
-  remove(i: number) {
-    this.scheduleItems.splice(i, 1);
+  // remove(i: number) {
+  //   this.scheduleItems.splice(i, 1);
+  // }
+
+  // replace(i: number, t: ScheduleItemType) {
+  //   this.scheduleItems[i] = this.helper.deepCopy(t);
+  // }
+
+  hasAppt(d: Date): boolean {
+    const sdv = new Date(d).setHours(0, 0, 0, 0).valueOf();
+    return this.scheduleItems
+      .some(x => (new Date(x.start).setHours(0, 0, 0, 0).valueOf() === sdv));
   }
 
-  replace(i: number, t: ScheduleItemType) {
-    this.scheduleItems[i] = this.helper.deepCopy(t);
+  selectDate(d: Date): ScheduleItemType[] {
+    let sd = new Date(d).setHours(0, 0, 0, 0);
+    return this.scheduleItems
+      .filter(x => (new Date(x.start).setHours(0, 0, 0, 0) === sd));
   }
 
 }
