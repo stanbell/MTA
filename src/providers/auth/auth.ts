@@ -52,6 +52,7 @@ export class AuthProvider {
     alert('reached client authorize');
     this.Client.authorize(options, (err, authResult) => {
       if (err) {
+        alert(err);
         throw err;
       }
       alert('return from client authorize');
@@ -66,8 +67,10 @@ export class AuthProvider {
       this.loading = false;
       this.loggedIn = true;
       // Fetch user's profile info
+      alert('calling userInfo');
       this.Auth0.client.userInfo(this.accessToken, (err, profile) => {
         if (err) {
+          alert(err);
           throw err;
         }
         alert('return from client.userInfo');
