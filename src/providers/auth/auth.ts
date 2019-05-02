@@ -1,9 +1,21 @@
 import { Injectable, NgZone } from '@angular/core';
 import { Storage } from '@ionic/storage';
 
-import { AUTH_CONFIG } from './auth.config';
 import Auth0Cordova from '@auth0/cordova';
 import * as auth0 from 'auth0-js';
+
+
+// import { AUTH_CONFIG } from './auth.config';
+const AUTH_CONFIG = {
+  // Needed for Auth0 (capitalization: ID):
+  clientID: 'KIiJdc6Akq07naDtGPlxN0uovg5mWDaY',
+  // Needed for Auth0Cordova (capitalization: Id):
+  clientId: 'KIiJdc6Akq07naDtGPlxN0uovg5mWDaY',
+  domain: 'stanbell.auth0.com',
+  callbackURL: location.href,  // this was missing from the auth0 tutorial 3 quickstart but was in the blog
+  packageIdentifier: 'com.dcsb.mta' // config.xml widget ID, e.g., com.auth0.ionic
+};
+
 
 @Injectable()
 export class AuthProvider {
@@ -70,4 +82,10 @@ export class AuthProvider {
     this.userProfile = null;
     this.loggedIn = false;
   }
+
+  // isAuthenticated(): boolean {
+  //   const expiresAt = JSON.parse(localStorage.getItem('expires_at'));
+  //   return Date.now() < this.expiresAt;
+  // }
+
 }
