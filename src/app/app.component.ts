@@ -42,6 +42,7 @@ export class MyApp {
         console.log(url);
         alert(url);
         Auth0Cordova.onRedirectUri(url);
+        alert('after onRedirectUri');
       }
       this.nav.setRoot(HomePage);
     });

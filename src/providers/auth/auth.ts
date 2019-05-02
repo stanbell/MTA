@@ -49,10 +49,13 @@ export class AuthProvider {
       // audience: 'https://${auth0Config.domain}/userInfo'
     };
     // Authorize login request with Auth0: open login page and get auth results
+    alert('reached client authorize');
     this.Client.authorize(options, (err, authResult) => {
       if (err) {
         throw err;
       }
+      alert('return from client authorize');
+      alert('authResult.accessToken' + authResult.accessToken);
       // Set Access Token
       this.storage.set('access_token', authResult.accessToken);
       this.accessToken = authResult.accessToken;
@@ -67,6 +70,7 @@ export class AuthProvider {
         if (err) {
           throw err;
         }
+        alert('return from client.userInfo');
         this.storage.set('profile', profile).then(val =>
           this.zone.run(() => this.userProfile = profile)
         );
