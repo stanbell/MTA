@@ -2,9 +2,14 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
 import { Calendar } from '@ionic-native/calendar';
 import { HelpersProvider } from '../../providers/helpers/helpers';
-import { UserDataProvider } from '../../providers/user-data/user-data';
+// import { UserDataProvider } from '../../providers/user-data/user-data';
 import { LookupPage } from '../lookup/lookup';
 import '../../types/types';
+import { EmptiesProvider } from '../../providers/empties/empties';
+import { ScheduleProvider } from '../../providers/schedule/schedule';
+import { TransactionsProvider } from '../../providers/transactions/transactions';
+import { UserProvider } from '../../providers/user/user';
+import { UserDataWriterProvider } from '../../providers/user-data-writer/user-data-writer';
 
 const MINUTE = 1000 * 60;
 const DAY = 1000 * 60 * 60 * 24;
@@ -25,23 +30,38 @@ export class AddEventPage {
   duration: any;
   event: ScheduleItemType;
   service: ServiceTypes;
+  selectedDate: Date;
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
     public plt: Platform,
     public helper: HelpersProvider,
-    public ud: UserDataProvider,
+    public empties: EmptiesProvider,
+    public sched: ScheduleProvider,
+    public trans: TransactionsProvider,
+    public user: UserProvider,
+    public udw: UserDataWriterProvider,
     public ncal: Calendar) {
-    this.event = navParams.get('event');
-    this.startDate = new Date(this.event.start).toISOString();
-    this.endDate = new Date(this.event.end).toISOString();
+    this.user.read();
+    this.sched.read();
+    this.trans.read();
+    this.selectedDate = navParams.get('date');
+    this.event = this.empties.getEmptyScheduleItem();
+    this.event.id = this.helper.newGuid();
+    var defaultDate = new Date(this.selectedDate);
+    defaultDate.setHours(11);  // default to 11  // maybe TODO set to current time, so not in past if "today"
+    this.event.start = this.helper.formatDateTime24(defaultDate);
+    console.log('this.event.start ', this.event.start);
+    defaultDate.setHours(11, 59, 59);  // default 1 hour less 1 second
+    this.event.end = this.helper.formatDateTime24(defaultDate);  // initial default 1 hour
+
+    this.startDate = this.helper.convertToISO(this.event.start);
+    this.endDate = this.helper.convertToISO(this.event.end);
+
+    this.minStartDate = new Date(Date.now() - DAY).toISOString();
     this.minStartDate = new Date(Date.now() - DAY).toISOString();
     this.maxEndDate = new Date(Date.now() + YEAR).toISOString();
-    this.calcDuration();
-  }
-
-  ionViewDidLoad() {
-    this.helper.signal('ionViewDidLoad AddEventPage');
+    this.calcDuration()
   }
 
   ionViewDidEnter() {
@@ -57,7 +77,7 @@ export class AddEventPage {
         case 'service':
           this.event.serviceDescription = ls.selected;
           // TODO also assign to this.service
-          this.service = this.helper.deepCopy(this.ud.userData.user.services[ls.index]);
+          this.service = this.helper.deepCopy(this.user.user.services[ls.index]);
           this.duration = this.service.duration;
           this.calcEndTime();
           break;
@@ -88,16 +108,17 @@ export class AddEventPage {
   addEvent() {
     this.helper.signal('addEvent');
     this.helper.signal(this.event);
-    this.event.start = this.helper.formatDateTime24(this.startDate); // new Date(this.startDate).toISOString();
-    this.event.end = this.helper.formatDateTime24(this.endDate); // new Date(this.endDate).toISOString();
+    this.event.start = this.helper.convertFromISO(this.startDate); // new Date(this.startDate).toISOString();
+    this.helper.signal('as used in addToNative');
+    this.helper.signal(new Date(this.event.start));
+    this.event.end = this.helper.convertFromISO(this.endDate); // new Date(this.endDate).toISOString();
     this.event.revenue = this.service.price;
     // create a revenue transaction, match it with the appt
     const transGuid = this.helper.newGuid();
     this.event.transactions.push({
       uniqueId: transGuid,  // use the new trans guid
     });
-    console.log(this.service.price);
-    this.ud.userData.transactions.push({
+    this.trans.add({
       uniqueId: transGuid + '_R',
       processorId: '',
       apptId: this.event.id,
@@ -111,10 +132,8 @@ export class AddEventPage {
       party: { id: this.event.clientName, description: '' }
     })
     this.addToNative();
-    // this event already added before we came in here
-    // this.ud.userData.schedule.push(this.event);
-    // TODO verify want to save here?
-    this.ud.writeData();
+    this.sched.add(this.event);
+    this.udw.write();
     // go back
     this.navCtrl.pop();
   }
@@ -124,29 +143,45 @@ export class AddEventPage {
     if (this.plt.is('cordova')) {  // only works on real device
       this.helper.signal('addToNative');
       // if user is using native
-      if (this.ud.userData.user.useCalendar === 'in-app') { return; } else  {
+      if (this.user.user.useCalendar !== 'in-app') {
         this.helper.signal('using native');
         // if we have permission
-        if (!this.ncal.hasReadWritePermission()) {
-          await this.ncal.requestReadWritePermission()
+        var permitted: boolean = await this.ncal.hasReadWritePermission();
+        if (!permitted) {
+          permitted = await this.ncal.requestReadWritePermission();
         }
-        if (this.ncal.hasReadWritePermission()) {
+        if (permitted) {
           this.helper.signal('has permission');
-          var calendarOptions: any = await this.ncal.getCalendarOptions();
-          this.helper.signal('got calendarOptions');
-          this.helper.signal(calendarOptions);
-          calendarOptions.firstReminderMinutes = 15;
-          var eventResponse: any = await this.ncal.createEventWithOptions(
-            this.ud.userData.user.defaultApptTitle,
-            null, // location, 
-            null, // notes,
-            new Date(this.event.start), // startDate, 
-            new Date(this.event.end), // endDate, 
-            calendarOptions);
-          this.helper.signal('after createEvent');
-          this.helper.signal(eventResponse);
-          this.event.providerItemId = eventResponse['id'];  // the unique id from the native calendar
-          this.event.provider = (this.plt.is('ios')) ? 'apple' : 'google';
+          try {
+            var calendarOptions: any = await this.ncal.getCalendarOptions();
+            this.helper.signal('got calendarOptions');
+            this.helper.signal(calendarOptions);
+            calendarOptions.firstReminderMinutes = 15;
+            const addr: string = this.user.user.address.street1 + ' ' +
+              this.user.user.address.street2 + ' ' +
+              this.user.user.address.city + ' ' +
+              this.user.user.address.state;
+            try {
+              // TODO test with ios, this "string" type below may fail
+              var eventResponse: string = await this.ncal.createEventWithOptions(
+                this.user.user.defaultApptTitle,
+                addr,
+                null, // notes,
+                new Date(this.event.start), // startDate, 
+                new Date(this.event.end), // endDate, 
+                calendarOptions);
+              this.helper.signal('after createEvent');
+              this.helper.signal(eventResponse);  // android gives a single number
+              // TOOD: validate ios also gives single number response, vs object
+              // this.event.providerItemId = eventResponse['id'];  // the unique id from the native calendar
+              this.event.providerItemId = eventResponse;  // the unique id from the native calendar  
+              this.event.provider = (this.plt.is('ios')) ? 'apple' : 'google';
+            } catch (error) {
+              alert('error creating native calendar event');
+            }
+          } catch (error) {
+            alert('failed to get calendar options');
+          }
         } // else no permissions, do nothing
       }  // else not using native calendar
       this.helper.signal(this.event);
@@ -154,7 +189,6 @@ export class AddEventPage {
   }
 
 }
-
 
 // calendarOptions.id is the unuqie identifier?  or calendarOptions.calendar    console.log(time1);
   //                maybe only if i assign it with createEventWithOptions

@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { UserDataProvider } from '../../providers/user-data/user-data';
-import { HelpersProvider } from '../../providers/helpers/helpers';
-import '../../types/types';
 import { SettingsPage } from '../settings/settings';
+import { UserDataWriterProvider } from '../../providers/user-data-writer/user-data-writer';
+import { UserProvider } from '../../providers/user/user';
+import '../../types/types';
 
 @IonicPage()
 @Component({
@@ -16,24 +16,22 @@ export class BusinessPage {
 
   constructor(public navCtrl: NavController, 
     public navParams: NavParams,
-    public helper: HelpersProvider,
-    public ud: UserDataProvider) {
-    this.biz = ud.userData.user;
+    public user: UserProvider,
+    public udw: UserDataWriterProvider) {
+    this.user.read();
+    this.biz = this.user.user;
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad BusinessPage');
   }
-  // cancel() {
-  //   this.navCtrl.pop();
-  // }
+
   settings() {
     this.navCtrl.push(SettingsPage);
   }
 
   save() {
-    this.ud.userData.user = this.helper.deepCopy(this.biz);
-    this.ud.writeData();
+    this.udw.write();
     this.navCtrl.pop();
   }
 

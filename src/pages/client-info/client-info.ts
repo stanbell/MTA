@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import '../../types/types';
-import { UserDataProvider } from '../../providers/user-data/user-data';
+import { UserDataWriterProvider } from '../../providers/user-data-writer/user-data-writer';
 
 @IonicPage()
 @Component({
@@ -15,7 +15,7 @@ export class ClientInfoPage {
 
   constructor(public navCtrl: NavController, 
     public navParams: NavParams,
-    public ud: UserDataProvider) {
+    public udw: UserDataWriterProvider) {
       this.client = navParams.get('client');  // keeps a reference, ie edits apply directly
       // this.itemIndex = this.findItem();
   }
@@ -30,7 +30,7 @@ export class ClientInfoPage {
   // }
 
   save() {
-    this.ud.writeData();
+    this.udw.write();
     this.navCtrl.pop();
   }
 
@@ -47,8 +47,4 @@ export class ClientInfoPage {
     z.okToText = !z.okToText;
   }
 
-  // private findItem(): number {
-  //   // this.
-  //   return 0;
-  // }
 }

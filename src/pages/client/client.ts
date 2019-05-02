@@ -7,6 +7,7 @@ import { ClientInfoPage } from '../client-info/client-info';
 import { TransactionsPage } from '../transactions/transactions';
 import { IntakePage } from '../intake/intake';
 import '../../types/types';
+import { EmptiesProvider } from '../../providers/empties/empties';
 
 @IonicPage()
 @Component({
@@ -15,18 +16,23 @@ import '../../types/types';
 })
 export class ClientPage {
 
-  item: ClientType;  // ??
-  itemIndex: number;
+  item: ClientType; 
+  mode: string;
   metrics: boolean = false;
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
     public helper: HelpersProvider,
+    public empties: EmptiesProvider,
     public clients: ClientsProvider) {
-    this.itemIndex = navParams.get('item');
-    // this.item = helper.deepCopy(clients.clients[this.itemIndex]); // this makes a copy
-    this.item = clients.clients[this.itemIndex]; // this keeps a reference 
-    console.log(this.item);
+    this.mode = navParams.get('mode');
+    if (this.mode === 'add') {
+      this.item = this.empties.getEmptyClient();
+      this.clients.add(this.item);
+    } else {
+      this.item = navParams.get('item');
+      // this.item = clients.clients[this.itemIndex]; // this keeps a reference 
+    }
   }
 
   ionViewDidLoad() {
@@ -35,7 +41,7 @@ export class ClientPage {
 
 
   navTo(where: string): void {
-    const FifteenDays = 15 * 24 * 60 * 60 * 1000;
+    const FIFTEENDAYS = 15 * 24 * 60 * 60 * 1000;
     switch (where) {
       case 'client':
         this.navCtrl.push(ClientInfoPage, {
@@ -46,7 +52,7 @@ export class ClientPage {
         this.navCtrl.push(AppointmentsPage, {
           client: this.item,
           // TODO this needs to be calculated from the users's preferred date range
-          start: new Date(Date.now() - FifteenDays).toISOString()
+          start: new Date(Date.now() - FIFTEENDAYS).toISOString()
         });
         break;
       case 'trans':
@@ -55,7 +61,7 @@ export class ClientPage {
           client: this.item,
           // TODO this needs to be calculated from the users's preferred date range
           // maybe or maybe not need this for trans
-          start: new Date(Date.now() - FifteenDays).toISOString()
+          start: new Date(Date.now() - FIFTEENDAYS).toISOString()
         });
         break;
       case 'intake':

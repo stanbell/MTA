@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { HelpersProvider } from '../../providers/helpers/helpers';
 import '../../types/types';
-import { UserDataProvider } from '../../providers/user-data/user-data';
 import { EmptiesProvider } from '../../providers/empties/empties';
+import { UserDataWriterProvider } from '../../providers/user-data-writer/user-data-writer';
 
 @IonicPage()
 @Component({
@@ -20,7 +20,7 @@ export class IntakePage {
     public navParams: NavParams,
     public helper: HelpersProvider,
     public mt: EmptiesProvider,
-    public ud: UserDataProvider) {
+    public udw: UserDataWriterProvider) {
       this.client = this.navParams.get('client');
       this.intake = this.mt.getEmptyIntake();
     }
@@ -40,7 +40,7 @@ export class IntakePage {
     // console.log('save', this.client);
     // console.log('save', this.ud.userData);
     // write the client from here?  yes  NOTE do this from each page that modifies
-    this.ud.writeData();
+    this.udw.write();
     this.navCtrl.pop();
     // console.log(this.intake);
   }

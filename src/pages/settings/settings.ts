@@ -1,13 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { UserDataProvider } from '../../providers/user-data/user-data';
-
-/**
- * Generated class for the SettingsPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { UserProvider } from '../../providers/user/user';
+import '../../types/types';
+import { UserDataWriterProvider } from '../../providers/user-data-writer/user-data-writer';
 
 @IonicPage()
 @Component({
@@ -16,22 +11,18 @@ import { UserDataProvider } from '../../providers/user-data/user-data';
 })
 export class SettingsPage {
 
-  // clientSchedule: boolean = false;
-  // listActive: string = "1m";
-  // sortClientsBy: string = "last";
-  // useCalendar: string = 'app';
-  // chargeCC: string = 'self';
-  // whoSchedule: string = 'user';
-  // whoIntake: string = 'user';
-  // defaultApptTitle: string = 'Massage';
-  // emailSchedule: string = '';
-  // autoLogOut: string = 'no';
   biz: UserInfoType;
 
   constructor(public navCtrl: NavController, 
     public navParams: NavParams,
-    public ud: UserDataProvider) {
-    this.biz = ud.userData.user;
+    public user: UserProvider,
+    public udw: UserDataWriterProvider) {
+    this.biz = user.user;
+  }
+
+  save() {
+    this.udw.write();
+    this.navCtrl.pop();
   }
 
 }

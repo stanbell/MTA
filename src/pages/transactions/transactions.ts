@@ -33,11 +33,11 @@ export class TransactionsPage {
     
   }
 
-  ionViewWillLeave() {
-    console.log('ionViewWillLeave TransactionsPage');
-    // this.saveItems()  ???
-    this.trans.write();
-  }
+  // ionViewWillLeave() {
+  //   console.log('ionViewWillLeave TransactionsPage');
+  //   // this.saveItems()  ???
+  //   this.trans.write();
+  // }
 
   choose(item: any) {
 
