@@ -11,7 +11,7 @@ const AUTH_CONFIG = {
   // Needed for Auth0Cordova (capitalization: Id):
   clientId: 'KIiJdc6Akq07naDtGPlxN0uovg5mWDaY',
   domain: 'stanbell.auth0.com',
-  callbackURL: location.href,  // this was missing from the auth0 tutorial 3 quickstart but was in the blog
+  // callbackURL: location.href,  // this was missing from the auth0 tutorial 3 quickstart but was in the blog
   packageIdentifier: 'com.dcsb.mta' // config.xml widget ID, e.g., com.auth0.ionic
 };
 
@@ -42,7 +42,8 @@ export class AuthProvider {
 
   async login() {
     const options = {
-      scope: 'openid profile offline_access'
+      // scope: 'openid profile offline_access'
+      scope: 'openid profile'
     };
     // Authorize login request with Auth0: open login page and get auth results
     this.Client.authorize(options, (err, authResult) => {
