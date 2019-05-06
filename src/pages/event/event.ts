@@ -3,7 +3,7 @@ import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
 import { UserDataProvider } from '../../providers/user-data/user-data';
 import { HelpersProvider } from '../../providers/helpers/helpers';
 import { StripePaymentPage } from '../stripe-payment/stripe-payment';
-import { InAppBrowser } from '@ionic-native/in-app-browser';
+// import { InAppBrowser } from '@ionic-native/in-app-browser';
 import '../../types/types';
 import { LocalStoreProvider } from '../../providers/local-store/local-store';
 
@@ -29,14 +29,14 @@ export class EventPage {
   transactions: any[];
   editingNoteNow: boolean = false;
 
-// temp
-  services = [ 'test 1', 'test 2', 'service 3'];
+  // temp
+  services = ['test 1', 'test 2', 'service 3'];
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
     public plt: Platform,
     public ls: LocalStoreProvider,
-    public iab: InAppBrowser,
+    // public iab: InAppBrowser,  // temporary while testing auth0
     public helper: HelpersProvider,
     public ud: UserDataProvider) {
     // this.mode = navParams.get('mode');
@@ -103,29 +103,29 @@ export class EventPage {
   exitEvent: any;
 
   paySquare() {
-    console.log('paySquare');
-    if (this.plt.is('cordova')) {
-      alert('cordova');
-      const browser = this.iab.create('../../assets/pages/sqpaymentform.html', '_blank', 'location=no');
-      // const browser = this.iab.create('http://stanbell.com', '_blank', 'location=no');
-      this.loadstopEvent = browser.on('loadstop').subscribe((x) => {
-        alert('loaded');
-        console.log('loaded');
-        browser.insertCSS({ file: '../../assets/pages/sqpaymentform-basic.css'});
-        // browser.executeScript({code: 'paymentForm.build();'}).then(() => alert('paymentForm BUILT'));
-        browser.executeScript({ code: 'force();' }).then(() => alert('forced'));
-        // browser.executeScript({code: 'alert("code");'}).then(() => alert('return'));
-      });
-      this.exitEvent = browser.on('exit').subscribe((x) => {
-        alert('exit');
-        // get the result data from localstorage
-        var chargeResult = this.ls.get(PMT_RESPONSE_KEY);
-        console.log(chargeResult);
-      })
-    } else {
-      alert('window');
+    this.helper.signal('paySquare');
+    // if (this.plt.is('cordova')) {
+    //   alert('cordova');
+    //   const browser = this.iab.create('../../assets/pages/sqpaymentform.html', '_blank', 'location=no');
+    //   // const browser = this.iab.create('http://stanbell.com', '_blank', 'location=no');
+    //   this.loadstopEvent = browser.on('loadstop').subscribe((x) => {
+    //     alert('loaded');
+    //     console.log('loaded');
+    //     browser.insertCSS({ file: '../../assets/pages/sqpaymentform-basic.css'});
+    //     // browser.executeScript({code: 'paymentForm.build();'}).then(() => alert('paymentForm BUILT'));
+    //     browser.executeScript({ code: 'force();' }).then(() => alert('forced'));
+    //     // browser.executeScript({code: 'alert("code");'}).then(() => alert('return'));
+    //   });
+    //   this.exitEvent = browser.on('exit').subscribe((x) => {
+    //     alert('exit');
+    //     // get the result data from localstorage
+    //     var chargeResult = this.ls.get(PMT_RESPONSE_KEY);
+    //     console.log(chargeResult);
+    //   })
+    // } else {
+      this.helper.signal('window');
       window.open('../../assets/pages/sqpaymentform.html', '_blank')
-    }
+    // }
   }
 
   save() {
@@ -133,7 +133,7 @@ export class EventPage {
 
   }
 
-// TODO unsubscribe from browser events
+  // TODO unsubscribe from browser events
 
   // private defaultTitle: string = (!!this.ud.userData.user.defaultApptTitle) ? this.ud.userData.user.defaultApptTitle : 'Massage';
   // private defaultLocation: string =

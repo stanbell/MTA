@@ -4,7 +4,7 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { IonicStorageModule } from '@ionic/storage';
 import { HttpClientModule } from '@angular/common/http';
 import { Calendar } from '@ionic-native/calendar';
-import { InAppBrowser } from '@ionic-native/in-app-browser';
+// import { InAppBrowser } from '@ionic-native/in-app-browser';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -114,7 +114,7 @@ import { UserDataWriterProvider } from '../providers/user-data-writer/user-data-
     Calendar,
     EventPage,
     DocumentsProvider,
-    InAppBrowser,
+    // InAppBrowser,
     EmptiesProvider,
     UserProvider,
     UserDataWriterProvider,
