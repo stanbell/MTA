@@ -57,4 +57,4 @@ temporarily removed from auth0 CORS box
     , http://*.dcsbdn.us, https://*.dcsbdn.us, http://localhost:8080, http://192.168.1.21:8100, http://192.168.1.26:8100, http://192.168.1.5:8100
 
     # replace YOUR_PACKAGE_ID with your app identifier
-ionic cordova plugin add cordova-plugin-customurlscheme --variable URL_SCHEME={YOUR_PACKAGE_ID} --variable ANDROID_SCHEME={YOUR_PACKAGE_ID} --variable ANDROID_HOST=stanbell.auth0.com --variable ANDROID_PATHPREFIX=/cordova/{YOUR_PACKAGE_ID}/callback
+ionic cordova plugin add cordova-plugin-customurlscheme --variable URL_SCHEME=com.dcsb.mta --variable ANDROID_SCHEME=com.dcsb.mta --variable ANDROID_HOST=stanbell.auth0.com --variable ANDROID_PATHPREFIX=/cordova/com.dcsb.mta/callback

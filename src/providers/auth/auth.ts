@@ -50,9 +50,9 @@ export class AuthProvider {
     this.Client.authorize(options, (err, authResult) => {
       alert(JSON.stringify(authResult));
       if (err) {
-        if (err !== 'Error: user canceled') {
+        if (err != 'Error: user canceled') {
           alert('err');
-          alert(err);
+          alert('%%' + err+ '%%');
           throw err;
         }
       }
