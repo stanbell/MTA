@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController } from 'ionic-angular';
-import { AuthProvider } from '../../providers/auth/auth';
+import { Auth0Provider } from '../../providers/auth0/auth0';
 import { UserDataProvider } from '../../providers/user-data/user-data';
 
 
@@ -12,7 +12,7 @@ import { UserDataProvider } from '../../providers/user-data/user-data';
 export class LoginPage {
 
   constructor(public navCtrl: NavController,
-    public auth: AuthProvider,
+    public auth: Auth0Provider,
     public ud: UserDataProvider) {
   }
 

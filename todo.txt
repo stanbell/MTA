@@ -58,3 +58,7 @@ temporarily removed from auth0 CORS box
 
     # replace YOUR_PACKAGE_ID with your app identifier
 ionic cordova plugin add cordova-plugin-customurlscheme --variable URL_SCHEME=com.dcsb.mta --variable ANDROID_SCHEME=com.dcsb.mta --variable ANDROID_HOST=stanbell.auth0.com --variable ANDROID_PATHPREFIX=/cordova/com.dcsb.mta/callback
+
+removed these from package.json for FAILED auth0 attempt
+    "@auth0/cordova": "^0.3.0",
+    "auth0-js": "^9.10.0",

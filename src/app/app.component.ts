@@ -3,7 +3,7 @@ import { Nav, Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
-import { Auth0Cordova } from '@auth0/cordova';
+// import { Auth0Cordova } from '@auth0/cordova';
 
 import { HomePage } from '../pages/home/home';
 import { UserDataProvider } from '../providers/user-data/user-data';
@@ -37,13 +37,14 @@ export class MyApp {
       // TODO: see if user already/previously logged in
       // this.auth.
 
-      // Redirect back to app after authenticating
-      (window as any).handleOpenURL = (url: string) => {
-        console.log(url);
-        alert('handleOpenURL callback ' + url);
-        Auth0Cordova.onRedirectUri(url);
-        alert('after onRedirectUri');
-      }
+      // FAILED auth0 code
+      // // Redirect back to app after authenticating
+      // (window as any).handleOpenURL = (url: string) => {
+      //   console.log(url);
+      //   alert('handleOpenURL callback ' + url);
+      //   Auth0Cordova.onRedirectUri(url);
+      //   alert('after onRedirectUri');
+      // }
       this.nav.setRoot(HomePage);
     });
   }

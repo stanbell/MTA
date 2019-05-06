@@ -17,7 +17,7 @@ const AUTH_CONFIG = {
 
 
 @Injectable()
-export class AuthProvider {
+export class Auth0Provider {
   Auth0 = new auth0.WebAuth(AUTH_CONFIG);
   Client = new Auth0Cordova(AUTH_CONFIG);
   accessToken: string;

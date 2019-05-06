@@ -10,7 +10,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { MyApp } from './app.component';
-import { AuthProvider } from '../providers/auth/auth';
+// import { Auth0Provider } from '../providers/auth0/auth0';
 import { UserDataProvider } from '../providers/user-data/user-data';
 import { ClientsProvider } from '../providers/clients/clients';
 import { TransactionsProvider } from '../providers/transactions/transactions';
@@ -99,7 +99,7 @@ import { UserDataWriterProvider } from '../providers/user-data-writer/user-data-
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    AuthProvider,
+    // Auth0Provider,
     UserDataProvider,
     ClientsProvider,
     TransactionsProvider,
