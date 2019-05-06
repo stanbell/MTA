@@ -33,6 +33,7 @@ export class AuthProvider {
     // TODO rename this local storage key "profile" to something else
     this.storage.get('profile').then(user => this.user = user);
     this.storage.get('access_token').then(token => this.accessToken = token);
+    alert(this.accessToken);
     this.storage.get('expires_at').then(exp => {
       this.loggedIn = Date.now() < JSON.parse(exp);
       this.loading = false;

@@ -48,3 +48,13 @@ _ quick add do-not-schedule-for-next-nn-minutes
 _ for user setting 'allow client to complete intake document'
     do 2-part form, with user part on separate page from client part
     (or just do 2 pages, and ignore the option; remove the option cause user can just hand to client if desired)
+
+
+    *******"cordova-plugin-inappbrowser": "3.0.0",  borrowed from package.json for testing
+
+
+temporarily removed from auth0 CORS box
+    , http://*.dcsbdn.us, https://*.dcsbdn.us, http://localhost:8080, http://192.168.1.21:8100, http://192.168.1.26:8100, http://192.168.1.5:8100
+
+    # replace YOUR_PACKAGE_ID with your app identifier
+ionic cordova plugin add cordova-plugin-customurlscheme --variable URL_SCHEME={YOUR_PACKAGE_ID} --variable ANDROID_SCHEME={YOUR_PACKAGE_ID} --variable ANDROID_HOST=stanbell.auth0.com --variable ANDROID_PATHPREFIX=/cordova/{YOUR_PACKAGE_ID}/callback
