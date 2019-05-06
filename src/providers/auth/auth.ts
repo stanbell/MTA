@@ -52,14 +52,17 @@ export class AuthProvider {
       if (err) {
         if (err != 'Error: user canceled') {
           alert('err');
-          alert('%%' + err+ '%%');
+          alert('%%' + err + '%%');
           throw err;
+        } else {
+          // hack
+          this.loggedIn = true;
         }
       }
       // ie, 'ignore user canceled' error
       // but there won't be any authResult
-      alert('return from client authorize');
-      alert('authResult.accessToken' + authResult.accessToken);
+      alert('return from client.authorize');
+      alert('authResult.accessToken ' + authResult.accessToken);
       // Set Access Token
       this.storage.set('access_token', authResult.accessToken);
       this.accessToken = authResult.accessToken;
