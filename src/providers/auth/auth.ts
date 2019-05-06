@@ -50,9 +50,14 @@ export class AuthProvider {
     this.Client.authorize(options, (err, authResult) => {
       alert(JSON.stringify(authResult));
       if (err) {
-        alert(err);
-        throw err;
+        if (err !== 'Error: user canceled') {
+          alert('err');
+          alert(err);
+          throw err;
+        }
       }
+      // ie, 'ignore user canceled' error
+      // but there won't be any authResult
       alert('return from client authorize');
       alert('authResult.accessToken' + authResult.accessToken);
       // Set Access Token
@@ -80,11 +85,12 @@ export class AuthProvider {
   }
 
   logout() {
-    this.storage.remove('profile');
-    this.storage.remove('access_token');
-    this.storage.remove('expires_at');
-    this.accessToken = null;
-    this.userProfile = null;
+    // may be mismatch between auth0 and app if im deleting unexpired accesstoken
+    // this.storage.remove('profile');
+    // this.storage.remove('access_token');
+    // this.storage.remove('expires_at');
+    // this.accessToken = null;
+    // this.userProfile = null;
     this.loggedIn = false;
   }
 
