@@ -48,6 +48,7 @@ export class AuthProvider {
     };
     // Authorize login request with Auth0: open login page and get auth results
     this.Client.authorize(options, (err, authResult) => {
+      alert(JSON.stringify(authResult));
       if (err) {
         alert(err);
         throw err;
