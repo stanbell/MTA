@@ -35,8 +35,6 @@ export class EmptiesProvider {
     return mt;
   }
 
-
-
   getEmptyStripe(): StripePaymentsType {
     const mt: StripePaymentsType = {
       secretKey: "",
@@ -83,6 +81,15 @@ export class EmptiesProvider {
       city: "",
       state: "",
       zip: ""
+    }
+    return mt;
+  }
+  getEmptyContact(): ContactInfoType {
+    const mt: ContactInfoType = {
+      type: "",
+      label: "",
+      contact: "", // phn# or address
+      okToText: false
     }
     return mt;
   }

@@ -4,6 +4,7 @@ import { CacheProvider } from '../cache/cache';
 import { HelpersProvider } from '../helpers/helpers';
 import { EmptiesProvider } from '../empties/empties';
 import '../../types/types';
+import { AuthProvider } from '../auth/auth';
 
 const CACHE_ID = 'MTA_DATA';
 const SERVER_ROUTE = 'contents';
@@ -28,7 +29,8 @@ export class UserDataProvider {
     public helper: HelpersProvider,
     private cache: CacheProvider,
     private api: MTAAPI,
-    public mt: EmptiesProvider) {
+    public mt: EmptiesProvider,
+    public auth: AuthProvider) {
       this.emptyUserData = this.helper.deepCopy(this.mt.getEmptyUserData);
   }
 
@@ -40,18 +42,20 @@ export class UserDataProvider {
     this.userData = this.helper.deepCopy(this.mt.getEmptyUserData());
   }
   
-  async readIdNumber() {
-    let serverReadData = await this.api.getData('mtausers/' + this.userId);
+  async readIdNumber(user) {
+    let route = 'mtausers/' + user + '?t=' + this.auth.accessToken;
+    let serverReadData = await this.api.getData(route);
     console.log(serverReadData);
     let serverReadObject = JSON.parse(serverReadData);
     this.userIdNumber = serverReadObject['contentsId'];
   }
   
-  async readData() {
-    
+  async readData(user: string) {
+    console.log('reading');
+    await this.readIdNumber(user);
     // DEBUG
     // ******************************* remove for production*************
-    this.cache.clearCache();
+    // this.cache.clearCache();
     // *****************************************
 
     // also reconciles most recent
@@ -103,8 +107,9 @@ export class UserDataProvider {
     // TODO:  PUT IN A USER ID for reading from the api/mongo 
     let serverReadData: string = '';
     let serverReadObject: UserDataType;
+    let route = SERVER_ROUTE + '/' + this.userIdNumber + '?t=' + this.auth.accessToken;
     try {
-      serverReadData = await this.api.getData(SERVER_ROUTE + '/' + this.userIdNumber);  // TODO needs a value for the getData parameter
+      serverReadData = await this.api.getData(route);  // TODO needs a value for the getData parameter
       serverReadObject = JSON.parse(serverReadData);
       return { ...this.emptyUserData, ...serverReadObject };
     }
@@ -136,9 +141,10 @@ export class UserDataProvider {
   }
 
   writeServer(data: UserDataType) {
+    let route = SERVER_ROUTE + '/' + this.userIdNumber + '?t=' + this.auth.accessToken;
     try {
       // console.log('writeServer', data);
-      this.api.putData(SERVER_ROUTE + '/' + this.userIdNumber, JSON.stringify(data))
+      this.api.putData(route, JSON.stringify(data))
       // .then((d) => { console.log('wrote ', d); });
       console.log('wrote ' + SERVER_ROUTE + '/' + this.userIdNumber);
     }
