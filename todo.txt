@@ -1,17 +1,22 @@
 _ consolidate intake form client name/addr/etc with client info page
     probably drop elements from intake, or else copy from intake to client
 
-_ show calendar days with appt's different bkgrnd than standard days
+x show calendar days with appt's different bkgrnd than standard days
 
-_ add appt
-    integrate w google
-    integrate w ical (both from native plugin?)
+x add appt
+   x integrate w google
+___ seems to go to device calendar but not account calendar?
+   x integrate w ical (both from native plugin?)
 
 X add client 
 
 N client first and last name for sorting
     drop this because using name to match appts and transactions
     if user wants last or first, put names in that way when entering clients 
+_ reconcile intake form has first/last name, where i have only 1
+
+_ calendar color wrong on selected day after add new appt if no appt previously
+_ color wrong on current date if has appts (cause starts as selected day?)
 
 N when to re-sort client list vs adds & deletes?
 
@@ -50,15 +55,4 @@ _ for user setting 'allow client to complete intake document'
     (or just do 2 pages, and ignore the option; remove the option cause user can just hand to client if desired)
 
 
-    *******"cordova-plugin-inappbrowser": "3.0.0",  borrowed from package.json for testing
 
-
-temporarily removed from auth0 CORS box
-    , http://*.dcsbdn.us, https://*.dcsbdn.us, http://localhost:8080, http://192.168.1.21:8100, http://192.168.1.26:8100, http://192.168.1.5:8100
-
-    # replace YOUR_PACKAGE_ID with your app identifier
-ionic cordova plugin add cordova-plugin-customurlscheme --variable URL_SCHEME=com.dcsb.mta --variable ANDROID_SCHEME=com.dcsb.mta --variable ANDROID_HOST=stanbell.auth0.com --variable ANDROID_PATHPREFIX=/cordova/com.dcsb.mta/callback
-
-removed these from package.json for FAILED auth0 attempt
-    "@auth0/cordova": "^0.3.0",
-    "auth0-js": "^9.10.0",

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { LocalStoreProvider } from '../local-store/local-store';
+import { HelpersProvider } from '../helpers/helpers';
 
-import CryptoJS from 'crypto-js';
 
 let ENCRYPT_KEY = 'And having perhaps the better claim, Because it was grassy and wanted wear,'  // robert frost, the road not taken
 // TODO:  cache uses passed-in key for encryption
@@ -10,6 +10,7 @@ let ENCRYPT_KEY = 'And having perhaps the better claim, Because it was grassy an
 export class CacheProvider {
 
   constructor(
+    public helper: HelpersProvider,
     private LSP: LocalStoreProvider) {
     console.log('Constructor Cache Provider');
   }
@@ -40,7 +41,7 @@ export class CacheProvider {
 
   write(type: string, input: string) {
     console.log('caching ' + type);
-    let p = this.encrypt(this.package(type, input), ENCRYPT_KEY);
+    let p = this.helper.encrypt(this.package(type, input), ENCRYPT_KEY);
     this.LSP.set(type, p)
       .then(result => console.log("saved to cache"))
       .catch(e => console.log("error: " + e));
@@ -54,7 +55,7 @@ export class CacheProvider {
         .then((data) => {
           if (data) {
             console.log('got cache');
-            const r = this.unPackage(type, this.decrypt(data, ENCRYPT_KEY));
+            const r = this.unPackage(type, this.helper.decrypt(data, ENCRYPT_KEY));
             resolve(r);
           } else {
             console.log('not in cache');
@@ -81,18 +82,4 @@ export class CacheProvider {
     const p = JSON.parse(input);
     return p[type].contents;
   }
-
-  encrypt(data: string, key: string): string {
-    // console.log("encrypting");
-    // console.log("key", key);
-    return CryptoJS.AES.encrypt(data, key).toString();
-  }
-
-  decrypt(data: string, key: string): string {
-    // console.log('decrypting');
-    // console.log("key", key);
-    const bytes = CryptoJS.AES.decrypt(data, key);
-    return bytes.toString(CryptoJS.enc.Utf8);
-  }
-
 }

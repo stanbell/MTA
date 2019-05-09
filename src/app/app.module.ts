@@ -40,10 +40,14 @@ import { DocumentPage } from '../pages/document/document';
 import { StripePaymentPage } from '../pages/stripe-payment/stripe-payment';
 import { IntakePage } from '../pages/intake/intake';
 import { EmptiesProvider } from '../providers/empties/empties';
-import { AddEventPage } from '../pages/add-event/add-event';
+// import { AddEventPage } from '../pages/add-event/add-event';
 import { LookupPage } from '../pages/lookup/lookup';
 import { UserProvider } from '../providers/user/user';
 import { UserDataWriterProvider } from '../providers/user-data-writer/user-data-writer';
+import { AuthProvider } from '../providers/auth/auth';
+import { AuthapiProvider } from '../providers/authapi/authapi';
+import { EditEventPage } from '../pages/edit-event/edit-event';
+import { EditContactPage } from '../pages/edit-contact/edit-contact';
 
 @NgModule({
   declarations: [
@@ -64,8 +68,10 @@ import { UserDataWriterProvider } from '../providers/user-data-writer/user-data-
     DocumentPage,
     StripePaymentPage,
     IntakePage,
-    AddEventPage,
+    // AddEventPage,
     LookupPage,
+    EditEventPage,
+    EditContactPage,
   ],
   imports: [
     BrowserModule,
@@ -92,8 +98,10 @@ import { UserDataWriterProvider } from '../providers/user-data-writer/user-data-
     DocumentPage,
     StripePaymentPage,
     IntakePage,
-    AddEventPage,
+    // AddEventPage,
     LookupPage,
+    EditEventPage,
+    EditContactPage,
   ],
   providers: [
     StatusBar,
@@ -118,6 +126,8 @@ import { UserDataWriterProvider } from '../providers/user-data-writer/user-data-
     EmptiesProvider,
     UserProvider,
     UserDataWriterProvider,
+    AuthProvider,
+    AuthapiProvider,
   ]
 })
 export class AppModule {}
