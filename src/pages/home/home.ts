@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { LoginPage } from '../login/login';
-import { Auth0Provider } from '../../providers/auth0/auth0';
+import { AuthProvider } from '../../providers/auth/auth';
 import { NavoptionsPage } from '../navoptions/navoptions';
+import { UserDataProvider } from '../../providers/user-data/user-data';
 
 @IonicPage()
 @Component({
@@ -11,9 +12,12 @@ import { NavoptionsPage } from '../navoptions/navoptions';
 })
 export class HomePage {
 
-  constructor(public navCtrl: NavController, 
+  constructor(public navCtrl: NavController,
     public navParams: NavParams,
-    public auth: Auth0Provider) {
+    public auth: AuthProvider,
+    public ud: UserDataProvider) {
+    console.log('home constructor');
+    this.auth.checkToken();
   }
 
   login() {
@@ -21,6 +25,8 @@ export class HomePage {
   }
 
   start() {
+    console.log('home.start');
+    this.ud.readData(this.auth.user);
     this.navCtrl.push(NavoptionsPage);
   }
 

@@ -1,7 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Platform } from 'ionic-angular';
 
+import CryptoJS from 'crypto-js';
+
 const MINUTE = 1000 * 60;
+
 
 @Injectable()
 export class HelpersProvider {
@@ -40,6 +43,8 @@ export class HelpersProvider {
   }
 
   newGuid() {
+    //               1         2         3      
+    //      123456789012345678901234567890123456
     return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
       var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
       return v.toString(16);
@@ -127,4 +132,19 @@ export class HelpersProvider {
     // interval expected in milliseconds
     return new Date(time1.getTime() + (isNaN(interval) ? 0 : interval));
   }
+
+  encrypt(data: string, key: string): string {
+    // console.log("encrypting");
+    // console.log("key", key);
+    return CryptoJS.AES.encrypt(data, key).toString();
+  }
+
+  decrypt(data: string, key: string): string {
+    // console.log('decrypting');
+    // console.log("key", key);
+    const bytes = CryptoJS.AES.decrypt(data, key);
+    return bytes.toString(CryptoJS.enc.Utf8);
+  }
+
+
 }

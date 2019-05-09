@@ -7,23 +7,15 @@
 </ion-header>
 
 <ion-content padding>
-  <button ion-button block color="secondary" (click)="mockLogIn()">Mock Log In</button>
-  <!-- <p *ngIf="auth.loading" text-center>Loading...</p> -->
-  <!-- <ng-template [ngIf]="!auth.loading"> -->
-  <!-- Not loading, not logged in: show login button -->
-  <button ion-button block color="secondary" *ngIf="!auth.loggedIn" (click)="login()">Log In</button>
-  <!-- <button ion-button block color="secondary" *ngIf="!auth.loggedIn" (click)="login()">Log In</button> -->
-  <!-- Not loading, logged in: show profile and logout button -->
-  <!-- <ng-template [ngIf]="auth.loggedIn"> -->
-  <!-- <button ion-button block color="danger" (click)="auth.logout()">Log Out</button> -->
-  <!-- </ng-template> -->
-  <!-- </ng-template> -->
-  <button ion-button block color="danger" (click)="logout()">Log Out</button>
-  <ion-card *ngIf="auth.user">
-    <img [src]="auth.user.picture">
-    <ion-card-content>
-      <ion-card-title>{{ auth.user.name }}</ion-card-title>
-      <pre>{{ auth.user | json }}</pre>
-    </ion-card-content>
-  </ion-card>
+  <ion-item>
+    <ion-label stacked>User ID</ion-label>
+    <ion-input [(ngModel)]="id"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label stacked>Password</ion-label>
+    <ion-input type="password" [(ngModel)]="pwd"></ion-input>
+  </ion-item>
+  <ion-item no-lines>
+    <button ion-button [disabled]="!(pwd && id)" (click)="login()">Log In</button><br>
+  </ion-item>
 </ion-content>
