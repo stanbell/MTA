@@ -1,4 +1,4 @@
-page-event {
+page-edit-event {
   ion-label {
     word-break: break-word;
     white-space: normal;
@@ -7,14 +7,12 @@ page-event {
   ion-input {
     background-color: color($colors, secondary);
   }
+  ion-datetime {
+    background-color: color($colors, secondary);
+  }
   .checkOption {
     font-size: x-small;
     margin: 0;
     overflow-wrap: break-word;
-  }
-  .revenue {
-    border-bottom-style: solid;
-    border-bottom-color: color($colors, primary);
-    border-bottom-width: 1px;
   }
 }

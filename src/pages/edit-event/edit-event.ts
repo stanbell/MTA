@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
 import { Calendar } from '@ionic-native/calendar';
 import { HelpersProvider } from '../../providers/helpers/helpers';
-// import { UserDataProvider } from '../../providers/user-data/user-data';
 import { LookupPage } from '../lookup/lookup';
 import '../../types/types';
 import { EmptiesProvider } from '../../providers/empties/empties';
@@ -17,10 +16,10 @@ const YEAR = 1000 * 60 * 60 * 24 * 365;
 
 @IonicPage()
 @Component({
-  selector: 'page-add-event',
-  templateUrl: 'add-event.html',
+  selector: 'page-edit-event',
+  templateUrl: 'edit-event.html',
 })
-export class AddEventPage {
+export class EditEventPage {
 
   startDate: any;
   endDate: any;
@@ -28,9 +27,13 @@ export class AddEventPage {
   maxEndDate: any;
   maxDuration: any = 180;
   duration: any;
+  revenue: any;
   event: ScheduleItemType;
   service: ServiceTypes;
   selectedDate: Date;
+  mode: string = 'edit';
+  editPrice: boolean = false;
+  editCompletionState: boolean = false;
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
@@ -45,22 +48,26 @@ export class AddEventPage {
     this.user.read();
     this.sched.read();
     this.trans.read();
-    this.selectedDate = navParams.get('date');
-    this.event = this.empties.getEmptyScheduleItem();
-    this.event.id = this.helper.newGuid();
-    var defaultDate = new Date(this.selectedDate);
-    defaultDate.setHours(11);  // default to 11  // maybe TODO set to current time, so not in past if "today"
-    this.event.start = this.helper.formatDateTime24(defaultDate);
-    console.log('this.event.start ', this.event.start);
-    defaultDate.setHours(12);  // default 1 hour less 1 second
-    this.event.end = this.helper.formatDateTime24(defaultDate);  // initial default 1 hour
-
+    this.mode = navParams.get('mode');
+    if (this.mode === 'edit') {
+      this.event = navParams.get('event');
+      this.editPrice = !this.event.pd;
+    } else {
+      this.editPrice = true;
+      this.selectedDate = navParams.get('date');
+      this.event = this.empties.getEmptyScheduleItem();
+      var defaultDate = new Date(this.selectedDate);
+      defaultDate.setHours(11);  // default to 11  // maybe TODO set to current time, so not in past if "today"
+      defaultDate.setHours(11, 59, 59);  // default 1 hour less 1 second
+      this.event.start = this.helper.formatDateTime24(defaultDate);
+      this.event.end = this.helper.formatDateTime24(defaultDate);  // initial default 1 hour
+    }
     this.startDate = this.helper.convertToISO(this.event.start);
     this.endDate = this.helper.convertToISO(this.event.end);
-
     this.minStartDate = new Date(Date.now() - DAY).toISOString();
     this.minStartDate = new Date(Date.now() - DAY).toISOString();
     this.maxEndDate = new Date(Date.now() + YEAR).toISOString();
+    this.revenue = this.event.revenue;
     this.calcDuration()
   }
 
@@ -103,14 +110,62 @@ export class AddEventPage {
     this.endDate = this.helper.addTimeInterval(new Date(this.startDate), (this.duration * MINUTE)).toISOString();
   }
 
-  addEvent() {
-    this.helper.signal('addEvent');
-    this.helper.signal(this.event);
+  save() {
+    console.log('save', this.mode);
+    if (this.mode === 'edit') {
+      this.editEvent();
+    } else {
+      this.addEvent();
+    }
+    console.log('now writing');
+    this.udw.write();
+    this.navCtrl.pop();
+  }
+
+  editEvent() {
     this.event.start = this.helper.convertFromISO(this.startDate); // new Date(this.startDate).toISOString();
-    this.helper.signal('as used in addToNative');
-    this.helper.signal(new Date(this.event.start));
     this.event.end = this.helper.convertFromISO(this.endDate); // new Date(this.endDate).toISOString();
-    this.event.revenue = this.service.price;
+    // if price changed,
+    //    find the corresponding revenue transaction
+    //      should have only the 1 (since only not-paid are allowed)
+    //  this.trans[].id === this.event.transactions[].uniqueId 
+    //    & update revenue
+    console.log('looking for transaction', this.event.transactions[0].uniqueId);
+    var rt: any = this.trans.transactions
+      .filter((t) => {
+        return (t.uniqueId === (this.event.transactions[0].uniqueId + '_R') )
+          && (t.apptId === this.event.id);
+      });
+      console.log('filtered=', rt);
+    // this.trans.add({
+    //   uniqueId: transGuid + '_R',
+    //   processorId: '',
+    //   apptId: this.event.id,
+    //   type: 'revenue',  // revenue (my services), service charges (i paid)
+    //   description: this.event.serviceDescription,
+    //   amount: this.event.revenue,
+    //   date: this.event.start,
+    //   reconciled: false,
+    //   partyType: 'client', // client or service provider (ie, bank, cc processor="pp")
+    //   //TODO:  check if TransPartyType really necessary, compare to sample data
+    //   party: { id: this.event.clientName, description: '' }
+    // })
+    // this.updateNative();
+    // this.sched.add(this.event);
+  }
+
+  updateNative() { }
+
+  formatRevenue() {
+    this.event.revenue=Number(this.revenue);
+  }
+
+  addEvent() {
+    console.log('in addEvent');
+    this.event.id = this.helper.newGuid();
+    this.event.start = this.helper.convertFromISO(this.startDate); // new Date(this.startDate).toISOString();
+    this.event.end = this.helper.convertFromISO(this.endDate); // new Date(this.endDate).toISOString();
+    // this.event.revenue = this.service.price;  
     // create a revenue transaction, match it with the appt
     const transGuid = this.helper.newGuid();
     this.event.transactions.push({
@@ -131,9 +186,6 @@ export class AddEventPage {
     })
     this.addToNative();
     this.sched.add(this.event);
-    this.udw.write();
-    // go back
-    this.navCtrl.pop();
   }
 
   async addToNative() {
@@ -162,6 +214,11 @@ export class AddEventPage {
             try {
               // TODO test with ios, this "string" type below may fail
               var eventResponse: string = await this.ncal.createEventWithOptions(
+                // calendarOptions.id is the unuqie identifier?  or calendarOptions.calendar    console.log(time1);
+                //                maybe only if i assign it with createEventWithOptions
+                // following .findEVent & .modifyEvent are ios only
+                // note when editing calendar event use calendar.findEvent(title, location, notes, startDate, endDate)
+                // AND .modifyEvent(title, location, notes, startDate, endDate, newTitle, newLocation, newNotes, newStartDate, newEndDate)EventWithOptions(
                 this.user.user.defaultApptTitle,
                 addr,
                 null, // notes,
@@ -186,10 +243,10 @@ export class AddEventPage {
     }
   }
 
-}
+  setCompletionState(state: string) {
+    this.event.completionState = state;
+    this.editCompletionState = false;
+  }
 
-// calendarOptions.id is the unuqie identifier?  or calendarOptions.calendar    console.log(time1);
-  //                maybe only if i assign it with createEventWithOptions
-  // following .findEVent & .modifyEvent are ios only
-  // note when editing calendar event use calendar.findEvent(title, location, notes, startDate, endDate)
-  // AND .modifyEvent(title, location, notes, startDate, endDate, newTitle, newLocation, newNotes, newStartDate, newEndDate)
+
+}

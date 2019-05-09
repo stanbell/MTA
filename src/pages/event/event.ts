@@ -6,6 +6,7 @@ import { StripePaymentPage } from '../stripe-payment/stripe-payment';
 // import { InAppBrowser } from '@ionic-native/in-app-browser';
 import '../../types/types';
 import { LocalStoreProvider } from '../../providers/local-store/local-store';
+import { EditEventPage } from '../edit-event/edit-event';
 
 const PMT_RESPONSE_KEY = "MTA_P001";
 
@@ -29,6 +30,11 @@ export class EventPage {
   transactions: any[];
   editingNoteNow: boolean = false;
 
+
+  // stupid angular won't refresh non-input data
+  // so use this for fields edited in edit-event form
+  display: string[] = ['','','','',''];
+
   // temp
   services = ['test 1', 'test 2', 'service 3'];
 
@@ -36,15 +42,13 @@ export class EventPage {
     public navParams: NavParams,
     public plt: Platform,
     public ls: LocalStoreProvider,
-    // public iab: InAppBrowser,  // temporary while testing auth0
     public helper: HelpersProvider,
     public ud: UserDataProvider) {
     // this.mode = navParams.get('mode');
     // we just edit, we've already created an empty/defaulted one if adding
 
     this.event = navParams.get('event');
-    console.log(this.event.start);
-    console.log(this.event.end);
+    console.log(this.event);
     this.displayDate = (new Date(this.event.start).toLocaleDateString());
     this.displayStart = (new Date(this.event.start).toLocaleTimeString());
     this.displayEnd = (new Date(this.event.end).toLocaleTimeString());
@@ -65,8 +69,12 @@ export class EventPage {
     this.transactions.forEach((e) => {
       e['formattedAmount'] = (e.amount >= 0) ? e.amount.toFixed(2) : "(" + (0 - e.amount).toFixed(2) + ")";
     });
+    this.display[0] = this.displayDate;
+    this.display[1] = this.displayStart + ' to ' + this.displayEnd;
+    this.display[2] = 'Client: ' + this.event.clientName;
+    this.display[3] = 'Service: ' + this.event.serviceDescription;
+    this.display[4] = this.event.completionState;
   }
-
 
   pay() {
     console.log('pay');
@@ -128,29 +136,16 @@ export class EventPage {
     // }
   }
 
+  editEvent() {
+    this.navCtrl.push(EditEventPage, {
+      mode: 'edit',
+      event: this.event
+    });
+  }
+
   save() {
     // for now, it's only the note contents
 
   }
 
-  // TODO unsubscribe from browser events
-
-  // private defaultTitle: string = (!!this.ud.userData.user.defaultApptTitle) ? this.ud.userData.user.defaultApptTitle : 'Massage';
-  // private defaultLocation: string =
-  //   (!!this.ud.userData.user.address.label) ? this.ud.userData.user.address.label : 'Office';
-  // addEvent(cal) {
-  //   this.navCtrl.push(EventPage, {
-  //     mode: 'add',
-  //     title: this.defaultTitle, // set default in settings
-  //     location: this.defaultLocation, // set in settings
-  //     startDate: this.selectedDate
-  //   })
-
-  // // also sync to native calendar 
-  // }
-
-  // cancelEvent(cal) {
-  // // also sync to native calendar 
-
-  // }
 }

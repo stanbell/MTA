@@ -2,18 +2,15 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Calendar } from '@ionic-native/calendar';
 import { EventPage } from '../event/event';
-// import { UserDataProvider } from '../../providers/user-data/user-data';
 import { ScheduleProvider } from '../../providers/schedule/schedule';
-// import { EmptiesProvider } from '../../providers/empties/empties';
 import { HelpersProvider } from '../../providers/helpers/helpers';
-import { AddEventPage } from '../add-event/add-event';
+// import { AddEventPage } from '../add-event/add-event';
+import { EditEventPage } from '../edit-event/edit-event';
 
 const normalDaysInMonths: number[] = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 const leapDaysInMonths: number[] = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 const monthNames: string[] = ["January", "February", "March", "April", "May", "June", "July",
   "August", "September", "October", "November", "December"];
-
-// const HOUR_VALUE = 1000 * 60 * 60;
 
 @IonicPage()
 @Component({
@@ -42,10 +39,8 @@ export class CalendarPage {
 
   private daysInMonths: number[];
 
-  // constructor(public navCtrl: NavController, public navParams: NavParams) {
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
-    // private plt: Platform,
     private cal: Calendar,
     public helper: HelpersProvider,
     public sched: ScheduleProvider) {
@@ -66,7 +61,8 @@ export class CalendarPage {
   }
 
   addAppt() {
-    this.navCtrl.push(AddEventPage, {
+    this.navCtrl.push(EditEventPage, {
+      mode: 'add',
       date: this.selectedDate
     });
   }
@@ -204,74 +200,6 @@ export class CalendarPage {
 }
 
 // original calendar display code from https://www.djamware.com/post/5a0bb8f780aca75eadc12d6b/build-ionic-3-angular-5-calendar-ui-with-event-integration
-
-// this code alternate way to get events, starting with native calendar and
-// finding corresponding event in userData.schedule
-// goes in/replaces getDateEvents
-
-// this.eventList = [
-//   {
-//     calendar: "MTA",
-//     endDate: "2019-02-20 08:29:59",
-//     startDate: "2019-02-20 08:00:00",
-//     id: "0F9990EB-05A7-40DB-B082-424A85B59F90",
-//     lastModifiedDate: "2019-02-15 09:14:02",
-//     location: "",
-//     message: "Massage 30",
-//     title: "Alice Adams"
-//   },
-//   {
-//     calendar: "MTA",
-//     endDate: "2019-02-20 09:59:59",
-//     startDate: "2019-02-20 09:00:00",
-//     id: "0F9990EB-05A7-40DB-B082-424A85B59F91",
-//     lastModifiedDate: "2019-02-15 09:14:02",
-//     location: "",
-//     message: "Massage 60",
-//     title: "Bob Barker"
-//   },
-//   {
-//     calendar: "MTA",
-//     endDate: "2019-02-20 13:59:59",
-//     startDate: "2019-02-20 13:00:00",
-//     id: "0F9990EB-05A7-40DB-B082-424A85B59F92",
-//     lastModifiedDate: "2019-02-15 09:14:02",
-//     location: "",
-//     message: "Massage 60",
-//     title: "Cathy Cohen"
-//   },
-// ]
-
-  //   // or
-  //   //  filter the events to those for which i have a stored schedule[].providerItemId
-  //   //    use values from there
-  //   let mtaAppts = new Array();
-  //   this.ud.userData.schedule.forEach(item => {
-  //     mtaAppts.push(item['id']);
-  //   });
-  //   let el = this.eventList.filter(x => mtaAppts.indexOf(x['providerItemId']) !== -1)
-  //   el.forEach(item => {
-  //     item['startTime'] = helpers.formatTime(item['startDate']);
-  //     var found = this.getMatchingAppt(item, this.ud.userData.schedule);
-  //     item = { ...item, ...found };
-  //     console.log(item);
-  //     // item['clientName'] = found['clientName'];
-  //     // item['serviceDescription'] = found['serviceDescription'];
-  //   });
-  // }
-
-  // private getMatchingAppt(item: any, arr: any): any {
-  //   var found = { clientName: 'none', serviceDescription: 'none' };
-  //   arr.forEach(i => {
-  //     if (item === i.providerItemId) {
-  //       found = {
-  //         clientName: i['clientName'],
-  //         serviceDescription: i['serviceDescription']
-  //       }
-  //     }
-  //   });
-  //   return found;
-  // }
 
 
   // following used the bad idea in schedule provider

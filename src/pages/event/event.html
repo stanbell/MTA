@@ -5,40 +5,22 @@
 </ion-header>
 
 <ion-content padding>
-  <p>{{event.providerItemId}}</p>
+  <!-- <p>{{event.providerItemId}}</p> -->
   <ion-grid>
     <div class="box">
-      <ion-row justify-content-center>
-        <p>{{displayDate}}</p>
+      <ion-row *ngFor="let d of display" justify-content-center>
+        <p>{{d}}</p>
       </ion-row>
-      <ion-row justify-content-center>
-        <p>{{displayStart}} to {{displayEnd}}</p>
+      <ion-row justify-content-right>
+        <ion-col col-9></ion-col>
+        <ion-col col-3>
+          <button class="editButton" ion-button icon-only (click)="editEvent()">
+            <ion-icon name="create"></ion-icon>
+          </button>
+        </ion-col>
       </ion-row>
-      <ion-row justify-content-center>
-        <p>Client: {{event.clientName}}</p>
-      </ion-row>
-      <ion-row justify-content-center>
-        <div *ngIf="!editingServiceNow">
-          <p>Service: {{event.serviceDescription}}
-            <ion-icon name="create" *ngIf="!editingServiceNow" (click)="editingServiceNow=true"></ion-icon>
-          </p>
-        </div>
-        <div *ngIf="editingServiceNow">
-          <ion-col col-11 justify-content-right>
-            <ion-item>
-              <ion-select [(ngModel)]="event.serviceDescription">
-                <ion-option *ngFor="let s of services" value={{s}}>{{s}}</ion-option>
-              </ion-select>
-            </ion-item>
-          </ion-col>
-          <ion-col col-1 justify-content-right>
-            <ion-icon name="checkmark" *ngIf="editingServiceNow" (click)="editingServiceNow=false; save()"></ion-icon>
-          </ion-col>
-        </div>
-      </ion-row>
-      <ion-row justify-content-center><p>{{event.completionState}}</p></ion-row>
     </div>
-      
+    <!-- =============================== -->
     <ion-row><br></ion-row>
     <div class="listInBox">
       <ion-row>
@@ -100,6 +82,7 @@
         </ion-col>
       </ion-row>
     </div>
+    <!-- =============================== -->
     <ion-row><br></ion-row>
     <div class="listInBox">
       <ion-row justify-content-center>
