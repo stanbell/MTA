@@ -24,7 +24,6 @@ import { LocalStoreProvider } from '../providers/local-store/local-store';
 // import { Stripe } from '@ionic-native/stripe/ngx';
 
 import { LoginPage } from '../pages/login/login';
-// import { SchedulePage } from '../pages/schedule/schedule';
 import { ClientsPage } from '../pages/clients/clients';
 import { TransactionsPage } from '../pages/transactions/transactions';
 import { SettingsPage } from '../pages/settings/settings';
@@ -36,11 +35,9 @@ import { EventPage } from '../pages/event/event';
 import { AppointmentsPage } from '../pages/appointments/appointments';
 import { NavoptionsPage } from '../pages/navoptions/navoptions';
 import { ClientInfoPage } from '../pages/client-info/client-info';
-import { DocumentPage } from '../pages/document/document';
 import { StripePaymentPage } from '../pages/stripe-payment/stripe-payment';
 import { IntakePage } from '../pages/intake/intake';
 import { EmptiesProvider } from '../providers/empties/empties';
-// import { AddEventPage } from '../pages/add-event/add-event';
 import { LookupPage } from '../pages/lookup/lookup';
 import { UserProvider } from '../providers/user/user';
 import { UserDataWriterProvider } from '../providers/user-data-writer/user-data-writer';
@@ -56,7 +53,6 @@ import { EditServicePage } from '../pages/edit-service/edit-service';
     MyApp,
     HomePage,
     LoginPage,
-    // SchedulePage,
     ClientsPage,
     ClientPage,
     TransactionsPage,
@@ -67,10 +63,8 @@ import { EditServicePage } from '../pages/edit-service/edit-service';
     AppointmentsPage,
     NavoptionsPage,
     ClientInfoPage,
-    DocumentPage,
     StripePaymentPage,
     IntakePage,
-    // AddEventPage,
     LookupPage,
     EditEventPage,
     EditContactPage,
@@ -88,7 +82,6 @@ import { EditServicePage } from '../pages/edit-service/edit-service';
     MyApp,
     HomePage,
     LoginPage,
-    // SchedulePage,
     ClientsPage,
     ClientPage,
     TransactionsPage,
@@ -99,10 +92,8 @@ import { EditServicePage } from '../pages/edit-service/edit-service';
     AppointmentsPage,
     NavoptionsPage,
     ClientInfoPage,
-    DocumentPage,
     StripePaymentPage,
     IntakePage,
-    // AddEventPage,
     LookupPage,
     EditEventPage,
     EditContactPage,
@@ -113,7 +104,6 @@ import { EditServicePage } from '../pages/edit-service/edit-service';
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    // Auth0Provider,
     UserDataProvider,
     ClientsProvider,
     TransactionsProvider,
