@@ -17,14 +17,8 @@ export class LocalStoreProvider {
       catch (err) {
         console.log('storage set failed ', err);
       }
-      // this.storage.set(key, value)
-      //   .then((result) => resolve(true))
-      //   .catch((reason) => {
-      //     console.info(reason);
-      //     reject(reason);
-      //   })
-    // });
   }
+
   async get(key: string): Promise<any> {
     // return new Promise((resolve, reject) => {
       try {
@@ -35,17 +29,6 @@ export class LocalStoreProvider {
         return '';
       }
   }
-
-  // get(key: string): Promise<any> {
-  //   return new Promise((resolve, reject) => {
-  //     this.storage.get(key)
-  //       .then(result => resolve(result))
-  //       .catch((reason) => {
-  //         console.info(reason);
-  //         reject(reason);
-  //       });
-  //   })
-  // }
 
   remove(key: string) {
     this.storage.remove(key);
