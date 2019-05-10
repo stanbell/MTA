@@ -40,6 +40,13 @@ X cancel add appt
 
 _ who owes me statistic
 
+_    show stats on clients page (or in metrics section?)
+    revenue and debt, prev appts, scheduled appts
+
+x fix save reconcile marker
+
+_ clean up format and style
+
 _ apply discount in transactions
     _ manual
     _ defined 

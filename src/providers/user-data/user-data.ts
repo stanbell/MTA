@@ -34,6 +34,36 @@ export class UserDataProvider {
       this.emptyUserData = this.helper.deepCopy(this.mt.getEmptyUserData);
   }
 
+  private _dataWindow: Date;
+
+  public get dataWindow(): Date {
+    return this._dataWindow;
+  }
+
+  public set dataWindow(v: Date) {
+    // v parameter ignored
+    const DAY = 24 * 60 * 60 * 1000;
+    const MONTH_1 = 30 * DAY;
+    const MONTH_6 = 182 * DAY;
+    const YEAR = 365 * DAY;
+
+    switch (this.userData.user.listActive) {
+      case '1m':
+        this._dataWindow = new Date(Date.now() - MONTH_1);
+        break;
+      case '6m':
+        this._dataWindow = new Date(Date.now() - MONTH_6);
+        break;
+      case '1y':
+        this._dataWindow = new Date(Date.now() - YEAR);
+        break;
+      default:
+        this._dataWindow = new Date(Date.now() - MONTH_1);
+        break;
+    }
+  }
+
+
   initData() {
     this.userData = this.helper.deepCopy(this.mt.getEmptyUserData());
   }
@@ -83,6 +113,7 @@ export class UserDataProvider {
     }
     // console.log('userData', this.userData);
     // refresh
+    this.dataWindow = new Date();
     this.writeData();
   }
 

@@ -6,6 +6,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { HomePage } from '../pages/home/home';
 import { UserDataProvider } from '../providers/user-data/user-data';
+import { TransactionsProvider } from '../providers/transactions/transactions';
+import { ScheduleProvider } from '../providers/schedule/schedule';
 
 @Component({
   templateUrl: 'app.html'
@@ -20,6 +22,8 @@ export class MyApp {
   constructor(public platform: Platform,
     public statusBar: StatusBar,
     public splashScreen: SplashScreen,
+    public trans: TransactionsProvider,
+    public sched: ScheduleProvider,
     public ud: UserDataProvider) {
       this.initializeApp();
     }
@@ -33,6 +37,8 @@ export class MyApp {
         
         // initialize primary data store
         this.ud.initData();
+        this.trans.init();
+        this.sched.init();
         
         this.nav.setRoot(HomePage);
       });

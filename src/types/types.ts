@@ -52,7 +52,7 @@ interface UserInfoType {
     // following are settings
     calendar: CalendarType,
     defaultApptTitle: string,
-    listActive: string,
+    listActive: string,  // '1m' '6m' '1y'
     sortClientsBy: string,
     useCalendar: string,
     whoSchedule: string,

@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { TransactionsProvider } from '../../providers/transactions/transactions';
 import { HelpersProvider } from '../../providers/helpers/helpers';
 import { UserDataProvider } from '../../providers/user-data/user-data';
+import { UserDataWriterProvider } from '../../providers/user-data-writer/user-data-writer';
 
 @IonicPage()
 @Component({
@@ -19,6 +20,7 @@ export class TransactionsPage {
     public navParams: NavParams,
     public helper: HelpersProvider,
     public trans: TransactionsProvider,
+    public udw: UserDataWriterProvider,
     public ud: UserDataProvider) {
       // TODO:  get user prefs and set transStartDate
     this.filter = navParams.get('client');
@@ -82,7 +84,8 @@ export class TransactionsPage {
   }
 
   save() {
-    
+    this.udw.write();
+    this.populateItems();
   }
 
 }

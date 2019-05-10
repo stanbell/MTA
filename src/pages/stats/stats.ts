@@ -1,14 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { TransactionsProvider } from '../../providers/transactions/transactions';
 import { ScheduleProvider } from '../../providers/schedule/schedule';
-
-/**
- * Generated class for the StatsPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { UserDataProvider } from '../../providers/user-data/user-data';
 
 @IonicPage()
 @Component({
@@ -32,9 +25,8 @@ export class StatsPage {
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
-    // public trans: TransactionsProvider,
+    public ud: UserDataProvider,
     public sched: ScheduleProvider) {
-    // this.trans.read();
     this.sched.read();
   }
 

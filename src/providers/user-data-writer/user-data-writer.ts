@@ -12,4 +12,8 @@ export class UserDataWriterProvider {
     this.ud.writeData();
   }
 
+
+  updateDataWindow() {
+    this.ud.dataWindow = new Date();
+  }
 }

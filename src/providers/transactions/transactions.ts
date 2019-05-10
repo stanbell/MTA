@@ -8,6 +8,7 @@ export class TransactionsProvider {
   transactions: TransactionType[] = [];
 
   constructor(public ud: UserDataProvider) {
+
   }
 
   init() {
@@ -15,7 +16,11 @@ export class TransactionsProvider {
   }
 
   read() {
-    this.transactions = this.ud.userData.transactions;
+    var t: TransactionType[] = [];
+    t = this.ud.userData.transactions;
+    this.transactions = t.filter((f) => {
+      return (new Date(f.date).valueOf() > this.ud.dataWindow.valueOf());
+    });
   }
 
   // this is a reference, not a copy, so this "write" redundant

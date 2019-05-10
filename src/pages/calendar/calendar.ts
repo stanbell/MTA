@@ -6,6 +6,7 @@ import { ScheduleProvider } from '../../providers/schedule/schedule';
 import { HelpersProvider } from '../../providers/helpers/helpers';
 // import { AddEventPage } from '../add-event/add-event';
 import { EditEventPage } from '../edit-event/edit-event';
+import { UserDataProvider } from '../../providers/user-data/user-data';
 
 const normalDaysInMonths: number[] = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 const leapDaysInMonths: number[] = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
@@ -19,7 +20,7 @@ const monthNames: string[] = ["January", "February", "March", "April", "May", "J
 })
 export class CalendarPage {
 
-  title: any = 'Schedule';  // whose calendar is it?  title on page
+  // title: any = 'Schedule';  // whose calendar is it?  title on page
 
   selectedDate: Date;  // determines red highlight, changed by click on date
   selectedDayOfMonth: any;
@@ -43,9 +44,10 @@ export class CalendarPage {
     public navParams: NavParams,
     private cal: Calendar,
     public helper: HelpersProvider,
+    public ud: UserDataProvider,
     public sched: ScheduleProvider) {
     (navParams.get('date')) ? this.setSelectedDate(navParams.get('date')) : this.setSelectedDate(this.getToday());
-    (navParams.get('title')) ? this.title = navParams.get('title') : this.title = 'My Schedule';
+    // (navParams.get('title')) ? this.title = navParams.get('title') : this.title = 'My Schedule';
     this.sched.read();
     this.getDateEvents();
     this.buildCalendarDays(this.selectedDate);

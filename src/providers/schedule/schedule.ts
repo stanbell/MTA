@@ -15,11 +15,15 @@ export class ScheduleProvider {
   }
 
   read() {
-    this.scheduleItems = this.ud.userData.schedule;
+    var s: ScheduleItemType[] = [];
+    s = this.ud.userData.schedule;
+    this.scheduleItems = s.filter((f) => {
+      return (new Date(f.start).valueOf() > this.ud.dataWindow.valueOf());
+    });
   }
 
-  add(t: ScheduleItemType) {
-    this.scheduleItems.push(t);
+  add(s: ScheduleItemType) {
+    this.scheduleItems.push(s);
   }
 
   // remove(i: number) {

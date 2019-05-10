@@ -1,32 +1,31 @@
-
 <ion-header>
-
-  <ion-navbar>
-    <ion-title>My Stats</ion-title>
-  </ion-navbar>
+<ion-navbar></ion-navbar>
 
 </ion-header>
 
 <ion-content padding>
   <ion-grid>
+
     <ion-row align-items-center>
       <ion-col col-1></ion-col>
       <ion-col col-10 align-self-center>
-        <div class="boxInList">
+        <div class="box">
           <p>Stats</p>
         </div>
       </ion-col>
       <ion-col col-1></ion-col>
     </ion-row>
+
     <ion-row align-items-center>
       <ion-col col-1></ion-col>
       <ion-col col-10 align-self-center>
-        <div class="boxInList">
+        <div class="box">
           <p>Past</p>
         </div>
       </ion-col>
       <ion-col col-1></ion-col>
     </ion-row>
+
     <ion-row align-items-center>
       <ion-col col-1></ion-col>
       <ion-col col-6 align-self-left>
@@ -41,11 +40,12 @@
       </ion-col>
       <ion-col col-1></ion-col>
     </ion-row>
+
     <ion-row align-items-center>
       <ion-col col-1></ion-col>
       <ion-col col-6 align-self-left>
         <div class="boxInList">
-          <p>Still marked 'Open'</p>
+          <p>Still 'Open'</p>
         </div>
       </ion-col>
       <ion-col col-4 align-self-end>
@@ -55,89 +55,138 @@
       </ion-col>
       <ion-col col-1></ion-col>
     </ion-row>
- 
+
     <ion-row align-items-center>
-      <ion-col col-2></ion-col>
-      <ion-col col-8 align-self-center>
+      <ion-col col-1></ion-col>
+      <ion-col col-6 align-self-left>
         <div class="boxInList">
-          <p>Revenue {{revenue}}</p>
+          <p>Revenue</p>
         </div>
       </ion-col>
-      <ion-col col-2></ion-col>
-    </ion-row>
-    <ion-row align-items-center>
-      <ion-col col-2></ion-col>
-      <ion-col col-8 align-self-center>
+      <ion-col col-4 align-self-end>
         <div class="boxInList">
-          <p>Collected {{paid}}</p>
+          <p>{{revenue}}</p>
         </div>
       </ion-col>
-      <ion-col col-2></ion-col>
-    </ion-row>
-    <ion-row align-items-center>
-      <ion-col col-2></ion-col>
-      <ion-col col-8 align-self-center>
-        <div class="boxInList">
-          <p>Uncollected {{uncollected}}</p>
-        </div>
-      </ion-col>
-      <ion-col col-2></ion-col>
+      <ion-col col-1></ion-col>
     </ion-row>
 
-  <ion-row align-items-center>
-    <ion-col col-2></ion-col>
-    <ion-col col-8 align-self-center>
-      <div class="boxInList">
-        <p>No Show Appts {{noShowAppts}}</p>
-      </div>
-    </ion-col>
-    <ion-col col-2></ion-col>
-  </ion-row>
-  <ion-row align-items-center>
-    <ion-col col-2></ion-col>
-    <ion-col col-8 align-self-center>
-      <div class="boxInList">
-        <p>Cancellations {{cancellations}}</p>
-      </div>
-    </ion-col>
-    <ion-col col-2></ion-col>
-  </ion-row>
-  <ion-row align-items-center>
-    <ion-col col-2></ion-col>
-    <ion-col col-8 align-self-center>
-      <div class="boxInList">
-        <p>Lost Revenue {{lostRevenue}}</p>
-      </div>
-    </ion-col>
-    <ion-col col-2></ion-col>
-  </ion-row>
+    <ion-row align-items-center>
+      <ion-col col-1></ion-col>
+      <ion-col col-6 align-self-left>
+        <div class="boxInList">
+          <p>Collected</p>
+        </div>
+      </ion-col>
+      <ion-col col-4 align-self-end>
+        <div class="boxInList">
+          <p>{{paid}}</p>
+        </div>
+      </ion-col>
+      <ion-col col-1></ion-col>
+    </ion-row>
+
+    <ion-row align-items-center>
+      <ion-col col-1></ion-col>
+      <ion-col col-6 align-self-left>
+        <div class="boxInList">
+          <p>Uncollected</p>
+        </div>
+      </ion-col>
+      <ion-col col-4 align-self-end>
+        <div class="boxInList">
+          <p>{{uncollected}}</p>
+        </div>
+      </ion-col>
+      <ion-col col-1></ion-col>
+    </ion-row>
+
+    <ion-row align-items-center>
+      <ion-col col-1></ion-col>
+      <ion-col col-6 align-self-left>
+        <div class="boxInList">
+          <p>No Show Appts</p>
+        </div>
+      </ion-col>
+      <ion-col col-4 align-self-end>
+        <div class="boxInList">
+          <p>{{noShowAppts}}</p>
+        </div>
+      </ion-col>
+      <ion-col col-1></ion-col>
+    </ion-row>
+
+    <ion-row align-items-center>
+      <ion-col col-1></ion-col>
+      <ion-col col-6 align-self-left>
+        <div class="boxInList">
+          <p>Cancellations</p>
+        </div>
+      </ion-col>
+      <ion-col col-4 align-self-end>
+        <div class="boxInList">
+          <p>{{cancellations}}</p>
+        </div>
+      </ion-col>
+      <ion-col col-1></ion-col>
+    </ion-row>
+
+    <ion-row align-items-center>
+      <ion-col col-1></ion-col>
+      <ion-col col-6 align-self>
+        <div class="boxInList">
+          <p>Lost Revenue</p>
+        </div>
+      </ion-col>
+      <ion-col col-4 align-self-end>
+        <div class="boxInList">
+          <p>{{lostRevenue}}</p>
+        </div>
+      </ion-col>
+      <ion-col col-1></ion-col>
+    </ion-row>
 
     <ion-row align-items-center>
       <ion-col col-1></ion-col>
       <ion-col col-10 align-self-center>
-        <div class="boxInList">
+        <div class="box">
           <p>Future</p>
         </div>
       </ion-col>
       <ion-col col-1></ion-col>
     </ion-row>
+
     <ion-row align-items-center>
-      <ion-col col-2></ion-col>
-      <ion-col col-8 align-self-center>
+      <ion-col col-1></ion-col>
+      <ion-col col-6 align-self-left>
         <div class="boxInList">
-          <p>Scheduled Appts {{scheduledAppts}}</p>
+          <p>Appts</p>
         </div>
       </ion-col>
-      <ion-col col-2></ion-col>
-    </ion-row>
-    <ion-row align-items-center>
-      <ion-col col-2></ion-col>
-      <ion-col col-8 align-self-center>
+      <ion-col col-4 align-self-end>
         <div class="boxInList">
-          <p>Scheduled Revenue {{scheduledRevenue}}</p>
+          <p>{{scheduledAppts}}</p>
         </div>
       </ion-col>
-      <ion-col col-2></ion-col>
+      <ion-col col-1></ion-col>
     </ion-row>
+
+    <ion-row align-items-center>
+      <ion-col col-1></ion-col>
+      <ion-col col-6 align-self-left>
+        <div class="boxInList">
+          <p>Revenue</p>
+        </div>
+      </ion-col>
+      <ion-col col-4 align-self-end>
+        <div class="boxInList">
+          <p>{{scheduledRevenue}}</p>
+        </div>
+      </ion-col>
+      <ion-col col-1></ion-col>
+    </ion-row>
+
   </ion-grid>
+  <div style="font-size: x-small;">Showing stats beginning {{ud.dataWindow.toDateString()}}, change in My
+    Business>>Settings</div>
 </ion-content>
