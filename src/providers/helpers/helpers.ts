@@ -10,7 +10,7 @@ const MINUTE = 1000 * 60;
 export class HelpersProvider {
 
   constructor(public plt: Platform) {
-    console.log('Hello HelpersProvider Provider');
+    console.log('Constructor HelpersProvider Provider');
   }
 
   private _lookupSelection: LookupSelectionType = null;  // used to pass responses from lookups, cleared immediately after reading

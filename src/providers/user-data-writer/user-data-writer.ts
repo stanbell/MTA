@@ -5,7 +5,7 @@ import { UserDataProvider } from '../user-data/user-data';
 export class UserDataWriterProvider {
 
   constructor(public ud: UserDataProvider) {
-    console.log('Hello UserDataWriterProvider Provider');
+    console.log('Constructor UserDataWriterProvider Provider');
   }
 
   write() {
@@ -15,5 +15,6 @@ export class UserDataWriterProvider {
 
   updateDataWindow() {
     this.ud.dataWindow = new Date();
+    console.log('new dataWindow', this.ud.dataWindow);
   }
 }

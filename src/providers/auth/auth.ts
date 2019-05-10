@@ -19,7 +19,7 @@ export class AuthProvider {
   constructor(public helper: HelpersProvider,
     public ls: LocalStoreProvider,
     public api: AuthapiProvider) {
-    console.log('Hello AuthProvider Provider');
+    console.log('Constructor AuthProvider Provider');
   }
 
   async checkToken() {

@@ -5,7 +5,7 @@ import '../../types/types';
 export class EmptiesProvider {
 
   constructor() {
-    console.log('Hello EmptiesProvider Provider');
+    console.log('Constructor EmptiesProvider Provider');
   }
 
   getEmptyUser(): UserInfoType {
