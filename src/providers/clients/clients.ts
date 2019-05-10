@@ -17,6 +17,7 @@ export class ClientsProvider {
   }
 
   read() {
+    this.sort();
     this.clients = this.ud.userData.clients;
   }
 
@@ -24,6 +25,9 @@ export class ClientsProvider {
     this.clients.push(c);
   }
 
+  sort() {
+    this.ud.userData.clients.sort((a, b) => { return ((a.name > b.name) as any) - ((b.name > a.name) as any) });
+  }
   // remove(i: number) {
   //   this.clients.splice(i, 1);
   // }

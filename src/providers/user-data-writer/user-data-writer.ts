@@ -15,6 +15,5 @@ export class UserDataWriterProvider {
 
   updateDataWindow() {
     this.ud.dataWindow = new Date();
-    console.log('new dataWindow', this.ud.dataWindow);
   }
 }
