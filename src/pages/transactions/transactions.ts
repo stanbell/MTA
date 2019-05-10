@@ -25,16 +25,16 @@ export class TransactionsPage {
       // TODO:  get user prefs and set transStartDate
     this.filter = navParams.get('client');
     this.mainTransPage = (!!this.filter) ? false : true; 
-    trans.read();
   }
-
+  
   ionViewDidLoad() {
     console.log('ionViewDidLoad TransactionsPage');
+    this.trans.read();
     (this.filter) ? this.populateItems(this.filter.name) : this.populateItems();
     // console.log(this.itemsList);
     
   }
-
+ 
   // ionViewWillLeave() {
   //   console.log('ionViewWillLeave TransactionsPage');
   //   // this.saveItems()  ???
