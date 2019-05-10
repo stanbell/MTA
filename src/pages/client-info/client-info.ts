@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import '../../types/types';
 import { UserDataWriterProvider } from '../../providers/user-data-writer/user-data-writer';
+import { EditContactPage } from '../edit-contact/edit-contact';
 
 @IonicPage()
 @Component({
@@ -13,11 +14,11 @@ export class ClientInfoPage {
   client: ClientType;
   itemIndex: number;
 
-  constructor(public navCtrl: NavController, 
+  constructor(public navCtrl: NavController,
     public navParams: NavParams,
     public udw: UserDataWriterProvider) {
-      this.client = navParams.get('client');  // keeps a reference, ie edits apply directly
-      // this.itemIndex = this.findItem();
+    this.client = navParams.get('client');  // keeps a reference, ie edits apply directly
+    // this.itemIndex = this.findItem();
   }
 
   ionViewDidLoad() {
@@ -36,11 +37,22 @@ export class ClientInfoPage {
 
   addContact() {
     console.log('addContact');
+    this.navCtrl.push(EditContactPage, {
+      mode: 'add',
+      item: this.client
+    })
   }
-  
-  editContact() {
-    console.log('editContact');
 
+  editContact(c: ContactInfoType) {
+    console.log('editContact');
+    this.navCtrl.push(EditContactPage, {
+      mode: 'edit',
+      contact: c
+    })
+  }
+
+  removeContact(c: ContactInfoType) {
+    alert('not yet implememnted');
   }
 
   toggleTextOK(z: ContactInfoType) {
