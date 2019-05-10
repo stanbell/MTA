@@ -11,6 +11,13 @@
       <ion-row *ngFor="let d of display" justify-content-center>
         <p>{{d}}</p>
       </ion-row>
+      <ion-row justify-content-center>
+        <p *ngIf="!editCompletionState" (click)="editCompletionState=true;">{{event.completionState}}</p>
+        <button *ngIf="editCompletionState" (click)="setCompletionState('Open')">Open</button>
+        <button *ngIf="editCompletionState" (click)="setCompletionState('No Show')">No Show</button>
+        <button *ngIf="editCompletionState" (click)="setCompletionState('Cancelled')">Cancelled</button>
+        <button *ngIf="editCompletionState" (click)="setCompletionState('Completed')">Completed</button>
+      </ion-row>
       <ion-row justify-content-right>
         <ion-col col-9></ion-col>
         <ion-col col-3>
@@ -19,6 +26,7 @@
           </button>
         </ion-col>
       </ion-row>
+
     </div>
     <!-- =============================== -->
     <ion-row><br></ion-row>

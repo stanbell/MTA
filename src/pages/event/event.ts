@@ -29,11 +29,12 @@ export class EventPage {
   initialTransactions: TransactionType[];
   transactions: any[];
   editingNoteNow: boolean = false;
+  editCompletionState: boolean = false;
 
 
   // stupid angular won't refresh non-input data
   // so use this for fields edited in edit-event form
-  display: string[] = ['','','','',''];
+  display: string[] = ['', '', '', '', ''];
 
   // temp
   services = ['test 1', 'test 2', 'service 3'];
@@ -73,7 +74,8 @@ export class EventPage {
     this.display[1] = this.displayStart + ' to ' + this.displayEnd;
     this.display[2] = 'Client: ' + this.event.clientName;
     this.display[3] = 'Service: ' + this.event.serviceDescription;
-    this.display[4] = this.event.completionState;
+    this.event.completionState = (!!this.event.completionState) ? this.event.completionState : 'Open';
+    // this.display[4] = this.event.completionState;
   }
 
   pay() {
@@ -129,11 +131,11 @@ export class EventPage {
     //     // get the result data from localstorage
     //     var chargeResult = this.ls.get(PMT_RESPONSE_KEY);
     //     console.log(chargeResult);
-    //     // this.event.completionState = 'Done';
+    //     // this.event.completionState = 'Completed';
     //   })
     // } else {
-      this.helper.signal('window');
-      window.open('../../assets/pages/sqpaymentform.html', '_blank')
+    this.helper.signal('window');
+    window.open('../../assets/pages/sqpaymentform.html', '_blank')
     // }
   }
 
@@ -146,7 +148,14 @@ export class EventPage {
 
   save() {
     // for now, it's only the note contents
+    this.ud.writeData();
+  }
 
+
+  setCompletionState(state: string) {
+    this.event.completionState = state;
+    this.editCompletionState = false;
+    this.save();
   }
 
 }

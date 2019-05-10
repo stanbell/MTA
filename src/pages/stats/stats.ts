@@ -18,7 +18,7 @@ import { ScheduleProvider } from '../../providers/schedule/schedule';
 export class StatsPage {
 
 
-  timePeriod: string = '';
+  // timePeriod: string = '';
   previousAppts: number = 0;
   revenue: number = 0;
   paid: number = 0;
@@ -41,24 +41,33 @@ export class StatsPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad StatsPage');
     this.computeStats();
+  }
+
+  computeStats() {
     // filter for time period--do this in sched & trans?  yes
+    console.log('number of items', this.sched.scheduleItems.length);
     this.sched.scheduleItems.forEach((s) => {
-      if (new Date(s.end).valueOf() < Date.now().valueOf()) {
+      if (new Date(s.start).valueOf() < Date.now().valueOf()) {
         // past
         switch (s.completionState) {
-          case 'Done':
+          case 'Completed':
             this.previousAppts += 1;
+            this.revenue += s.revenue;
             if (s.pd) {
-              this.revenue += s.revenue;
+              this.paid += s.revenue;
             } else {
               this.uncollected += s.revenue;
             }
             break;
+          case '':
+            s.completionState = 'Open';  // if needed
+            // falls thru 'Open' case
           case 'Open':
             this.inComplete += 1;
             this.previousAppts += 1;
+            this.revenue += s.revenue;
             if (s.pd) {
-              this.revenue += s.revenue;
+              this.paid += s.revenue;
             } else {
               this.uncollected += s.revenue;
             }
@@ -72,6 +81,7 @@ export class StatsPage {
             this.lostRevenue += s.revenue;
             break;
           default:
+            console.log('unrecognized case');
             break;
         }
       } else {
@@ -79,10 +89,8 @@ export class StatsPage {
         this.scheduledAppts += 1;
         this.scheduledRevenue += s.revenue;
       }
+      // console.log(s.revenue);
+      // console.log(s.completionState);
     });
-  }
-
-  computeStats() {
-
   }
 }

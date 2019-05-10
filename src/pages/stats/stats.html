@@ -19,10 +19,48 @@
       <ion-col col-1></ion-col>
     </ion-row>
     <ion-row align-items-center>
+      <ion-col col-1></ion-col>
+      <ion-col col-10 align-self-center>
+        <div class="boxInList">
+          <p>Past</p>
+        </div>
+      </ion-col>
+      <ion-col col-1></ion-col>
+    </ion-row>
+    <ion-row align-items-center>
+      <ion-col col-1></ion-col>
+      <ion-col col-6 align-self-left>
+        <div class="boxInList">
+          <p>Previous Appts</p>
+        </div>
+      </ion-col>
+      <ion-col col-4 align-self-right>
+        <div class="boxInList">
+          <p>{{previousAppts}}</p>
+        </div>
+      </ion-col>
+      <ion-col col-1></ion-col>
+    </ion-row>
+    <ion-row align-items-center>
+      <ion-col col-1></ion-col>
+      <ion-col col-6 align-self-left>
+        <div class="boxInList">
+          <p>Still marked 'Open'</p>
+        </div>
+      </ion-col>
+      <ion-col col-4 align-self-right>
+        <div class="boxInList">
+          <p>{{inComplete}}</p>
+        </div>
+      </ion-col>
+      <ion-col col-1></ion-col>
+    </ion-row>
+ 
+    <ion-row align-items-center>
       <ion-col col-2></ion-col>
       <ion-col col-8 align-self-center>
         <div class="boxInList">
-          <p>For time period: {{stats.timePeriod}}</p>
+          <p>Revenue {{revenue}}</p>
         </div>
       </ion-col>
       <ion-col col-2></ion-col>
@@ -31,7 +69,7 @@
       <ion-col col-2></ion-col>
       <ion-col col-8 align-self-center>
         <div class="boxInList">
-          <p>Previous Appts {{stats.previousAppts}}</p>
+          <p>Collected {{paid}}</p>
         </div>
       </ion-col>
       <ion-col col-2></ion-col>
@@ -40,44 +78,54 @@
       <ion-col col-2></ion-col>
       <ion-col col-8 align-self-center>
         <div class="boxInList">
-          <p>No Show Appts {{stats.noShowAppts}}</p>
-        </div>
-      </ion-col>
-      <ion-col col-2></ion-col>
-    </ion-row>
-    <ion-row align-items-center>
-      <ion-col col-2></ion-col>
-      <ion-col col-8 align-self-center>
-        <div class="boxInList">
-          <p>Cancellations {{stats.cancellations}}</p>
-        </div>
-      </ion-col>
-      <ion-col col-2></ion-col>
-    </ion-row>
-    <ion-row align-items-center>
-      <ion-col col-2></ion-col>
-      <ion-col col-8 align-self-center>
-        <div class="boxInList">
-          <p>Revenue {{stats.revenue}}</p>
+          <p>Uncollected {{uncollected}}</p>
         </div>
       </ion-col>
       <ion-col col-2></ion-col>
     </ion-row>
 
+  <ion-row align-items-center>
+    <ion-col col-2></ion-col>
+    <ion-col col-8 align-self-center>
+      <div class="boxInList">
+        <p>No Show Appts {{noShowAppts}}</p>
+      </div>
+    </ion-col>
+    <ion-col col-2></ion-col>
+  </ion-row>
+  <ion-row align-items-center>
+    <ion-col col-2></ion-col>
+    <ion-col col-8 align-self-center>
+      <div class="boxInList">
+        <p>Cancellations {{cancellations}}</p>
+      </div>
+    </ion-col>
+    <ion-col col-2></ion-col>
+  </ion-row>
+  <ion-row align-items-center>
+    <ion-col col-2></ion-col>
+    <ion-col col-8 align-self-center>
+      <div class="boxInList">
+        <p>Lost Revenue {{lostRevenue}}</p>
+      </div>
+    </ion-col>
+    <ion-col col-2></ion-col>
+  </ion-row>
+
     <ion-row align-items-center>
-      <ion-col col-2></ion-col>
-      <ion-col col-8 align-self-center>
+      <ion-col col-1></ion-col>
+      <ion-col col-10 align-self-center>
         <div class="boxInList">
           <p>Future</p>
         </div>
       </ion-col>
-      <ion-col col-2></ion-col>
+      <ion-col col-1></ion-col>
     </ion-row>
     <ion-row align-items-center>
       <ion-col col-2></ion-col>
       <ion-col col-8 align-self-center>
         <div class="boxInList">
-          <p>Scheduled Appts {{stats.scheduledAppts}}</p>
+          <p>Scheduled Appts {{scheduledAppts}}</p>
         </div>
       </ion-col>
       <ion-col col-2></ion-col>
@@ -86,7 +134,7 @@
       <ion-col col-2></ion-col>
       <ion-col col-8 align-self-center>
         <div class="boxInList">
-          <p>Scheduled Revenue {{stats.scheduledRevenue}}</p>
+          <p>Scheduled Revenue {{scheduledRevenue}}</p>
         </div>
       </ion-col>
       <ion-col col-2></ion-col>

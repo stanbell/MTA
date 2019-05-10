@@ -30,7 +30,7 @@ _ acknowledge a cancellation
 _ implement visit history timeline, include clients 1m/6m/1y
 
 X add a revenue predictor based on scheduled appts' service prices
-    yes, 
+X and other stats 
 
 X client search
 _ settings add service
