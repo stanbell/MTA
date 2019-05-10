@@ -1,0 +1,48 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Service</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+  <ion-item no-lines>
+    <ion-label class="checkOption">Description</ion-label>
+  </ion-item>
+
+  <ion-grid>
+    <ion-row justify-content-left>
+      <ion-col col-5>
+        <ion-label>Description</ion-label>
+      </ion-col>
+      <ion-col col-7>
+        <ion-input class="checkOption" type="text" [(ngModel)]="service.name">
+        </ion-input>
+      </ion-col>
+    </ion-row>
+    <ion-row justify-content-left>
+      <ion-col col-5>
+        <ion-label>Duration</ion-label>
+      </ion-col>
+      <ion-col col-3>
+        <ion-input class="checkOption" type="number" [(ngModel)]="service.duration">
+        </ion-input>
+      </ion-col>
+    </ion-row>
+    <ion-row justify-content-left>
+      <ion-col col-5>
+        <ion-label>Price</ion-label>
+      </ion-col>
+      <ion-col col-3>
+        <ion-input class="checkOption" type="number" [(ngModel)]="service.price">
+        </ion-input>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+
+  <button ion-button [disabled]="!service.name" (click)="save()">Save</button>
+</ion-content>

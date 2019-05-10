@@ -219,14 +219,24 @@
   <ion-grid>
     <ion-row>
       <ion-col col-6>
-        <div>Service Types</div>
+        <div>Service</div>
       </ion-col>
-      <ion-col col-6>
+      <ion-col col-3>
         <div>Duration</div>
       </ion-col>
+      <ion-col col-3>
+        <div>Price</div>
+      </ion-col>
+    </ion-row>
+    <ion-row *ngFor="let s of biz.services">
+      <ion-col col-6>{{s.name}}</ion-col>
+      <ion-col col-3 align-self-end>{{s.duration}}</ion-col>
+      <ion-col col-3 align-self-end>{{s.price}}</ion-col>
     </ion-row>
   </ion-grid>
+  <p>
+    <ion-icon class="checkOption" name="add-circle" (click)="addService()"></ion-icon> Add Service
+  </p>
 
   <button ion-button (click)="save()">Save</button>
-  <!-- <button ion-button (click)="cancel()">Cancel</button> -->
 </ion-content>

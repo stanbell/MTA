@@ -29,7 +29,7 @@ export class EditEventPage {
   duration: any;
   revenue: any;
   event: ScheduleItemType;
-  service: ServiceTypes;
+  service: ServiceType;
   selectedDate: Date;
   mode: string = 'edit';
   editPrice: boolean = false;

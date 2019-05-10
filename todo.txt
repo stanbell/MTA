@@ -22,10 +22,10 @@ N when to re-sort client list vs adds & deletes?
 
 _ where to re-calc client metrics
 
-_ acknowledge a no-show
-_ acknowledge a cancellation
-    _ in-app
-    _ via external calendar?
+x acknowledge a no-show
+x acknowledge a cancellation
+    x in-app
+  ___ via external calendar?
 
 _ implement visit history timeline, include clients 1m/6m/1y
 
@@ -33,12 +33,12 @@ X add a revenue predictor based on scheduled appts' service prices
 X and other stats 
 
 X client search
-_ settings add service
+X settings add service
 X add contact--to biz:  
-_   also add to client
+X   also add to client
 X cancel add appt
 
-_ who owes me stat
+_ who owes me statistic
 
 _ apply discount in transactions
     _ manual
@@ -58,4 +58,6 @@ _ for user setting 'allow client to complete intake document'
     (or just do 2 pages, and ignore the option; remove the option cause user can just hand to client if desired)
 
 
-
+___ DO THE WEB page
+    ___ set up account
+    ___ web versions of pages

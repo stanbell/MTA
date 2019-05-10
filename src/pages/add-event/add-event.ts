@@ -29,7 +29,7 @@ export class AddEventPage {
   maxDuration: any = 180;
   duration: any;
   event: ScheduleItemType;
-  service: ServiceTypes;
+  service: ServiceType;
   selectedDate: Date;
 
   constructor(public navCtrl: NavController,

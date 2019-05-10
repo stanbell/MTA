@@ -49,6 +49,7 @@ import { AuthapiProvider } from '../providers/authapi/authapi';
 import { EditEventPage } from '../pages/edit-event/edit-event';
 import { EditContactPage } from '../pages/edit-contact/edit-contact';
 import { StatsPage } from '../pages/stats/stats';
+import { EditServicePage } from '../pages/edit-service/edit-service';
 
 @NgModule({
   declarations: [
@@ -74,6 +75,7 @@ import { StatsPage } from '../pages/stats/stats';
     EditEventPage,
     EditContactPage,
     StatsPage,
+    EditServicePage,
   ],
   imports: [
     BrowserModule,
@@ -105,6 +107,7 @@ import { StatsPage } from '../pages/stats/stats';
     EditEventPage,
     EditContactPage,
     StatsPage,
+    EditServicePage,
   ],
   providers: [
     StatusBar,

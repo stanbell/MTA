@@ -52,6 +52,10 @@ export class BusinessPage {
     })
   }
 
+  removeContact(c: ContactInfoType) {
+    alert('not yet implememnted');
+  }
+
   toggleTextOK(z: ContactInfoType) {
     z.okToText = !z.okToText;
   }

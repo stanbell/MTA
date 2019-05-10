@@ -93,6 +93,14 @@ export class EmptiesProvider {
     }
     return mt;
   }
+  getEmptyService(): ServiceType {
+    const mt: ServiceType = {
+      name: "",
+      duration: 0,
+      price: 0
+    }
+    return mt;
+  }
 
   getEmptyScheduleItem(): ScheduleItemType {
     const mt: ScheduleItemType = {
