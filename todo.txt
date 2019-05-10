@@ -29,13 +29,16 @@ _ acknowledge a cancellation
 
 _ implement visit history timeline, include clients 1m/6m/1y
 
-_ add a revenue predictor based on scheduled appts' service prices
+X add a revenue predictor based on scheduled appts' service prices
     yes, 
 
 X client search
 _ settings add service
-_ add contact
+X add contact--to biz:  
+_   also add to client
 X cancel add appt
+
+_ who owes me stat
 
 _ apply discount in transactions
     _ manual

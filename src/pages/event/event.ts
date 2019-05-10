@@ -129,6 +129,7 @@ export class EventPage {
     //     // get the result data from localstorage
     //     var chargeResult = this.ls.get(PMT_RESPONSE_KEY);
     //     console.log(chargeResult);
+    //     // this.event.completionState = 'Done';
     //   })
     // } else {
       this.helper.signal('window');

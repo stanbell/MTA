@@ -5,6 +5,7 @@ import { CalendarPage } from '../calendar/calendar';
 import { ClientsPage } from '../clients/clients';
 import { TransactionsPage } from '../transactions/transactions';
 import { BusinessPage } from '../business/business';
+import { StatsPage } from '../stats/stats';
 
 @IonicPage()
 @Component({
@@ -35,8 +36,8 @@ export class NavoptionsPage {
       case 'biz':
           this.navCtrl.push(BusinessPage);
         break;
-      case 'sets':
-          this.navCtrl.push(SettingsPage);
+      case 'stats':
+          this.navCtrl.push(StatsPage);
         break;
       default:
         break;

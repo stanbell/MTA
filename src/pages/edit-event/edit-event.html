@@ -93,6 +93,7 @@
       <button *ngIf="editCompletionState" (click)="setCompletionState('Open')">Open</button>
       <button *ngIf="editCompletionState" (click)="setCompletionState('No Show')">No Show</button>
       <button *ngIf="editCompletionState" (click)="setCompletionState('Cancelled')">Cancelled</button>
+      <button *ngIf="editCompletionState" (click)="setCompletionState('Done')">Done</button>
     </ion-row>
   </ion-grid>
   <button ion-button [disabled]="duration < 0 || !event.clientName || !event.serviceDescription"

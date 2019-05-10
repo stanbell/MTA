@@ -88,6 +88,7 @@ export class StripePaymentPage {
                 this.event.transactions.push({ uniqueId: t.uniqueId });
               });
               this.event.pd = true;
+              this.event.completionState = 'Done';
               alert('Payment request completed');
             } else {  // paid = false, expect a failure code  //TEST
               alert('transaction failed with stripe failure code ' + returnedCharge.failure_code + ' ' + returnedCharge.failure_message);
