@@ -47,6 +47,7 @@ import { EditEventPage } from '../pages/edit-event/edit-event';
 import { EditContactPage } from '../pages/edit-contact/edit-contact';
 import { StatsPage } from '../pages/stats/stats';
 import { EditServicePage } from '../pages/edit-service/edit-service';
+import { SignupPage } from '../pages/signup/signup';
 
 @NgModule({
   declarations: [
@@ -70,6 +71,7 @@ import { EditServicePage } from '../pages/edit-service/edit-service';
     EditContactPage,
     StatsPage,
     EditServicePage,
+    SignupPage,
   ],
   imports: [
     BrowserModule,
@@ -99,6 +101,7 @@ import { EditServicePage } from '../pages/edit-service/edit-service';
     EditContactPage,
     StatsPage,
     EditServicePage,
+    SignupPage,
   ],
   providers: [
     StatusBar,

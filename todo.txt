@@ -27,7 +27,7 @@ x acknowledge a cancellation
     x in-app
   ___ via external calendar?
 
-_ implement visit history timeline, include clients 1m/6m/1y
+x implement visit history timeline, include clients 1m/6m/1y
 
 X add a revenue predictor based on scheduled appts' service prices
 X and other stats 
@@ -37,6 +37,11 @@ X settings add service
 X add contact--to biz:  
 X   also add to client
 X cancel add appt
+
+_ FIX mtaapi git repository
+
+_ cash/check payments
+_ paypal payments
 
 _ who owes me statistic
 
@@ -64,7 +69,9 @@ _ for user setting 'allow client to complete intake document'
     do 2-part form, with user part on separate page from client part
     (or just do 2 pages, and ignore the option; remove the option cause user can just hand to client if desired)
 
+X set up account==signup
 
 ___ DO THE WEB page
-    ___ set up account
     ___ web versions of pages
+        __ css responsive
+

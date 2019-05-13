@@ -44,9 +44,25 @@ export class MTAAPI {
                 'Content-Type': 'application/json',
                 'Cache-Control': 'no-cache'
             });
-            // headers = headers.set('authorization', 'Bearer ' + token);
-            // let options = { headers: httpHeaders, observe: 'body' };
             this.http.put(fullRoute, body, 
+                { headers: httpHeaders, observe: 'body', responseType: 'json' })
+                // .timeout(7100)
+                .subscribe( // note just changed JSON.stringify(data) to (data) bc i think .put returns an object aleady
+                    (data) => resolve(data),
+                    (err) => reject(err));
+        });
+    }
+
+    postData(route: string, body: string): Promise<object> {
+        const fullRoute = this.apiURL + route;
+        console.log('postData', fullRoute);
+        // console.log('postData', body);
+        return new Promise((resolve, reject) => {
+            let httpHeaders = new HttpHeaders({
+                'Content-Type': 'application/json',
+                'Cache-Control': 'no-cache'
+            });
+            this.http.post(fullRoute, body, 
                 { headers: httpHeaders, observe: 'body', responseType: 'json' })
                 // .timeout(7100)
                 .subscribe( // note just changed JSON.stringify(data) to (data) bc i think .put returns an object aleady

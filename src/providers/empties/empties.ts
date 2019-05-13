@@ -11,7 +11,7 @@ export class EmptiesProvider {
   getEmptyUser(): UserInfoType {
     const mt: UserInfoType = {
       id: "",
-      pwd: "",
+      // pwd: "",
       businessName: "",
       address: this.getEmptyAddress(),
       contacts: [],
@@ -35,6 +35,25 @@ export class EmptiesProvider {
     return mt;
   }
 
+  getEmptyUserBillingInfo(): UserBillingInfoType {
+    const mt = {
+      ccName: "",  // holder's name
+      cc: "",
+      expDate: "",  // mmyy
+      secCode: ""
+    }
+    return mt;
+  }
+
+  getEmptyNewUser(): NewUserType {
+    const mt = {
+      id: "",
+      pwd: "",
+      businessName: "",
+      billing: this.getEmptyUserBillingInfo()
+    }
+    return mt;
+  }
   getEmptyStripe(): StripePaymentsType {
     const mt: StripePaymentsType = {
       secretKey: "",
@@ -65,11 +84,11 @@ export class EmptiesProvider {
   }
   getEmptyCalendar(): CalendarType {
     const mt: CalendarType = {
-      id: "", 
+      id: "",
       provider: "",
-      name: "", 
+      name: "",
       connectionInfo: "",
-      owner: "", 
+      owner: "",
     }
     return mt;
   }
@@ -336,7 +355,7 @@ export class EmptiesProvider {
       _id: '',
       user: {
         id: '',
-        pwd: '',
+        // pwd: '',
         businessName: '',
         address: {
           label: '',

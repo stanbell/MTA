@@ -5,6 +5,7 @@ import { UserDataWriterProvider } from '../../providers/user-data-writer/user-da
 import { UserProvider } from '../../providers/user/user';
 import '../../types/types';
 import { EditContactPage } from '../edit-contact/edit-contact';
+import { AuthProvider } from '../../providers/auth/auth';
 
 @IonicPage()
 @Component({
@@ -17,6 +18,7 @@ export class BusinessPage {
 
   constructor(public navCtrl: NavController, 
     public navParams: NavParams,
+    public auth: AuthProvider,
     public user: UserProvider,
     public udw: UserDataWriterProvider) {
     this.user.read();

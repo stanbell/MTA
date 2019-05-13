@@ -45,7 +45,7 @@ interface ServiceType {
 
 interface UserInfoType {
     id: string,
-    pwd: string,
+    // pwd: string,
     businessName: string,
     address: AddressType,
     contacts: ContactInfoType[],
@@ -65,6 +65,20 @@ interface UserInfoType {
     paypal: PayPalPaymentsType,
     merch: MerchantAcctType
     services: ServiceType[]
+}
+
+interface UserBillingInfoType {
+    ccName: string,  // holder's name
+    cc: string,
+    expDate: string,  // mmyy
+    secCode: string
+}
+
+interface NewUserType {
+    id: string,
+    pwd: string,
+    businessName: string,
+    billing: UserBillingInfoType
 }
 
 interface CalendarType {

@@ -4,6 +4,8 @@ import { LoginPage } from '../login/login';
 import { AuthProvider } from '../../providers/auth/auth';
 import { NavoptionsPage } from '../navoptions/navoptions';
 import { UserDataProvider } from '../../providers/user-data/user-data';
+import { BusinessPage } from '../business/business';
+import { SignupPage } from '../signup/signup';
 
 @IonicPage()
 @Component({
@@ -24,6 +26,7 @@ export class HomePage {
     this.navCtrl.push(LoginPage);
   }
 
+
   start() {
     console.log('home.start');
     this.ud.readData(this.auth.user);
@@ -34,4 +37,9 @@ export class HomePage {
     this.auth.logout();
   }
 
+  signup() {
+    // WORKING HERE
+    // go to client page w/signup option
+    this.navCtrl.push(SignupPage);
+  }
 }

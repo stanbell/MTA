@@ -7,10 +7,11 @@ import '../../types/types';
 import { AuthProvider } from '../auth/auth';
 
 const CACHE_ID = 'MTA_DATA';
-const SERVER_ROUTE = 'contents';
+const CONTENTS_ROUTE = 'contents';
+const NEWUSER_ROUTE = 'newuser';
 
 // TODO: encrypt/decrypt package/unpackage before reads/wrires
-const MASTER_KEY = "Two roads diverged in a yellow wood,"
+// const MASTER_KEY = "Two roads diverged in a yellow wood,"
 // robert frost, the road not taken
 
 // login get user name  (temp, replace with authentication service to get user #)
@@ -20,10 +21,11 @@ const MASTER_KEY = "Two roads diverged in a yellow wood,"
 @Injectable()
 export class UserDataProvider {
 
-  userId: string;
+  // userId: string;
   userIdNumber: string;
   userData: UserDataType;
-  emptyUserData: UserDataType;
+  private emptyUserData: UserDataType;
+  private inCache: boolean = false;
 
   constructor(
     public helper: HelpersProvider,
@@ -31,7 +33,8 @@ export class UserDataProvider {
     private api: MTAAPI,
     public mt: EmptiesProvider,
     public auth: AuthProvider) {
-      this.emptyUserData = this.helper.deepCopy(this.mt.getEmptyUserData);
+    // console.log('userData constructor');
+    this.emptyUserData = this.mt.getEmptyUserData();
   }
 
   private _dataWindow: Date;
@@ -63,23 +66,22 @@ export class UserDataProvider {
     }
   }
 
-
   initData() {
     this.userData = this.helper.deepCopy(this.mt.getEmptyUserData());
   }
-  
+
   clearData() {
-    this.userData = this.helper.deepCopy(this.mt.getEmptyUserData());
+    this.initData();
   }
-  
+
   async readIdNumber(user) {
     let route = 'mtausers/' + user + '?t=' + this.auth.accessToken;
     let serverReadData = await this.api.getData(route);
-    console.log(serverReadData);
+    // console.log(serverReadData);
     let serverReadObject = JSON.parse(serverReadData);
     this.userIdNumber = serverReadObject['contentsId'];
   }
-  
+
   async readData(user: string) {
     console.log('reading');
     await this.readIdNumber(user);
@@ -89,29 +91,34 @@ export class UserDataProvider {
     // *****************************************
 
     // also reconciles most recent
-    let localData: UserDataType = this.helper.deepCopy(this.mt.getEmptyUserData());
-    let serverData: UserDataType = this.helper.deepCopy(this.mt.getEmptyUserData());
+    let localData: UserDataType = this.helper.deepCopy(this.emptyUserData);
+    let serverData: UserDataType = this.helper.deepCopy(this.emptyUserData);
     let l: number, s: number;
     try {
       localData = await this.readLocal();
+      // console.log('localData', localData);
       l = new Date(localData.appActivity.lastUpdate).valueOf();
       console.log('readData l=', l);
     }
     catch { l = 0; }
-
+    
     try {
       serverData = await this.readServer();
+      // console.log('serverData', serverData);
       s = new Date(serverData.appActivity.lastUpdate).valueOf();
       console.log('readData s=', s);
     }
     catch (err) { s = 0; }
     // NOTE: write updates userData.appActivity--make sure a re-read doesn't over-write
-    if (l >= s) {
-      this.userData = this.helper.deepCopy(localData);
-    } else {
-      this.userData = this.helper.deepCopy(serverData);
-    }
-    // console.log('userData', this.userData);
+    if ((this.inCache) && (l > s)) {
+      // if (l > s) {  // use local only if newer
+        // also using lastUpdate to indicate empty local data
+        //  needed to make new, empty userData after signup to start correctly
+        this.userData = this.helper.deepCopy(localData);
+      } else {
+        this.userData = this.helper.deepCopy(serverData);
+      }
+    console.log('userData', this.userData);
     // refresh
     this.dataWindow = new Date();
     this.writeData();
@@ -119,17 +126,19 @@ export class UserDataProvider {
 
   async readLocal(): Promise<UserDataType> {
     // read from local cache
+    var locallyRead: string = "";
+    var locallyReadData: UserDataType;
     try {
-      let locallyRead: string = await this.cache.read(CACHE_ID + '_' + this.userIdNumber);
-      // console.log('readLocal', locallyRead);
-      // what if locallyRead doesn't parse well?
-      let locallyReadData: UserDataType = JSON.parse(locallyRead);
-      // to simplify matching object elements, merge in what we find
-      // locallyReadData might be empty, resulting in localData staying empty
+      locallyRead = await this.cache.read(CACHE_ID + '_' + this.userIdNumber);
+      this.inCache = true;
+      locallyReadData = JSON.parse(locallyRead);
       return { ...this.emptyUserData, ...locallyReadData };
     }
     catch (err) {
       console.log('readLocal error ', err);
+      this.inCache = false;
+      locallyReadData = this.emptyUserData;
+      locallyReadData.appActivity.lastUpdate = "1/1/1968" 
       return this.emptyUserData;
     }
   }
@@ -138,7 +147,7 @@ export class UserDataProvider {
     // TODO:  PUT IN A USER ID for reading from the api/mongo 
     let serverReadData: string = '';
     let serverReadObject: UserDataType;
-    let route = SERVER_ROUTE + '/' + this.userIdNumber + '?t=' + this.auth.accessToken;
+    let route = CONTENTS_ROUTE + '/' + this.userIdNumber + '?t=' + this.auth.accessToken;
     try {
       serverReadData = await this.api.getData(route);  // TODO needs a value for the getData parameter
       serverReadObject = JSON.parse(serverReadData);
@@ -172,17 +181,30 @@ export class UserDataProvider {
   }
 
   writeServer(data: UserDataType) {
-    let route = SERVER_ROUTE + '/' + this.userIdNumber + '?t=' + this.auth.accessToken;
+    let route = CONTENTS_ROUTE + '/' + this.userIdNumber + '?t=' + this.auth.accessToken;
     try {
       // console.log('writeServer', data);
       this.api.putData(route, JSON.stringify(data))
       // .then((d) => { console.log('wrote ', d); });
-      console.log('wrote ' + SERVER_ROUTE + '/' + this.userIdNumber);
+      console.log('wrote ' + CONTENTS_ROUTE + '/' + this.userIdNumber);
     }
     catch (err) {
-      console.log('writeLocal mtaapi.putData error', err);
+      console.log('writeServer mtaapi.putData error', err);
     }
   }
 
+  createUser(newUser: NewUserType) {
+    let route = NEWUSER_ROUTE + '/';
+    try {
+      console.log('createUser', newUser);
+      this.api.postData(route, JSON.stringify(newUser))
+        .then((d) => { console.log('wrote ', d); });
+      console.log('wrote ' + route);
+    }
+    catch (err) {
+      console.log('writeLocal mtaapi.postData error', err);
+    }
+
+  }
 
 }
