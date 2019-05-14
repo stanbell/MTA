@@ -36,7 +36,7 @@ export class PaymentPage {
     this.payMethod = this.ud.userData.user.acceptPayments;
   }
 
-// TODO:  remember to reset event.revenue from this.price when saving/leaving
+  // TODO:  remember to reset event.revenue from this.price when saving/leaving
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad PaymentPage');
@@ -48,22 +48,31 @@ export class PaymentPage {
 
   pay(method: string) {
     console.log('pay');
-    console.log('method ', this.payMethod);
+    console.log('method ', method);
 
-    switch (this.payMethod) {
+    switch (method) {
       case 'stripe':
+        console.log('stripe');
         this.navCtrl.push(StripePaymentPage, {
           event: this.event
         });
         break;
       case 'square':
+        console.log('square');
         this.paySquare();
         break;
       case 'paypal':
-        console.log('paypal')
+        console.log('paypal');
+        this.payPayPal();
         break;
       case 'merch':
         console.log('merch')
+        this.payMerch();
+        break;
+      case 'cash':
+      case 'check':
+        console.log(method)
+        this.payCash();
         break;
       default:
         break;
@@ -73,7 +82,6 @@ export class PaymentPage {
 
   loadstopEvent: any;
   exitEvent: any;
-
   paySquare() {
     this.helper.signal('paySquare');
     if (this.plt.is('cordova')) {
@@ -101,6 +109,94 @@ export class PaymentPage {
     }
   }
 
+  payCash() {
+    console.log('payCash');
+    this.composeTrans().forEach((t) => {
+      this.event.transactions.push({ uniqueId: t.uniqueId })
+      this.ud.userData.transactions.push(t);
+    });
+    this.event.pd = true;
+    this.event.completionState = 'Completed';
+    // TODO generate email receipt
+    // save?
+    this.ud.writeData();
+    alert('Payment Complete');
+    this.exitPage();
+  }
+
+  payPayPal() {
+
+  }
+
+  payMerch() {
+
+  }
+
+  composeTrans(): TransactionType[] {
+    console.log('composeTrans');
+    // re-assign price to revenue
+    this.event.revenue = parseFloat(this.price);
+    let d: string = new Date(Date.now()).toLocaleDateString();
+    var trans: TransactionType[] = [];
+
+    if (parseFloat(this.tipAmount) > 0) {
+      trans.push({
+        uniqueId: this.event.id + '_T',
+        apptId: this.event.id,
+        processorId: '',
+        type: 'Tip',
+        description: 'tip',
+        amount: parseFloat(this.tipAmount),
+        date: d,
+        reconciled: false,
+        partyType: '',
+        party: { id: '', description: '' }
+      });
+    }
+    var paymentAmt: number = parseFloat(this.price);
+    if (parseFloat(this.tipAmount) > 0) {
+      paymentAmt = paymentAmt + parseFloat(this.tipAmount);
+    }
+    if (parseFloat(this.discountAmount) > 0) {
+      paymentAmt = paymentAmt - parseFloat(this.discountAmount);
+    }
+    paymentAmt = paymentAmt * -1;
+    trans.push({
+      uniqueId: this.event.id + '_P',
+      apptId: this.event.id,
+      processorId: '',
+      type: 'Pmt',
+      description: 'payment',
+      amount: paymentAmt,
+      date: d,
+      reconciled: false,
+      partyType: '',
+      party: { id: '', description: '' }
+    });
+    if (parseFloat(this.discountAmount) > 0) {
+      trans.push({
+        uniqueId: this.event.id + '_D',
+        apptId: this.event.id,
+        processorId: '',
+        type: 'Dsc',
+        description: 'discount',
+        amount: parseFloat(this.discountAmount) * -1,
+        date: d,
+        reconciled: false,
+        partyType: '',
+        party: { id: '', description: '' }
+      });
+    }
+    console.log('return');
+    return trans;
+  }
+
+
+  exitPage() {
+    this.navCtrl.pop();
+  }
+
+  // ==== page helpers ====
   revenueChange() {
     this.calcTotal();
   }

@@ -141,7 +141,7 @@ export class EditEventPage {
     //   uniqueId: transGuid + '_R',
     //   processorId: '',
     //   apptId: this.event.id,
-    //   type: 'revenue',  // revenue (my services), service charges (i paid)
+    //   type: 'Rev',  // revenue (my services), service charges (i paid)
     //   description: this.event.serviceDescription,
     //   amount: this.event.revenue,
     //   date: this.event.start,
@@ -175,7 +175,7 @@ export class EditEventPage {
       uniqueId: transGuid + '_R',
       processorId: '',
       apptId: this.event.id,
-      type: 'revenue',  // revenue (my services), service charges (i paid)
+      type: 'Rev',  // revenue (my services), service charges (i paid)
       description: this.event.serviceDescription,
       amount: this.event.revenue,
       date: this.event.start,

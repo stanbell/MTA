@@ -28,6 +28,7 @@ x acknowledge a cancellation
   ___ via external calendar?
 
 x implement visit history timeline, include clients 1m/6m/1y
+_ DEBUG, not filtering correctly for client.transactions
 
 X add a revenue predictor based on scheduled appts' service prices
 X and other stats 

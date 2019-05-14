@@ -105,6 +105,9 @@ export class StripePaymentPage {
 
   }
 
+
+// TODO:  fix this to match cash/other payments in payments.ts
+
   composeTrans(charge: PaymentRequestResponseType, fee: number): TransactionType[] {
     console.log(fee);
     let feeAmount: number = 0 - (charge.amount * fee);
@@ -115,7 +118,7 @@ export class StripePaymentPage {
       uniqueId: charge.id + '_R',
       processorId: charge.id,
       apptId: this.event.id,
-      type: 'rev',
+      type: 'Rev',
       description: charge.description,
       amount: charge.amount,
       date: d,
@@ -130,7 +133,7 @@ export class StripePaymentPage {
       uniqueId: charge.id + '_F',
       processorId: charge.id,      
       apptId: this.event.id,
-      type: 'fee',
+      type: 'Fee',
       description: this.ud.userData.user.acceptPayments + ' fee',
       amount: feeAmount,
       date: d,
@@ -145,7 +148,7 @@ export class StripePaymentPage {
       uniqueId: charge.id + '_P',
       processorId: '',
       apptId: this.event.id,
-      type: 'pmt',
+      type: 'Pmt',
       // description: 'net credit',
       description: this.ud.userData.user.acceptPayments + ' ' + charge.id,
       amount: chgRemainder,
