@@ -1,14 +1,11 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { UserDataProvider } from '../../providers/user-data/user-data';
 import { HelpersProvider } from '../../providers/helpers/helpers';
-import { StripePaymentPage } from '../stripe-payment/stripe-payment';
-// import { InAppBrowser } from '@ionic-native/in-app-browser';
-import '../../types/types';
-import { LocalStoreProvider } from '../../providers/local-store/local-store';
 import { EditEventPage } from '../edit-event/edit-event';
+import { PaymentPage } from '../payment/payment';
+import '../../types/types';
 
-const PMT_RESPONSE_KEY = "MTA_P001";
 
 @IonicPage()
 @Component({
@@ -41,15 +38,15 @@ export class EventPage {
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
-    public plt: Platform,
-    public ls: LocalStoreProvider,
+    // public plt: Platform,
+    // public ls: LocalStoreProvider,
     public helper: HelpersProvider,
     public ud: UserDataProvider) {
     // this.mode = navParams.get('mode');
     // we just edit, we've already created an empty/defaulted one if adding
 
     this.event = navParams.get('event');
-    console.log(this.event);
+    // console.log(this.event);
     this.displayDate = (new Date(this.event.start).toLocaleDateString());
     this.displayStart = (new Date(this.event.start).toLocaleTimeString());
     this.displayEnd = (new Date(this.event.end).toLocaleTimeString());
@@ -79,26 +76,10 @@ export class EventPage {
   }
 
   pay() {
-    console.log('pay');
-
-    switch (this.ud.userData.user.acceptPayments) {
-      case 'stripe':
-        this.navCtrl.push(StripePaymentPage, {
-          event: this.event
-        });
-        break;
-      case 'square':
-        this.paySquare();
-        break;
-      case 'paypal':
-        break;
-      case 'self':
-        // just let them key in amount paid?
-        break;
-      default:
-        break;
-    }
-
+    this.navCtrl.push(PaymentPage,
+      {
+        event: this.event,
+      });
   }
 
   private matchTransactions(trans: any[], source: any[]): any[] {
@@ -109,35 +90,7 @@ export class EventPage {
     // return filteredTrans;
   }
 
-  loadstopEvent: any;
-  exitEvent: any;
 
-  paySquare() {
-    this.helper.signal('paySquare');
-    // if (this.plt.is('cordova')) {
-    //   alert('cordova');
-    //   const browser = this.iab.create('../../assets/pages/sqpaymentform.html', '_blank', 'location=no');
-    //   // const browser = this.iab.create('http://stanbell.com', '_blank', 'location=no');
-    //   this.loadstopEvent = browser.on('loadstop').subscribe((x) => {
-    //     alert('loaded');
-    //     console.log('loaded');
-    //     browser.insertCSS({ file: '../../assets/pages/sqpaymentform-basic.css'});
-    //     // browser.executeScript({code: 'paymentForm.build();'}).then(() => alert('paymentForm BUILT'));
-    //     browser.executeScript({ code: 'force();' }).then(() => alert('forced'));
-    //     // browser.executeScript({code: 'alert("code");'}).then(() => alert('return'));
-    //   });
-    //   this.exitEvent = browser.on('exit').subscribe((x) => {
-    //     alert('exit');
-    //     // get the result data from localstorage
-    //     var chargeResult = this.ls.get(PMT_RESPONSE_KEY);
-    //     console.log(chargeResult);
-    //     // this.event.completionState = 'Completed';
-    //   })
-    // } else {
-    this.helper.signal('window');
-    window.open('../../assets/pages/sqpaymentform.html', '_blank')
-    // }
-  }
 
   editEvent() {
     this.navCtrl.push(EditEventPage, {

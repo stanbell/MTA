@@ -48,6 +48,8 @@ import { EditContactPage } from '../pages/edit-contact/edit-contact';
 import { StatsPage } from '../pages/stats/stats';
 import { EditServicePage } from '../pages/edit-service/edit-service';
 import { SignupPage } from '../pages/signup/signup';
+import { PaymentPage } from '../pages/payment/payment';
+import { InAppBrowser } from '@ionic-native/in-app-browser';
 
 @NgModule({
   declarations: [
@@ -72,6 +74,7 @@ import { SignupPage } from '../pages/signup/signup';
     StatsPage,
     EditServicePage,
     SignupPage,
+    PaymentPage,
   ],
   imports: [
     BrowserModule,
@@ -102,6 +105,7 @@ import { SignupPage } from '../pages/signup/signup';
     StatsPage,
     EditServicePage,
     SignupPage,
+    PaymentPage,
   ],
   providers: [
     StatusBar,
@@ -121,7 +125,7 @@ import { SignupPage } from '../pages/signup/signup';
     Calendar,
     EventPage,
     DocumentsProvider,
-    // InAppBrowser,
+    InAppBrowser,
     EmptiesProvider,
     UserProvider,
     UserDataWriterProvider,

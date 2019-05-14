@@ -38,9 +38,12 @@ X add contact--to biz:
 X   also add to client
 X cancel add appt
 
-_ FIX mtaapi git repository
+X FIX mtaapi git repository
+
+_ deposit advice (reconciliation?)
 
 _ cash/check payments
+    _ email receipt
 _ paypal payments
 
 _ who owes me statistic
@@ -75,3 +78,5 @@ ___ DO THE WEB page
     ___ web versions of pages
         __ css responsive
 
+
+_ csv export stuff
