@@ -1,11 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { SettingsPage } from '../settings/settings';
 import { CalendarPage } from '../calendar/calendar';
 import { ClientsPage } from '../clients/clients';
-import { TransactionsPage } from '../transactions/transactions';
-import { BusinessPage } from '../business/business';
-import { StatsPage } from '../stats/stats';
 import { BiznavPage } from '../biznav/biznav';
 
 @IonicPage()

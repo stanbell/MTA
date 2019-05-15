@@ -17,7 +17,7 @@
     <ion-grid>
       <ion-row>
         <ion-col col-9>
-          Transactions since {{ud.dataWindow.toDateString()}}
+          Since {{ud.dataWindow.toDateString()}}
         </ion-col>
         <ion-col col-3>
         </ion-col>
@@ -26,7 +26,11 @@
         <ion-col col-9>
         </ion-col>
         <ion-col col-3>
-          <button class="editButton" ion-button (click)="editingNow=!editingNow">Edit</button>
+          <button class="editButton" ion-button icon-only (click)="editingNow=!editingNow">
+            <ion-icon name="create"></ion-icon>
+          </button>
+          <!-- <button icon-only class="editButton" ion-button (click)="editingNow=!editingNow">
+          </button> -->
         </ion-col>
       </ion-row>
       <!-- header -->
@@ -81,5 +85,6 @@
       <!-- </div> -->
     </ion-grid>
   </div>
-<div style="font-size: x-small;">Showing transactions beginning {{ud.dataWindow.toDateString()}}, change in My Business>>Settings</div>
+  <div style="font-size: x-small;">Showing transactions beginning {{ud.dataWindow.toDateString()}}, change in My
+    Business>>Settings</div>
 </ion-content>

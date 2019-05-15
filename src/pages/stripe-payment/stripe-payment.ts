@@ -3,11 +3,11 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { HttpHeaders } from '@angular/common/http';
 import { UserDataProvider } from '../../providers/user-data/user-data';
 import { CCAPI } from '../../providers/ccapi/ccapi';
-import '../../types/types';
 import { HelpersProvider } from '../../providers/helpers/helpers';
+import '../../types/types';
 
 const CC_SERVER_ROUTE = 'payments';
-const CRYPTO_KEY = "Twas brillig, and the slithy toves Did gyre and gimble in the wabe: All mimsy were the borogoves, And the mome raths outgrabe."
+// const CRYPTO_KEY = "Twas brillig, and the slithy toves Did gyre and gimble in the wabe: All mimsy were the borogoves, And the mome raths outgrabe."
 
 @IonicPage()
 @Component({

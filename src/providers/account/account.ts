@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+// import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MTAAPI } from '../mtaapi/mtaapi';
 import { AuthProvider } from '../auth/auth';
@@ -12,7 +12,7 @@ export class AccountProvider {
 
   nu: SystemUserType;
 
-  constructor(public http: HttpClient,
+  constructor(
     public helper: HelpersProvider,
     public empties: EmptiesProvider,
     public api: MTAAPI,

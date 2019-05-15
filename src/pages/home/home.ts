@@ -4,7 +4,6 @@ import { LoginPage } from '../login/login';
 import { AuthProvider } from '../../providers/auth/auth';
 import { NavoptionsPage } from '../navoptions/navoptions';
 import { UserDataProvider } from '../../providers/user-data/user-data';
-import { BusinessPage } from '../business/business';
 import { SignupPage } from '../signup/signup';
 import { AccountProvider } from '../../providers/account/account';
 

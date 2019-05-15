@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController } from 'ionic-angular';
 import { AuthProvider } from '../../providers/auth/auth';
-import { UserDataProvider } from '../../providers/user-data/user-data';
 
 
 @IonicPage()
