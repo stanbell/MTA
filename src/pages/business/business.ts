@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { SettingsPage } from '../settings/settings';
+// import { SettingsPage } from '../settings/settings';
 import { UserDataWriterProvider } from '../../providers/user-data-writer/user-data-writer';
 import { UserProvider } from '../../providers/user/user';
 import '../../types/types';
@@ -29,9 +29,9 @@ export class BusinessPage {
     console.log('ionViewDidLoad BusinessPage');
   }
 
-  settings() {
-    this.navCtrl.push(SettingsPage);
-  }
+  // settings() {
+  //   this.navCtrl.push(SettingsPage);
+  // }
 
   save() {
     this.udw.write();

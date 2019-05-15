@@ -1,0 +1,83 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>MTA</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <ion-grid>
+    <!-- <ion-row align-items-center justify-content-center>
+      <h2 class="pageTitle" align="center">My Massage Therapy Assistant</h2>
+    </ion-row> -->
+
+
+    <ion-row align-items-center>
+      <ion-col col-1></ion-col>
+      <ion-col col-10 align-self-center>
+        <div class="box">
+          <p>My Business</p>
+        </div>
+      </ion-col>
+      <ion-col col-1></ion-col>
+    </ion-row>
+    <ion-row align-items-center>
+      <ion-col col-1></ion-col>
+      <ion-col col-10 align-self-center (click)="navTo('today')">
+        <div class="boxInList">
+          <p>Today's Business</p>
+        </div>
+      </ion-col>
+      <ion-col col-1></ion-col>
+    </ion-row>
+
+    <ion-row align-items-center>
+      <ion-col col-1></ion-col>
+      <ion-col col-10 align-self-center (click)="navTo('stats')">
+        <div class="boxInList">
+          <p>Stats</p>
+        </div>
+      </ion-col>
+      <ion-col col-1></ion-col>
+    </ion-row>
+    <ion-row align-items-center>
+      <ion-col col-1></ion-col>
+      <ion-col col-10 align-self-center (click)="navTo('trans')">
+        <div class="boxInList">
+          <p>Recent Transactions</p>
+        </div>
+      </ion-col>
+      <ion-col col-1></ion-col>
+    </ion-row>
+    <ion-row align-items-center>
+      <ion-col col-1></ion-col>
+      <ion-col col-10 align-self-center (click)="navTo('biz')">
+        <div class="boxInList">
+          <p>My Info</p>
+        </div>
+      </ion-col>
+      <ion-col col-1></ion-col>
+    </ion-row>
+    <ion-row align-items-center>
+      <ion-col col-1></ion-col>
+      <ion-col col-10 align-self-center (click)="navTo('settings')">
+        <div class="boxInList">
+          <p>Settings</p>
+        </div>
+      </ion-col>
+      <ion-col col-1></ion-col>
+    </ion-row>
+    <ion-row align-items-center>
+      <ion-col col-1></ion-col>
+      <ion-col col-10 align-self-center (click)="navTo('account')">
+        <div class="boxInList">
+          <p>My MTA Account</p>
+        </div>
+      </ion-col>
+      <ion-col col-1></ion-col>
+    </ion-row>
+  </ion-grid>
+
+</ion-content>
