@@ -50,6 +50,10 @@ import { EditServicePage } from '../pages/edit-service/edit-service';
 import { SignupPage } from '../pages/signup/signup';
 import { PaymentPage } from '../pages/payment/payment';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
+import { BiznavPage } from '../pages/biznav/biznav';
+import { BiztodayPage } from '../pages/biztoday/biztoday';
+import { AccountPage } from '../pages/account/account';
+import { AccountProvider } from '../providers/account/account';
 
 @NgModule({
   declarations: [
@@ -75,6 +79,9 @@ import { InAppBrowser } from '@ionic-native/in-app-browser';
     EditServicePage,
     SignupPage,
     PaymentPage,
+    BiznavPage,
+    BiztodayPage,
+    AccountPage,
   ],
   imports: [
     BrowserModule,
@@ -106,6 +113,9 @@ import { InAppBrowser } from '@ionic-native/in-app-browser';
     EditServicePage,
     SignupPage,
     PaymentPage,
+    BiznavPage,
+    BiztodayPage,
+    AccountPage,
   ],
   providers: [
     StatusBar,
@@ -131,6 +141,7 @@ import { InAppBrowser } from '@ionic-native/in-app-browser';
     UserDataWriterProvider,
     AuthProvider,
     AuthapiProvider,
+    AccountProvider,
   ]
 })
 export class AppModule {}

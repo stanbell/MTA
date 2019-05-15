@@ -15,12 +15,13 @@ N client first and last name for sorting
     if user wants last or first, put names in that way when entering clients 
 _ reconcile intake form has first/last name, where i have only 1
 
-_ calendar color wrong on selected day after add new appt if no appt previously
-_ color wrong on current date if has appts (cause starts as selected day?)
+_ DEBUG calendar color wrong on selected day after add new appt if no appt previously
+_ DEBUG color wrong on current date if has appts (cause starts as selected day?)
 
 N when to re-sort client list vs adds & deletes?
 
 _ where to re-calc client metrics
+    _ when requested?
 
 x acknowledge a no-show
 x acknowledge a cancellation
@@ -43,7 +44,7 @@ X FIX mtaapi git repository
 
 _ deposit advice (reconciliation?)
 
-_ cash/check payments
+X cash/check payments
     _ email receipt
 _ paypal payments
 
@@ -57,7 +58,7 @@ x fix save reconcile marker
 _ clean up format and style
 
 _ apply discount in transactions
-    _ manual
+    x manual
     _ defined 
     _ automate with some kind of "membership"
         _ or buy 4 get 1 free, buy 5 card, similar

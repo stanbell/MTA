@@ -17,7 +17,7 @@ export class UserDataWriterProvider {
     this.ud.dataWindow = new Date();
   }
 
-  signup(nu: NewUserType) {
+  signup(nu: SystemUserType) {
     this.ud.createUser(nu);
   }
 

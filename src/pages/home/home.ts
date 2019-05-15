@@ -6,6 +6,7 @@ import { NavoptionsPage } from '../navoptions/navoptions';
 import { UserDataProvider } from '../../providers/user-data/user-data';
 import { BusinessPage } from '../business/business';
 import { SignupPage } from '../signup/signup';
+import { AccountProvider } from '../../providers/account/account';
 
 @IonicPage()
 @Component({
@@ -17,6 +18,7 @@ export class HomePage {
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
     public auth: AuthProvider,
+    public account: AccountProvider,
     public ud: UserDataProvider) {
     console.log('home constructor');
     this.auth.checkToken();
@@ -29,6 +31,7 @@ export class HomePage {
 
   start() {
     console.log('home.start');
+    this.account.getAccount();
     this.ud.readData(this.auth.user);
     this.navCtrl.push(NavoptionsPage);
   }

@@ -10,7 +10,7 @@ import { UserDataWriterProvider } from '../../providers/user-data-writer/user-da
 })
 export class SignupPage {
 
-  nu: NewUserType;
+  nu: SystemUserType;
   available: boolean = false;
   verifyPwd: string = "";
 

@@ -45,7 +45,7 @@ export class EmptiesProvider {
     return mt;
   }
 
-  getEmptyNewUser(): NewUserType {
+  getEmptyNewUser(): SystemUserType {
     const mt = {
       id: "",
       pwd: "",

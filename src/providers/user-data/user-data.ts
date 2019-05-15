@@ -3,8 +3,8 @@ import { MTAAPI } from '../mtaapi/mtaapi';
 import { CacheProvider } from '../cache/cache';
 import { HelpersProvider } from '../helpers/helpers';
 import { EmptiesProvider } from '../empties/empties';
-import '../../types/types';
 import { AuthProvider } from '../auth/auth';
+import '../../types/types';
 
 const CACHE_ID = 'MTA_DATA';
 const CONTENTS_ROUTE = 'contents';
@@ -24,6 +24,7 @@ export class UserDataProvider {
   // userId: string;
   userIdNumber: string;
   userData: UserDataType;
+  accountData: SystemUserType;
   private emptyUserData: UserDataType;
   private inCache: boolean = false;
 
@@ -74,7 +75,7 @@ export class UserDataProvider {
     this.initData();
   }
 
-  async readIdNumber(user) {
+  private async readIdNumber(user) {
     let route = 'mtausers/' + user + '?t=' + this.auth.accessToken;
     let serverReadData = await this.api.getData(route);
     // console.log(serverReadData);
@@ -124,7 +125,7 @@ export class UserDataProvider {
     this.writeData();
   }
 
-  async readLocal(): Promise<UserDataType> {
+  private async readLocal(): Promise<UserDataType> {
     // read from local cache
     var locallyRead: string = "";
     var locallyReadData: UserDataType;
@@ -143,7 +144,7 @@ export class UserDataProvider {
     }
   }
 
-  async readServer(): Promise<UserDataType> {
+  private async readServer(): Promise<UserDataType> {
     // TODO:  PUT IN A USER ID for reading from the api/mongo 
     let serverReadData: string = '';
     let serverReadObject: UserDataType;
@@ -170,7 +171,7 @@ export class UserDataProvider {
     this.writeServer(this.userData);
   }
 
-  writeLocal(data: UserDataType) {
+  private writeLocal(data: UserDataType) {
     try {
       this.cache.write(CACHE_ID + '_' + this.userIdNumber, JSON.stringify(data));
       console.log('wrote ' + CACHE_ID + '_' + this.userIdNumber);
@@ -180,7 +181,7 @@ export class UserDataProvider {
     }
   }
 
-  writeServer(data: UserDataType) {
+  private writeServer(data: UserDataType) {
     let route = CONTENTS_ROUTE + '/' + this.userIdNumber + '?t=' + this.auth.accessToken;
     try {
       // console.log('writeServer', data);
@@ -193,7 +194,7 @@ export class UserDataProvider {
     }
   }
 
-  createUser(newUser: NewUserType) {
+  createUser(newUser: SystemUserType) {
     let route = NEWUSER_ROUTE + '/';
     try {
       console.log('createUser', newUser);

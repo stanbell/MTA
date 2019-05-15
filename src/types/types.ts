@@ -74,7 +74,7 @@ interface UserBillingInfoType {
     secCode: string
 }
 
-interface NewUserType {
+interface SystemUserType {
     id: string,
     pwd: string,
     businessName: string,

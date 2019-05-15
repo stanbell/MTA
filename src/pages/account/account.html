@@ -1,0 +1,78 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>MTA Account</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <ion-item>
+    <ion-label class="box">Your MTA User Account</ion-label>
+  </ion-item>
+  <ion-item>
+    <ion-label class="checkOption">User ID</ion-label>
+  </ion-item>
+  <ion-item no-lines>
+    <div>{{nu._id}}</div>
+    <!-- <ion-input disabled [(ngModel)]="nu.id"></ion-input> -->
+  </ion-item>
+  <br><br>
+  <ion-item>
+    <ion-label class="checkOption">Update Credit Card Information</ion-label>
+  </ion-item>
+  <ion-item>
+    <ion-label class="checkOption">Name on card</ion-label>
+  </ion-item>
+  <ion-item no-lines>
+    <ion-input type="text" [(ngModel)]="nu.billing.ccName">
+    </ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label class="checkOption">Card Number</ion-label>
+  </ion-item>
+  <ion-item no-lines>
+    <ion-input type="text" [(ngModel)]="nu.billing.cc">
+    </ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label class="checkOption">Expiration Date</ion-label>
+  </ion-item>
+  <ion-item no-lines>
+    <ion-datetime [(ngModel)]="nu.billing.expDate">
+    </ion-datetime>
+  </ion-item>
+  <ion-item>
+    <ion-label class="checkOption">Security Code</ion-label>
+  </ion-item>
+  <ion-item no-lines>
+    <ion-input type="number" [(ngModel)]="nu.billing.secCode">
+    </ion-input>
+  </ion-item>
+  <ion-item no-lines>
+    <button ion-button [disabled]="!ccName || !cc || !expDate || !secCode" (click)="updateBilling()">Update</button><br>
+  </ion-item>
+  <br><br>
+
+  <ion-item>
+    <ion-label class="checkOption">Reset Password</ion-label>
+  </ion-item>
+
+  <ion-item>
+    <ion-label class="checkOption">New Password</ion-label>
+  </ion-item>
+  <ion-item no-lines>
+    <ion-input type="password" [(ngModel)]="newPwd"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label class="checkOption">Repeat New Password</ion-label>
+  </ion-item>
+  <ion-item no-lines>
+    <ion-input type="password" [(ngModel)]="verifyPwd"></ion-input>
+  </ion-item>
+  <ion-item no-lines>
+    <button ion-button [disabled]="!newPwd || !verifyPwd" (click)="resetPwd()">Reset</button><br>
+  </ion-item>
+
+</ion-content>
