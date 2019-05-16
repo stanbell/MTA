@@ -22,6 +22,7 @@ export class SettingsPage {
     public sched: ScheduleProvider,
     public user: UserProvider,
     public udw: UserDataWriterProvider) {
+    user.read();
     this.biz = user.user;
   }
 

@@ -4,6 +4,11 @@ _ paypal payments
 
 _ who owes me statistic
 
+_ error in transactions page trans date
+_ don't add tip to revenue in payments page(s)
+
+_ encrypt ccapi credit card data
+
 
 
 _ consolidate intake form client name/addr/etc with client info page
