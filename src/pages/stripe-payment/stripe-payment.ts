@@ -100,13 +100,15 @@ export class StripePaymentPage {
               });
               this.event.pd = true;
               this.event.completionState = 'Completed';
+              this.ud.writeData();
               alert('Payment request completed');
-              // go back 2 pages
-              // TODO
             } else {  // paid = false, expect a failure code  //TEST
               alert('transaction failed with stripe failure code ' + returnedCharge.failure_code + ' ' + returnedCharge.failure_message);
             }
-            this.navCtrl.pop();
+            this.navCtrl.removeView(this.navCtrl.getPrevious())
+              .then(() => {
+                this.navCtrl.pop(); // go back to event page
+              });
           });
       }
       catch (err) {
