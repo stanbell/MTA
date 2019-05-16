@@ -74,7 +74,8 @@ export class EmptiesProvider {
     const mt: PayPalPaymentsType = {
       merchantId: "",
       publicKey: "",
-      privateKey: ""
+      privateKey: "",
+      fee: 0
     }
     return mt;
   }

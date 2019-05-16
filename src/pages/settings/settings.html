@@ -185,6 +185,35 @@
       <ion-input type="text" [(ngModel)]="biz.stripe.fee"></ion-input>
     </ion-item>
   </div>
+  <div *ngIf="biz.acceptPayments=='paypal'">
+    <ion-item>
+      <ion-label class="checkOption">PayPal/Braintree Connection Info</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label class="checkOption">Merchant Id</ion-label>
+    </ion-item>
+    <ion-item no-lines>
+      <ion-input type="text" [(ngModel)]="biz.paypal.merchantId"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label class="checkOption">Public Key</ion-label>
+    </ion-item>
+    <ion-item no-lines>
+      <ion-input type="text" [(ngModel)]="biz.paypal.publicKey"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label class="checkOption">Private Key)</ion-label>
+    </ion-item>
+    <ion-item no-lines>
+      <ion-input type="text" [(ngModel)]="biz.paypal.privateKey"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label class="checkOption">Transaction Fee (%)</ion-label>
+    </ion-item>
+    <ion-item no-lines>
+      <ion-input type="text" [(ngModel)]="biz.paypal.fee"></ion-input>
+    </ion-item>
+  </div>
   <div *ngIf="biz.acceptPayments=='square'">
     <ion-item>
       <ion-label class="checkOption">Square Connection Info</ion-label>
