@@ -1,7 +1,5 @@
 _ clean up format and style
 
-_ paypal payments
-
 _ who owes me statistic
 
 _ error in transactions page trans date
@@ -9,6 +7,7 @@ _ don't add tip to revenue in payments page(s)
 
 _ encrypt ccapi credit card data
 
+_ paypal payments
 
 
 _ consolidate intake form client name/addr/etc with client info page
