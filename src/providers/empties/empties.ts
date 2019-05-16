@@ -72,10 +72,13 @@ export class EmptiesProvider {
   }
   getEmptyPaypal(): PayPalPaymentsType {
     const mt: PayPalPaymentsType = {
-      key: ""
+      merchantId: "",
+      publicKey: "",
+      privateKey: ""
     }
     return mt;
   }
+  
   getEmptyMerchant(): MerchantAcctType {
     const mt: MerchantAcctType = {
       acct: ""

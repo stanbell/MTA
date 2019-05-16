@@ -31,7 +31,9 @@ interface SquarePaymentsType {
     fee: number
 }
 interface PayPalPaymentsType {
-    key: string
+    merchantId: string,
+    publicKey: string,
+    privateKey: string
 }
 interface MerchantAcctType {
     acct: string
