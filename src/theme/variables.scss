@@ -23,8 +23,6 @@ $app-direction: ltr;
 // http://ionicframework.com/docs/theming/overriding-ionic-variables/
 
 
-
-
 // Named Color Variables
 // --------------------------------------------------
 // Named colors makes it easy to reuse colors on various components.
@@ -36,16 +34,18 @@ $app-direction: ltr;
 $colors: (
 background:    #eff8e6,
   primary:    #035d08,
-  secondary:   #f8af11,
-  tertiary:  #f7c973,
+  secondary:   #f8b422,
+  tertiary:  #fcc652,
   danger:     #f53d3d,
   boxborder:  #c48704,
   lightText:  #f4f4f4,
-  darkText:   #0441c5,
+  darkText:   #030f75,
   light:      #f4f4f4,
   dark:       #222
 );
 
+$toolbar-background: color($colors, primary);
+$toobar-text-color: color($colors, lightText);
 
 // App iOS Variables
 // --------------------------------------------------

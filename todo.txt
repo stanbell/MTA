@@ -1,14 +1,17 @@
-_ clean up format and style
+_ web
 
-_ who owes me statistic
+_ put in stores
 
-_ error in transactions page trans date
-_ don't add tip to revenue in payments page(s)
+X clean up format and style
+
+X error in transactions page trans date
+? don't add tip to revenue in payments page(s)
 
 _ encrypt ccapi credit card data
 
 _ paypal payments
 
+_ who owes me statistic
 
 _ consolidate intake form client name/addr/etc with client info page
     probably drop elements from intake, or else copy from intake to client

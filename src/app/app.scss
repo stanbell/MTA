@@ -40,6 +40,11 @@ html {
   white-space: normal;
 }
 
+.mainPrompt {
+  font-style: italic;
+  color: color($colors, primary);
+}
+
 .editButton {
   height: 18px;
 }
@@ -58,6 +63,7 @@ html {
   border-style: solid;
   border-color: color($colors, boxborder);
   border-width: 1px;
+  border-radius: 0.4rem;
 }
 .listInBox {
   padding: 2px;
@@ -66,6 +72,7 @@ html {
   border-style: solid;
   border-color: color($colors, boxborder);
   border-width: 1px;
+  border-radius: 0.4rem;
 }
 .boxInList {
   padding: 2px;
@@ -75,7 +82,18 @@ html {
   border-color: color($colors, boxborder);
   border-width: 1px;
   text-align: center;
+  border-radius: 0.4rem;
 }
+
+.transList {
+  // font-size: smaller !important;
+  text-align: start !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+// .toolbar-background {
+//     background-color: color($colors, primary);
+// }
 
 p {
   color: color($colors, darkText) !important;
@@ -90,9 +108,12 @@ ion-label {
   white-space: normal;
   color: color($colors, primary);
 }
+
 ion-input {
+  padding: 4px;
   background-color: color($colors, secondary);
 }
+
 ion-datetime {
   background-color: color($colors, secondary);
 }
@@ -100,4 +121,9 @@ ion-datetime {
   font-size: x-small;
   margin: 0;
   overflow-wrap: break-word;
+}
+
+.search {
+  background-color: color($colors, primary);
+  color: color($colors, lightText);
 }

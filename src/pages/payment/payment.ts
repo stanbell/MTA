@@ -69,10 +69,10 @@ export class PaymentPage {
         console.log('paypal');
         this.payPayPal();
         break;
-      case 'merch':
-        console.log('merch')
-        this.payMerch();
-        break;
+      // case 'merch':
+      //   console.log('merch')
+      //   this.payMerch();
+      //   break;
       case 'cash':
       case 'check':
         console.log(method)

@@ -6,8 +6,8 @@ import { AppointmentsPage } from '../appointments/appointments';
 import { ClientInfoPage } from '../client-info/client-info';
 import { TransactionsPage } from '../transactions/transactions';
 import { IntakePage } from '../intake/intake';
-import '../../types/types';
 import { EmptiesProvider } from '../../providers/empties/empties';
+import '../../types/types';
 
 @IonicPage()
 @Component({

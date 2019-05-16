@@ -6,111 +6,109 @@
 
 </ion-header>
 
-
-<!-- WORKING HERE:  "no value accessor"  have to put 'value' items in, probably in the checkboxes or radiobuttons -->
-
 <ion-content padding>
-  <!-- <ion-grid>
-    <ion-row>
-      <ion-col col-12>
-      </ion-col>
-    </ion-row>
-  </ion-grid> -->
-
   <h5>Personal Information</h5>
-  <ion-item>
-    <ion-label stacked>First Name</ion-label>
-    <ion-input type="text" [(ngModel)]="intake.first"></ion-input>
-  </ion-item>
-  <ion-item>
-    <ion-label stacked>Last Name</ion-label>
-    <ion-input type="text" [(ngModel)]="intake.last"></ion-input>
-  </ion-item>
-  <ion-item>
-    <ion-label stacked>Date of Birth</ion-label>
-    <ion-input type="text" [(ngModel)]="intake.dob"></ion-input>
-  </ion-item>
-  <ion-item>
-    <ion-label stacked>Gender</ion-label>
-    <!-- <ion-label fixed>male/female/not specified</ion-label> -->
-    <ion-input type="text" [(ngModel)]="intake.sex"></ion-input>
-  </ion-item>
-  <ion-item>
-    <ion-label stacked>Occupation</ion-label>
-    <ion-input type="text" [(ngModel)]="intake.occupation"></ion-input>
-  </ion-item>
-  <ion-item>
-    <ion-label stacked>eMail</ion-label>
-    <ion-input type="text" [(ngModel)]="intake.email"></ion-input>
-  </ion-item>
-  <ion-item>
-    <ion-label stacked>Phone</ion-label>
-    <ion-input type="text" [(ngModel)]="intake.phone"></ion-input>
-  </ion-item>
-  <ion-item>
-    <ion-label stacked>Address</ion-label>
-    <ion-input type="text" [(ngModel)]="intake.street1"></ion-input>
-    <ion-input type="text" [(ngModel)]="intake.street2"></ion-input>
-  </ion-item>
-  <ion-item>
-    <ion-label stacked>City</ion-label>
-    <ion-input type="text" [(ngModel)]="intake.city"></ion-input>
-  </ion-item>
-  <ion-item>
-    <ion-label stacked>State</ion-label>
-    <ion-input type="text" [(ngModel)]="intake.state"></ion-input>
-  </ion-item>
-  <ion-item>
-    <ion-label stacked>Zip</ion-label>
-    <ion-input type="text" [(ngModel)]="intake.zip"></ion-input>
-  </ion-item>
-  <ion-item>
-    <ion-label stacked>Emergency Contact</ion-label>
-    <ion-input type="text" [(ngModel)]="intake.ecName"></ion-input>
-  </ion-item>
-  <ion-item>
-    <ion-label stacked>Phone</ion-label>
-    <ion-input type="text" [(ngModel)]="intake.ecPhone"></ion-input>
-  </ion-item>
-  <ion-item>
-    <ion-label stacked>Relationship</ion-label>
-    <ion-input type="text" [(ngModel)]="intake.ecRelationship"></ion-input>
-  </ion-item>
-  <ion-item>
-    <ion-label stacked>Physician</ion-label>
-    <ion-input type="text" [(ngModel)]="intake.physName"></ion-input>
-  </ion-item>
-  <ion-item>
-    <ion-label stacked>Phone</ion-label>
-    <ion-input type="text" [(ngModel)]="intake.physPhone"></ion-input>
-  </ion-item>
-  <ion-item>
-    <ion-label stacked>Cause of injury or concern?</ion-label>
-    <ion-input type="text" [(ngModel)]="intake.cause"></ion-input>
-  </ion-item>
-  <ion-item>
-    <ion-label stacked>How long since first noticed?</ion-label>
-    <ion-input type="text" [(ngModel)]="intake.firstNoticed"></ion-input>
-  </ion-item>
-  <ion-item>
-    <ion-label stacked>Describe treatment goals.</ion-label>
-    <ion-input type="text" [(ngModel)]="intake.goals"></ion-input>
-  </ion-item>
-  <ion-item>
-    <ion-label stacked>Past treatment</ion-label>
-    <ion-input type="text" [(ngModel)]="intake.pastTreatment"></ion-input>
-  </ion-item>
-  <ion-item>
-    <ion-label stacked>How would you rate your daily stress level?</ion-label>
-    <ion-input type="text" [(ngModel)]="intake.dailyStress"></ion-input>
-  </ion-item>
-  <ion-item>
-    <ion-label stacked>Have you recieved a massage before?</ion-label>
-    <ion-input type="text" [(ngModel)]="intake.massageBefore"></ion-input>
-  </ion-item>
-  <ion-item>
-    <ion-label stacked>What type of massage do you prefer?</ion-label>
-  </ion-item>
+  <!-- <ion-item> -->
+  <ion-label stacked>First Name</ion-label>
+  <ion-input no-margin type="text" [(ngModel)]="intake.first"></ion-input>
+  <!-- </ion-item> -->
+  <!-- <ion-item> -->
+  <ion-label stacked>Last Name</ion-label>
+  <ion-input no-margin type="text" [(ngModel)]="intake.last"></ion-input>
+  <!-- </ion-item> -->
+  <!-- <ion-item> -->
+  <ion-label stacked>Date of Birth</ion-label>
+  <ion-input no-margin type="text" [(ngModel)]="intake.dob"></ion-input>
+  <!-- </ion-item> -->
+  <!-- <ion-item no-lines> -->
+  <!-- <ion-label>Gender</ion-label> -->
+  <!-- </ion-item> -->
+  <ion-list radio-group [(ngModel)]="intake.sex">
+    <ion-item no-lines>
+      <ion-label class="checkOption">Female</ion-label>
+      <ion-radio value="female"></ion-radio>
+    </ion-item>
+    <ion-item no-lines>
+      <ion-label class="checkOption">Male</ion-label>
+      <ion-radio value="male"></ion-radio>
+    </ion-item>
+  </ion-list>
+  <!-- <ion-item> -->
+  <ion-label stacked>Occupation</ion-label>
+  <ion-input no-margin type="text" [(ngModel)]="intake.occupation"></ion-input>
+  <!-- </ion-item> -->
+  <!-- <ion-item> -->
+  <ion-label stacked>eMail</ion-label>
+  <ion-input no-margin type="text" [(ngModel)]="intake.email"></ion-input>
+  <!-- </ion-item> -->
+  <!-- <ion-item> -->
+  <ion-label stacked>Phone</ion-label>
+  <ion-input no-margin type="text" [(ngModel)]="intake.phone"></ion-input>
+  <!-- </ion-item> -->
+  <!-- <ion-item> -->
+  <ion-label stacked>Address</ion-label>
+  <ion-input no-margin type="text" [(ngModel)]="intake.street1"></ion-input>
+  <ion-input no-margin type="text" [(ngModel)]="intake.street2"></ion-input>
+  <!-- </ion-item> -->
+  <!-- <ion-item> -->
+  <ion-label stacked>City</ion-label>
+  <ion-input no-margin type="text" [(ngModel)]="intake.city"></ion-input>
+  <!-- </ion-item> -->
+  <!-- <ion-item> -->
+  <ion-label stacked>State</ion-label>
+  <ion-input no-margin type="text" [(ngModel)]="intake.state"></ion-input>
+  <!-- </ion-item> -->
+  <!-- <ion-item> -->
+  <ion-label stacked>Zip</ion-label>
+  <ion-input no-margin type="text" [(ngModel)]="intake.zip"></ion-input>
+  <!-- </ion-item> -->
+  <!-- <ion-item> -->
+  <ion-label stacked>Emergency Contact</ion-label>
+  <ion-input no-margin type="text" [(ngModel)]="intake.ecName"></ion-input>
+  <!-- </ion-item> -->
+  <!-- <ion-item> -->
+  <ion-label stacked>Phone</ion-label>
+  <ion-input no-margin type="text" [(ngModel)]="intake.ecPhone"></ion-input>
+  <!-- </ion-item> -->
+  <!-- <ion-item> -->
+  <ion-label stacked>Relationship</ion-label>
+  <ion-input no-margin type="text" [(ngModel)]="intake.ecRelationship"></ion-input>
+  <!-- </ion-item> -->
+  <!-- <ion-item> -->
+  <ion-label stacked>Physician</ion-label>
+  <ion-input no-margin type="text" [(ngModel)]="intake.physName"></ion-input>
+  <!-- </ion-item> -->
+  <!-- <ion-item> -->
+  <ion-label stacked>Phone</ion-label>
+  <ion-input no-margin type="text" [(ngModel)]="intake.physPhone"></ion-input>
+  <!-- </ion-item> -->
+  <!-- <ion-item> -->
+  <ion-label stacked>Cause of injury or concern?</ion-label>
+  <ion-input no-margin type="text" [(ngModel)]="intake.cause"></ion-input>
+  <!-- </ion-item> -->
+  <!-- <ion-item> -->
+  <ion-label stacked>How long since first noticed?</ion-label>
+  <ion-input no-margin type="text" [(ngModel)]="intake.firstNoticed"></ion-input>
+  <!-- </ion-item> -->
+  <!-- <ion-item> -->
+  <ion-label stacked>Describe treatment goals.</ion-label>
+  <ion-input no-margin type="text" [(ngModel)]="intake.goals"></ion-input>
+  <!-- </ion-item> -->
+  <!-- <ion-item> -->
+  <ion-label stacked>Past treatment</ion-label>
+  <ion-input no-margin type="text" [(ngModel)]="intake.pastTreatment"></ion-input>
+  <!-- </ion-item> -->
+  <!-- <ion-item> -->
+  <ion-label stacked>How would you rate your daily stress level?</ion-label>
+  <ion-input no-margin type="text" [(ngModel)]="intake.dailyStress"></ion-input>
+  <!-- </ion-item> -->
+  <!-- <ion-item> -->
+  <ion-label stacked>Have you recieved a massage before?</ion-label>
+  <ion-input no-margin type="text" [(ngModel)]="intake.massageBefore"></ion-input>
+  <!-- </ion-item> -->
+  <!-- <ion-item> -->
+  <ion-label stacked>What type of massage do you prefer?</ion-label>
+  <!-- </ion-item> -->
   <ion-item>
     <ion-checkbox [(ngModel)]="intake.massage.therapeutic"></ion-checkbox>
     <ion-label class="checkOption">Therapeutic</ion-label>
@@ -119,9 +117,9 @@
     <ion-checkbox [(ngModel)]="intake.massage.relaxation"></ion-checkbox>
     <ion-label class="checkOption">Relaxation</ion-label>
   </ion-item>
-  <ion-item no-lines>
-    <ion-label stacked>What amount of pressure do you prefer?</ion-label>
-  </ion-item>
+  <!-- <ion-item no-lines> -->
+  <ion-label stacked>What amount of pressure do you prefer?</ion-label>
+  <!-- </ion-item> -->
   <ion-list radio-group [(ngModel)]="intake.pressure">
     <ion-item>
       <ion-label class="checkOption">Light</ion-label>
@@ -644,46 +642,46 @@
     <ion-checkbox [(ngModel)]="intake.neuro.tingling"></ion-checkbox>
     <ion-label class="checkOption">Tingling</ion-label>
   </ion-item>
-  <ion-item>
+  <!-- <ion-item> -->
     <ion-label class="checkOption">Allergies and other conditions your provider should be aware of?</ion-label>
-  </ion-item>
-  <ion-item no-lines>
-    <ion-input type="text" [(ngModel)]="intake.allergiesOther"></ion-input>
-  </ion-item>
-  <ion-item>
+  <!-- </ion-item> -->
+  <!-- <ion-item no-lines> -->
+    <ion-input no-margin type="text" [(ngModel)]="intake.allergiesOther"></ion-input>
+  <!-- </ion-item> -->
+  <!-- <ion-item> -->
     <ion-label class="checkOption">Medications</ion-label>
-  </ion-item>
-  <ion-item>
+  <!-- </ion-item> -->
+  <!-- <ion-item> -->
     <ion-label class="checkOption">Please list any medications or drugs you are currently on.</ion-label>
-  </ion-item>
-  <ion-item no-lines>
-    <ion-input type="text" [(ngModel)]="intake.meds"></ion-input>
-  </ion-item>
-  <ion-item>
+  <!-- </ion-item> -->
+  <!-- <ion-item no-lines> -->
+    <ion-input no-margin type="text" [(ngModel)]="intake.meds"></ion-input>
+  <!-- </ion-item> -->
+  <!-- <ion-item> -->
     <ion-label class="checkOption">Additional Questions</ion-label>
-  </ion-item>
-  <ion-item>
+  <!-- </ion-item> -->
+  <!-- <ion-item> -->
     <ion-label class="checkOption">Please list any past surgeries and when they took place.</ion-label>
-  </ion-item>
-  <ion-item no-lines>
-    <ion-input type="text" [(ngModel)]="intake.surgeries"></ion-input>
-  </ion-item>
-  <ion-item>
+  <!-- </ion-item> -->
+  <!-- <ion-item no-lines> -->
+    <ion-input no-margin type="text" [(ngModel)]="intake.surgeries"></ion-input>
+  <!-- </ion-item> -->
+  <!-- <ion-item> -->
     <ion-label class="checkOption">Please list any skin irritations (warts, fever blister, rash, open cuts or wounds,
       burns,
       bruising,
       etc.)</ion-label>
-  </ion-item>
-  <ion-item no-lines>
-    <ion-input type="text" [(ngModel)]="intake.skinIrritations"></ion-input>
-  </ion-item>
-  <ion-item>
+  <!-- </ion-item> -->
+  <!-- <ion-item no-lines> -->
+    <ion-input no-margin type="text" [(ngModel)]="intake.skinIrritations"></ion-input>
+  <!-- </ion-item> -->
+  <!-- <ion-item> -->
     <ion-label class="checkOption">Have you been sick with fever within the last 5 days? if yes, please explain.
     </ion-label>
-  </ion-item>
-  <ion-item no-lines>
-    <ion-input type="text" [(ngModel)]="intake.sick"></ion-input>
-  </ion-item>
+  <!-- </ion-item> -->
+  <!-- <ion-item no-lines> -->
+    <ion-input no-margin type="text" [(ngModel)]="intake.sick"></ion-input>
+  <!-- </ion-item> -->
   <button ion-button (click)="save()">Save</button>
 </ion-content>
 <!-- waiver

@@ -35,16 +35,6 @@ export class TransactionsPage {
     
   }
  
-  // ionViewWillLeave() {
-  //   console.log('ionViewWillLeave TransactionsPage');
-  //   // this.saveItems()  ???
-  //   this.trans.write();
-  // }
-
-  choose(item: any) {
-
-  }
-
   // TODO:  also filter to user preferences for transStartDate
   populateItems(filter?: string) {
 
@@ -62,9 +52,9 @@ export class TransactionsPage {
       const j = this.itemsList.length - 1;  // last one added
       this.itemsList[j]['clientName'] = cName;
       let d = new Date(this.itemsList[j].date);
-      let y = d.getFullYear().toString();
-      y = y.substr(2, 2);
-      this.itemsList[j]['shortDate'] = (d.getMonth() + 1) + '/' + y;
+      let day = d.getDate().toString();
+      // day = day.substr(2, 2);
+      this.itemsList[j]['shortDate'] = (d.getMonth() + 1) + '/' + day;
       this.itemsList[j]['formattedAmount'] = (this.itemsList[j].amount >= 0)
         ? this.itemsList[j].amount.toFixed(2)
         : "(" + (0 - this.itemsList[j].amount).toFixed(2) + ")";
