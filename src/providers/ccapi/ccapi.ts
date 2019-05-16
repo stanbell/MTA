@@ -8,14 +8,9 @@ export class CCAPI {
         console.log('Constructor CCAPI Provider');
     }
 
-    // apiURL = 'http://api.cpmez.com:22000/CarePlan/';
     // apiURL = 'http://127.0.0.1:48000/mtacc/';
-    // apiURL = 'http://35.162.31.157:48000/mtacc/'; // elastic ip
-    apiURL = 'http://api.dcsbdn.us:48000/mtacc/';  // domain
-    // local apiURL = 'http://127.0.0.1:18000/MTA/';
-    // elastice ip apiURL = 'http://ec2-34-195-4-230.compute-1.amazonaws.com:22000/CarePlan/';
-    // no longer valid ip apiURL = 'http://34.229.7.109:22000/CarePlan/';
-    // old instance apiURL = 'http://ec2-34-229-7-109.compute-1.amazonaws.com:22000/CarePlan/';
+    // apiURL = 'https://35.162.31.157:48000/mtacc/'; // elastic ip
+    apiURL = 'https://api.dcsbdn.us:48000/mtacc/';  // domain
 
     httpHeaders: any;
 

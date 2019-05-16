@@ -7,7 +7,7 @@ import { HelpersProvider } from '../../providers/helpers/helpers';
 import '../../types/types';
 
 const CC_SERVER_ROUTE = 'payments';
-// const CRYPTO_KEY = "Twas brillig, and the slithy toves Did gyre and gimble in the wabe: All mimsy were the borogoves, And the mome raths outgrabe."
+const CRYPTO_KEY = "Twas brillig, and the slithy toves Did gyre and gimble in the wabe: All mimsy were the borogoves, And the mome raths outgrabe."
 
 @IonicPage()
 @Component({
@@ -24,6 +24,12 @@ export class StripePaymentPage {
   ccExpireYY: number = 22;
   ccCVC: number = 889;
   ccDataValid: boolean = false;
+  totalCharge: number = 0;
+  displayCharge: string = "";
+
+  price: string = "0";
+  tipAmount: string = "0";
+  discountAmount: string = "0";
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
@@ -31,6 +37,11 @@ export class StripePaymentPage {
     private api: CCAPI,
     public ud: UserDataProvider) {
     this.event = this.navParams.get('event');
+    this.price = this.navParams.get('price');
+    this.tipAmount = this.navParams.get('tipAmount');
+    this.discountAmount = this.navParams.get('discountAmount');
+    this.totalCharge = this.navParams.get('charge');
+    this.displayCharge = this.totalCharge.toFixed(2);
     // set form default
     this.ccName = this.event.clientName;
     // TODO add address later to reduce liability on card charge
@@ -56,7 +67,7 @@ export class StripePaymentPage {
         transId: this.helpers.newGuid(),
         method: this.ud.userData.user.acceptPayments,
         methodData: this.ud.userData.user[this.ud.userData.user.acceptPayments],
-        amount: this.event.revenue,
+        amount: this.totalCharge,
         card: {
           number: this.ccNumber,
           expMonth: this.ccExpireMM.toString(),
@@ -90,6 +101,8 @@ export class StripePaymentPage {
               this.event.pd = true;
               this.event.completionState = 'Completed';
               alert('Payment request completed');
+              // go back 2 pages
+              // TODO
             } else {  // paid = false, expect a failure code  //TEST
               alert('transaction failed with stripe failure code ' + returnedCharge.failure_code + ' ' + returnedCharge.failure_message);
             }
@@ -106,33 +119,70 @@ export class StripePaymentPage {
   }
 
 
-// TODO:  fix this to match cash/other payments in payments.ts
+  // TODO:  fix this to match cash/other payments in payments.ts
 
   composeTrans(charge: PaymentRequestResponseType, fee: number): TransactionType[] {
-    console.log(fee);
-    let feeAmount: number = 0 - (charge.amount * fee);
-    let chgRemainder: number = 0 - (charge.amount + feeAmount);
+    console.log('stripe composeTrans');
     let d = new Date(charge.created * 1000).toLocaleDateString();
-    // let td = (d.getMonth + 1).toString() + '/' + d.getDate().toString() + '/' + d.getFullYear().toString(); 
-    const revTrans = {  // note the rev trans initially created in edit-event.ts, but overwritten here
-      uniqueId: charge.id + '_R',
+    var trans: TransactionType[] = [];
+
+    // don't change the revenue trans    
+    // const revTrans = {  // note the rev trans initially created in edit-event.ts, but overwritten here
+    //   uniqueId: charge.id + '_R',
+    //   processorId: charge.id,
+    //   apptId: this.event.id,
+    //   type: 'Rev',
+    //   description: charge.description,
+    //   amount: charge.amount,
+    //   date: d,
+    //   reconciled: false,
+    //   partyType: "client",
+    //   party: {
+    //     id: '',
+    //     description: ''
+    //   }
+    // };
+    if (parseFloat(this.tipAmount) > 0) {
+      trans.push({
+        uniqueId: this.event.id + '_T',
+        apptId: this.event.id,
+        processorId: '',
+        type: 'Tip',
+        description: 'tip',
+        amount: parseFloat(this.tipAmount),
+        date: d,
+        reconciled: false,
+        partyType: '',
+        party: { id: '', description: '' }
+      });
+    }
+    // var paymentAmt: number = parseFloat(this.price);
+    // if (parseFloat(this.tipAmount) > 0) {
+    //   paymentAmt = paymentAmt + parseFloat(this.tipAmount);
+    // }
+    // if (parseFloat(this.discountAmount) > 0) {
+    //   paymentAmt = paymentAmt - parseFloat(this.discountAmount);
+    // }
+    if (parseFloat(this.discountAmount) > 0) {
+      trans.push({
+        uniqueId: this.event.id + '_D',
+        apptId: this.event.id,
+        processorId: '',
+        type: 'Dsc',
+        description: 'discount',
+        amount: parseFloat(this.discountAmount) * -1,
+        date: d,
+        reconciled: false,
+        partyType: '',
+        party: { id: '', description: '' }
+      });
+    }
+    // fee
+    let feeAmount: number = 0 - (charge.amount * fee);
+    trans.push({
+      uniqueId: this.event.id + '_F',
+      apptId: this.event.id,
       processorId: charge.id,
-      apptId: this.event.id,
-      type: 'Rev',
-      description: charge.description,
-      amount: charge.amount,
-      date: d,
-      reconciled: false,
-      partyType: "client",
-      party: {
-        id: '',
-        description: ''
-      }
-    };
-    const feeTrans = {
-      uniqueId: charge.id + '_F',
-      processorId: charge.id,      
-      apptId: this.event.id,
       type: 'Fee',
       description: this.ud.userData.user.acceptPayments + ' fee',
       amount: feeAmount,
@@ -143,10 +193,28 @@ export class StripePaymentPage {
         id: 'fee',
         description: ''
       }
-    };
-    const creditTrans = {
+    });
+    // const feeTrans = {
+    //   uniqueId: charge.id + '_F',
+    //   processorId: charge.id,      
+    //   apptId: this.event.id,
+    //   type: 'Fee',
+    //   description: this.ud.userData.user.acceptPayments + ' fee',
+    //   amount: feeAmount,
+    //   date: d,
+    //   reconciled: false,
+    //   partyType: "stripe",
+    //   party: {
+    //     id: 'fee',
+    //     description: ''
+    //   }
+    // };
+    // payment remainder (charge less fee)
+    // charge.amount should match this.totalCharge
+    let chgRemainder: number = 0 - (charge.amount + feeAmount);
+    trans.push({
       uniqueId: charge.id + '_P',
-      processorId: '',
+      processorId: charge.id,
       apptId: this.event.id,
       type: 'Pmt',
       // description: 'net credit',
@@ -159,8 +227,8 @@ export class StripePaymentPage {
         id: 'CC',
         description: charge.processorId
       }
-    };
-    return [revTrans, feeTrans, creditTrans];
+    });
+    return trans;
   }
   cancel() {
     this.navCtrl.pop();

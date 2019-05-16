@@ -1,3 +1,11 @@
+_ clean up format and style
+
+_ paypal payments
+
+_ who owes me statistic
+
+
+
 _ consolidate intake form client name/addr/etc with client info page
     probably drop elements from intake, or else copy from intake to client
 
@@ -27,6 +35,7 @@ x acknowledge a no-show
 x acknowledge a cancellation
     x in-app
   ___ via external calendar?
+  N send customer invitation (by adding them to native calendar)?  looks like plugin doesn't know how to do this
 
 x implement visit history timeline, include clients 1m/6m/1y
 _ DEBUG, not filtering correctly for client.transactions
@@ -42,20 +51,15 @@ X cancel add appt
 
 X FIX mtaapi git repository
 
-_ deposit advice (reconciliation?)
+_ deposit advice (reconciliation?)  --save for later, requires iterating transactions vs just schedule events
 
 X cash/check payments
     _ email receipt
-_ paypal payments
-
-_ who owes me statistic
 
 _    show stats on clients page (or in metrics section?)
     revenue and debt, prev appts, scheduled appts
 
 x fix save reconcile marker
-
-_ clean up format and style
 
 _ apply discount in transactions
     x manual
@@ -81,4 +85,5 @@ ___ DO THE WEB page
         __ css responsive
 
 
+Web only
 _ csv export stuff

@@ -54,7 +54,11 @@ export class PaymentPage {
       case 'stripe':
         console.log('stripe');
         this.navCtrl.push(StripePaymentPage, {
-          event: this.event
+          event: this.event,
+          charge: parseFloat(this.totalCharge),
+          price: parseFloat(this.price),
+          tipAmount: parseFloat(this.tipAmount),
+          discountAmount: parseFloat(this.discountAmount),
         });
         break;
       case 'square':
@@ -187,7 +191,6 @@ export class PaymentPage {
         party: { id: '', description: '' }
       });
     }
-    console.log('return');
     return trans;
   }
 
