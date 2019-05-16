@@ -356,53 +356,7 @@ export class EmptiesProvider {
   getEmptyUserData(): UserDataType {
     const mt: UserDataType = {
       _id: '',
-      user: {
-        id: '',
-        // pwd: '',
-        businessName: '',
-        address: {
-          label: '',
-          street1: '',
-          street2: '',
-          city: '',
-          state: '',
-          zip: ''
-        },
-        contacts: [],
-        calendar: {
-          id: '',
-          name: '',
-          provider: '',
-          connectionInfo: '',
-          owner: '',
-        },
-        defaultApptTitle: '',
-        listActive: "1m",
-        sortClientsBy: "last",
-        useCalendar: 'app',
-        acceptPayments: 'self',
-        whoSchedule: 'user',
-        whoIntake: 'user',
-        emailSchedule: '',
-        autoLogOut: 'no',
-        stripe: {
-          secretKey: "",
-          fee: 0
-        },
-        square: {
-          applicationId: "",
-          accessToken: "",
-          locationId: "",
-          fee: 0
-        },
-        paypal: {
-          key: ""
-        },
-        merch: {
-          acct: ""
-        },
-        services: []
-      },
+      user: this.getEmptyUser(),
       appActivity: {
         lastUpdate: "01/01/1968"  // pretty old date
       },
