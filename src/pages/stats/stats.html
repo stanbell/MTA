@@ -45,7 +45,7 @@
       <ion-col col-1></ion-col>
       <ion-col col-6 align-self-left>
         <div class="boxInList">
-          <p>Still 'Open'</p>
+          <p>Open/Incomplete</p>
         </div>
       </ion-col>
       <ion-col col-4 align-self-end>
@@ -96,6 +96,35 @@
       <ion-col col-4 align-self-end>
         <div class="boxInList">
           <p>{{uncollected.toFixed(2)}}</p>
+        </div>
+      </ion-col>
+      <ion-col col-1></ion-col>
+    </ion-row>
+    
+    <ion-row align-items-center>
+      <ion-col col-1></ion-col>
+      <ion-col col-6 align-self-left>
+        <div class="boxInList">
+          <p>Discounts</p>
+        </div>
+      </ion-col>
+      <ion-col col-4 align-self-end>
+        <div class="boxInList">
+          <p>{{discounts.toFixed(2)}}</p>
+        </div>
+      </ion-col>
+      <ion-col col-1></ion-col>
+    </ion-row>
+    <ion-row align-items-center>
+      <ion-col col-1></ion-col>
+      <ion-col col-6 align-self-left>
+        <div class="boxInList">
+          <p>CC Fees</p>
+        </div>
+      </ion-col>
+      <ion-col col-4 align-self-end>
+        <div class="boxInList">
+          <p>{{fees.toFixed(2)}}</p>
         </div>
       </ion-col>
       <ion-col col-1></ion-col>

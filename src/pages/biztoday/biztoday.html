@@ -30,7 +30,7 @@
       <ion-col col-1></ion-col>
       <ion-col col-6 align-self-left>
         <div class="boxInList">
-          <p>Appts</p>
+          <p>Scheduled Appts</p>
         </div>
       </ion-col>
       <ion-col col-4 align-self-end>
@@ -45,12 +45,12 @@
       <ion-col col-1></ion-col>
       <ion-col col-6 align-self-left>
         <div class="boxInList">
-          <p>Revenue</p>
+          <p>Scheduled Revenue</p>
         </div>
       </ion-col>
       <ion-col col-4 align-self-end>
         <div class="boxInList">
-          <p>{{scheduledRevenue}}</p>
+          <p>{{scheduledRevenue.toFixed(2)}}</p>
         </div>
       </ion-col>
       <ion-col col-1></ion-col>
@@ -60,7 +60,7 @@
       <ion-col col-1></ion-col>
       <ion-col col-6 align-self-left>
         <div class="boxInList">
-          <p>Open</p>
+          <p>Open/Incomplete</p>
         </div>
       </ion-col>
       <ion-col col-4 align-self-end>
@@ -80,7 +80,7 @@
       </ion-col>
       <ion-col col-4 align-self-end>
         <div class="boxInList">
-          <p>{{revenue}}</p>
+          <p>{{revenue.toFixed(2)}}</p>
         </div>
       </ion-col>
       <ion-col col-1></ion-col>
@@ -95,7 +95,7 @@
       </ion-col>
       <ion-col col-4 align-self-end>
         <div class="boxInList">
-          <p>{{paid}}</p>
+          <p>{{paid.toFixed(2)}}</p>
         </div>
       </ion-col>
       <ion-col col-1></ion-col>
@@ -110,7 +110,36 @@
       </ion-col>
       <ion-col col-4 align-self-end>
         <div class="boxInList">
-          <p>{{uncollected}}</p>
+          <p>{{uncollected.toFixed(2)}}</p>
+        </div>
+      </ion-col>
+      <ion-col col-1></ion-col>
+    </ion-row>
+
+    <ion-row align-items-center>
+      <ion-col col-1></ion-col>
+      <ion-col col-6 align-self-left>
+        <div class="boxInList">
+          <p>Discounts</p>
+        </div>
+      </ion-col>
+      <ion-col col-4 align-self-end>
+        <div class="boxInList">
+          <p>{{discounts.toFixed(2)}}</p>
+        </div>
+      </ion-col>
+      <ion-col col-1></ion-col>
+    </ion-row>
+    <ion-row align-items-center>
+      <ion-col col-1></ion-col>
+      <ion-col col-6 align-self-left>
+        <div class="boxInList">
+          <p>CC Fees</p>
+        </div>
+      </ion-col>
+      <ion-col col-4 align-self-end>
+        <div class="boxInList">
+          <p>{{fees.toFixed(2)}}</p>
         </div>
       </ion-col>
       <ion-col col-1></ion-col>
@@ -155,12 +184,64 @@
       </ion-col>
       <ion-col col-4 align-self-end>
         <div class="boxInList">
-          <p>{{lostRevenue}}</p>
+          <p>{{lostRevenue.toFixed(2)}}</p>
         </div>
       </ion-col>
       <ion-col col-1></ion-col>
     </ion-row>
 
+    <ion-row align-items-center>
+      <ion-col col-1></ion-col>
+      <ion-col col-10 align-self-center>
+        <div class="box">
+          <p>Receipts</p>
+        </div>
+      </ion-col>
+      <ion-col col-1></ion-col>
+    </ion-row>
+
+        <ion-row align-items-center>
+          <ion-col col-1></ion-col>
+          <ion-col col-6 align-self>
+            <div class="boxInList">
+              <p>Cash</p>
+            </div>
+          </ion-col>
+          <ion-col col-4 align-self-end>
+            <div class="boxInList">
+              <p>{{cash.toFixed(2)}}</p>
+            </div>
+          </ion-col>
+          <ion-col col-1></ion-col>
+        </ion-row>
+    <ion-row align-items-center>
+      <ion-col col-1></ion-col>
+      <ion-col col-6 align-self>
+        <div class="boxInList">
+          <p>Checks</p>
+        </div>
+      </ion-col>
+      <ion-col col-4 align-self-end>
+        <div class="boxInList">
+          <p>{{checks.toFixed(2)}}</p>
+        </div>
+      </ion-col>
+      <ion-col col-1></ion-col>
+    </ion-row>
+    <ion-row align-items-center>
+      <ion-col col-1></ion-col>
+      <ion-col col-6 align-self>
+        <div class="boxInList">
+          <p>Tips</p>
+        </div>
+      </ion-col>
+      <ion-col col-4 align-self-end>
+        <div class="boxInList">
+          <p>{{tips.toFixed(2)}}</p>
+        </div>
+      </ion-col>
+      <ion-col col-1></ion-col>
+    </ion-row>
 
 
   </ion-grid>

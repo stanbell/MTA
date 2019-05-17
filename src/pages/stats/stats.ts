@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { ScheduleProvider } from '../../providers/schedule/schedule';
 import { UserDataProvider } from '../../providers/user-data/user-data';
+import { TransactionsProvider } from '../../providers/transactions/transactions';
 
 @IonicPage()
 @Component({
@@ -22,12 +23,19 @@ export class StatsPage {
   lostRevenue: number = 0;
   scheduledAppts: number = 0;
   scheduledRevenue: number = 0;
+  discounts: number = 0;
+  cash: number = 0;
+  checks: number = 0;
+  tips: number = 0;
+  fees: number = 0;
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
     public ud: UserDataProvider,
-    public sched: ScheduleProvider) {
+    public sched: ScheduleProvider,
+    public trans: TransactionsProvider) {
     this.sched.read();
+    this.trans.read();
   }
 
   ionViewDidLoad() {
@@ -36,6 +44,7 @@ export class StatsPage {
   }
 
   computeStats() {
+    // from schedule items
     // filter for time period--do this in sched & trans?  yes
     console.log('number of items', this.sched.scheduleItems.length);
     this.sched.scheduleItems.forEach((s) => {
@@ -53,7 +62,7 @@ export class StatsPage {
             break;
           case '':
             s.completionState = 'Open';  // if needed
-            // falls thru 'Open' case
+          // falls thru 'Open' case
           case 'Open':
             this.inComplete += 1;
             this.previousAppts += 1;
@@ -73,7 +82,7 @@ export class StatsPage {
             this.lostRevenue += s.revenue;
             break;
           default:
-            console.log('unrecognized case');
+            console.log('unrecognized: ', s.completionState);
             break;
         }
       } else {
@@ -81,8 +90,33 @@ export class StatsPage {
         this.scheduledAppts += 1;
         this.scheduledRevenue += s.revenue;
       }
-      // console.log(s.revenue);
-      // console.log(s.completionState);
+    });
+
+    // from transactions
+    console.log('number of items', this.trans.transactions.length);
+    this.trans.transactions.forEach((i) => {
+      switch (i.type) {
+        // case 'Cash':
+        //   this.cash += i.amount;
+        //   break;
+        // case 'Check':
+        //   this.checks += i.amount;
+        //   break;
+        // case 'Tip':
+        //   this.tips += i.amount;
+        //   break;
+        case 'Dsc':
+          this.discounts += i.amount;
+          console.log(i);
+          break;
+        case 'Fee':
+          this.fees += i.amount;
+          console.log(i);
+          break;
+        default:
+          console.log('unrecognized: ', i.type);
+          break;
+      }
     });
   }
 }

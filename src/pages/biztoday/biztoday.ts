@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { ScheduleProvider } from '../../providers/schedule/schedule';
+import { TransactionsProvider } from '../../providers/transactions/transactions';
 
 @IonicPage()
 @Component({
@@ -19,11 +20,18 @@ export class BiztodayPage {
   lostRevenue: number = 0;
   scheduledAppts: number = 0;
   scheduledRevenue: number = 0;
+  discounts: number = 0;
+  cash: number = 0;
+  checks: number = 0;
+  tips: number = 0;
+  fees: number = 0;
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
-    public sched: ScheduleProvider) {
+    public sched: ScheduleProvider,
+    public trans: TransactionsProvider) {
     this.sched.read();
+    this.trans.read();
   }
 
   ionViewDidLoad() {
@@ -32,6 +40,7 @@ export class BiztodayPage {
   }
 
   computeStats() {
+    // from schedule items
     // filter for today
     var todaysDate: Date = new Date();
     todaysDate.setHours(0, 0, 0);
@@ -83,6 +92,40 @@ export class BiztodayPage {
       }
       this.scheduledAppts += 1;
       this.scheduledRevenue += i.revenue;
+    });
+
+    // from transactions
+    // filter for today
+    var t: TransactionType[] = [];
+    t = this.trans.transactions.filter((f) => {
+      var compDate: Date = new Date(f.date);
+      compDate.setHours(0, 0, 0);
+      // console.log('compDate', compDate.valueOf());
+      return (compDate.valueOf() === todaysDate.valueOf());
+    });
+
+    console.log('number of items', t.length);
+    t.forEach((i) => {
+      switch (i.type) {
+        case 'Cash':
+          this.cash += i.amount;
+          break;
+        case 'Check':
+          this.checks += i.amount;
+          break;
+        case 'Tip':
+          this.tips += i.amount;
+          break;
+        case 'Dsc':
+          this.discounts += i.amount;
+          break;
+        case 'Fee':
+          this.fees += i.amount;
+          break;
+        default:
+          console.log('unrecognized case');
+          break;
+      }
     });
   }
 }
