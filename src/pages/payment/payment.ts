@@ -73,8 +73,8 @@ export class PaymentPage {
       //   console.log('merch')
       //   this.payMerch();
       //   break;
-      case 'cash':
-      case 'check':
+      case 'Cash':
+      case 'Check':
         console.log(method)
         this.payCash(method);
         break;
