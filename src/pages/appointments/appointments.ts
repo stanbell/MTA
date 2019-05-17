@@ -53,7 +53,8 @@ export class AppointmentsPage {
       var o = this.helper.deepCopy(e);
       o['startTime'] = this.formatTime(e.start);
       // o['startTime'] += ((d.getHours() > 12) ? 'pm' : 'am');
-      o['startDate'] = this.formatDate(e.start); 
+      o['startDate'] = this.formatDate(e.start);
+      o['paid'] = (o['pd']) ? 'pd' : 'due';
       this.eventList.push(o);
     });
   }
