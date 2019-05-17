@@ -65,9 +65,9 @@ export class AddEventPage {
   }
 
   ionViewDidEnter() {
-    this.helper.signal('ionViewDidEnter AddEventPage');
+    // this.helper.signal('ionViewDidEnter AddEventPage');
     const ls: LookupSelectionType = this.helper.lookupSelection;
-    this.helper.signal('lookupSelection:', ls);
+    // this.helper.signal('lookupSelection:', ls);
     if (!!ls) {
       // returning from lookup
       switch (ls.what) {
@@ -104,11 +104,11 @@ export class AddEventPage {
   }
 
   addEvent() {
-    this.helper.signal('addEvent');
-    this.helper.signal(this.event);
+    // this.helper.signal('addEvent');
+    // this.helper.signal(this.event);
     this.event.start = this.helper.convertFromISO(this.startDate); // new Date(this.startDate).toISOString();
-    this.helper.signal('as used in addToNative');
-    this.helper.signal(new Date(this.event.start));
+    // this.helper.signal('as used in addToNative');
+    // this.helper.signal(new Date(this.event.start));
     this.event.end = this.helper.convertFromISO(this.endDate); // new Date(this.endDate).toISOString();
     this.event.revenue = this.service.price;
     // create a revenue transaction, match it with the appt
@@ -129,7 +129,10 @@ export class AddEventPage {
       //TODO:  check if TransPartyType really necessary, compare to sample data
       party: { id: this.event.clientName, description: '' }
     })
-    this.addToNative();
+    if (this.user.user.useCalendar !== 'app') {
+      // if requested in user settings
+      this.addToNative();
+    }
     this.sched.add(this.event);
     this.udw.write();
     // go back
@@ -139,21 +142,21 @@ export class AddEventPage {
   async addToNative() {
     console.log('cordova', this.plt.is('cordova'));
     if (this.plt.is('cordova')) {  // only works on real device
-      this.helper.signal('addToNative');
+      // this.helper.signal('addToNative');
       // if user is using native
       if (this.user.user.useCalendar !== 'in-app') {
-        this.helper.signal('using native');
+        // this.helper.signal('using native');
         // if we have permission
         var permitted: boolean = await this.ncal.hasReadWritePermission();
         if (!permitted) {
           permitted = await this.ncal.requestReadWritePermission();
         }
         if (permitted) {
-          this.helper.signal('has permission');
+          // this.helper.signal('has permission');
           try {
             var calendarOptions: any = await this.ncal.getCalendarOptions();
-            this.helper.signal('got calendarOptions');
-            this.helper.signal(calendarOptions);
+            // this.helper.signal('got calendarOptions');
+            // this.helper.signal(calendarOptions);
             calendarOptions.firstReminderMinutes = 15;
             const addr: string = this.user.user.address.street1 + ' ' +
               this.user.user.address.street2 + ' ' +
@@ -168,8 +171,8 @@ export class AddEventPage {
                 new Date(this.event.start), // startDate, 
                 new Date(this.event.end), // endDate, 
                 calendarOptions);
-              this.helper.signal('after createEvent');
-              this.helper.signal(eventResponse);  // android gives a single number
+              // this.helper.signal('after createEvent');
+              // this.helper.signal(eventResponse);  // android gives a single number
               // TOOD: validate ios also gives single number response, vs object
               // this.event.providerItemId = eventResponse['id'];  // the unique id from the native calendar
               this.event.providerItemId = eventResponse;  // the unique id from the native calendar  
@@ -182,7 +185,7 @@ export class AddEventPage {
           }
         } // else no permissions, do nothing
       }  // else not using native calendar
-      this.helper.signal(this.event);
+      // this.helper.signal(this.event);
     }
   }
 
