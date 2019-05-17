@@ -76,7 +76,7 @@ export class PaymentPage {
       case 'cash':
       case 'check':
         console.log(method)
-        this.payCash();
+        this.payCash(method);
         break;
       default:
         break;
@@ -113,9 +113,9 @@ export class PaymentPage {
     }
   }
 
-  payCash() {
+  payCash(m: string) {
     console.log('payCash');
-    this.composeTrans().forEach((t) => {
+    this.composeTrans(m).forEach((t) => {
       this.event.transactions.push({ uniqueId: t.uniqueId })
       this.ud.userData.transactions.push(t);
     });
@@ -132,11 +132,7 @@ export class PaymentPage {
 
   }
 
-  payMerch() {
-
-  }
-
-  composeTrans(): TransactionType[] {
+  composeTrans(payType: string): TransactionType[] {
     console.log('composeTrans');
     // re-assign price to revenue
     this.event.revenue = parseFloat(this.price);
@@ -169,7 +165,7 @@ export class PaymentPage {
       uniqueId: this.event.id + '_P',
       apptId: this.event.id,
       processorId: '',
-      type: 'Pmt',
+      type: payType,
       description: 'payment',
       amount: paymentAmt,
       date: d,
