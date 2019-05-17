@@ -22,22 +22,22 @@ html {
 }
 
 // suggested ?standard bootstrap 4.x
-@media all and (max-width: 1199px) {
+@media only screen and (max-width: 1199px) {
   html {
     font-size: 170% !important;
   }
 }
-@media all and (max-width: 991px) {
+@media only screen and (max-width: 991px) {
   html {
     font-size: 140% !important;
   }
 }
-@media all and (max-width: 768px) {
+@media only screen and (max-width: 768px) {
   html {
     font-size: 110% !important;
   }
 }
-@media all and (max-width: 575px) {
+@media only screen and (max-width: 575px) {
   html {
     font-size: 70% !important;
   }
