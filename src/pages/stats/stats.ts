@@ -107,11 +107,9 @@ export class StatsPage {
         //   break;
         case 'Dsc':
           this.discounts += i.amount;
-          console.log(i);
           break;
         case 'Fee':
           this.fees += i.amount;
-          console.log(i);
           break;
         default:
           console.log('unrecognized: ', i.type);
