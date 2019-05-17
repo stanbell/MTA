@@ -9,6 +9,7 @@ import '../../types/types';
 const CACHE_ID = 'MTA_DATA';
 const CONTENTS_ROUTE = 'contents';
 const NEWUSER_ROUTE = 'newuser';
+const CHECKUSER_ROUTE = 'checkuser';
 
 // TODO: encrypt/decrypt package/unpackage before reads/wrires
 // const MASTER_KEY = "Two roads diverged in a yellow wood,"
@@ -102,7 +103,7 @@ export class UserDataProvider {
       console.log('readData l=', l);
     }
     catch { l = 0; }
-    
+
     try {
       serverData = await this.readServer();
       // console.log('serverData', serverData);
@@ -113,12 +114,12 @@ export class UserDataProvider {
     // NOTE: write updates userData.appActivity--make sure a re-read doesn't over-write
     if ((this.inCache) && (l > s)) {
       // if (l > s) {  // use local only if newer
-        // also using lastUpdate to indicate empty local data
-        //  needed to make new, empty userData after signup to start correctly
-        this.userData = this.helper.deepCopy(localData);
-      } else {
-        this.userData = this.helper.deepCopy(serverData);
-      }
+      // also using lastUpdate to indicate empty local data
+      //  needed to make new, empty userData after signup to start correctly
+      this.userData = this.helper.deepCopy(localData);
+    } else {
+      this.userData = this.helper.deepCopy(serverData);
+    }
     console.log('userData', this.userData);
     // refresh
     this.dataWindow = new Date();
@@ -139,7 +140,7 @@ export class UserDataProvider {
       console.log('readLocal error ', err);
       this.inCache = false;
       locallyReadData = this.emptyUserData;
-      locallyReadData.appActivity.lastUpdate = "1/1/1968" 
+      locallyReadData.appActivity.lastUpdate = "1/1/1968"
       return this.emptyUserData;
     }
   }
@@ -206,6 +207,27 @@ export class UserDataProvider {
       console.log('writeLocal mtaapi.postData error', err);
     }
 
+  }
+
+  checkIdAvailable(newUser: string): Promise<boolean> {
+    let route = CHECKUSER_ROUTE + '/' + newUser;
+    return new Promise((resolve, reject) => {
+      try {
+        console.log('checkUser', newUser);
+        this.api.getData(route)
+          .then(d => {
+            const r = JSON.parse(d);
+            if (r['status'] === 'in use') {
+              resolve(false);
+            } else {
+              resolve(true);
+            }
+          });
+      }
+      catch (err) {
+        reject(true);
+      }
+    });
   }
 
 }
