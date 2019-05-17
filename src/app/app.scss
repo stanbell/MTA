@@ -21,36 +21,58 @@ html {
   font-size: 100%;
 }
 
-@media (min-width: 320px) {
+// suggested ?standard bootstrap 4.x
+@media all and (max-width: 1199px) {
   html {
-    font-size: 70% !important;
+    font-size: 170% !important;
   }
 }
-@media (min-width: 480px) {
-  html {
-    font-size: 80% !important;
-  }
-}
-@media (min-width: 768px) {
-  html {
-    font-size: 110% !important;
-  }
-}
-@media (min-width: 1024px) {
+@media all and (max-width: 991px) {
   html {
     font-size: 140% !important;
   }
 }
-@media (min-width: 1280px) {
+@media all and (max-width: 768px) {
   html {
-    font-size: 160% !important;
+    font-size: 110% !important;
   }
 }
-@media (min-width: 1366px) {
+@media all and (max-width: 575px) {
   html {
-    font-size: 180% !important;
+    font-size: 70% !important;
   }
 }
+// mine
+// @media (min-width: 320px) {
+//   html {
+//     font-size: 70% !important;
+//   }
+// }
+// @media (min-width: 480px) {
+//   html {
+//     font-size: 80% !important;
+//   }
+// }
+// @media (min-width: 768px) {
+//   html {
+//     font-size: 110% !important;
+//   }
+// }
+// @media (min-width: 1024px) {
+//   html {
+//     font-size: 140% !important;
+//   }
+// }
+// @media (min-width: 1280px) {
+//   html {
+//     font-size: 160% !important;
+//   }
+// }
+// @media (min-width: 1366px) {
+//   html {
+//     font-size: 180% !important;
+//   }
+// }
 
 // body {
 //   max-width: 900px;
