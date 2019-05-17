@@ -70,7 +70,7 @@
       <ion-input type="password" [(ngModel)]="verifyPwd"></ion-input>
     </ion-item>
     <ion-item no-lines>
-      <button ion-button [disabled]="!nu.id || !nu.pwd || !verifyPwd" (click)="signup()">Complete Setup</button><br>
+      <button ion-button [disabled]="!nu.businessName || !nu.id || !nu.pwd || (verifyPwd !== nu.pwd)" (click)="signup()">Complete Setup</button><br>
     </ion-item>
   </div>
 </ion-content>
