@@ -1,9 +1,10 @@
 bugs
-_ native calendar elements in settings, not needed
-_ tries to use native calendar without respect to setting
+x native calendar elements in settings, not needed
+X tries to use native calendar without respect to setting
+X remove un-emplemented settings options (sort name, square pay)
 _ pwd check available missing
 _ pwd match verify in signup
-_ mta account shows wrong user 'joe'
+N mta account shows wrong user 'joe'--DID NOT REPRODUCE
 
 
 _ responsive

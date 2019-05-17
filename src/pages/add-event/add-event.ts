@@ -129,7 +129,7 @@ export class AddEventPage {
       //TODO:  check if TransPartyType really necessary, compare to sample data
       party: { id: this.event.clientName, description: '' }
     })
-    if (this.user.user.useCalendar !== 'app') {
+    if (this.user.user.useCalendar === 'native') {
       // if requested in user settings
       this.addToNative();
     }

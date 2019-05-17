@@ -28,7 +28,7 @@
     </ion-item>
   </ion-list>
 
-  <ion-item no-lines>
+  <!-- <ion-item no-lines>
     <ion-label class="checkOption">Sort client list by</ion-label>
   </ion-item>
   <ion-list radio-group [(ngModel)]="biz.sortClientsBy">
@@ -40,7 +40,7 @@
       <ion-label class="checkOption">Last Name</ion-label>
       <ion-radio value="last"></ion-radio>
     </ion-item>
-  </ion-list>
+  </ion-list> -->
 
   <ion-item no-lines>
     <ion-label class="checkOption">Automatically log out</ion-label>
@@ -56,7 +56,7 @@
     </ion-item>
   </ion-list>
 
-  <ion-item no-lines>
+  <!-- <ion-item no-lines>
     <ion-label class="checkOption">Who may complete the intake form?</ion-label>
   </ion-item>
   <ion-list radio-group [(ngModel)]="biz.whoIntake">
@@ -68,7 +68,7 @@
       <ion-label class="checkOption">Allow clients</ion-label>
       <ion-radio value="client"></ion-radio>
     </ion-item>
-  </ion-list>
+  </ion-list> -->
 
   <ion-item no-lines>
     <ion-label class="checkOption">Who can schedule?</ion-label>
@@ -83,6 +83,9 @@
       <ion-radio value="client"></ion-radio>
     </ion-item>
   </ion-list>
+  <ion-item>
+    <ion-label class="checkOption">Requires use of companion app for clients.</ion-label>
+  </ion-item>
 
   <ion-item>
     <ion-label fixed>email daily schedule to: </ion-label>
@@ -114,9 +117,8 @@
     <ion-label class="checkOption">Note if you use both iOs & Android devices, only the calendar native to that device will be updated when making appointments.</ion-label>
   </ion-item>
 
-  <div *ngIf="biz.useCalendar!='in-app'">
+  <!-- <div *ngIf="biz.useCalendar!='in-app'">
     <ion-item>
-      <!-- <ion-label hidden [(ngModel)]="biz.calendar.provider">{{biz.useCalendar}}</ion-label> -->
       <ion-label class="checkOption">Name</ion-label>
     </ion-item>
     <ion-item no-lines>
@@ -140,24 +142,24 @@
     <ion-item no-lines>
       <ion-input type="text" [(ngModel)]="biz.calendar.connectionInfo"></ion-input>
     </ion-item>
-  </div>
+  </div> -->
   <ion-item></ion-item>
   <ion-item no-lines>
-    <ion-label class="checkOption">Accept Payments in App</ion-label>
+    <ion-label class="checkOption">Third-party Payments in App</ion-label>
   </ion-item>
   <ion-list radio-group [(ngModel)]="biz.acceptPayments">
     <ion-item>
-      <ion-label class="checkOption">No, not in the app</ion-label>
+      <ion-label class="checkOption">No, I'll handle outside the app.</ion-label>
       <ion-radio value="none" checked></ion-radio>
     </ion-item>
     <ion-item>
       <ion-label class="checkOption">Yes, with Stripe</ion-label>
       <ion-radio value="stripe"></ion-radio>
     </ion-item>
-    <ion-item>
+    <!-- <ion-item>
       <ion-label class="checkOption">Yes, with Square</ion-label>
       <ion-radio value="square"></ion-radio>
-    </ion-item>
+    </ion-item> -->
     <ion-item>
       <ion-label class="checkOption">Yes, with Paypal</ion-label>
       <ion-radio value="paypal"></ion-radio>
@@ -214,7 +216,7 @@
       <ion-input type="text" [(ngModel)]="biz.paypal.fee"></ion-input>
     </ion-item>
   </div>
-  <div *ngIf="biz.acceptPayments=='square'">
+  <!-- <div *ngIf="biz.acceptPayments=='square'">
     <ion-item>
       <ion-label class="checkOption">Square Connection Info</ion-label>
     </ion-item>
@@ -242,7 +244,7 @@
     <ion-item no-lines>
       <ion-input type="text" [(ngModel)]="biz.square.fee"></ion-input>
     </ion-item>
-  </div>
+  </div> -->
 
   <ion-item>Your Services</ion-item>
   <ion-grid>
