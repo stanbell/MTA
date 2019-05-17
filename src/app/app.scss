@@ -13,9 +13,48 @@
 // To declare rules for a specific mode, create a child rule
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
+
+// ionic defaults appear to be md=768, lg=992, xl=1200
+// or (in 4?) xs=100%, sm=540px, md=720, lg=960, xl=1140
+
 html {
-  font-size: 9px !important;
+  font-size: 100%;
 }
+
+@media (min-width: 320px) {
+  html {
+    font-size: 70% !important;
+  }
+}
+@media (min-width: 480px) {
+  html {
+    font-size: 80% !important;
+  }
+}
+@media (min-width: 768px) {
+  html {
+    font-size: 110% !important;
+  }
+}
+@media (min-width: 1024px) {
+  html {
+    font-size: 140% !important;
+  }
+}
+@media (min-width: 1280px) {
+  html {
+    font-size: 160% !important;
+  }
+}
+@media (min-width: 1366px) {
+  html {
+    font-size: 180% !important;
+  }
+}
+
+// body {
+//   max-width: 900px;
+// }
 
 .content {
   background-color: color($colors, background);
@@ -118,7 +157,7 @@ ion-datetime {
   background-color: color($colors, secondary);
 }
 .checkOption {
-  font-size: x-small;
+  // font-size: x-small;
   margin: 0;
   overflow-wrap: break-word;
 }

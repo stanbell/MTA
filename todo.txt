@@ -1,3 +1,12 @@
+bugs
+_ native calendar elements in settings, not needed
+_ tries to use native calendar without respect to setting
+_ pwd check available missing
+_ pwd match verify in signup
+_ mta account shows wrong user 'joe'
+
+
+_ responsive
 _ web
 
 _ put in stores
@@ -6,6 +15,8 @@ X clean up format and style
 
 X error in transactions page trans date
 ? don't add tip to revenue in payments page(s)
+
+
 
 _ encrypt ccapi credit card data
 
