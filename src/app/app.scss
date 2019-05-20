@@ -21,15 +21,13 @@ html {
   font-size: 100%;
 }
 
-// suggested ?standard bootstrap 4.x
-@media only screen and (max-width: 1199px) {
+// to fix too-big fonts when landscape
+// @media (orientation: landscape) { }
+
+
+@media only screen and (min-width: 990px) {
   html {
-    font-size: 170% !important;
-  }
-}
-@media only screen and (max-width: 991px) {
-  html {
-    font-size: 140% !important;
+    font-size: 120% !important;
   }
 }
 @media only screen and (max-width: 768px) {
@@ -42,40 +40,30 @@ html {
     font-size: 70% !important;
   }
 }
-// mine
-// @media (min-width: 320px) {
-//   html {
-//     font-size: 70% !important;
-//   }
-// }
-// @media (min-width: 480px) {
-//   html {
-//     font-size: 80% !important;
-//   }
-// }
-// @media (min-width: 768px) {
-//   html {
-//     font-size: 110% !important;
-//   }
-// }
-// @media (min-width: 1024px) {
-//   html {
-//     font-size: 140% !important;
-//   }
-// }
-// @media (min-width: 1280px) {
-//   html {
-//     font-size: 160% !important;
-//   }
-// }
-// @media (min-width: 1366px) {
-//   html {
-//     font-size: 180% !important;
-//   }
-// }
+@media only screen and (max-width: 330px) {
+  html {
+    font-size: 55% !important;
+  }
+}
+@media only screen and (max-width: 300px) {
+  html {
+    font-size: 45% !important;
+  }
+}
+// limit size & center
+@media only screen and (min-width: 1025px) {
+  body {
+    max-width: 1024px;
+    margin-left: calc((100vw - 1024px) / 2);
+  }
+}
 
-// body {
-//   max-width: 900px;
+// ion-app {
+//   // display: block;
+//   max-width: 960px;
+//   margin-left: calc((100vw - 960px) /2 );
+//   margin-right: auto;
+//   text-align: center;
 // }
 
 .content {
