@@ -58,14 +58,6 @@ html {
   }
 }
 
-// ion-app {
-//   // display: block;
-//   max-width: 960px;
-//   margin-left: calc((100vw - 960px) /2 );
-//   margin-right: auto;
-//   text-align: center;
-// }
-
 .content {
   background-color: color($colors, background);
 }
@@ -175,4 +167,8 @@ ion-datetime {
 .search {
   background-color: color($colors, primary);
   color: color($colors, lightText);
+}
+
+.advise {
+  font-size: small;
 }

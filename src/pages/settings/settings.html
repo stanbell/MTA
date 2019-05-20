@@ -9,9 +9,11 @@
 
 
 <ion-content padding>
-
+  <ion-item>
+    <p class="box">Activity</p>
+  </ion-item>
   <ion-item no-lines>
-    <ion-label class="checkOption">List clients active within</ion-label>
+    <ion-label class="checkOption">List clients who have been active within</ion-label>
   </ion-item>
   <ion-list radio-group [(ngModel)]="biz.listActive">
     <ion-item>
@@ -42,7 +44,7 @@
     </ion-item>
   </ion-list> -->
 
-  <ion-item no-lines>
+  <!-- <ion-item no-lines>
     <ion-label class="checkOption">Automatically log out</ion-label>
   </ion-item>
   <ion-list radio-group [(ngModel)]="biz.autoLogOut">
@@ -54,7 +56,7 @@
       <ion-label class="checkOption">Never</ion-label>
       <ion-radio value="no"></ion-radio>
     </ion-item>
-  </ion-list>
+  </ion-list> -->
 
   <!-- <ion-item no-lines>
     <ion-label class="checkOption">Who may complete the intake form?</ion-label>
@@ -70,7 +72,7 @@
     </ion-item>
   </ion-list> -->
 
-  <ion-item no-lines>
+  <!-- <ion-item no-lines>
     <ion-label class="checkOption">Who can schedule?</ion-label>
   </ion-item>
   <ion-list radio-group [(ngModel)]="biz.whoSchedule">
@@ -85,23 +87,28 @@
   </ion-list>
   <ion-item>
     <ion-label class="checkOption">Requires use of companion app for clients.</ion-label>
-  </ion-item>
+  </ion-item> -->
 
-  <ion-item>
-    <ion-label fixed>email daily schedule to: </ion-label>
+  <!-- <ion-item no-lines>
+    <ion-label class="checkOption">email daily schedule to: </ion-label>
   </ion-item>
   <ion-item no-lines>
     <ion-input type="text" [(ngModel)]="biz.emailSchedule"></ion-input>
-  </ion-item>
+  </ion-item> -->
+  <ion-item no-lines></ion-item>
   <ion-item>
-    <ion-label fixed>default title for new appts: </ion-label>
+    <p class="box">Calendar/Appointments</p>
+  </ion-item>
+
+  <ion-item no-lines>
+    <ion-label class="checkOption">Default title for new appts: </ion-label>
   </ion-item>
   <ion-item no-lines>
     <ion-input type="text" [(ngModel)]="biz.defaultApptTitle"></ion-input>
   </ion-item>
   <ion-item></ion-item>
   <ion-item no-lines>
-    <ion-label class="checkOption">Use calendar</ion-label>
+    <ion-label class="checkOption">Use calendar?</ion-label>
   </ion-item>
   <ion-list radio-group [(ngModel)]="biz.useCalendar">
     <ion-item>
@@ -114,7 +121,8 @@
     </ion-item>
   </ion-list>
   <ion-item>
-    <ion-label class="checkOption">Note if you use both iOs & Android devices, only the calendar native to that device will be updated when making appointments.</ion-label>
+    <ion-label class="advise">Note if you use both iOs & Android devices, only the calendar native to that device will
+      be updated when making appointments.</ion-label>
   </ion-item>
 
   <!-- <div *ngIf="biz.useCalendar!='in-app'">
@@ -143,7 +151,10 @@
       <ion-input type="text" [(ngModel)]="biz.calendar.connectionInfo"></ion-input>
     </ion-item>
   </div> -->
-  <ion-item></ion-item>
+  <ion-item no-lines></ion-item>
+  <ion-item>
+    <p class="box">Payments</p>
+  </ion-item>
   <ion-item no-lines>
     <ion-label class="checkOption">Third-party Payments in App</ion-label>
   </ion-item>
@@ -246,17 +257,20 @@
     </ion-item>
   </div> -->
 
-  <ion-item>Your Services</ion-item>
+  <ion-item no-lines></ion-item>
+  <ion-item>
+    <p class="box">Your Services</p>
+  </ion-item>
   <ion-grid>
     <ion-row>
       <ion-col col-6>
-        <div>Service</div>
+        <div class="myHeader">Service</div>
       </ion-col>
       <ion-col col-3>
-        <div>Duration</div>
+        <div class="myHeader">Duration</div>
       </ion-col>
       <ion-col col-3>
-        <div>Price</div>
+        <div class="myHeader">Price</div>
       </ion-col>
     </ion-row>
     <ion-row *ngFor="let s of biz.services">
@@ -266,7 +280,7 @@
     </ion-row>
   </ion-grid>
   <p>
-    <ion-icon class="checkOption" name="add-circle" (click)="addService()"></ion-icon> Add Service
+    <ion-icon class="checkOption" name="add-circle" (click)="addService()"></ion-icon> Add a Service
   </p>
 
   <button ion-button (click)="save()">Save</button>
