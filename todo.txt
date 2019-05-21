@@ -6,6 +6,7 @@ X pwd check available missing
 x pwd match verify in signup
 N mta account shows wrong user 'joe'--DID NOT REPRODUCE
 
+_ set up 'feedback@dcsbdn.us' mail alias
 
 x responsive
 _ web
@@ -20,7 +21,10 @@ X clean up format and style
 X error in transactions page trans date
 ? don't add tip to revenue in payments page(s)
 
+defer options
 _ email tomorrow's schedule
+_ who can schedule/client schedule
+_ auto log out
 
 _ encrypt ccapi credit card data
 

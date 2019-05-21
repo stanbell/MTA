@@ -40,6 +40,8 @@ export class SignupPage {
   }
 
   signup() {
+    this.nu.expires = new Date().toISOString();
+    this.nu.cancelled = "";
     this.udw.signup(this.nu);
     this.navCtrl.pop();
   }

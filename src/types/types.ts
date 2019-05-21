@@ -81,7 +81,9 @@ interface SystemUserType {
     id: string,
     pwd: string,
     businessName: string,
-    billing: UserBillingInfoType
+    billing: UserBillingInfoType,
+    expires: string,
+    cancelled: string
 }
 
 interface CalendarType {

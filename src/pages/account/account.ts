@@ -24,10 +24,8 @@ export class AccountPage {
     public plt: Platform,
     public helper: HelpersProvider,
     public account: AccountProvider) {
-      console.log(this.plt.platforms());
-    if (!this.plt.is('mobile')) {
+    if (!this.plt.is('mobile')) {  // only allow account cancellation on the web
       this.ontheWeb = true;
-      console.log('ontheweb', this.ontheWeb);
     }
     this.nu = this.helper.deepCopy(this.account.nu);
     console.log(this.nu);
@@ -51,11 +49,8 @@ export class AccountPage {
 
 
   cancelAccount() {
-
-  }
-
-  emailWhy() {
-
+    this.account.cancelAccount(this.nu.id);
+    // TODO:  notify cancellation complete
   }
 
   gotoDownload() {

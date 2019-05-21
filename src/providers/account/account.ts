@@ -46,7 +46,7 @@ export class AccountProvider {
       console.log(error);
     }
   }
-
+  
   async resetPwd(newPwd: string) {
     // note actually replaces the whole mtausers record
     this.nu.pwd = newPwd;
@@ -58,6 +58,17 @@ export class AccountProvider {
       console.log(error);
     }
   }
-
+  
+  async cancelAccount(uid: string) {
+    console.log('cancelAccount');
+    let route = 'canceluser/' + this.auth.user + '?t=' + this.auth.accessToken;  // WORKING HERE: reconcile nu._id
+    console.log(route);
+    try {
+      await this.api.postData(route, "");
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  
 }
 
