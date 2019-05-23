@@ -193,32 +193,32 @@ export class DownloadPage {
 
     // file to write on target 
     var destinationFullPath = "";
-    this.helper.signal('destination', destinationFullPath);
     if (this.plt.is('mobile')) {
       this.helper.signal('in mobile section');
       // mobile
-      if (this.plt.is('ios')) {
-        // destinationFullPath = <any> window.resolveLocalFileSystemURL(this.file.documentsDirectory + sourceFileName); 
+      // if (this.plt.is('ios')) {
+        // destinationFullPath = window.rresolveLocalFileSystemURL(this.file.documentsDirectory + sourceFileName); 
         destinationFullPath = this.file.documentsDirectory + sourceFileName;  // verify we can see these docs
-      } else if (this.plt.is('android')) {
-        destinationFullPath = this.file.externalDataDirectory + sourceFileName;
-      }
+      // } else if (this.plt.is('android')) {
+        // destinationFullPath = this.file.externalDataDirectory + sourceFileName;
+      // }
+      this.helper.signal('destination', destinationFullPath);
       this.file.writeFile(sourceFilePath, sourceFileName, content, {})
       .then((d) => {
         if (d) this.helper.signal('wrote file successfully');
           // download
-          const ft: FileTransferObject = this.trans.create();
-          ft.download(sourceFullPath, destinationFullPath, true)
-            .then((entry) => {
-              this.helper.signal('download complete: ' + entry.toURL());
-              // remove the server copy of the file
-              this.file.removeFile(sourceFilePath, sourceFileName)
-                .then((d) => this.helper.signal('download file deleted on server'))
-                .catch(error => this.helper.signal('download file delete error', error));
-            })
-            .catch(error => {
-              this.helper.signal('transfer download error', error);
-            });
+          // const ft: FileTransferObject = this.trans.create();
+          // ft.download(sourceFullPath, destinationFullPath, true)
+          //   .then((entry) => {
+          //     this.helper.signal('download complete: ' + entry.toURL());
+          //     // remove the server copy of the file
+          //     this.file.removeFile(sourceFilePath, sourceFileName)
+          //       .then((d) => this.helper.signal('download file deleted on server'))
+          //       .catch(error => this.helper.signal('download file delete error', error));
+          //   })
+          //   .catch(error => {
+          //     this.helper.signal('transfer download error', error);
+          //   });
         })
         .catch(error => {  // writefile
           this.helper.signal('writeFile error', error);
@@ -255,3 +255,36 @@ export class DownloadPage {
     this.navCtrl.pop();
   }
 }
+
+
+// var destinationFullPath = "";
+// if (this.plt.is('mobile')) {
+//   this.helper.signal('in mobile section');
+//   // mobile
+//   if (this.plt.is('ios')) {
+//     // destinationFullPath = window.rresolveLocalFileSystemURL(this.file.documentsDirectory + sourceFileName); 
+//     destinationFullPath = this.file.documentsDirectory + sourceFileName;  // verify we can see these docs
+//   } else if (this.plt.is('android')) {
+//     destinationFullPath = this.file.externalDataDirectory + sourceFileName;
+//   }
+//   this.helper.signal('destination', destinationFullPath);
+//   this.file.writeFile(sourceFilePath, sourceFileName, content, {})
+//     .then((d) => {
+//       if (d) this.helper.signal('wrote file successfully');
+//       // download
+//       const ft: FileTransferObject = this.trans.create();
+//       ft.download(sourceFullPath, destinationFullPath, true)
+//         .then((entry) => {
+//           this.helper.signal('download complete: ' + entry.toURL());
+//           // remove the server copy of the file
+//           this.file.removeFile(sourceFilePath, sourceFileName)
+//             .then((d) => this.helper.signal('download file deleted on server'))
+//             .catch(error => this.helper.signal('download file delete error', error));
+//         })
+//         .catch(error => {
+//           this.helper.signal('transfer download error', error);
+//         });
+//     })
+//     .catch(error => {  // writefile
+//       this.helper.signal('writeFile error', error);
+//     });
