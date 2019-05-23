@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
 import { AccountProvider } from '../../providers/account/account';
 import { HelpersProvider } from '../../providers/helpers/helpers';
 import '../../types/types';
+import { DownloadPage } from '../download/download';
 
 @IonicPage()
 @Component({
@@ -16,6 +17,7 @@ export class AccountPage {
   newPwd: string = "";
   verifyPwd: string = "";
   confirmId: string = "";
+  expDate: string = "";
 
   ontheWeb: boolean = false;
 
@@ -29,6 +31,10 @@ export class AccountPage {
     }
     this.nu = this.helper.deepCopy(this.account.nu);
     console.log(this.nu);
+    var d: Date = new Date();
+    d.setHours(0, 0, 0);
+    this.expDate = d.toISOString();
+    console.log(this.expDate);
   }
 
   async ionViewDidLoad() {
@@ -39,6 +45,7 @@ export class AccountPage {
 
   updateBilling() {
     // TODO verify cc info immediately
+    // TODO reset expiration date
     this.account.updateBilling(this.nu.billing);
   }
 
@@ -54,6 +61,6 @@ export class AccountPage {
   }
 
   gotoDownload() {
-
+    this.navCtrl.push(DownloadPage);
   }
 }
