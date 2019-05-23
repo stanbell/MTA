@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
 import { UserDataProvider } from '../../providers/user-data/user-data';
 import { HelpersProvider } from '../../providers/helpers/helpers';
-import { FileTransfer, FileTransferObject } from '@ionic-native/file-transfer';
+// import { FileTransfer, FileTransferObject } from '@ionic-native/file-transfer';
 import { File } from '@ionic-native/file';
 
 
@@ -28,7 +28,7 @@ export class DownloadPage {
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
     public plt: Platform,
-    private trans: FileTransfer,
+    // private trans: FileTransfer,
     private file: File,
     public helper: HelpersProvider,
     public ud: UserDataProvider) {
@@ -180,32 +180,37 @@ export class DownloadPage {
         });
       }
       content = DL.join('\n');
-      // console.log(content);
+      // content = escape(content);
+      // content = encodeURIComponent(content);
+      console.log(content);
+
     }
 
     // download data =====
     // create file locally on server
     const sourceFilePath = '/userdownloads/';  // TODO remember to make this dir & chmod
     const fd = new Date();
-    var sourceFileName = 'MTAdata' + fd.getMonth().toString() + fd.getDate().toString() + fd.getFullYear().toString();
-    sourceFileName = (this.format === 'csv') ? sourceFileName + '.csv' : sourceFileName + '.json';
-    const sourceFullPath = sourceFilePath + sourceFileName;
+    var fileName = 'MTAdata' + fd.getMonth().toString() + fd.getDate().toString() + fd.getFullYear().toString();
+    fileName = (this.format === 'csv') ? fileName + '.csv' : fileName + '.json';
+    // const sourceFullPath = sourceFilePath + sourceFileName;
 
     // file to write on target 
     var destinationFullPath = "";
     if (this.plt.is('mobile')) {
       this.helper.signal('in mobile section');
       // mobile
-      // if (this.plt.is('ios')) {
+      if (this.plt.is('ios')) {
         // destinationFullPath = window.rresolveLocalFileSystemURL(this.file.documentsDirectory + sourceFileName); 
-        destinationFullPath = this.file.documentsDirectory + sourceFileName;  // verify we can see these docs
-      // } else if (this.plt.is('android')) {
-        // destinationFullPath = this.file.externalDataDirectory + sourceFileName;
-      // }
+        destinationFullPath = this.file.documentsDirectory + fileName;  // verify we can see these docs
+      } else if (this.plt.is('android')) {
+        // destinationFullPath = this.file.dataDirectory + fileName;
+        destinationFullPath = fileName;
+      }
       this.helper.signal('destination', destinationFullPath);
-      this.file.writeFile(sourceFilePath, sourceFileName, content, {})
-      .then((d) => {
-        if (d) this.helper.signal('wrote file successfully');
+      const blob = new Blob([content], { type: 'text/csv;charset=utf-8;' });
+      this.file.writeFile(sourceFilePath, fileName, blob, {})
+        .then((d) => {
+          if (d) this.helper.signal('wrote file successfully');
           // download
           // const ft: FileTransferObject = this.trans.create();
           // ft.download(sourceFullPath, destinationFullPath, true)
@@ -226,27 +231,27 @@ export class DownloadPage {
 
 
     } else if (this.plt.is('core')) {
-    // browser--create a "download" link and "click" it
-    // destinationFullPath = 'Downloads/'+ sourceFileName;
-    destinationFullPath = sourceFileName;
-    this.helper.signal('destination', destinationFullPath);
-    const blob = new Blob([content], { type: 'text/csv;charset=utf-8;' });
-    if (navigator.msSaveBlob) { // IE 10+
-      navigator.msSaveBlob(blob, destinationFullPath);
-    } else {
-      this.helper.signal('in link section');
-      const link = document.createElement('a');
-      if (link.download !== undefined) {
-        // Browsers that support HTML5 download attribute
-        const url = URL.createObjectURL(blob);
-        link.setAttribute('href', url);
-        link.setAttribute('download', destinationFullPath);
-        link.style.visibility = 'hidden';
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
+      // browser--create a "download" link and "click" it
+      // destinationFullPath = 'Downloads/'+ sourceFileName;
+      destinationFullPath = fileName;
+      this.helper.signal('destination', destinationFullPath);
+      const blob = new Blob([content], { type: 'text/csv;charset=utf-8;' });
+      if (navigator.msSaveBlob) { // IE 10+
+        navigator.msSaveBlob(blob, destinationFullPath);
+      } else {
+        this.helper.signal('in link section');
+        const link = document.createElement('a');
+        if (link.download !== undefined) {
+          // Browsers that support HTML5 download attribute
+          const url = URL.createObjectURL(blob);
+          link.setAttribute('href', url);
+          link.setAttribute('download', destinationFullPath);
+          link.style.visibility = 'hidden';
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+        }
       }
-    }
 
     } // else??
 
