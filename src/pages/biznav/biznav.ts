@@ -42,6 +42,7 @@ export class BiznavPage {
         break;
       case 'account':
         this.navCtrl.push(AccountPage);
+        break;
       case 'download':
         this.navCtrl.push(DownloadPage);
         break;
