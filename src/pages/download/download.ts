@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
 import { UserDataProvider } from '../../providers/user-data/user-data';
-// import { FileTransfer, FileTransferObject } from '@ionic-native/file-transfer';
-// import { File } from '@ionic-native/file';
-// import fs from 'fs';
+import { HelpersProvider } from '../../providers/helpers/helpers';
+import { FileTransfer, FileTransferObject } from '@ionic-native/file-transfer';
+import { File } from '@ionic-native/file';
 
 
 const SIXMONTHS = 180;
@@ -28,8 +28,9 @@ export class DownloadPage {
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
     public plt: Platform,
-    // private trans: FileTransfer,
-    // private file: File,
+    private trans: FileTransfer,
+    private file: File,
+    public helper: HelpersProvider,
     public ud: UserDataProvider) {
     this.fromDateD = new Date();
     this.fromDateD.setHours(0, 0, 0);
@@ -125,7 +126,7 @@ export class DownloadPage {
       content = JSON.stringify(DD);
       console.log(DL);
     } else {
-       // csv
+      // csv
       var DL: string[] = [];
       // "download" section
       DL = [];
@@ -192,59 +193,60 @@ export class DownloadPage {
 
     // file to write on target 
     var destinationFullPath = "";
-    // if (this.plt.is('mobile')) {
-    //   // mobile
-    //   if (this.plt.is('ios')) {
-    //     // destinationFullPath = <any> window.resolveLocalFileSystemURL(this.file.documentsDirectory + sourceFileName); 
-    //     destinationFullPath = this.file.documentsDirectory + sourceFileName;  // verify we can see these docs
-    //   } else if (this.plt.is('android')) {
-    //     destinationFullPath = this.file.externalDataDirectory + sourceFileName;
-    //   }
-    //   this.file.writeFile(sourceFilePath, sourceFileName, content, {})
-    //     .then((d) => {
-    //       if (d) console.log('wrote file successfully');
-    //       // download
-    //       const ft: FileTransferObject = this.trans.create();
-    //       ft.download(sourceFullPath, destinationFullPath, true)
-    //         .then((entry) => {
-    //           console.log('download complete: ' + entry.toURL());
-    //           // remove the server copy of the file
-    //           this.file.removeFile(sourceFilePath, sourceFileName)
-    //             .then((d) => console.log('download file deleted on server'))
-    //             .catch(error => console.log('download file delete error', error));
-    //         })
-    //         .catch(error => {
-    //           console.log('transfer download error', error);
-    //         });
-    //     })
-    //     .catch(error => {  // writefile
-    //       console.log('writeFile error', error);
-    //     });
-
-
-    // } else if (this.plt.is('core')) {
-      // browser--create a "download" link and "click" it
-      // destinationFullPath = 'Downloads/'+ sourceFileName;
-      destinationFullPath = sourceFileName;
-
-      const blob = new Blob([content], { type: 'text/csv;charset=utf-8;' });
-      if (navigator.msSaveBlob) { // IE 10+
-        navigator.msSaveBlob(blob, destinationFullPath);
-      } else {
-        const link = document.createElement('a');
-        if (link.download !== undefined) {
-          // Browsers that support HTML5 download attribute
-          const url = URL.createObjectURL(blob);
-          link.setAttribute('href', url);
-          link.setAttribute('download', destinationFullPath);
-          link.style.visibility = 'hidden';
-          document.body.appendChild(link);
-          link.click();
-          document.body.removeChild(link);
-        }
+    if (this.plt.is('mobile')) {
+      // mobile
+      if (this.plt.is('ios')) {
+        // destinationFullPath = <any> window.resolveLocalFileSystemURL(this.file.documentsDirectory + sourceFileName); 
+        destinationFullPath = this.file.documentsDirectory + sourceFileName;  // verify we can see these docs
+      } else if (this.plt.is('android')) {
+        destinationFullPath = this.file.externalDataDirectory + sourceFileName;
       }
+      this.file.writeFile(sourceFilePath, sourceFileName, content, {})
+        .then((d) => {
+          if (d) console.log('wrote file successfully');
+          // download
+          const ft: FileTransferObject = this.trans.create();
+          ft.download(sourceFullPath, destinationFullPath, true)
+            .then((entry) => {
+              console.log('download complete: ' + entry.toURL());
+              // remove the server copy of the file
+              this.file.removeFile(sourceFilePath, sourceFileName)
+                .then((d) => console.log('download file deleted on server'))
+                .catch(error => console.log('download file delete error', error));
+            })
+            .catch(error => {
+              console.log('transfer download error', error);
+            });
+        })
+        .catch(error => {  // writefile
+          console.log('writeFile error', error);
+        });
 
-    // } // else??
+
+    } else if (this.plt.is('core')) {
+    // browser--create a "download" link and "click" it
+    // destinationFullPath = 'Downloads/'+ sourceFileName;
+    destinationFullPath = sourceFileName;
+    this.helper.signal('destination', destinationFullPath);
+    const blob = new Blob([content], { type: 'text/csv;charset=utf-8;' });
+    if (navigator.msSaveBlob) { // IE 10+
+      navigator.msSaveBlob(blob, destinationFullPath);
+    } else {
+      this.helper.signal('in link section');
+      const link = document.createElement('a');
+      if (link.download !== undefined) {
+        // Browsers that support HTML5 download attribute
+        const url = URL.createObjectURL(blob);
+        link.setAttribute('href', url);
+        link.setAttribute('download', destinationFullPath);
+        link.style.visibility = 'hidden';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      }
+    }
+
+    } // else??
 
 
     // when complete, go back
