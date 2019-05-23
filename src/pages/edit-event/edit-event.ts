@@ -72,9 +72,9 @@ export class EditEventPage {
   }
 
   ionViewDidEnter() {
-    this.helper.signal('ionViewDidEnter AddEventPage');
+    // this.helper.signal('ionViewDidEnter AddEventPage');
     const ls: LookupSelectionType = this.helper.lookupSelection;
-    this.helper.signal('lookupSelection:', ls);
+    // this.helper.signal('lookupSelection:', ls);
     if (!!ls) {
       // returning from lookup
       switch (ls.what) {
