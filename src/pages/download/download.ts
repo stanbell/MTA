@@ -180,7 +180,7 @@ export class DownloadPage {
         });
       }
       content = DL.join('\n');
-      console.log(content);
+      // console.log(content);
     }
 
     // download data =====
@@ -193,7 +193,9 @@ export class DownloadPage {
 
     // file to write on target 
     var destinationFullPath = "";
+    this.helper.signal('destination', destinationFullPath);
     if (this.plt.is('mobile')) {
+      this.helper.signal('in mobile section');
       // mobile
       if (this.plt.is('ios')) {
         // destinationFullPath = <any> window.resolveLocalFileSystemURL(this.file.documentsDirectory + sourceFileName); 
@@ -202,24 +204,24 @@ export class DownloadPage {
         destinationFullPath = this.file.externalDataDirectory + sourceFileName;
       }
       this.file.writeFile(sourceFilePath, sourceFileName, content, {})
-        .then((d) => {
-          if (d) console.log('wrote file successfully');
+      .then((d) => {
+        if (d) this.helper.signal('wrote file successfully');
           // download
           const ft: FileTransferObject = this.trans.create();
           ft.download(sourceFullPath, destinationFullPath, true)
             .then((entry) => {
-              console.log('download complete: ' + entry.toURL());
+              this.helper.signal('download complete: ' + entry.toURL());
               // remove the server copy of the file
               this.file.removeFile(sourceFilePath, sourceFileName)
-                .then((d) => console.log('download file deleted on server'))
-                .catch(error => console.log('download file delete error', error));
+                .then((d) => this.helper.signal('download file deleted on server'))
+                .catch(error => this.helper.signal('download file delete error', error));
             })
             .catch(error => {
-              console.log('transfer download error', error);
+              this.helper.signal('transfer download error', error);
             });
         })
         .catch(error => {  // writefile
-          console.log('writeFile error', error);
+          this.helper.signal('writeFile error', error);
         });
 
 
