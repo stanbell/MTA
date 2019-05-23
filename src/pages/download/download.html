@@ -1,0 +1,73 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Download</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+  <ion-item>
+    <p class="box">Activity</p>
+  </ion-item>
+  <ion-item no-lines>
+    <ion-label class="checkOption">Download Activity</ion-label>
+  </ion-item>
+  <ion-list radio-group [(ngModel)]="timeframe">
+    <ion-item>
+      <ion-label class="checkOption">Forever</ion-label>
+      <ion-radio value="all" checked></ion-radio>
+    </ion-item>
+    <ion-item>
+      <ion-label class="checkOption">Specific Dates</ion-label>
+      <ion-radio value="dates"></ion-radio>
+    </ion-item>
+  </ion-list>
+  <div *ngIf="timeframe=='dates'">
+    <ion-item no-lines>
+      <ion-label class="checkOption">From</ion-label>
+      <ion-datetime displayFormat="MMM D YYYY" pickerFormat="MMM DD YYYY" [(ngModel)]="fromDate"></ion-datetime>
+    </ion-item>
+    <ion-item no-lines>
+        <ion-label class="checkOption">To</ion-label>
+      <ion-datetime displayFormat="MMM D YYYY" pickerFormat="MMM DD YYYY" [(ngModel)]="toDate"></ion-datetime>
+    </ion-item>
+  </div>
+
+  <ion-item no-lines></ion-item>
+  <ion-item no-lines>
+    <ion-label class="checkOption">Data Format</ion-label>
+  </ion-item>
+  <ion-list radio-group [(ngModel)]="format">
+    <ion-item>
+      <ion-label class="checkOption">CSV (works with Excel)</ion-label>
+      <ion-radio value="csv" checked></ion-radio>
+    </ion-item>
+    <ion-item>
+      <ion-label class="checkOption">JSON (common for data exchange)</ion-label>
+      <ion-radio value="json"></ion-radio>
+    </ion-item>
+  </ion-list>
+
+  <ion-item no-lines></ion-item>
+  <ion-item no-lines>
+    <ion-label class="checkOption">Include Data</ion-label>
+  </ion-item>
+  <ion-item>
+    <ion-label>Clients</ion-label>
+    <ion-checkbox [(ngModel)]="includeClients"></ion-checkbox>
+  </ion-item>
+  <ion-item>
+    <ion-label>Appointments</ion-label>
+    <ion-checkbox [(ngModel)]="includeAppts"></ion-checkbox>
+  </ion-item>
+  <ion-item>
+    <ion-label>Transactions</ion-label>
+    <ion-checkbox [(ngModel)]="includeTransactions"></ion-checkbox>
+  </ion-item>
+  <ion-item no-lines></ion-item>
+  
+  <button ion-button (click)="download()">Download Now</button>
+</ion-content>

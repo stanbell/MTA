@@ -5,13 +5,16 @@ X remove un-emplemented settings options (sort name, square pay)
 X pwd check available missing
 x pwd match verify in signup
 N mta account shows wrong user 'joe'--DID NOT REPRODUCE
+_ error loading appt screen w/appt for alice adams 4/24
+
 
 _ set up 'feedback@dcsbdn.us' mail alias
 
+x export csv or json (test on device, works on browser)
+
 x responsive
-_ web
-    _ web only cancel user account
-    _ web only export csv
+x web
+    X web only cancel user account
 
 
 _ put in stores
@@ -107,11 +110,6 @@ _ for user setting 'allow client to complete intake document'
 
 X set up account==signup
 
-___ DO THE WEB page
-    ___ web versions of pages
-        _x_ css responsive
-
 
 Web only
-_ csv export stuff
 _ square payments?

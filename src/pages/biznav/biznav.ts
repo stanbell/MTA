@@ -6,6 +6,7 @@ import { SettingsPage } from '../settings/settings';
 import { TransactionsPage } from '../transactions/transactions';
 import { StatsPage } from '../stats/stats';
 import { AccountPage } from '../account/account';
+import { DownloadPage } from '../download/download';
 
 @IonicPage()
 @Component({
@@ -41,6 +42,8 @@ export class BiznavPage {
         break;
       case 'account':
         this.navCtrl.push(AccountPage);
+      case 'download':
+        this.navCtrl.push(DownloadPage);
         break;
       default:
         break;

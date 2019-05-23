@@ -54,6 +54,9 @@ import { BiznavPage } from '../pages/biznav/biznav';
 import { BiztodayPage } from '../pages/biztoday/biztoday';
 import { AccountPage } from '../pages/account/account';
 import { AccountProvider } from '../providers/account/account';
+import { DownloadPage } from '../pages/download/download';
+import { File } from '@ionic-native/file';
+import { FileTransfer } from '@ionic-native/file-transfer';
 
 @NgModule({
   declarations: [
@@ -82,6 +85,7 @@ import { AccountProvider } from '../providers/account/account';
     BiznavPage,
     BiztodayPage,
     AccountPage,
+    DownloadPage,
   ],
   imports: [
     BrowserModule,
@@ -116,6 +120,7 @@ import { AccountProvider } from '../providers/account/account';
     BiznavPage,
     BiztodayPage,
     AccountPage,
+    DownloadPage,
   ],
   providers: [
     StatusBar,
@@ -142,6 +147,8 @@ import { AccountProvider } from '../providers/account/account';
     AuthProvider,
     AuthapiProvider,
     AccountProvider,
+    File,
+    FileTransfer,
   ]
 })
 export class AppModule {}
