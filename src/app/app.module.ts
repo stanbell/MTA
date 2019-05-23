@@ -56,7 +56,6 @@ import { AccountPage } from '../pages/account/account';
 import { AccountProvider } from '../providers/account/account';
 import { DownloadPage } from '../pages/download/download';
 import { File } from '@ionic-native/file';
-import { FileTransfer } from '@ionic-native/file-transfer';
 
 @NgModule({
   declarations: [
@@ -148,7 +147,6 @@ import { FileTransfer } from '@ionic-native/file-transfer';
     AuthapiProvider,
     AccountProvider,
     File,
-    FileTransfer,
   ]
 })
 export class AppModule {}

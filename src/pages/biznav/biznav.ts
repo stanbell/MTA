@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
 import { BusinessPage } from '../business/business';
 import { BiztodayPage } from '../biztoday/biztoday';
 import { SettingsPage } from '../settings/settings';
@@ -15,7 +15,12 @@ import { DownloadPage } from '../download/download';
 })
 export class BiznavPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  onTheWeb: boolean = false;
+
+  constructor(public navCtrl: NavController,
+    public navParams: NavParams,
+    public plt: Platform) {
+    this.onTheWeb = (!this.plt.is('mobile'));
   }
 
   ionViewDidLoad() {

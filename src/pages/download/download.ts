@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
 import { UserDataProvider } from '../../providers/user-data/user-data';
 import { HelpersProvider } from '../../providers/helpers/helpers';
-// import { FileTransfer, FileTransferObject } from '@ionic-native/file-transfer';
 import { File } from '@ionic-native/file';
 
 
@@ -28,7 +27,6 @@ export class DownloadPage {
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
     public plt: Platform,
-    // private trans: FileTransfer,
     private file: File,
     public helper: HelpersProvider,
     public ud: UserDataProvider) {
@@ -211,19 +209,6 @@ export class DownloadPage {
       this.file.writeFile(sourceFilePath, fileName, blob, {})
         .then((d) => {
           if (d) this.helper.signal('wrote file successfully');
-          // download
-          // const ft: FileTransferObject = this.trans.create();
-          // ft.download(sourceFullPath, destinationFullPath, true)
-          //   .then((entry) => {
-          //     this.helper.signal('download complete: ' + entry.toURL());
-          //     // remove the server copy of the file
-          //     this.file.removeFile(sourceFilePath, sourceFileName)
-          //       .then((d) => this.helper.signal('download file deleted on server'))
-          //       .catch(error => this.helper.signal('download file delete error', error));
-          //   })
-          //   .catch(error => {
-          //     this.helper.signal('transfer download error', error);
-          //   });
         })
         .catch(error => {  // writefile
           this.helper.signal('writeFile error', error);

@@ -64,7 +64,7 @@
       </ion-col>
       <ion-col col-1></ion-col>
     </ion-row>
-    <ion-row align-items-center>
+    <ion-row *ngIf="onTheWeb" align-items-center>
       <ion-col col-1></ion-col>
       <ion-col col-10 align-self-center (click)="navTo('download')">
         <div class="boxInList">
