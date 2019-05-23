@@ -6,6 +6,7 @@ X pwd check available missing
 x pwd match verify in signup
 N mta account shows wrong user 'joe'--DID NOT REPRODUCE
 _ error loading appt screen w/appt for alice adams 4/24
+_ fix 401 unauthorized (when you sign in from a different device, you invalidate the saved token on the first device)
 
 
 _ set up 'feedback@dcsbdn.us' mail alias

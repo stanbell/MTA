@@ -178,74 +178,62 @@ export class DownloadPage {
         });
       }
       content = DL.join('\n');
-      // content = escape(content);
-      // content = encodeURIComponent(content);
       console.log(content);
 
     }
 
     // download data =====
-    // create file locally on server
-    const sourceFilePath = '/userdownloads/';  // TODO remember to make this dir & chmod
     const fd = new Date();
     var fileName = 'MTAdata' + fd.getMonth().toString() + fd.getDate().toString() + fd.getFullYear().toString();
     fileName = (this.format === 'csv') ? fileName + '.csv' : fileName + '.json';
-    // const sourceFullPath = sourceFilePath + sourceFileName;
 
-    // file to write on target 
-    var destinationFullPath = "";
-    if (this.plt.is('mobile')) {
-      this.helper.signal('in mobile section');
-      // mobile
-      if (this.plt.is('ios')) {
-        // destinationFullPath = window.rresolveLocalFileSystemURL(this.file.documentsDirectory + sourceFileName); 
-        destinationFullPath = this.file.documentsDirectory + fileName;  // verify we can see these docs
-      } else if (this.plt.is('android')) {
-        // destinationFullPath = this.file.dataDirectory + fileName;
-        destinationFullPath = fileName;
+    // browser--create a "download" link and "click" it
+    this.helper.signal('destination', fileName);
+    const blob = new Blob([content], { type: 'text/csv;charset=utf-8;' });
+    if (navigator.msSaveBlob) { // IE 10+
+      navigator.msSaveBlob(blob, fileName);
+    } else {
+      this.helper.signal('in link section');
+      const link = document.createElement('a');
+      if (link.download !== undefined) {
+        // Browsers that support HTML5 download attribute
+        const url = URL.createObjectURL(blob);
+        link.setAttribute('href', url);
+        link.setAttribute('download', fileName);
+        link.style.visibility = 'hidden';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
       }
-      this.helper.signal('destination', destinationFullPath);
-      const blob = new Blob([content], { type: 'text/csv;charset=utf-8;' });
-      this.file.writeFile(sourceFilePath, fileName, blob, {})
-        .then((d) => {
-          if (d) this.helper.signal('wrote file successfully');
-        })
-        .catch(error => {  // writefile
-          this.helper.signal('writeFile error', error);
-        });
-
-
-    } else if (this.plt.is('core')) {
-      // browser--create a "download" link and "click" it
-      // destinationFullPath = 'Downloads/'+ sourceFileName;
-      destinationFullPath = fileName;
-      this.helper.signal('destination', destinationFullPath);
-      const blob = new Blob([content], { type: 'text/csv;charset=utf-8;' });
-      if (navigator.msSaveBlob) { // IE 10+
-        navigator.msSaveBlob(blob, destinationFullPath);
-      } else {
-        this.helper.signal('in link section');
-        const link = document.createElement('a');
-        if (link.download !== undefined) {
-          // Browsers that support HTML5 download attribute
-          const url = URL.createObjectURL(blob);
-          link.setAttribute('href', url);
-          link.setAttribute('download', destinationFullPath);
-          link.style.visibility = 'hidden';
-          document.body.appendChild(link);
-          link.click();
-          document.body.removeChild(link);
-        }
-      }
-
-    } // else??
-
+    }
 
     // when complete, go back
     this.navCtrl.pop();
   }
 }
 
+    // if (this.plt.is('mobile')) {
+    //   this.helper.signal('in mobile section');
+    //   // mobile
+    //   if (this.plt.is('ios')) {
+    //     // destinationFullPath = window.rresolveLocalFileSystemURL(this.file.documentsDirectory + sourceFileName); 
+    //     destinationFullPath = this.file.documentsDirectory + fileName;  // verify we can see these docs
+    //   } else if (this.plt.is('android')) {
+    //     // destinationFullPath = this.file.dataDirectory + fileName;
+    //     destinationFullPath = fileName;
+    //   }
+    //   this.helper.signal('destination', destinationFullPath);
+    //   const blob = new Blob([content], { type: 'text/csv;charset=utf-8;' });
+    //   this.file.writeFile(sourceFilePath, fileName, blob, {})
+    //     .then((d) => {
+    //       if (d) this.helper.signal('wrote file successfully');
+    //     })
+    //     .catch(error => {  // writefile
+    //       this.helper.signal('writeFile error', error);
+    //     });
+
+
+    // } else if (this.plt.is('core')) {
 
 // var destinationFullPath = "";
 // if (this.plt.is('mobile')) {
