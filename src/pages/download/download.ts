@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
 import { UserDataProvider } from '../../providers/user-data/user-data';
-import { FileTransfer, FileTransferObject } from '@ionic-native/file-transfer';
-import { File } from '@ionic-native/file';
+// import { FileTransfer, FileTransferObject } from '@ionic-native/file-transfer';
+// import { File } from '@ionic-native/file';
 // import fs from 'fs';
 
 
@@ -28,8 +28,8 @@ export class DownloadPage {
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
     public plt: Platform,
-    private trans: FileTransfer,
-    private file: File,
+    // private trans: FileTransfer,
+    // private file: File,
     public ud: UserDataProvider) {
     this.fromDateD = new Date();
     this.fromDateD.setHours(0, 0, 0);
@@ -115,141 +115,139 @@ export class DownloadPage {
         if (e.formattedAmount) delete e.formattedAmount;
         if (e.reconciledIcon) delete e.reconciledIcon;
       });
+    }
 
-      // output
-      var b: string = "";
-      var content: string = "";
-      
-      if (this.format === 'json') {
-        content = JSON.stringify(DD);
-        console.log(DL);
-      } else { // csv
-        var DL: string[] = [];
-        // "download" section
-        DL = [];
-        // DL.push('"business", "download dates", "including"');
-        b = '"' + DD.business + '","' +
-          ((this.timeframe === 'all') ? 'all dates' : DD.download.dates.fromDate + ' - ' + DD.download.dates.toDate) + '","';
-        DD.download.including.forEach((e) => {
-          b = b + e + '","'
+    // output
+    var b: string = "";
+    var content: string = "";
+
+    if (this.format === 'json') {
+      content = JSON.stringify(DD);
+      console.log(DL);
+    } else {
+       // csv
+      var DL: string[] = [];
+      // "download" section
+      DL = [];
+      // DL.push('"business", "download dates", "including"');
+      b = '"' + DD.business + '","' +
+        ((this.timeframe === 'all') ? 'all dates' : DD.download.dates.fromDate + ' - ' + DD.download.dates.toDate) + '","';
+      DD.download.including.forEach((e) => {
+        b = b + e + '","'
+      });
+      b = b.slice(0, -2);
+      DL.push(b);
+      // clients section
+      if (this.includeClients) {
+        DL.push('Clients');
+        // DL.push('"name","address_label","street1","street2","city","state","zip"');
+        DD.clients.forEach(c => {
+          b = '"' + c.name + '","' +
+            c.address.label + '","' + c.address.street1 + '","' + c.address.street2 + '","' + c.address.city + '","' + c.address.zip + '"'
+          DL.push(b);
+          if (c.contacts.length > 0) {
+            c.contacts.forEach(e => {
+              // b = '"contact",' + e.type + '","' + e.label + '","' + e.contact + '"';
+              b = '"' + e.label + '","' + e.contact + '"';
+              DL.push(b);
+            });
+          }
         });
-        b = b.slice(0, -2);
-        DL.push(b);
-        // clients section
-        if (this.includeClients) {
-          DL.push('Clients');
-          // DL.push('"name","address_label","street1","street2","city","state","zip"');
-          DD.clients.forEach(c => {
-            b = '"' + c.name + '","' +
-              c.address.label + '","' + c.address.street1 + '","' + c.address.street2 + '","' + c.address.city + '","' + c.address.zip + '"'
-            DL.push(b);
-            if (c.contacts.length > 0) {
-              c.contacts.forEach(e => {
-                // b = '"contact",' + e.type + '","' + e.label + '","' + e.contact + '"';
-                b = '"' + e.label + '","' + e.contact + '"';
-                DL.push(b);
-              });
-            }
-          });
+      }
+      // appointments section
+      if (this.includeAppts) {
+        DL.push('Appointments');
+        DL.push('"id","client","start","end","service","status","revenue","paid","subjective","objective","assessment","plan"');
+        DD.appointments.forEach(a => {
+          b = '"' + a.id + '","' +
+            a.clientName + '","' + a.start + '","' + a.end + '","' + a.serviceDescription + '","' + a.completionState + '",' + a.revenue + ',"' + a.pd + '","' +
+            ((a.visitNote.subjective) ? a.visitNote.subjective : '') + '","' +
+            ((a.visitNote.objective) ? a.visitNote.objective : '') + '","' +
+            ((a.visitNote.assessment) ? a.visitNote.assessment : '') + '","' +
+            ((a.visitNote.plan) ? a.visitNote.plan : '') + '"';
+          DL.push(b);
+        });
+      }
+      if (this.includeTransactions) {
+        DL.push('Transactions');
+        DL.push('"id","appointment_id","client","date","type","description","amount","reconciled","processor_id"');
+        DD.transactions.forEach(t => {
+          b = '"' + t.uniqueId + '","' +
+            t.apptId + '","' + t.clientName + '","' + t.date + '","' + t.type + '","' + t.description + '",' + t.amount + ',"' + t.reconciled + '","' +
+            ((t.processorId) ? t.processorId : '') + '"';
+          DL.push(b);
+        });
+      }
+      content = DL.join('\n');
+      console.log(content);
+    }
+
+    // download data =====
+    // create file locally on server
+    const sourceFilePath = '/userdownloads/';  // TODO remember to make this dir & chmod
+    const fd = new Date();
+    var sourceFileName = 'MTAdata' + fd.getMonth().toString() + fd.getDate().toString() + fd.getFullYear().toString();
+    sourceFileName = (this.format === 'csv') ? sourceFileName + '.csv' : sourceFileName + '.json';
+    const sourceFullPath = sourceFilePath + sourceFileName;
+
+    // file to write on target 
+    var destinationFullPath = "";
+    // if (this.plt.is('mobile')) {
+    //   // mobile
+    //   if (this.plt.is('ios')) {
+    //     // destinationFullPath = <any> window.resolveLocalFileSystemURL(this.file.documentsDirectory + sourceFileName); 
+    //     destinationFullPath = this.file.documentsDirectory + sourceFileName;  // verify we can see these docs
+    //   } else if (this.plt.is('android')) {
+    //     destinationFullPath = this.file.externalDataDirectory + sourceFileName;
+    //   }
+    //   this.file.writeFile(sourceFilePath, sourceFileName, content, {})
+    //     .then((d) => {
+    //       if (d) console.log('wrote file successfully');
+    //       // download
+    //       const ft: FileTransferObject = this.trans.create();
+    //       ft.download(sourceFullPath, destinationFullPath, true)
+    //         .then((entry) => {
+    //           console.log('download complete: ' + entry.toURL());
+    //           // remove the server copy of the file
+    //           this.file.removeFile(sourceFilePath, sourceFileName)
+    //             .then((d) => console.log('download file deleted on server'))
+    //             .catch(error => console.log('download file delete error', error));
+    //         })
+    //         .catch(error => {
+    //           console.log('transfer download error', error);
+    //         });
+    //     })
+    //     .catch(error => {  // writefile
+    //       console.log('writeFile error', error);
+    //     });
+
+
+    // } else if (this.plt.is('core')) {
+      // browser--create a "download" link and "click" it
+      // destinationFullPath = 'Downloads/'+ sourceFileName;
+      destinationFullPath = sourceFileName;
+
+      const blob = new Blob([content], { type: 'text/csv;charset=utf-8;' });
+      if (navigator.msSaveBlob) { // IE 10+
+        navigator.msSaveBlob(blob, destinationFullPath);
+      } else {
+        const link = document.createElement('a');
+        if (link.download !== undefined) {
+          // Browsers that support HTML5 download attribute
+          const url = URL.createObjectURL(blob);
+          link.setAttribute('href', url);
+          link.setAttribute('download', destinationFullPath);
+          link.style.visibility = 'hidden';
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
         }
-        // appointments section
-        if (this.includeAppts) {
-          DL.push('Appointments');
-          DL.push('"id","client","start","end","service","status","revenue","paid","subjective","objective","assessment","plan"');
-          DD.appointments.forEach(a => {
-            b = '"' + a.id + '","' +
-              a.clientName + '","' + a.start + '","' + a.end + '","' + a.serviceDescription + '","' + a.completionState + '",' + a.revenue + ',"' + a.pd + '","' +
-              ((a.visitNote.subjective) ? a.visitNote.subjective : '') + '","' +
-              ((a.visitNote.objective) ? a.visitNote.objective : '') + '","' +
-              ((a.visitNote.assessment) ? a.visitNote.assessment : '') + '","' +
-              ((a.visitNote.plan) ? a.visitNote.plan : '') + '"';
-            DL.push(b);
-          });
-        }
-        if (this.includeTransactions) {
-          DL.push('Transactions');
-          DL.push('"id","appointment_id","client","date","type","description","amount","reconciled","processor_id"');
-          DD.transactions.forEach(t => {
-            b = '"' + t.uniqueId + '","' +
-              t.apptId + '","' + t.clientName + '","' + t.date + '","' + t.type + '","' + t.description + '",' + t.amount + ',"' + t.reconciled + '","' +
-              ((t.processorId) ? t.processorId : '') + '"';
-            DL.push(b);
-          });
-        }
-        content = DL.join('\n');
-        console.log(content);
       }
 
-      // turn the generated array into csv
-
-      // download data =====
-      // create file locally on server
-      const sourceFilePath = '/userdownloads/';  // TODO remember to make this dir & chmod
-      const fd = new Date();
-      var sourceFileName = 'MTAdata' + fd.getMonth().toString() + fd.getDate().toString() + fd.getFullYear().toString();
-      sourceFileName = (this.format === 'csv') ? sourceFileName + '.csv' : sourceFileName + '.json';
-      const sourceFullPath = sourceFilePath + sourceFileName;
-      
-      // file to write on target 
-      var destinationFullPath = "";
-      if (this.plt.is('mobile')) {
-        // mobile
-        if (this.plt.is('ios')) {
-          // destinationFullPath = <any> window.resolveLocalFileSystemURL(this.file.documentsDirectory + sourceFileName); 
-          destinationFullPath = this.file.documentsDirectory + sourceFileName;  // verify we can see these docs
-        } else if (this.plt.is('android')) {
-          destinationFullPath = this.file.externalDataDirectory + sourceFileName;
-        }
-        this.file.writeFile(sourceFilePath, sourceFileName, content, {})
-          .then((d) => {
-            if (d) console.log('wrote file successfully');
-            // download
-            const ft: FileTransferObject = this.trans.create();
-            ft.download(sourceFullPath, destinationFullPath, true)
-              .then((entry) => {
-                console.log('download complete: ' + entry.toURL());
-                // remove the server copy of the file
-                this.file.removeFile(sourceFilePath, sourceFileName)
-                  .then((d) => console.log('download file deleted on server'))
-                  .catch(error => console.log('download file delete error', error));
-              })
-              .catch(error => {
-                console.log('transfer download error', error);
-              });
-          })
-          .catch(error => {  // writefile
-            console.log('writeFile error', error);
-          });
+    // } // else??
 
 
-      } else if (this.plt.is('core')) {  
-        // browser--create a "download" link and "click" it
-        // destinationFullPath = 'Downloads/'+ sourceFileName;
-        destinationFullPath = sourceFileName;
-
-        const blob = new Blob([content], { type: 'text/csv;charset=utf-8;' });
-        if (navigator.msSaveBlob) { // IE 10+
-          navigator.msSaveBlob(blob, destinationFullPath);
-        } else {
-          const link = document.createElement('a');
-          if (link.download !== undefined) {
-            // Browsers that support HTML5 download attribute
-            const url = URL.createObjectURL(blob);
-            link.setAttribute('href', url);
-            link.setAttribute('download', destinationFullPath);
-            link.style.visibility = 'hidden';
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-          }
-        }
-
-      } // else??
-
-
-      // when complete, go back
-      this.navCtrl.pop();
-    }
+    // when complete, go back
+    this.navCtrl.pop();
   }
-
 }
