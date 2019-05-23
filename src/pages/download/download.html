@@ -69,5 +69,5 @@
   </ion-item>
   <ion-item no-lines></ion-item>
   
-  <button ion-button (click)="download()">Download Now</button>
+  <button ion-button [disabled]="!includeClients && !includeAppts && !includeTransactions"  (click)="download()">Download Now</button>
 </ion-content>
