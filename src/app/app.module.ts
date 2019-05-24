@@ -55,7 +55,7 @@ import { BiztodayPage } from '../pages/biztoday/biztoday';
 import { AccountPage } from '../pages/account/account';
 import { AccountProvider } from '../providers/account/account';
 import { DownloadPage } from '../pages/download/download';
-import { File } from '@ionic-native/file';
+// import { File } from '@ionic-native/file';
 
 @NgModule({
   declarations: [
@@ -146,7 +146,7 @@ import { File } from '@ionic-native/file';
     AuthProvider,
     AuthapiProvider,
     AccountProvider,
-    File,
+    // File,
   ]
 })
 export class AppModule {}

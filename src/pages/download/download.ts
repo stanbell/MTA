@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
 import { UserDataProvider } from '../../providers/user-data/user-data';
 import { HelpersProvider } from '../../providers/helpers/helpers';
-import { File } from '@ionic-native/file';
+// import { File } from '@ionic-native/file';
 
 
 const SIXMONTHS = 180;
@@ -27,7 +27,7 @@ export class DownloadPage {
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
     public plt: Platform,
-    private file: File,
+    // private file: File,
     public helper: HelpersProvider,
     public ud: UserDataProvider) {
     this.fromDateD = new Date();
