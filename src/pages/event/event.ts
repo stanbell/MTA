@@ -38,12 +38,8 @@ export class EventPage {
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
-    // public plt: Platform,
-    // public ls: LocalStoreProvider,
     public helper: HelpersProvider,
     public ud: UserDataProvider) {
-    // this.mode = navParams.get('mode');
-    // we just edit, we've already created an empty/defaulted one if adding
 
     this.event = navParams.get('event');
     // console.log(this.event);
