@@ -137,7 +137,6 @@ var paymentForm = new SqPaymentForm({
             alert('nonce ' + nonce);
             //   document.getElementById('nonce-form').submit();
 
-            // match stripe
             chargeRequest = {
                 accountId: "1",
                 client: "Alice Adams",
