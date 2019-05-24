@@ -166,7 +166,7 @@ export class PaymentPage {
       apptId: this.event.id,
       processorId: '',
       type: payType,
-      description: 'payment',
+      description: 'payment for ' + this.event.start,
       amount: paymentAmt,
       date: d,
       reconciled: false,

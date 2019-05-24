@@ -220,7 +220,7 @@ export class StripePaymentPage {
       apptId: this.event.id,
       type: 'CC',
       // description: 'net credit',
-      description: this.ud.userData.user.acceptPayments + ' payment', //  + charge.id,
+      description: this.ud.userData.user.acceptPayments + ' payment for' + this.event.start, //  + charge.id,
       amount: chgRemainder,
       date: d,
       reconciled: false,

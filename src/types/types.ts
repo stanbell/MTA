@@ -78,7 +78,7 @@ interface UserBillingInfoType {
 }
 
 interface SystemUserType {
-    id: string,
+    _id: string,
     pwd: string,
     businessName: string,
     billing: UserBillingInfoType,

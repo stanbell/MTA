@@ -56,7 +56,7 @@ export class AccountPage {
 
 
   cancelAccount() {
-    this.account.cancelAccount(this.nu.id);
+    this.account.cancelAccount(this.nu._id);
     // TODO:  notify cancellation complete
   }
 

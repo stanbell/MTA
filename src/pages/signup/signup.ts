@@ -31,7 +31,7 @@ export class SignupPage {
   async pwdAvailable() {
     console.log('pwdAvailable');
     try {
-      this.available = await (this.ud.checkIdAvailable(this.nu.id));
+      this.available = await (this.ud.checkIdAvailable(this.nu._id));
       console.log('returnd from ud.checkuser');
       console.log(this.available);
     } catch (error) {
