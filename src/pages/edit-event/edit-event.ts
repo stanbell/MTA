@@ -3,12 +3,12 @@ import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
 import { Calendar } from '@ionic-native/calendar';
 import { HelpersProvider } from '../../providers/helpers/helpers';
 import { LookupPage } from '../lookup/lookup';
-import '../../types/types';
 import { EmptiesProvider } from '../../providers/empties/empties';
 import { ScheduleProvider } from '../../providers/schedule/schedule';
 import { TransactionsProvider } from '../../providers/transactions/transactions';
 import { UserProvider } from '../../providers/user/user';
 import { UserDataWriterProvider } from '../../providers/user-data-writer/user-data-writer';
+import '../../types/types';
 
 const MINUTE = 1000 * 60;
 const DAY = 1000 * 60 * 60 * 24;
@@ -72,7 +72,7 @@ export class EditEventPage {
   }
 
   ionViewDidEnter() {
-    // this.helper.signal('ionViewDidEnter AddEventPage');
+    // this.helper.signal('ionViewDidEnter EditEventPage');
     const ls: LookupSelectionType = this.helper.lookupSelection;
     // this.helper.signal('lookupSelection:', ls);
     if (!!ls) {

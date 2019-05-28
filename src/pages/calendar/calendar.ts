@@ -4,7 +4,6 @@ import { Calendar } from '@ionic-native/calendar';
 import { EventPage } from '../event/event';
 import { ScheduleProvider } from '../../providers/schedule/schedule';
 import { HelpersProvider } from '../../providers/helpers/helpers';
-// import { AddEventPage } from '../add-event/add-event';
 import { EditEventPage } from '../edit-event/edit-event';
 import { UserDataProvider } from '../../providers/user-data/user-data';
 

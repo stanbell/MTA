@@ -33,8 +33,7 @@ export class EventPage {
   // so use this for fields edited in edit-event form
   display: string[] = ['', '', '', '', ''];
 
-  // temp
-  services = ['test 1', 'test 2', 'service 3'];
+  services: string[] = [];
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,

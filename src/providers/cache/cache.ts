@@ -15,7 +15,7 @@ export class CacheProvider {
     console.log('Constructor Cache Provider');
   }
 
-  remove(type) {
+  remove(type: string) {
     console.log('removing from cache', type);
     this.LSP.remove(type);
   }
@@ -26,14 +26,9 @@ export class CacheProvider {
       .then((k) => {
         for (const t in k) {
           if (k.hasOwnProperty(t)) {
-            // remove everything except session and plans
-            // if (k[t] !== "mta_session"
-            //   && k[t] !== "plans") {
+            // removes everybody's eveerything
             console.log('clearing ', k[t]);
             this.LSP.remove(k[t]);
-            // } else {
-            //   console.log('not clearing ', k[t]);
-            // }
           }
         }
       });
