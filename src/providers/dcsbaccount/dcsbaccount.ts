@@ -1,4 +1,3 @@
-// import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MTAAPI } from '../mtaapi/mtaapi';
 import { AuthProvider } from '../auth/auth';
@@ -8,7 +7,7 @@ import { EmptiesProvider } from '../empties/empties';
 // routes:  contents/_id (numeric)
 
 @Injectable()
-export class AccountProvider {
+export class DcsbAccountProvider {
 
   nu: SystemUserType;
 
@@ -17,7 +16,7 @@ export class AccountProvider {
     public empties: EmptiesProvider,
     public api: MTAAPI,
     public auth: AuthProvider) {
-    console.log('Constructor AccountProvider Provider');
+    console.log('Constructor DcsbaccountProvider Provider');
     this.nu = empties.getEmptyNewUser();
     // this.getAccount();
     // console.log(this.nu);
@@ -28,7 +27,7 @@ export class AccountProvider {
     try {
       const s = JSON.parse(await this.api.getData(route));
       console.log(s);
-      this.nu = {...s, ...this.nu};
+      this.nu = { ...s, ...this.nu };
       console.log(this.nu);
     } catch (error) {
       console.log(error);
@@ -46,7 +45,7 @@ export class AccountProvider {
       console.log(error);
     }
   }
-  
+
   async resetPwd(newPwd: string) {
     // note actually replaces the whole mtausers record
     this.nu.pwd = newPwd;
@@ -58,7 +57,7 @@ export class AccountProvider {
       console.log(error);
     }
   }
-  
+
   async cancelAccount(uid: string) {
     console.log('cancelAccount');
     let route = 'canceluser/' + this.auth.user + '?t=' + this.auth.accessToken;  // WORKING HERE: reconcile nu._id
@@ -69,6 +68,6 @@ export class AccountProvider {
       console.log(error);
     }
   }
-  
+
 }
 

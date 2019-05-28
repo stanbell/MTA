@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
-import { AccountProvider } from '../../providers/account/account';
+import { DcsbAccountProvider } from '../../providers/dcsbaccount/dcsbaccount';
 import { HelpersProvider } from '../../providers/helpers/helpers';
-import '../../types/types';
 import { DownloadPage } from '../download/download';
+import '../../types/types';
 
 @IonicPage()
 @Component({
@@ -11,7 +11,6 @@ import { DownloadPage } from '../download/download';
   templateUrl: 'account.html',
 })
 export class AccountPage {
-
 
   nu: SystemUserType;
   newPwd: string = "";
@@ -25,7 +24,7 @@ export class AccountPage {
     public navParams: NavParams,
     public plt: Platform,
     public helper: HelpersProvider,
-    public account: AccountProvider) {
+    public account: DcsbAccountProvider) {
     if (!this.plt.is('mobile')) {  // only allow account cancellation on the web
       this.ontheWeb = true;
     }

@@ -5,7 +5,7 @@ import { AuthProvider } from '../../providers/auth/auth';
 import { NavoptionsPage } from '../navoptions/navoptions';
 import { UserDataProvider } from '../../providers/user-data/user-data';
 import { SignupPage } from '../signup/signup';
-import { AccountProvider } from '../../providers/account/account';
+import { DcsbAccountProvider } from '../../providers/dcsbaccount/dcsbaccount';
 
 @IonicPage()
 @Component({
@@ -17,7 +17,7 @@ export class HomePage {
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
     public auth: AuthProvider,
-    public account: AccountProvider,
+    public account: DcsbAccountProvider,
     public ud: UserDataProvider) {
     console.log('home constructor');
     this.auth.checkToken();
