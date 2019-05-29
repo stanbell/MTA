@@ -17,8 +17,8 @@ export class AuthapiProvider {
 
   authenticate(body: string): Promise<object> {
     const fullRoute = this.apiURL + 'authenticate';
-    console.log('authenticate', fullRoute);
-    console.log('authenticate', body);
+    // console.log('authenticate', fullRoute);
+    // console.log('authenticate', body);
     return new Promise((resolve, reject) => {
       let httpHeaders = new HttpHeaders({
         'Content-Type': 'application/json',
@@ -29,7 +29,7 @@ export class AuthapiProvider {
         // .timeout(7100)
         .subscribe( // note just changed JSON.stringify(data) to (data) bc i think .put returns an object aleady
           (data) => {
-            console.log('read from authenticate post', data);
+            // console.log('read from authenticate post', data);
             resolve(data);},
           (err) => reject(err));
     });
@@ -37,7 +37,7 @@ export class AuthapiProvider {
 
   checkToken(token: string): Promise<boolean> {
     const fullRoute = this.apiURL + 'authenticate?token=' + token;
-    console.log('authenticate', fullRoute);
+    // console.log('authenticate', fullRoute);
     return new Promise((resolve, reject) => {
       let httpHeaders = new HttpHeaders({
         'Content-Type': 'application/json',
