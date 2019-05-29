@@ -12,11 +12,9 @@ export class CacheProvider {
   constructor(
     public helper: HelpersProvider,
     private LSP: LocalStoreProvider) {
-    // console.log('Constructor Cache Provider');
   }
 
   remove(type: string) {
-    console.log('removing from cache', type);
     this.LSP.remove(type);
   }
 
@@ -27,7 +25,6 @@ export class CacheProvider {
         for (const t in k) {
           if (k.hasOwnProperty(t)) {
             // removes everybody's eveerything
-            console.log('clearing ', k[t]);
             this.LSP.remove(k[t]);
           }
         }
@@ -35,29 +32,25 @@ export class CacheProvider {
   }
 
   write(type: string, input: string) {
-    console.log('caching ' + type);
     let p = this.helper.encrypt(this.package(type, input), ENCRYPT_KEY);
     this.LSP.set(type, p)
-      .then(result => console.log("saved to cache"))
+      .then((result) => {})  //console.log("saved to cache"))
       .catch(e => console.log("error: " + e));
   }
 
 
   read(type: string): Promise<string> {
-    console.log('reading cache for ' + type);
+    // console.log('reading cache for ' + type);
     return new Promise((resolve, reject) => {
       this.LSP.get(type)
         .then((data) => {
           if (data) {
-            console.log('got cache');
             const r = this.unPackage(type, this.helper.decrypt(data, ENCRYPT_KEY));
             resolve(r);
           } else {
-            console.log('not in cache');
             reject('not in cache');
           }
         });
-      // .catch(e => reject => console.log("error: " + e));
     })
   }
 

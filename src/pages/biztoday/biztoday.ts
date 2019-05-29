@@ -42,12 +42,11 @@ export class BiztodayPage {
     // from schedule items
     // filter for today
     var todaysDate: Date = new Date();
-    todaysDate.setHours(0, 0, 0);
-    // console.log('todaysDate', todaysDate.valueOf());
+    todaysDate.setHours(0, 0, 0, 0);
     var s: ScheduleItemType[] = [];
     s = this.sched.scheduleItems.filter((f) => {
       var compDate: Date = new Date(f.start);
-      compDate.setHours(0, 0, 0);
+      compDate.setHours(0, 0, 0, 0);
       // console.log('compDate', compDate.valueOf());
       return (compDate.valueOf() === todaysDate.valueOf());
     });
@@ -98,12 +97,11 @@ export class BiztodayPage {
     var t: TransactionType[] = [];
     t = this.trans.transactions.filter((f) => {
       var compDate: Date = new Date(f.date);
-      compDate.setHours(0, 0, 0);
-      // console.log('compDate', compDate.valueOf());
+      compDate.setHours(0, 0, 0, 0);
       return (compDate.valueOf() === todaysDate.valueOf());
     });
 
-    console.log('number of items', t.length);
+    // console.log('number of items', t.length);
     t.forEach((i) => {
       switch (i.type) {
         case 'Cash':

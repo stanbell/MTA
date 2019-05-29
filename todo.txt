@@ -5,11 +5,14 @@ X remove un-emplemented settings options (sort name, square pay)
 X pwd check available missing
 x pwd match verify in signup
 N mta account shows wrong user 'joe'--DID NOT REPRODUCE
-_ error loading appt screen w/appt for alice adams 4/24
-_ fix 401 unauthorized (when you sign in from a different device, you invalidate the saved token on the first device)
-_ event info missing access from my schedule
-_ today stats not showing payment/receipts
+N error loading appt screen w/appt for alice adams 4/24
+X fix 401 unauthorized (when you sign in from a different device, you invalidate the saved token on the first device)
+x event info missing access from my schedule
+X today stats not showing payment/receipts
 
+
+!! _ put in checks for connectivity before trying to connect with api'same
+        should still work with local cache of app & data
 
 _ set up 'feedback@dcsbdn.us' mail alias
 

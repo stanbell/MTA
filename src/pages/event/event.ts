@@ -41,7 +41,7 @@ export class EventPage {
     public ud: UserDataProvider) {
 
     this.event = navParams.get('event');
-    // console.log(this.event);
+    console.log(this.event);
     this.displayDate = (new Date(this.event.start).toLocaleDateString());
     this.displayStart = (new Date(this.event.start).toLocaleTimeString());
     this.displayEnd = (new Date(this.event.end).toLocaleTimeString());
@@ -53,12 +53,17 @@ export class EventPage {
 
   ionViewDidEnter() {
     console.log('ionViewDidEnter EventPage');
-    this.initialTransactions = this.matchTransactions(this.event.transactions, this.ud.userData.transactions);
-    this.initialTransactions.forEach(e => e.type = this.helper.upshiftInitial(e.type));
-    this.transactions = this.helper.deepCopy(this.initialTransactions);
-    this.transactions.forEach((e) => {
-      e['formattedAmount'] = (e.amount >= 0) ? e.amount.toFixed(2) : "(" + (0 - e.amount).toFixed(2) + ")";
-    });
+    if (!!this.event.transactions) {
+      this.initialTransactions = this.matchTransactions(this.event.transactions, this.ud.userData.transactions);
+      this.initialTransactions.forEach(e => e.type = this.helper.upshiftInitial(e.type));
+      this.transactions = this.helper.deepCopy(this.initialTransactions);
+      this.transactions.forEach((e) => {
+        e['formattedAmount'] = (e.amount >= 0) ? e.amount.toFixed(2) : "(" + (0 - e.amount).toFixed(2) + ")";
+      });
+    } else {
+      this.event.transactions = this.transactions = [];
+      // this.transactions = [];
+    }
     this.display[0] = this.displayDate;
     this.display[1] = this.displayStart + ' to ' + this.displayEnd;
     this.display[2] = 'Client: ' + this.event.clientName;

@@ -34,11 +34,11 @@ export class DownloadPage {
     this.fromDateD.setHours(0, 0, 0);
     this.fromDateD.setDate(this.fromDateD.getDate() - SIXMONTHS);
     this.fromDate = this.fromDateD.toISOString();
-    console.log(this.fromDateD.toDateString());
+    // console.log(this.fromDateD.toDateString());
     this.toDateD = new Date();
     this.toDateD.setHours(0, 0, 0);
     this.toDate = this.toDateD.toISOString();
-    console.log(this.toDateD.toDateString());
+    // console.log(this.toDateD.toDateString());
   }
 
 

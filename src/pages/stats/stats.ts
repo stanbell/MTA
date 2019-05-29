@@ -45,7 +45,7 @@ export class StatsPage {
   computeStats() {
     // from schedule items
     // filter for time period--do this in sched & trans?  yes
-    console.log('number of items', this.sched.scheduleItems.length);
+    // console.log('number of items', this.sched.scheduleItems.length);
     this.sched.scheduleItems.forEach((s) => {
       if (new Date(s.start).valueOf() < Date.now().valueOf()) {
         // past
@@ -92,7 +92,7 @@ export class StatsPage {
     });
 
     // from transactions
-    console.log('number of items', this.trans.transactions.length);
+    // console.log('number of items', this.trans.transactions.length);
     this.trans.transactions.forEach((i) => {
       switch (i.type) {
         // case 'Cash':
@@ -111,7 +111,7 @@ export class StatsPage {
           this.fees += i.amount;
           break;
         default:
-          console.log('unrecognized: ', i.type);
+          // console.log('unrecognized: ', i.type);
           break;
       }
     });

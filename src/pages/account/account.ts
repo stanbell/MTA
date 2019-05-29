@@ -29,11 +29,11 @@ export class AccountPage {
       this.ontheWeb = true;
     }
     this.nu = this.helper.deepCopy(this.account.nu);
-    console.log(this.nu);
+    // console.log(this.nu);
     var d: Date = new Date();
     d.setHours(0, 0, 0);
     this.expDate = d.toISOString();
-    console.log(this.expDate);
+    // console.log(this.expDate);
   }
 
   updateBilling() {

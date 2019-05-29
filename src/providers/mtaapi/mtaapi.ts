@@ -18,7 +18,7 @@ export class MTAAPI {
     getData(route: string): Promise<string> {
         // console.log('getData', route);
         const fullRoute = this.apiURL + route;
-        console.log('getData', fullRoute);
+        // console.log('getData', fullRoute);
         return new Promise((resolve, reject) => {
             let httpHeaders = new HttpHeaders({
                 'Content-Type': 'application/json',
@@ -37,7 +37,7 @@ export class MTAAPI {
     putData(route: string, body: string): Promise<object> {
         // console.log('putData', route);
         const fullRoute = this.apiURL + route;
-        console.log('putData', fullRoute);
+        // console.log('putData', fullRoute);
         // console.log('putData', body);
         return new Promise((resolve, reject) => {
             let httpHeaders = new HttpHeaders({
@@ -55,7 +55,7 @@ export class MTAAPI {
 
     postData(route: string, body: string): Promise<object> {
         const fullRoute = this.apiURL + route;
-        console.log('postData', fullRoute);
+        // console.log('postData', fullRoute);
         // console.log('postData', body);
         return new Promise((resolve, reject) => {
             let httpHeaders = new HttpHeaders({
