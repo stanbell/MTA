@@ -19,7 +19,7 @@ export class AuthProvider {
   constructor(public helper: HelpersProvider,
     public ls: LocalStoreProvider,
     public api: AuthapiProvider) {
-    console.log('Constructor AuthProvider Provider');
+    // console.log('Constructor AuthProvider Provider');
   }
 
   async checkToken() {
@@ -36,16 +36,17 @@ export class AuthProvider {
         try {
           creds = JSON.parse(this.helper.decrypt(creds, CRYPTO_KEY));
           console.log(creds);
+          this.user = creds.user;
+          this.accessToken = creds.accessToken;
+          this.tokenExpires = creds.tokenExpires;
         } catch (error) {
+          this.clearCreds();
           console.log(error);
         }
       } else {
         // no creds stored locally
-        this.logout();
+        this.clearCreds();
       }
-      this.user = creds.user;
-      this.accessToken = creds.accessToken;
-      this.tokenExpires = creds.tokenExpires;
     } catch (error) {
       console.log(error);
     }
@@ -93,27 +94,27 @@ export class AuthProvider {
     }
     catch (err) {
       console.log('authentication error ', err);
-      this.user = undefined;  // TODO:  save for working offline
-      this.loggedIn = false;
-      this.accessToken = undefined;
-      this.tokenExpires = undefined;
-      this.password = undefined;
+      this.clearCreds();
       this.saveToken();
     }
   }
 
   logout() {
-    this.user = undefined;  // TODO:  save for working offline
+    this.clearCreds();
+    this.saveToken();
+  }
+
+  private clearCreds() {
+    this.user = undefined; // TODO:  save for working offline
     this.loggedIn = false;
     this.accessToken = undefined;
     this.tokenExpires = undefined;
     this.password = undefined;
-    this.saveToken();
   }
 
   async mockLogIn() {
     this.user = 'joe';
-    this.user = 'abc';
+    this.password = 'abc';
     this.loggedIn = true;
   }
 
