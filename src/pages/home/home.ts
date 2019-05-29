@@ -19,7 +19,7 @@ export class HomePage {
     public auth: AuthProvider,
     public account: DcsbAccountProvider,
     public ud: UserDataProvider) {
-    this.auth.checkToken();
+    this.auth.checkCreds();
   }
 
   login() {
@@ -27,9 +27,9 @@ export class HomePage {
   }
 
 
-  start() {
-    console.log('home.start');
-    this.account.getAccount();
+  async start() {
+    // console.log('home.start');
+    await this.account.getAccount();
     this.ud.readData(this.auth.user);
     this.navCtrl.push(NavoptionsPage);
   }

@@ -52,7 +52,8 @@ export class EmptiesProvider {
       businessName: "",
       billing: this.getEmptyUserBillingInfo(),
       expires: "",
-      cancelled: ""
+      cancelled: "",
+      contentsId: ""
     }
     return mt;
   }
