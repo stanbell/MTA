@@ -16,10 +16,6 @@ const CHECKUSER_ROUTE = 'checkuser';
 // const MASTER_KEY = "Two roads diverged in a yellow wood,"
 // robert frost, the road not taken
 
-// login get user name  (temp, replace with authentication service to get user #)
-// login look up user id #
-// user-data get user data w/id #
-
 @Injectable()
 export class UserDataProvider {
 
@@ -79,16 +75,9 @@ export class UserDataProvider {
   // this already done in account.getAccount()
   // private async readIdNumber(user) {
   //   let route = 'mtausers/' + user + '?t=' + this.auth.accessToken;
-  //   let serverReadData = await this.api.getData(route);
-  //   // console.log(serverReadData);
-  //   let serverReadObject = JSON.parse(serverReadData);
-  //   this.userIdNumber = serverReadObject['contentsId'];
-  // }
 
   async readData(user: string) {
-    // console.log('reading');
-    // replaced with account.nu. 
-    // await this.readIdNumber(user);
+
     if (!this.acct.nu) {
       this.acct.getAccount();
     }
@@ -147,12 +136,11 @@ export class UserDataProvider {
   }
 
   private async readServer(): Promise<UserDataType> {
-    // TODO:  PUT IN A USER ID for reading from the api/mongo 
     var serverReadData: string = '';
     var serverReadObject: UserDataType;
     var route = CONTENTS_ROUTE + '/' + this.acct.nu.contentsId + '?t=' + this.auth.accessToken;
     try {
-      serverReadData = await this.api.getData(route);  // TODO needs a value for the getData parameter
+      serverReadData = await this.api.getData(route);
       serverReadObject = JSON.parse(serverReadData);
       return { ...this.emptyUserData, ...serverReadObject };
     }

@@ -10,6 +10,15 @@ X fix 401 unauthorized (when you sign in from a different device, you invalidate
 x event info missing access from my schedule
 X today stats not showing payment/receipts
 
+TODO
+_ filter lookup client & service
+_ add appt from client
+_ default start time in add appt
+_ date range from user prefs for client metrics & trans & appts
+_ verify cc info immediately on signup
+_ test ios create calendar event
+_ copy client contact info from intake form to client main data
+_ payment email a receipt (default to client email, copy to client email if entered)
 
 !! _ put in checks for connectivity before trying to connect with api'same
         should still work with local cache of app & data

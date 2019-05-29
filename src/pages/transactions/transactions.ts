@@ -22,7 +22,6 @@ export class TransactionsPage {
     public trans: TransactionsProvider,
     public udw: UserDataWriterProvider,
     public ud: UserDataProvider) {
-      // TODO:  get user prefs and set transStartDate
     this.filter = navParams.get('client');
     this.mainTransPage = (!!this.filter) ? false : true; 
   }

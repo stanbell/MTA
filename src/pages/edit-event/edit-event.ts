@@ -83,7 +83,6 @@ export class EditEventPage {
           break;
         case 'service':
           this.event.serviceDescription = ls.selected;
-          // TODO also assign to this.service
           this.service = this.helper.deepCopy(this.user.user.services[ls.index]);
           this.duration = this.service.duration;
           this.calcEndTime();

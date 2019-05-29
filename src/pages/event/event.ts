@@ -47,7 +47,6 @@ export class EventPage {
     this.displayEnd = (new Date(this.event.end).toLocaleTimeString());
 
     this.eventDate = new Date(this.event.start);
-    // TODO:  restrict edits for past events?
     this.future = (this.eventDate.valueOf() > Date.now());  // future, can edit
   }
 

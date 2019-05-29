@@ -36,8 +36,6 @@ export class PaymentPage {
     this.payMethod = this.ud.userData.user.acceptPayments;
   }
 
-  // TODO:  remember to reset event.revenue from this.price when saving/leaving
-
   ionViewDidLoad() {
     // console.log('method ', this.payMethod);
     // console.log(this.event);

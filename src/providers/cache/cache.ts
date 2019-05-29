@@ -4,7 +4,6 @@ import { HelpersProvider } from '../helpers/helpers';
 
 
 let ENCRYPT_KEY = 'And having perhaps the better claim, Because it was grassy and wanted wear,'  // robert frost, the road not taken
-// TODO:  cache uses passed-in key for encryption
 
 @Injectable()
 export class CacheProvider {
