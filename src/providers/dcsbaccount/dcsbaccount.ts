@@ -16,7 +16,7 @@ export class DcsbAccountProvider {
     public empties: EmptiesProvider,
     public api: MTAAPI,
     public auth: AuthProvider) {
-    console.log('Constructor DcsbaccountProvider Provider');
+    // console.log('Constructor DcsbaccountProvider Provider');
     this.nu = empties.getEmptyNewUser();
     // this.getAccount();
     // console.log(this.nu);

@@ -12,7 +12,7 @@ export class CacheProvider {
   constructor(
     public helper: HelpersProvider,
     private LSP: LocalStoreProvider) {
-    console.log('Constructor Cache Provider');
+    // console.log('Constructor Cache Provider');
   }
 
   remove(type: string) {

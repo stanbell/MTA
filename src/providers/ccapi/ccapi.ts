@@ -5,7 +5,7 @@ import '../../types/types';
 @Injectable()
 export class CCAPI {
     constructor(private http: HttpClient) {
-        console.log('Constructor CCAPI Provider');
+        // console.log('Constructor CCAPI Provider');
     }
 
     // apiURL = 'http://127.0.0.1:48000/mtacc/';

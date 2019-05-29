@@ -7,7 +7,7 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class MTAAPI {
     constructor(private http: HttpClient) {
-        console.log('Constructor MTAAPI Provider');
+        // console.log('Constructor MTAAPI Provider');
     }
 
     // apiURL = 'http://127.0.0.1:18000/MTA/';

@@ -6,7 +6,7 @@ import { UserDataProvider } from '../user-data/user-data';
 export class UserDataWriterProvider {
 
   constructor(public ud: UserDataProvider) {
-    console.log('Constructor UserDataWriterProvider Provider');
+    // console.log('Constructor UserDataWriterProvider Provider');
   }
 
   write() {
