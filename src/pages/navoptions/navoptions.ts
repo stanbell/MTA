@@ -14,11 +14,6 @@ export class NavoptionsPage {
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad NavoptionsPage');
-  }
-
-
   navTo(where: string) {
     switch (where) {
       case 'sched':

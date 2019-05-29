@@ -21,15 +21,6 @@ export class ClientInfoPage {
     // this.itemIndex = this.findItem();
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad ClientInfoPage');
-  }
-
-
-  // cancel() {
-  //   this.navCtrl.pop();
-  // }
-
   save() {
     this.udw.write();
     this.navCtrl.pop();

@@ -51,9 +51,6 @@ export class EventPage {
     this.future = (this.eventDate.valueOf() > Date.now());  // future, can edit
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad EventPage');
-  }
   ionViewDidEnter() {
     console.log('ionViewDidEnter EventPage');
     this.initialTransactions = this.matchTransactions(this.event.transactions, this.ud.userData.transactions);

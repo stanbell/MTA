@@ -35,7 +35,6 @@ export class BiztodayPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad BiztodayPage');
     this.computeStats();
   }
 

@@ -23,11 +23,6 @@ export class BiznavPage {
     this.onTheWeb = (!this.plt.is('mobile'));
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad BiznavPage');
-  }
-
-
   navTo(where: string) {
     switch (where) {
       case 'today':

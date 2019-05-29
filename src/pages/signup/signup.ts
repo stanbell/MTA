@@ -24,10 +24,6 @@ export class SignupPage {
       console.log(this.nu);
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad SignupPage');
-  }
-
   async pwdAvailable() {
     console.log('pwdAvailable');
     try {

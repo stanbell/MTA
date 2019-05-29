@@ -39,7 +39,6 @@ export class StatsPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad StatsPage');
     this.computeStats();
   }
 

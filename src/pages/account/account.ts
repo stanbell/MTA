@@ -36,12 +36,6 @@ export class AccountPage {
     console.log(this.expDate);
   }
 
-  async ionViewDidLoad() {
-    console.log('ionViewDidLoad AccountPage');
-  }
-
-  // TODO create a cancel account option on web site
-
   updateBilling() {
     // TODO verify cc info immediately
     // TODO reset expiration date

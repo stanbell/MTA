@@ -25,14 +25,6 @@ export class BusinessPage {
     this.biz = this.user.user;
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad BusinessPage');
-  }
-
-  // settings() {
-  //   this.navCtrl.push(SettingsPage);
-  // }
-
   save() {
     this.udw.write();
     this.navCtrl.pop();

@@ -39,9 +39,8 @@ export class PaymentPage {
   // TODO:  remember to reset event.revenue from this.price when saving/leaving
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad PaymentPage');
-    console.log('method ', this.payMethod);
-    console.log(this.event);
+    // console.log('method ', this.payMethod);
+    // console.log(this.event);
     this.price = this.event.revenue.toFixed(2);
     this.calcTotal();
   }

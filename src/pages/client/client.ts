@@ -35,11 +35,6 @@ export class ClientPage {
     }
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad ClientPage');
-  }
-
-
   navTo(where: string): void {
     const FIFTEENDAYS = 15 * 24 * 60 * 60 * 1000;
     switch (where) {

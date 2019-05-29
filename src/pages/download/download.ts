@@ -41,15 +41,10 @@ export class DownloadPage {
     console.log(this.toDateD.toDateString());
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad DownloadPage');
-  }
-
 
   download() {
 
     // MAYBE, do this only on browser (code below includes mobiles)
-
 
     // prep data =====
     var DD: any = {};

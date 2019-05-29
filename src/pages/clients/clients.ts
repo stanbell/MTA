@@ -23,18 +23,10 @@ export class ClientsPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad ClientsPage');
-    console.log('clients', this.clients.clients);
     this.populateItems();
   }
 
-  // ionViewWillLeave() {
-  //   console.log('ionViewWillLeave ClientsPage');
-  //   // this.saveItems()  ???
-  //   this.clients.write();
-  // }
-
-  editItem(item: ClientType) {
+   editItem(item: ClientType) {
     this.navCtrl.push(ClientPage, {
       mode: 'edit',
       item: item

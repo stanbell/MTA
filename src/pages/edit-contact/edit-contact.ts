@@ -29,10 +29,6 @@ export class EditContactPage {
     }
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad EditContactPage');
-  }
-
   save() {
     if (this.mode === 'add') {
       this.item['contacts'].push(this.contact);

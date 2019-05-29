@@ -26,23 +26,18 @@ export class IntakePage {
     }
     
     ionViewDidLoad() {
-      console.log('ionViewDidLoad IntakePage');
       if (!!this.client.intake) {
         this.intake = this.helper.deepCopy(this.client.intake);
       } else {
         this.intake = this.mt.getEmptyIntake();
       }
-    // console.log(this.intake);
   }
   
   save() {
     this.client.intake = this.helper.deepCopy(this.intake);
-    // console.log('save', this.client);
-    // console.log('save', this.ud.userData);
     // write the client from here?  yes  NOTE do this from each page that modifies
     this.udw.write();
     this.navCtrl.pop();
-    // console.log(this.intake);
   }
 
   // TODO copy email, phone, to client contact info

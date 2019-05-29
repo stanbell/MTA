@@ -30,10 +30,6 @@ export class AppointmentsPage {
       this.decorateClientEvents();
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad AppointmentsPage');
-  }
-
   selectEvent(event: any) {
     // pick this event, go to appt details
     this.navCtrl.push(EventPage, {

@@ -19,7 +19,6 @@ export class HomePage {
     public auth: AuthProvider,
     public account: DcsbAccountProvider,
     public ud: UserDataProvider) {
-    console.log('home constructor');
     this.auth.checkToken();
   }
 

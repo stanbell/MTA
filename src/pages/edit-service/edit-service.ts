@@ -27,10 +27,6 @@ export class EditServicePage {
     }
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad EditServicePage');
-  }
-
   save() {
     if (this.mode === 'add') {
       this.item['services'].push(this.service);

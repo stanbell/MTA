@@ -28,14 +28,11 @@ export class TransactionsPage {
   }
   
   ionViewDidLoad() {
-    console.log('ionViewDidLoad TransactionsPage');
     this.trans.read();
     (this.filter) ? this.populateItems(this.filter.name) : this.populateItems();
-    // console.log(this.itemsList);
     
   }
  
-  // TODO:  also filter to user preferences for transStartDate
   populateItems(filter?: string) {
 
     this.itemsList = [];
