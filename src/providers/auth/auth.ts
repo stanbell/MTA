@@ -31,12 +31,17 @@ export class AuthProvider {
     try {
       console.log('getting creds');
       var creds = await this.ls.get('creds');
-      console.log(creds);
-      try {
-        creds = JSON.parse(this.helper.decrypt(creds, CRYPTO_KEY));
+      if (!!creds) {
         console.log(creds);
-      } catch (error) {
-        console.log(error);
+        try {
+          creds = JSON.parse(this.helper.decrypt(creds, CRYPTO_KEY));
+          console.log(creds);
+        } catch (error) {
+          console.log(error);
+        }
+      } else {
+        // no creds stored locally
+        this.logout();
       }
       this.user = creds.user;
       this.accessToken = creds.accessToken;
@@ -55,22 +60,22 @@ export class AuthProvider {
   }
 
   goodToken(): boolean {
-    var good: boolean = false;
+    var isGood: boolean = false;
     console.log('accessToken', this.accessToken);
     if (!!this.accessToken) {
       if (this.accessToken.length === 36) {  // depends on helpers.newGuid length
         if (this.accessToken.charAt(4) === 'f'
           && this.accessToken.charAt(17) === '7'
           && this.accessToken.charAt(27) === 'b')
-          good = true;
+          isGood = true;
       }
       if (!!this.tokenExpires) {
         if (new Date(this.tokenExpires).valueOf() > Date.now()) {
-          good = true;
+          isGood = true;
         }
       }
-    }
-    return good;
+    } // fall-through returns false
+    return isGood;
   }
 
   async login(id: string, pwd: string) {
@@ -96,7 +101,7 @@ export class AuthProvider {
       this.saveToken();
     }
   }
-  
+
   logout() {
     this.user = undefined;  // TODO:  save for working offline
     this.loggedIn = false;
