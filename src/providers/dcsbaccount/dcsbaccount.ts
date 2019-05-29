@@ -4,8 +4,6 @@ import { AuthProvider } from '../auth/auth';
 import { HelpersProvider } from '../helpers/helpers';
 import { EmptiesProvider } from '../empties/empties';
 
-// routes:  contents/_id (numeric)
-
 @Injectable()
 export class DcsbAccountProvider {
 
@@ -16,19 +14,15 @@ export class DcsbAccountProvider {
     public empties: EmptiesProvider,
     public api: MTAAPI,
     public auth: AuthProvider) {
-    // console.log('Constructor DcsbaccountProvider Provider');
     this.nu = empties.getEmptyNewUser();
-    // this.getAccount();
-    // console.log(this.nu);
   }
 
   async getAccount() {
     let route = 'mtausers/' + this.auth.user + '?t=' + this.auth.accessToken;
     try {
       const s = JSON.parse(await this.api.getData(route));
-      console.log(s);
-      this.nu = { ...s, ...this.nu };
-      console.log(this.nu);
+      this.nu = { ...this.nu, ...s };
+      // this.nu = { ...s, ...this.nu };
     } catch (error) {
       console.log(error);
     }
@@ -38,7 +32,6 @@ export class DcsbAccountProvider {
     // note actually replaces the whole mtausers record
     this.nu.billing = this.helper.deepCopy(b);
     let route = 'mtausers/' + this.auth.user + '?t=' + this.auth.accessToken;
-    console.log(this.nu);
     try {
       await this.api.putData(route, JSON.stringify(this.nu));
     } catch (error) {
@@ -50,7 +43,6 @@ export class DcsbAccountProvider {
     // note actually replaces the whole mtausers record
     this.nu.pwd = newPwd;
     let route = 'mtausers/' + this.auth.user + '?t=' + this.auth.accessToken;
-    console.log(this.nu);
     try {
       await this.api.putData(route, JSON.stringify(this.nu));
     } catch (error) {
@@ -59,9 +51,7 @@ export class DcsbAccountProvider {
   }
 
   async cancelAccount(uid: string) {
-    console.log('cancelAccount');
     let route = 'canceluser/' + this.auth.user + '?t=' + this.auth.accessToken;  // WORKING HERE: reconcile nu._id
-    console.log(route);
     try {
       await this.api.postData(route, "");
     } catch (error) {

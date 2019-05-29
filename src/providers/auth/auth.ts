@@ -13,32 +13,33 @@ export class AuthProvider {
   user: string;
   password: string;
   tokenExpires: any;
+  contentsId: string;
 
   loggedIn: boolean = false;
 
   constructor(public helper: HelpersProvider,
     public ls: LocalStoreProvider,
     public api: AuthapiProvider) {
-    // console.log('Constructor AuthProvider Provider');
   }
 
-  async checkToken() {
+  async checkCreds() {
     await this.getCreds();
-    this.loggedIn = this.goodToken();
+    this.loggedIn = this.goodCreds();
   }
 
   async getCreds() {
     try {
-      console.log('getting creds');
-      var creds = await this.ls.get('creds');
+      // console.log('getting creds');
+      var creds = await this.ls.get('MTA_creds');
       if (!!creds) {
-        console.log(creds);
+        // console.log(creds);
         try {
           creds = JSON.parse(this.helper.decrypt(creds, CRYPTO_KEY));
-          console.log(creds);
+          // console.log(creds);
           this.user = creds.user;
           this.accessToken = creds.accessToken;
           this.tokenExpires = creds.tokenExpires;
+          this.contentsId = creds.contentsId;
         } catch (error) {
           this.clearCreds();
           console.log(error);
@@ -56,20 +57,22 @@ export class AuthProvider {
     const creds = this.helper.encrypt(
       JSON.stringify({ user: this.user, accessToken: this.accessToken, tokenExpires: this.tokenExpires }),
       CRYPTO_KEY);
-    console.log('saving creds');
-    this.ls.set('creds', creds);
+    // console.log('saving creds');
+    this.ls.set('MTA_creds', creds);
   }
 
-  goodToken(): boolean {
+  goodCreds(): boolean {
     var isGood: boolean = false;
-    console.log('accessToken', this.accessToken);
+    // console.log('accessToken', this.accessToken);
     if (!!this.accessToken) {
+      // if good format
       if (this.accessToken.length === 36) {  // depends on helpers.newGuid length
         if (this.accessToken.charAt(4) === 'f'
           && this.accessToken.charAt(17) === '7'
           && this.accessToken.charAt(27) === 'b')
           isGood = true;
       }
+      // and not expired
       if (!!this.tokenExpires) {
         if (new Date(this.tokenExpires).valueOf() > Date.now()) {
           isGood = true;
@@ -83,12 +86,13 @@ export class AuthProvider {
     var body = {
       creds: this.helper.encrypt(this.packageCreds(id, pwd), CRYPTO_KEY)
     };
-    console.log(JSON.stringify(body));
+    // console.log(JSON.stringify(body));
     try {
       const authResponse = await this.api.authenticate(JSON.stringify(body))
       this.user = id;
       this.accessToken = authResponse['accessToken'];
       this.tokenExpires = authResponse['tokenExpires'];
+      this.contentsId = authResponse['contentsId'];
       this.loggedIn = true;
       this.saveToken();
     }
@@ -110,6 +114,7 @@ export class AuthProvider {
     this.accessToken = undefined;
     this.tokenExpires = undefined;
     this.password = undefined;
+    this.contentsId = undefined;
   }
 
   async mockLogIn() {

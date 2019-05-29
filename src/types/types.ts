@@ -84,6 +84,7 @@ interface SystemUserType {
     billing: UserBillingInfoType,
     expires: string,
     cancelled: string
+    contentsId: string;
 }
 
 interface CalendarType {

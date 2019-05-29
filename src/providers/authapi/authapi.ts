@@ -8,7 +8,6 @@ import { Injectable } from '@angular/core';
 export class AuthapiProvider {
 
   constructor(public http: HttpClient) {
-    // console.log('Constructor AuthapiProvider Provider');
   }
 
   // apiURL = 'http://127.0.0.1:19000/MTA/';  // testing

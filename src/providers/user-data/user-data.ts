@@ -4,6 +4,7 @@ import { CacheProvider } from '../cache/cache';
 import { HelpersProvider } from '../helpers/helpers';
 import { EmptiesProvider } from '../empties/empties';
 import { AuthProvider } from '../auth/auth';
+import { DcsbAccountProvider } from '../dcsbaccount/dcsbaccount';
 import '../../types/types';
 
 const CACHE_ID = 'MTA_DATA';
@@ -23,9 +24,8 @@ const CHECKUSER_ROUTE = 'checkuser';
 export class UserDataProvider {
 
   // userId: string;
-  userIdNumber: string;
+  // userIdNumber: string;
   userData: UserDataType;
-  accountData: SystemUserType;
   private emptyUserData: UserDataType;
   private inCache: boolean = false;
 
@@ -34,8 +34,8 @@ export class UserDataProvider {
     private cache: CacheProvider,
     private api: MTAAPI,
     public mt: EmptiesProvider,
-    public auth: AuthProvider) {
-    // console.log('userData constructor');
+    public auth: AuthProvider,
+    public acct: DcsbAccountProvider) {
     this.emptyUserData = this.mt.getEmptyUserData();
   }
 
@@ -76,26 +76,27 @@ export class UserDataProvider {
     this.initData();
   }
 
-  private async readIdNumber(user) {
-    let route = 'mtausers/' + user + '?t=' + this.auth.accessToken;
-    let serverReadData = await this.api.getData(route);
-    // console.log(serverReadData);
-    let serverReadObject = JSON.parse(serverReadData);
-    this.userIdNumber = serverReadObject['contentsId'];
-  }
+  // this already done in account.getAccount()
+  // private async readIdNumber(user) {
+  //   let route = 'mtausers/' + user + '?t=' + this.auth.accessToken;
+  //   let serverReadData = await this.api.getData(route);
+  //   // console.log(serverReadData);
+  //   let serverReadObject = JSON.parse(serverReadData);
+  //   this.userIdNumber = serverReadObject['contentsId'];
+  // }
 
   async readData(user: string) {
-    console.log('reading');
-    await this.readIdNumber(user);
-    // DEBUG
-    // ******************************* remove for production*************
-    // this.cache.clearCache();
-    // *****************************************
+    // console.log('reading');
+    // replaced with account.nu. 
+    // await this.readIdNumber(user);
+    if (!this.acct.nu) {
+      this.acct.getAccount();
+    }
 
     // also reconciles most recent
-    let localData: UserDataType = this.helper.deepCopy(this.emptyUserData);
-    let serverData: UserDataType = this.helper.deepCopy(this.emptyUserData);
-    let l: number, s: number;
+    var localData: UserDataType = this.helper.deepCopy(this.emptyUserData);
+    var serverData: UserDataType = this.helper.deepCopy(this.emptyUserData);
+    var l: number, s: number;
     try {
       localData = await this.readLocal();
       // console.log('localData', localData);
@@ -120,7 +121,7 @@ export class UserDataProvider {
     } else {
       this.userData = this.helper.deepCopy(serverData);
     }
-    console.log('userData', this.userData);
+    // console.log('userData', this.userData);
     // refresh
     this.dataWindow = new Date();
     this.writeData();
@@ -131,7 +132,7 @@ export class UserDataProvider {
     var locallyRead: string = "";
     var locallyReadData: UserDataType;
     try {
-      locallyRead = await this.cache.read(CACHE_ID + '_' + this.userIdNumber);
+      locallyRead = await this.cache.read(CACHE_ID + '_' + this.acct.nu.contentsId);
       this.inCache = true;
       locallyReadData = JSON.parse(locallyRead);
       return { ...this.emptyUserData, ...locallyReadData };
@@ -147,9 +148,9 @@ export class UserDataProvider {
 
   private async readServer(): Promise<UserDataType> {
     // TODO:  PUT IN A USER ID for reading from the api/mongo 
-    let serverReadData: string = '';
-    let serverReadObject: UserDataType;
-    let route = CONTENTS_ROUTE + '/' + this.userIdNumber + '?t=' + this.auth.accessToken;
+    var serverReadData: string = '';
+    var serverReadObject: UserDataType;
+    var route = CONTENTS_ROUTE + '/' + this.acct.nu.contentsId + '?t=' + this.auth.accessToken;
     try {
       serverReadData = await this.api.getData(route);  // TODO needs a value for the getData parameter
       serverReadObject = JSON.parse(serverReadData);
@@ -165,7 +166,7 @@ export class UserDataProvider {
     // both of these are async, but don't wait
     // set lastUpdate
     this.userData.appActivity.lastUpdate = new Date(Date.now()).toISOString();
-    console.log('new activity', this.userData.appActivity.lastUpdate);
+    // console.log('new activity', this.userData.appActivity.lastUpdate);
     // identical, unless you saved from a different device,
     //    then local & server might be different
     this.writeLocal(this.userData);
@@ -174,8 +175,8 @@ export class UserDataProvider {
 
   private writeLocal(data: UserDataType) {
     try {
-      this.cache.write(CACHE_ID + '_' + this.userIdNumber, JSON.stringify(data));
-      console.log('wrote ' + CACHE_ID + '_' + this.userIdNumber);
+      this.cache.write(CACHE_ID + '_' + this.acct.nu.contentsId, JSON.stringify(data));
+      // console.log('wrote ' + CACHE_ID + '_' + this.acct.nu.contentsId);
     }
     catch (err) {
       console.log('writeLocal cache.write error', err);
@@ -183,12 +184,10 @@ export class UserDataProvider {
   }
 
   private writeServer(data: UserDataType) {
-    let route = CONTENTS_ROUTE + '/' + this.userIdNumber + '?t=' + this.auth.accessToken;
+    let route = CONTENTS_ROUTE + '/' + this.acct.nu.contentsId + '?t=' + this.auth.accessToken;
     try {
-      // console.log('writeServer', data);
       this.api.putData(route, JSON.stringify(data))
-      // .then((d) => { console.log('wrote ', d); });
-      console.log('wrote ' + CONTENTS_ROUTE + '/' + this.userIdNumber);
+      // console.log('wrote ' + CONTENTS_ROUTE + '/' + this.acct.nu.contentsId);
     }
     catch (err) {
       console.log('writeServer mtaapi.putData error', err);
@@ -198,10 +197,10 @@ export class UserDataProvider {
   createUser(newUser: SystemUserType) {
     let route = NEWUSER_ROUTE + '/';
     try {
-      console.log('createUser', newUser);
+      // console.log('createUser', newUser);
       this.api.postData(route, JSON.stringify(newUser))
         .then((d) => { console.log('wrote ', d); });
-      console.log('wrote ' + route);
+      // console.log('wrote ' + route);
     }
     catch (err) {
       console.log('writeLocal mtaapi.postData error', err);
@@ -213,7 +212,7 @@ export class UserDataProvider {
     let route = CHECKUSER_ROUTE + '/' + newUser;
     return new Promise((resolve, reject) => {
       try {
-        console.log('checkUser', newUser);
+        // console.log('checkUser', newUser);
         this.api.getData(route)
           .then(d => {
             const r = JSON.parse(d);
