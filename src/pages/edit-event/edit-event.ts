@@ -125,11 +125,6 @@ export class EditEventPage {
   editEvent() {
     this.event.start = this.helper.convertFromISO(this.startDate); // new Date(this.startDate).toISOString();
     this.event.end = this.helper.convertFromISO(this.endDate); // new Date(this.endDate).toISOString();
-    // if price changed,
-    //    find the corresponding revenue transaction
-    //      should have only the 1 (since only not-paid are allowed)
-    //  this.trans[].id === this.event.transactions[].uniqueId 
-    //    & update revenue
     console.log('looking for transaction', this.event.transactions[0].uniqueId);
     var rt: any = this.trans.transactions
       .filter((t) => {
@@ -137,21 +132,6 @@ export class EditEventPage {
           && (t.apptId === this.event.id);
       });
       console.log('filtered=', rt);
-    // this.trans.add({
-    //   uniqueId: transGuid + '_R',
-    //   processorId: '',
-    //   apptId: this.event.id,
-    //   type: 'Rev',  // revenue (my services), service charges (i paid)
-    //   description: this.event.serviceDescription,
-    //   amount: this.event.revenue,
-    //   date: this.event.start,
-    //   reconciled: false,
-    //   partyType: 'client', // client or service provider (ie, bank, cc processor="pp")
-    //   //TODO:  check if TransPartyType really necessary, compare to sample data
-    //   party: { id: this.event.clientName, description: '' }
-    // })
-    // this.updateNative();
-    // this.sched.add(this.event);
   }
 
   updateNative() { }

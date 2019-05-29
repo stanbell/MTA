@@ -102,7 +102,7 @@ export class HelpersProvider {
     const fd = new Date(d);
     const dt = this.formatDate(fd);
     const ts = fd.toTimeString();
-    console.log('formatDateTime24', ts);
+    // console.log('formatDateTime24', ts);
     return dt + " " + ts;
   }
 
