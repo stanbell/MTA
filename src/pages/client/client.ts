@@ -25,13 +25,12 @@ export class ClientPage {
     public helper: HelpersProvider,
     public empties: EmptiesProvider,
     public clients: ClientsProvider) {
-    this.mode = navParams.get('mode');
-    if (this.mode === 'add') {
-      this.item = this.empties.getEmptyClient();
-      this.clients.add(this.item);
+      this.mode = navParams.get('mode');
+      if (this.mode === 'add') {
+        this.item = this.empties.getEmptyClient();
+        this.clients.add(this.item);
     } else {
       this.item = navParams.get('item');
-      // this.item = clients.clients[this.itemIndex]; // this keeps a reference 
     }
   }
 
@@ -74,4 +73,5 @@ export class ClientPage {
   toggleMetrics() {
     this.metrics = !this.metrics;
   }
+
 }

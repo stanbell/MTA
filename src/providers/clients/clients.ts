@@ -28,12 +28,45 @@ export class ClientsProvider {
   sort() {
     this.ud.userData.clients.sort((a, b) => { return ((a.name > b.name) as any) - ((b.name > a.name) as any) });
   }
-  // remove(i: number) {
-  //   this.clients.splice(i, 1);
-  // }
 
-  // replace(i: number, t: ClientType) {
-  //   this.clients[i] = this.helper.deepCopy(t);
-  // }
+  refreshMetrics(){
+    return new Promise<boolean>(resolve => {
+      var todaysDate: Date = new Date()
+      // todaysDate.setHours(0,0,0,0);
+      this.ud.userData.clients.forEach((c) => {
+        // re-init
+        c.previousAppts = 0;
+        c.noShowAppts = 0;
+        c.scheduledAppts = 0;
+        // filter appts to this client
+        const ca: ScheduleItemType[] = this.ud.userData.schedule.filter((s) => (s.clientName === c.name));
+        // add up each type
+        ca.forEach((e) => {
+          var ed: Date = new Date(e.start);
+          // ed.setHours
+          if (ed.valueOf() < todaysDate.valueOf()) {
+            // past
+            switch (e.completionState) {
+              case 'Completed':
+                c.previousAppts += 1;
+                break;
+              // case 'Cancelled':
+              //   c.previousAppts += 1;
+              //   break;
+              case 'No Show':
+                c.noShowAppts += 1;
+                break;
+              default:
+                break;
+            }
+          } else {
+            // future
+            c.scheduledAppts += 1;
+          }
+        });
+      });
+      resolve(true);
+    })
+  }
 
 }
