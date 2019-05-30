@@ -58,9 +58,9 @@ export class EditEventPage {
       this.event = this.empties.getEmptyScheduleItem();
       this.event.clientName = navParams.get('clientName');
       var defaultDate = new Date(this.selectedDate);
-      defaultDate.setHours(11);  // default to 11  // maybe TODO set to current time, so not in past if "today"
-      defaultDate.setHours(11, 59, 59);  // default 1 hour less 1 second
+      defaultDate.setHours(defaultDate.getHours()+1,0,0,0);  // default start on next hour
       this.event.start = this.helper.formatDateTime24(defaultDate);
+      defaultDate.setHours(defaultDate.getHours()+1,0,0,0);  // default 1 hour
       this.event.end = this.helper.formatDateTime24(defaultDate);  // initial default 1 hour
     }
     this.startDate = this.helper.convertToISO(this.event.start);

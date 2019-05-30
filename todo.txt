@@ -16,7 +16,7 @@ x fix date display format sign up page
 TODO
 _ filter lookup client & service
 x add appt from client
-_ default start time in add appt
+x default start time in add appt
 x date range from user prefs for client metrics
 _ remove contact (biz & client)
 _ remove service (biz settings)
