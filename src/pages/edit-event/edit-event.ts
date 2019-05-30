@@ -34,6 +34,8 @@ export class EditEventPage {
   mode: string = 'edit';
   editPrice: boolean = false;
   editCompletionState: boolean = false;
+  displayDate: string;
+  timeInUse: ScheduleItemType[] = [];
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
@@ -62,6 +64,7 @@ export class EditEventPage {
       this.event.start = this.helper.formatDateTime24(defaultDate);
       defaultDate.setHours(defaultDate.getHours()+1,0,0,0);  // default 1 hour
       this.event.end = this.helper.formatDateTime24(defaultDate);  // initial default 1 hour
+      this.duration = 60;  // 1 hour
     }
     this.startDate = this.helper.convertToISO(this.event.start);
     this.endDate = this.helper.convertToISO(this.event.end);
@@ -69,7 +72,7 @@ export class EditEventPage {
     this.minStartDate = new Date(Date.now() - DAY).toISOString();
     this.maxEndDate = new Date(Date.now() + YEAR).toISOString();
     this.revenue = this.event.revenue;
-    this.calcDuration()
+    this.dateChange();
   }
 
   ionViewDidEnter() {
@@ -102,6 +105,14 @@ export class EditEventPage {
       });
   }
 
+  dateChange() {
+    const dt =  new Date(this.helper.convertFromISO(this.startDate));
+    this.displayDate = (dt.getMonth() + 1) + '/' + dt.getDate();
+    this.calcEndTime();
+    this.calcDuration();
+    this.getTimeInUseForDay();
+  }
+
   calcDuration() {
     this.duration = Math.round(this.helper.timeDiff(new Date(this.endDate), new Date(this.startDate)) / MINUTE);
   }
@@ -109,6 +120,22 @@ export class EditEventPage {
     this.duration = isNaN(this.duration) ? 0 : this.duration;
     this.endDate = this.helper.addTimeInterval(new Date(this.startDate), (this.duration * MINUTE)).toISOString();
   }
+
+  getTimeInUseForDay() {
+    var todaysDate = new Date(this.helper.convertFromISO(this.startDate));
+    todaysDate.setHours(0, 0, 0, 0);
+    // scan thru schedle & find appts on same day as proposed schedule
+    this.timeInUse = this.sched.scheduleItems.filter((s) => {
+      var sDate = new Date(s.start);
+      sDate.setHours(0, 0, 0, 0);
+      return sDate.valueOf() === todaysDate.valueOf();
+    })
+    this.timeInUse.forEach((t) => {
+      t['startTime'] = this.helper.formatTime(t.start);
+      t['endTime'] = this.helper.formatTime(t.end);
+    })
+  }
+
 
   save() {
     // console.log('save', this.mode);
@@ -124,12 +151,16 @@ export class EditEventPage {
   editEvent() {
     this.event.start = this.helper.convertFromISO(this.startDate); // new Date(this.startDate).toISOString();
     this.event.end = this.helper.convertFromISO(this.endDate); // new Date(this.endDate).toISOString();
+
+    ////// what was this supposed to do?
+    ///////  replace revenue if corresponding service changed?
+    ///// TODO
     // console.log('looking for transaction', this.event.transactions[0].uniqueId);
-    var rt: any = this.trans.transactions
-      .filter((t) => {
-        return (t.uniqueId === (this.event.transactions[0].uniqueId + '_R') )
-          && (t.apptId === this.event.id);
-      });
+    // var rt: any = this.trans.transactions
+    //   .filter((t) => {
+    //     return (t.uniqueId === (this.event.transactions[0].uniqueId + '_R') )
+    //       && (t.apptId === this.event.id);
+    //   });
       // console.log('filtered=', rt);
   }
 
@@ -226,6 +257,5 @@ export class EditEventPage {
     this.event.completionState = state;
     this.editCompletionState = false;
   }
-
 
 }
