@@ -24,7 +24,7 @@ export class AppointmentsPage {
     public helper: HelpersProvider,
     public ud: UserDataProvider) {
       this.client = navParams.get('client');// get the parms,
-      this.start = navParams.get('start');// get the parms,
+      // this.start = navParams.get('start');// get the parms,
       // get the list filtered by the parms
       this.getClientEvents();
       this.decorateClientEvents();

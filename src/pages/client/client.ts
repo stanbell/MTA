@@ -35,7 +35,7 @@ export class ClientPage {
   }
 
   navTo(where: string): void {
-    const FIFTEENDAYS = 15 * 24 * 60 * 60 * 1000;
+    // const FIFTEENDAYS = 15 * 24 * 60 * 60 * 1000;
     switch (where) {
       case 'client':
         this.navCtrl.push(ClientInfoPage, {
@@ -45,17 +45,16 @@ export class ClientPage {
       case 'appt':
         this.navCtrl.push(AppointmentsPage, {
           client: this.item,
-          // TODO this needs to be calculated from the users's preferred date range
-          start: new Date(Date.now() - FIFTEENDAYS).toISOString()
+          // restricted date range should be in place alread, because implemented on trans & schedule
+          // start: new Date(Date.now() - FIFTEENDAYS).toISOString()
         });
         break;
       case 'trans':
         this.navCtrl.push(TransactionsPage, {
           // sending a filter value to show only this client's trans
           client: this.item,
-          // TODO this needs to be calculated from the users's preferred date range
-          // maybe or maybe not need this for trans
-          start: new Date(Date.now() - FIFTEENDAYS).toISOString()
+          // restricted date range should be in place alread, because implemented on trans & schedule
+          // start: new Date(Date.now() - FIFTEENDAYS).toISOString()
         });
         break;
       case 'intake':
