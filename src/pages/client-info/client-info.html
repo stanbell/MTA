@@ -72,7 +72,7 @@
   </ion-item>
   <ion-grid>
     <div class="listInBox">
-      <ion-row *ngFor="let z of client.contacts">
+      <ion-row *ngFor="let z of client.contacts; let i = index">
         <ion-col col-3 (click)="editContact(z)">
           <p>{{z.label}}</p>
         </ion-col>
@@ -85,12 +85,26 @@
             <p *ngIf="!z.okToText" (click)="toggleTextOK(z)">No Text</p>
           </div>
         </ion-col>
+        <ion-col col-1 align-self-end>
+          <ion-icon class="checkOption" name="remove-circle" (click)="removeContact(i)"></ion-icon>
+        </ion-col>
       </ion-row>
     </div>
+    <ion-row>
+      <ion-col col-1>
+        <ion-icon class="checkOption" name="add-circle" (click)="addContact()"></ion-icon>
+      </ion-col>
+      <ion-col col-5 align-self-start>
+        <p>Add a Contact Method</p>
+      </ion-col>
+      <ion-col col-6 align-self-end>
+        <p><em>Save after removing a Contact</em></p>
+      </ion-col>
+    </ion-row>
   </ion-grid>
-  <p>
+  <!-- <p>
     <ion-icon class="checkOption" name="add-circle" (click)="addContact()"></ion-icon> Add Contact
-  </p>
+  </p> -->
 
   <button ion-button [disabled]="!client.name" (click)="save()">Save</button>
   <!-- <button ion-button (click)="cancel()">Cancel</button> -->

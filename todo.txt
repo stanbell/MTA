@@ -20,7 +20,7 @@ x search in lookup client & service
 x add appt from client
 x default start time in add appt
 x date range from user prefs for client metrics
-_ remove contact (biz & client)
+x remove contact (biz & client)
 X remove service (biz settings)
 _ user's preferred schedule
 _ pick appt time graphically--show time slots available as buttons/clickable

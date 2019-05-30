@@ -40,8 +40,8 @@ export class ClientInfoPage {
     })
   }
 
-  removeContact(c: ContactInfoType) {
-    alert('not yet implememnted');
+  removeContact(i: number) {
+    if (i < this.client.contacts.length) this.client.contacts.splice(i, 1);  // should never be, but
   }
 
   toggleTextOK(z: ContactInfoType) {

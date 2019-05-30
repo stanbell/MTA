@@ -44,8 +44,8 @@ export class BusinessPage {
     })
   }
 
-  removeContact(c: ContactInfoType) {
-    alert('not yet implememnted');
+  removeContact(i: number) {
+    if (i < this.biz.contacts.length) this.biz.contacts.splice(i, 1);  // should never be, but
   }
 
   toggleTextOK(z: ContactInfoType) {
