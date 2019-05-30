@@ -37,7 +37,6 @@ export class LookupPage {
           ? tempList = this.ud.userData.clients
             .filter(x => x.name.toLowerCase().indexOf(this.searchTerm.toLowerCase()) !== -1)
           : tempList = this.ud.userData.clients;
-          console.log(tempList);
         tempList.forEach(e => {
           this.itemsList.push({ text: e.name });
         });
