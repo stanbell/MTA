@@ -59,7 +59,7 @@ export class ClientPage {
         });
         break;
       case 'intake':
-        console.log('intake');
+        // console.log('intake');
         this.navCtrl.push(IntakePage, {
           client: this.item,
         });

@@ -110,13 +110,13 @@ export class EditEventPage {
   }
 
   save() {
-    console.log('save', this.mode);
+    // console.log('save', this.mode);
     if (this.mode === 'edit') {
       this.editEvent();
     } else {
       this.addEvent();
     }
-    console.log('now writing');
+    // console.log('now writing');
     this.udw.write();
     this.navCtrl.pop();
   }
@@ -124,13 +124,13 @@ export class EditEventPage {
   editEvent() {
     this.event.start = this.helper.convertFromISO(this.startDate); // new Date(this.startDate).toISOString();
     this.event.end = this.helper.convertFromISO(this.endDate); // new Date(this.endDate).toISOString();
-    console.log('looking for transaction', this.event.transactions[0].uniqueId);
+    // console.log('looking for transaction', this.event.transactions[0].uniqueId);
     var rt: any = this.trans.transactions
       .filter((t) => {
         return (t.uniqueId === (this.event.transactions[0].uniqueId + '_R') )
           && (t.apptId === this.event.id);
       });
-      console.log('filtered=', rt);
+      // console.log('filtered=', rt);
   }
 
   updateNative() { }
@@ -140,7 +140,7 @@ export class EditEventPage {
   }
 
   addEvent() {
-    console.log('in addEvent');
+    // console.log('in addEvent');
     this.event.id = this.helper.newGuid();
     this.event.start = this.helper.convertFromISO(this.startDate); // new Date(this.startDate).toISOString();
     this.event.end = this.helper.convertFromISO(this.endDate); // new Date(this.endDate).toISOString();
@@ -168,7 +168,7 @@ export class EditEventPage {
   }
 
   async addToNative() {
-    console.log('cordova', this.plt.is('cordova'));
+    // console.log('cordova', this.plt.is('cordova'));
     if (this.plt.is('cordova')) {  // only works on real device
       this.helper.signal('addToNative');
       // if user is using native

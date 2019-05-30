@@ -81,7 +81,7 @@ export class StatsPage {
             this.lostRevenue += s.revenue;
             break;
           default:
-            console.log('unrecognized: ', s.completionState);
+            // console.log('unrecognized: ', s.completionState);
             break;
         }
       } else {

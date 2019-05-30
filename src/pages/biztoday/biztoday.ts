@@ -85,7 +85,7 @@ export class BiztodayPage {
           this.lostRevenue += i.revenue;
           break;
         default:
-          console.log('unrecognized case');
+          // console.log('unrecognized case');
           break;
       }
       this.scheduledAppts += 1;
@@ -120,7 +120,7 @@ export class BiztodayPage {
           this.fees += i.amount;
           break;
         default:
-          console.log('unrecognized case');
+          // console.log('unrecognized case');
           break;
       }
     });

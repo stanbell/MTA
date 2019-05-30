@@ -9,12 +9,22 @@ N error loading appt screen w/appt for alice adams 4/24
 X fix 401 unauthorized (when you sign in from a different device, you invalidate the saved token on the first device)
 x event info missing access from my schedule
 X today stats not showing payment/receipts
+_ sign up from web page "identifier ok has already been declared"
+_ if api connections fail
+_ fix date display format sign up page
+
+logging to remove
+_ pwdavailable, return from checkuser in signup
+
 
 TODO
 _ filter lookup client & service
 _ add appt from client
 _ default start time in add appt
 _ date range from user prefs for client metrics & trans & appts
+_ remove contact (biz & client)
+_ remove service (biz settings)
+
 _ verify cc info immediately on signup
 _ test ios create calendar event
 _ copy client contact info from intake form to client main data

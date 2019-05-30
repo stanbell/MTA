@@ -34,7 +34,7 @@ export class CacheProvider {
     let p = this.helper.encrypt(this.package(type, input), ENCRYPT_KEY);
     this.LSP.set(type, p)
       .then((result) => {})  //console.log("saved to cache"))
-      .catch(e => console.log("error: " + e));
+      .catch(e => console.log("error", e));
   }
 
 

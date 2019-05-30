@@ -17,9 +17,8 @@ export class CCAPI {
     putData(route: string, headers: HttpHeaders, body: PaymentRequestType): Promise<object> {
         // console.log('putData', route);
         const fullRoute = this.apiURL + route;
-        console.log('putData', fullRoute);
+        // console.log('putData', fullRoute);
         // console.log('putData', JSON.stringify(body));
-        console.log('putData', body);
         // console.log('putData', body);
         return new Promise((resolve, reject) => {
             // headers = headers.set('authorization', 'Bearer ' + token);

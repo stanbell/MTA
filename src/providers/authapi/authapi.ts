@@ -51,7 +51,7 @@ export class AuthapiProvider {
             if (resp.status === 200) {
               resolve(true);
             } else {
-              console.log(resp.status);
+              // console.log(resp.status);
               resolve(false);
             }
           },

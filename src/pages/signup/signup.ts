@@ -21,7 +21,6 @@ export class SignupPage {
     public udw: UserDataWriterProvider,
     public ud: UserDataProvider) {
       this.nu = this.empties.getEmptyNewUser();
-      console.log(this.nu);
   }
 
   async pwdAvailable() {

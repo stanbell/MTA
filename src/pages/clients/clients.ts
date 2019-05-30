@@ -42,7 +42,6 @@ export class ClientsPage {
   }
 
   addItem() {
-    console.log('addClient');
     this.navCtrl.push(ClientPage, {
       mode: 'add'
     })

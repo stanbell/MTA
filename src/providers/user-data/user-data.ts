@@ -127,7 +127,7 @@ export class UserDataProvider {
       return { ...this.emptyUserData, ...locallyReadData };
     }
     catch (err) {
-      console.log('readLocal error ', err);
+      console.log(err);
       this.inCache = false;
       locallyReadData = this.emptyUserData;
       locallyReadData.appActivity.lastUpdate = "1/1/1968"
@@ -187,8 +187,7 @@ export class UserDataProvider {
     try {
       // console.log('createUser', newUser);
       this.api.postData(route, JSON.stringify(newUser))
-        .then((d) => { console.log('wrote ', d); });
-      // console.log('wrote ' + route);
+      .then((d) => {});
     }
     catch (err) {
       console.log('writeLocal mtaapi.postData error', err);

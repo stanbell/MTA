@@ -19,13 +19,11 @@ export class LoginPage {
   }
 
   login() {
-    console.log('logging in');
     this.auth.login(this.id, this.pwd);
     this.navCtrl.pop();
   }
 
   logout() {
-    console.log('logging out');
     this.auth.logout();
     this.navCtrl.pop();
   }

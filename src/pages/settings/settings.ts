@@ -36,7 +36,6 @@ export class SettingsPage {
 
 
   addService() {
-    console.log('addService');
     this.navCtrl.push(EditServicePage, {
       mode: 'add',
       item: this.biz
@@ -44,14 +43,13 @@ export class SettingsPage {
   }
 
   editService(c: ServiceType) {
-    console.log('editService');
     this.navCtrl.push(EditServicePage, {
       mode: 'edit',
       Service: c
     })
   }
 
-  removeContact(c: ContactInfoType) {
+  removeService(c: ServiceType) {
     alert('not yet implememnted');
   }
 }

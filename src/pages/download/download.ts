@@ -117,7 +117,7 @@ export class DownloadPage {
 
     if (this.format === 'json') {
       content = JSON.stringify(DD);
-      console.log(DL);
+      // console.log(DL);
     } else {
       // csv
       var DL: string[] = [];
@@ -173,7 +173,7 @@ export class DownloadPage {
         });
       }
       content = DL.join('\n');
-      console.log(content);
+      // console.log(content);
 
     }
 

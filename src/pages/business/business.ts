@@ -31,7 +31,6 @@ export class BusinessPage {
   }
 
   addContact() {
-    console.log('addContact');
     this.navCtrl.push(EditContactPage, {
       mode: 'add',
       item: this.biz
@@ -39,7 +38,6 @@ export class BusinessPage {
   }
 
   editContact(c: ContactInfoType) {
-    console.log('editContact');
     this.navCtrl.push(EditContactPage, {
       mode: 'edit',
       contact: c
