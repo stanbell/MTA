@@ -34,6 +34,10 @@ export class ClientPage {
     }
   }
 
+  ionViewWillEnter() {
+    this.clients.refreshMetrics();
+  }
+
   navTo(where: string): void {
     // const FIFTEENDAYS = 15 * 24 * 60 * 60 * 1000;
     switch (where) {
