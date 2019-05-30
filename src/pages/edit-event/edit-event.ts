@@ -52,10 +52,11 @@ export class EditEventPage {
     if (this.mode === 'edit') {
       this.event = navParams.get('event');
       this.editPrice = !this.event.pd;
-    } else {
+    } else {  // add
       this.editPrice = true;
       this.selectedDate = navParams.get('date');
       this.event = this.empties.getEmptyScheduleItem();
+      this.event.clientName = navParams.get('clientName');
       var defaultDate = new Date(this.selectedDate);
       defaultDate.setHours(11);  // default to 11  // maybe TODO set to current time, so not in past if "today"
       defaultDate.setHours(11, 59, 59);  // default 1 hour less 1 second
@@ -116,7 +117,6 @@ export class EditEventPage {
     } else {
       this.addEvent();
     }
-    // console.log('now writing');
     this.udw.write();
     this.navCtrl.pop();
   }
@@ -144,7 +144,7 @@ export class EditEventPage {
     this.event.id = this.helper.newGuid();
     this.event.start = this.helper.convertFromISO(this.startDate); // new Date(this.startDate).toISOString();
     this.event.end = this.helper.convertFromISO(this.endDate); // new Date(this.endDate).toISOString();
-    // this.event.revenue = this.service.price;  
+    this.event.completionState = 'Open';  
     // create a revenue transaction, match it with the appt
     const transGuid = this.helper.newGuid();
     this.event.transactions.push({

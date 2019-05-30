@@ -4,6 +4,7 @@ import { UserDataProvider } from '../../providers/user-data/user-data';
 import { HelpersProvider } from '../../providers/helpers/helpers';
 import { EventPage } from '../event/event';
 import '../../types/types';
+import { EditEventPage } from '../edit-event/edit-event';
 
 const ShortMonths: string[] = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Dec'];
 
@@ -19,15 +20,19 @@ export class AppointmentsPage {
   initialList: ScheduleItemType[];
   eventList: any[] = [];
 
-  constructor(public navCtrl: NavController, 
+  constructor(public navCtrl: NavController,
     public navParams: NavParams,
     public helper: HelpersProvider,
     public ud: UserDataProvider) {
-      this.client = navParams.get('client');// get the parms,
-      // this.start = navParams.get('start');// get the parms,
-      // get the list filtered by the parms
-      this.getClientEvents();
-      this.decorateClientEvents();
+    this.client = navParams.get('client');// get the parms,
+    // this.getClientEvents();
+    // this.decorateClientEvents();
+  }
+
+  ionViewWillEnter() {
+    this.eventList = [];
+    this.getClientEvents();
+    this.decorateClientEvents();
   }
 
   selectEvent(event: any) {
@@ -56,7 +61,11 @@ export class AppointmentsPage {
   }
 
   addAppt() {
-    // TODO:  implement this
+    this.navCtrl.push(EditEventPage, {
+      mode: 'add',
+      date: new Date(),
+      clientName: this.client.name
+    });
   }
 
   private formatDate(dt: string): string {

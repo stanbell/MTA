@@ -24,6 +24,7 @@ export class ScheduleProvider {
 
   add(s: ScheduleItemType) {
     this.scheduleItems.push(s);
+    this.ud.userData.schedule.push(s);
   }
 
   hasAppt(d: Date): boolean {
