@@ -14,7 +14,9 @@ _ if api connections fail
 x fix date display format sign up page
 
 TODO
-_ filter lookup client & service
+_ prevent time overlap in appts/calendar
+_ filter calendar & client appts for cancelled
+x search in lookup client & service
 x add appt from client
 x default start time in add appt
 x date range from user prefs for client metrics

@@ -25,21 +25,29 @@ export class LookupPage {
   }
 
   ionViewDidEnter() {
-    this.getList(this.type);
+    this.getList();
   }
 
-  getList(type: string) {
-    // TODO:  filter to searchTerm
-
+  getList() {
     this.itemsList = [];
-    switch (type) {
+    var tempList: any = [];
+    switch (this.type) {
       case 'client':
-        this.ud.userData.clients.forEach(e => {
+        tempList = (!!this.searchTerm)
+          ? tempList = this.ud.userData.clients
+            .filter(x => x.name.toLowerCase().indexOf(this.searchTerm.toLowerCase()) !== -1)
+          : tempList = this.ud.userData.clients;
+          console.log(tempList);
+        tempList.forEach(e => {
           this.itemsList.push({ text: e.name });
         });
         break;
       case 'service':
-        this.ud.userData.user.services.forEach(e => {
+        tempList = (!!this.searchTerm)
+          ? tempList = this.ud.userData.user.services
+            .filter(x => x.name.toLowerCase().indexOf(this.searchTerm.toLowerCase()) !== -1)
+          : tempList = this.ud.userData.user.services;
+        tempList.forEach(e => {
           this.itemsList.push({ text: e.name });
         });
         break;
@@ -52,5 +60,14 @@ export class LookupPage {
     this.helper.lookupSelection = { what: this.type, selected: which, index: i };
     this.navCtrl.pop();
   }
+
+  // populateItems() {
+  //   // this.itemsList = [];
+  //   this.itemsList = (!!this.searchTerm)
+  //     ? this.itemsList = this.clients.clients
+  //       .filter(x => x.name.toLowerCase().indexOf(this.searchTerm.toLowerCase()) !== -1)
+  //     : this.itemsList = this.clients.clients;
+  // }
+
 
 }
