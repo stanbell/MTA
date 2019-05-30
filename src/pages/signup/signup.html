@@ -36,7 +36,7 @@
     <ion-label class="checkOption">Expiration Date</ion-label>
   </ion-item>
   <ion-item no-lines>
-    <ion-datetime [(ngModel)]="nu.billing.expDate">
+    <ion-datetime displayFormat="MM YY" pickerFormat="MM YY" min="2019" max="2029" [(ngModel)]="nu.billing.expDate">
     </ion-datetime>
   </ion-item>
   <ion-item>
@@ -73,7 +73,8 @@
       <ion-input type="password" [(ngModel)]="verifyPwd"></ion-input>
     </ion-item>
     <ion-item no-lines>
-      <button ion-button [disabled]="!nu.businessName || !nu._id || !nu.pwd || (verifyPwd !== nu.pwd)" (click)="signup()">Complete Setup</button><br>
+      <button ion-button [disabled]="!nu.businessName || !nu._id || !nu.pwd || (verifyPwd !== nu.pwd)"
+        (click)="signup()">Complete Setup</button><br>
     </ion-item>
   </div>
 </ion-content>
