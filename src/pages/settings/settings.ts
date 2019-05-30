@@ -52,7 +52,7 @@ export class SettingsPage {
     })
   }
 
-  removeService(c: ServiceType) {
-    alert('not yet implememnted');
+  removeService(i: number) {
+    if (i < this.biz.services.length) this.biz.services.splice(i, 1);  // should never be, but
   }
 }

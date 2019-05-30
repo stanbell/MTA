@@ -14,14 +14,16 @@ _ if api connections fail
 x fix date display format sign up page
 
 TODO
-_ prevent time overlap in appts/calendar
+y prevent time overlap in appts/calendar  // well, show
 _ filter calendar & client appts for cancelled
 x search in lookup client & service
 x add appt from client
 x default start time in add appt
 x date range from user prefs for client metrics
 _ remove contact (biz & client)
-_ remove service (biz settings)
+X remove service (biz settings)
+_ user's preferred schedule
+_ pick appt time graphically--show time slots available as buttons/clickable
 
 _ verify cc info immediately on signup
 _ test ios create calendar event

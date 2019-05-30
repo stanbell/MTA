@@ -263,7 +263,7 @@
   </ion-item>
   <ion-grid>
     <ion-row>
-      <ion-col col-6>
+      <ion-col col-5>
         <div class="myHeader">Service</div>
       </ion-col>
       <ion-col col-3>
@@ -272,16 +272,32 @@
       <ion-col col-3>
         <div class="myHeader">Price</div>
       </ion-col>
+      <ion-col col-1>
+      </ion-col>
     </ion-row>
-    <ion-row *ngFor="let s of biz.services">
-      <ion-col col-6>{{s.name}}</ion-col>
+    <ion-row *ngFor="let s of biz.services; let i = index">
+      <ion-col col-5>{{s.name}}</ion-col>
       <ion-col col-3 align-self-end>{{s.duration}}</ion-col>
       <ion-col col-3 align-self-end>{{s.price}}</ion-col>
+      <ion-col col-1 align-self-end>
+        <ion-icon class="checkOption" name="remove-circle" (click)="removeService(i)"></ion-icon>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col col-1>
+          <ion-icon class="checkOption" name="add-circle" (click)="addService()"></ion-icon>
+      </ion-col>
+      <ion-col col-5 align-self-start>
+          <p>Add a Service</p>
+      </ion-col>
+      <ion-col col-6 align-self-end>
+          <p><em>Save after removing a Service</em></p>
+      </ion-col>
     </ion-row>
   </ion-grid>
-  <p>
+  <!-- <p>
     <ion-icon class="checkOption" name="add-circle" (click)="addService()"></ion-icon> Add a Service
-  </p>
+  </p> -->
 
   <button ion-button (click)="save()">Save</button>
 </ion-content>
