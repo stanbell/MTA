@@ -6,6 +6,7 @@ import { UserDataWriterProvider } from '../../providers/user-data-writer/user-da
 import { EditServicePage } from '../edit-service/edit-service';
 import { TransactionsProvider } from '../../providers/transactions/transactions';
 import { ScheduleProvider } from '../../providers/schedule/schedule';
+import { ClientsProvider } from '../../providers/clients/clients';
 
 @IonicPage()
 @Component({
@@ -20,6 +21,7 @@ export class SettingsPage {
     public navParams: NavParams,
     public trans: TransactionsProvider,
     public sched: ScheduleProvider,
+    public clients: ClientsProvider,
     public user: UserProvider,
     public udw: UserDataWriterProvider) {
     user.read();
@@ -30,6 +32,7 @@ export class SettingsPage {
     this.udw.updateDataWindow();
     this.trans.init();
     this.sched.init();
+    this.clients.init();
     this.udw.write();
     this.navCtrl.pop();
   }

@@ -8,6 +8,7 @@ import { HomePage } from '../pages/home/home';
 import { UserDataProvider } from '../providers/user-data/user-data';
 import { TransactionsProvider } from '../providers/transactions/transactions';
 import { ScheduleProvider } from '../providers/schedule/schedule';
+import { ClientsProvider } from '../providers/clients/clients';
 
 @Component({
   templateUrl: 'app.html'
@@ -24,6 +25,7 @@ export class MyApp {
     public splashScreen: SplashScreen,
     public trans: TransactionsProvider,
     public sched: ScheduleProvider,
+    public clients: ClientsProvider,
     public ud: UserDataProvider) {
       this.initializeApp();
     }
@@ -41,6 +43,7 @@ export class MyApp {
         this.ud.initData();
         this.trans.init();
         this.sched.init();
+        this.clients.init();
         
         this.nav.setRoot(HomePage);
       });

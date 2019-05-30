@@ -18,6 +18,7 @@ export class ClientsProvider {
 
   read() {
     this.sort();
+    this.refreshMetrics();
     this.clients = this.ud.userData.clients;
   }
 
