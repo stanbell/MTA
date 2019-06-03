@@ -15,10 +15,19 @@ export class ScheduleProvider {
   }
 
   read() {
+    this.sort();
     var s: ScheduleItemType[] = [];
     s = this.ud.userData.schedule;
     this.scheduleItems = s.filter((f) => {
       return (new Date(f.start).valueOf() > this.ud.dataWindow.valueOf());
+    });
+  }
+
+  sort() {
+    this.ud.userData.schedule.sort((a, b) => {
+      const ad = new Date(a.start).valueOf();
+      const bd = new Date(b.start).valueOf();
+      return ((ad > bd) as any) - ((bd > ad) as any); 
     });
   }
 

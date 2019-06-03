@@ -22,6 +22,8 @@ x default start time in add appt
 x date range from user prefs for client metrics
 x remove contact (biz & client)
 X remove service (biz settings)
+x sort appts by date/time in lists
+x sort trans by date/time in lists
 _ user's preferred schedule
 _ pick appt time graphically--show time slots available as buttons/clickable
 
