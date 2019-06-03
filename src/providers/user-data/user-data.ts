@@ -186,6 +186,8 @@ export class UserDataProvider {
     let route = NEWUSER_ROUTE + '/';
     try {
       // console.log('createUser', newUser);
+      // from the api, charge their card
+      // possibly get a negative response message
       this.api.postData(route, JSON.stringify(newUser))
       .then((d) => {});
     }
