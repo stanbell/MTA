@@ -38,7 +38,9 @@ export class AccountPage {
 
   updateBilling() {
     // TODO verify cc info immediately
-    // TODO reset expiration date
+    // should i charge immediately?  not for renewals, but for initial--see signup
+    this.nu.billing.expDate = this.helper.convertFromISO(this.expDate);
+    console.log(this.nu.billing.expDate);
     this.account.updateBilling(this.nu.billing);
   }
 
