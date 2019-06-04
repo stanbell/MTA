@@ -51,13 +51,16 @@ export class ClientsProvider {
               case 'Completed':
                 c.previousAppts += 1;
                 break;
+              case 'Open':
+                c.previousAppts += 1;
+                break;
               // case 'Cancelled':
               //   c.previousAppts += 1;
               //   break;
               case 'No Show':
                 c.noShowAppts += 1;
                 break;
-              default:
+              default:  
                 break;
             }
           } else {
