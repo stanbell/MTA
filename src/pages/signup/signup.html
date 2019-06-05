@@ -9,6 +9,28 @@
 
 <ion-content padding>
   <ion-item>
+    <p>Signing up with My Therapy Assistant is easy. And cost-effective. MTA costs 9.99 USD each month.</p>
+    <ul>
+      <li>To get started, on the Sign Up page, name your business, enter your credit card details, and choose a user id.
+      </li>
+      <li>Your user id may be anything you choose, as long as it hasn't already been taken. Email addresses as id's are
+        ok, but not required. Verify your choice of id is available with Check Availability. Your user id can't be
+        changed once you sign up (but everything else can be.)</li>
+      <li>If Choose Another ID and the password entries appear, your choice was not previously used (and we're assuming
+        it now belongs to you.) If you want to change your selected id before you sign up, select Choose Another Id, and
+        try your new choice for availability.</li>
+      <li>Likewise, you're free to choose any password you wish. We do think it's a good practice to use a hard-to-hack
+        password, but that's up to you.</li>
+      <li>When your password entries match, you can select Sign Me Up.</li>
+      <li>MTA will charge your credit card within a few hours, and every month thereafter for as long as you don't
+        cancel.</li>
+      <li>After you sign up, you can change the credit card used for your MTA subscription, or change your password, at
+        My Business->My MTA Account.</li>
+      <li>You can cancel anytime on the web version of the app, also at My Business->My MTA Account (cancellation is not
+        available on the mobile app, only on the web.)  Find us on the web at <a href="https://mta.dcsbdn.us">mta.dcsbdn.us</a></li>
+      </ul>
+  </ion-item>
+  <ion-item>
     <ion-label class="checkOption">Business Name</ion-label>
   </ion-item>
   <ion-item no-lines>
@@ -74,7 +96,7 @@
     </ion-item>
     <ion-item no-lines>
       <button ion-button [disabled]="!nu.businessName || !nu._id || !nu.pwd || (verifyPwd !== nu.pwd)"
-        (click)="signup()">Complete Setup</button><br>
+        (click)="signup()">Sign Me Up!</button><br>
     </ion-item>
   </div>
 </ion-content>
