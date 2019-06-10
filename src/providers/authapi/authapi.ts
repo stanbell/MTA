@@ -1,5 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { HelpersProvider } from '../helpers/helpers';
 
 
 // routes:  mtauser/alpha-id, contents/_id (numeric)
@@ -7,7 +8,8 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class AuthapiProvider {
 
-  constructor(public http: HttpClient) {
+  constructor(public http: HttpClient,
+    public helper: HelpersProvider) {
   }
 
   // apiURL = 'http://127.0.0.1:19000/MTA/';  // testing
@@ -17,7 +19,7 @@ export class AuthapiProvider {
 
   authenticate(body: string): Promise<object> {
     const fullRoute = this.apiURL + 'authenticate';
-    // console.log('authenticate', fullRoute);
+    this.helper.signal('authenticate', fullRoute);
     // console.log('authenticate', body);
     return new Promise((resolve, reject) => {
       let httpHeaders = new HttpHeaders({
@@ -29,7 +31,7 @@ export class AuthapiProvider {
         // .timeout(7100)
         .subscribe( // note just changed JSON.stringify(data) to (data) bc i think .put returns an object aleady
           (data) => {
-            // console.log('read from authenticate post', data);
+            this.helper.signal('read from authenticate post', data);
             resolve(data);},
           (err) => reject(err));
     });

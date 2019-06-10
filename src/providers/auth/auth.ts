@@ -88,6 +88,7 @@ export class AuthProvider {
     };
     // console.log(JSON.stringify(body));
     try {
+      this.helper.signal("sending authenticate");
       const authResponse = await this.api.authenticate(JSON.stringify(body))
       this.user = id;
       this.accessToken = authResponse['accessToken'];
@@ -98,16 +99,17 @@ export class AuthProvider {
     }
     catch (err) {
       console.log('authentication error ', err);
+      this.helper.signal('authentication error ', err);
       this.clearCreds();
       this.saveToken();
     }
   }
-
+  
   logout() {
     this.clearCreds();
     this.saveToken();
   }
-
+  
   private clearCreds() {
     this.user = undefined; // TODO:  save for working offline
     this.loggedIn = false;
@@ -116,14 +118,15 @@ export class AuthProvider {
     this.password = undefined;
     this.contentsId = undefined;
   }
-
+  
   async mockLogIn() {
     this.user = 'joe';
     this.password = 'abc';
     this.loggedIn = true;
   }
-
+  
   packageCreds(id: string, pwd: string): string {
+    this.helper.signal(id, pwd);
     return JSON.stringify({
       user: id,
       password: pwd
