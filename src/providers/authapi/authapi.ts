@@ -19,7 +19,7 @@ export class AuthapiProvider {
 
   authenticate(body: string): Promise<object> {
     const fullRoute = this.apiURL + 'authenticate';
-    this.helper.signal('authenticate', fullRoute);
+    // this.helper.signal('authenticate', fullRoute);
     // console.log('authenticate', body);
     return new Promise((resolve, reject) => {
       let httpHeaders = new HttpHeaders({
@@ -31,7 +31,7 @@ export class AuthapiProvider {
         // .timeout(7100)
         .subscribe( // note just changed JSON.stringify(data) to (data) bc i think .put returns an object aleady
           (data) => {
-            this.helper.signal('read from authenticate post', data);
+            // this.helper.signal('read from authenticate post', data);
             resolve(data);},
           (err) => reject(err));
     });
