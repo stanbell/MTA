@@ -88,7 +88,7 @@ export class AuthProvider {
     };
     // console.log(JSON.stringify(body));
     try {
-      this.helper.signal("sending authenticate");
+      // this.helper.signal("sending authenticate");
       const authResponse = await this.api.authenticate(JSON.stringify(body))
       this.user = id;
       this.accessToken = authResponse['accessToken'];
@@ -99,7 +99,7 @@ export class AuthProvider {
     }
     catch (err) {
       console.log('authentication error ', err);
-      this.helper.signal('authentication error ', err);
+      // this.helper.signal('authentication error ', err);
       this.clearCreds();
       this.saveToken();
     }
@@ -126,7 +126,7 @@ export class AuthProvider {
   }
   
   packageCreds(id: string, pwd: string): string {
-    this.helper.signal(id, pwd);
+    // this.helper.signal(id, pwd);
     return JSON.stringify({
       user: id,
       password: pwd
