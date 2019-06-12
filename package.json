@@ -72,7 +72,7 @@
       "cordova-plugin-ionic-keyboard": {},
       "cordova-plugin-ionic": {
         "APP_ID": "8a4b6fc4",
-        "CHANNEL_NAME": "Master",
+        "CHANNEL_NAME": "Production",
         "UPDATE_METHOD": "background",
         "UPDATE_API": "https://api.ionicjs.com",
         "MAX_STORE": "2",
