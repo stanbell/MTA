@@ -42,15 +42,16 @@ export class EventPage {
 
     this.event = navParams.get('event');
     // console.log(this.event);
-    this.displayDate = (new Date(this.event.start).toLocaleDateString());
-    this.displayStart = (new Date(this.event.start).toLocaleTimeString());
-    this.displayEnd = (new Date(this.event.end).toLocaleTimeString());
-
+    // this.displayDate = (new Date(this.event.start).toLocaleDateString());
+    // this.displayStart = (new Date(this.event.start).toLocaleTimeString());
+    // this.displayEnd = (new Date(this.event.end).toLocaleTimeString());
+    
     this.eventDate = new Date(this.event.start);
     this.future = (this.eventDate.valueOf() > Date.now());  // future, can edit
   }
-
+  
   ionViewDidEnter() {
+    console.log('didEnter event.ts');
     if (!!this.event.transactions) {
       this.initialTransactions = this.matchTransactions(this.event.transactions, this.ud.userData.transactions);
       this.initialTransactions.forEach(e => e.type = this.helper.upshiftInitial(e.type));
@@ -62,6 +63,9 @@ export class EventPage {
       this.event.transactions = this.transactions = [];
       // this.transactions = [];
     }
+    this.displayDate = (new Date(this.event.start).toLocaleDateString([], { weekday: 'short', year: '2-digit', month: '2-digit', day: 'numeric'}));
+    this.displayStart = (new Date(this.event.start).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }));
+    this.displayEnd = (new Date(this.event.end).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }));
     this.display[0] = this.displayDate;
     this.display[1] = this.displayStart + ' to ' + this.displayEnd;
     this.display[2] = 'Client: ' + this.event.clientName;

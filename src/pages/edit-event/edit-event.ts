@@ -54,6 +54,7 @@ export class EditEventPage {
     if (this.mode === 'edit') {
       this.event = navParams.get('event');
       this.editPrice = !this.event.pd;
+      console.log('end', this.event.end);
     } else {  // add
       this.editPrice = true;
       this.selectedDate = navParams.get('date');
@@ -68,7 +69,7 @@ export class EditEventPage {
     }
     this.startDate = this.helper.convertToISO(this.event.start);
     this.endDate = this.helper.convertToISO(this.event.end);
-    this.minStartDate = new Date(Date.now() - DAY).toISOString();
+    console.log('end', this.endDate);
     this.minStartDate = new Date(Date.now() - DAY).toISOString();
     this.maxEndDate = new Date(Date.now() + YEAR).toISOString();
     this.revenue = this.event.revenue;
@@ -76,7 +77,7 @@ export class EditEventPage {
   }
 
   ionViewDidEnter() {
-    // this.helper.signal('ionViewDidEnter EditEventPage');
+    this.helper.signal('ionViewDidEnter EditEventPage');
     const ls: LookupSelectionType = this.helper.lookupSelection;
     // this.helper.signal('lookupSelection:', ls);
     if (!!ls) {
@@ -89,7 +90,8 @@ export class EditEventPage {
           this.event.serviceDescription = ls.selected;
           this.service = this.helper.deepCopy(this.user.user.services[ls.index]);
           this.duration = this.service.duration;
-          this.calcEndTime();
+          console.log(this.duration);
+          if (this.duration) this.calcEndTime();
           break;
         default:
           break;
@@ -108,17 +110,28 @@ export class EditEventPage {
   dateChange() {
     const dt =  new Date(this.helper.convertFromISO(this.startDate));
     this.displayDate = (dt.getMonth() + 1) + '/' + dt.getDate();
-    this.calcEndTime();
-    this.calcDuration();
+    if (this.duration) {
+      this.calcEndTime();
+      this.calcDuration();
+    } else {
+      this.calcDuration();
+      this.calcEndTime();
+    }
     this.getTimeInUseForDay();
   }
 
   calcDuration() {
+    console.log('end', this.endDate);
     this.duration = Math.round(this.helper.timeDiff(new Date(this.endDate), new Date(this.startDate)) / MINUTE);
+    console.log('end', this.endDate);
   }
   calcEndTime() {
+    console.log('end', this.endDate);
+    console.log('duration', this.duration);
     this.duration = isNaN(this.duration) ? 0 : this.duration;
     this.endDate = this.helper.addTimeInterval(new Date(this.startDate), (this.duration * MINUTE)).toISOString();
+    console.log('end', this.endDate);
+    console.log('duration', this.duration);
   }
 
   getTimeInUseForDay() {
@@ -138,7 +151,7 @@ export class EditEventPage {
 
 
   save() {
-    // console.log('save', this.mode);
+    console.log('save', this.mode);
     if (this.mode === 'edit') {
       this.editEvent();
     } else {
@@ -149,19 +162,12 @@ export class EditEventPage {
   }
 
   editEvent() {
+    
     this.event.start = this.helper.convertFromISO(this.startDate); // new Date(this.startDate).toISOString();
     this.event.end = this.helper.convertFromISO(this.endDate); // new Date(this.endDate).toISOString();
+    console.log('start', this.event.start);
+    console.log('end', this.event.end);
 
-    ////// what was this supposed to do?
-    ///////  replace revenue if corresponding service changed?
-    ///// TODO
-    // console.log('looking for transaction', this.event.transactions[0].uniqueId);
-    // var rt: any = this.trans.transactions
-    //   .filter((t) => {
-    //     return (t.uniqueId === (this.event.transactions[0].uniqueId + '_R') )
-    //       && (t.apptId === this.event.id);
-    //   });
-      // console.log('filtered=', rt);
   }
 
   updateNative() { }

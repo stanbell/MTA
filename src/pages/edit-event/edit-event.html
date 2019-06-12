@@ -46,7 +46,7 @@
           [(ngModel)]="startDate" (ngModelChange)="dateChange()"></ion-datetime>
       </ion-col>
       <ion-col col-4>
-        <ion-datetime displayFormat="HH:mm" pickerFormat="HH:mm" [(ngModel)]="startDate"
+        <ion-datetime displayFormat="h:mm a" pickerFormat="h:mm a" [(ngModel)]="startDate"
           (ngModelChange)="calcDuration()"></ion-datetime>
       </ion-col>
     </ion-row>
@@ -61,7 +61,7 @@
           [(ngModel)]="endDate" (ngModelChange)="calcDuration()"></ion-datetime> -->
       </ion-col>
       <ion-col col-4>
-        <ion-datetime displayFormat="HH:mm" pickerFormat="HH:mm" [(ngModel)]="endDate" (ngModelChange)="calcDuration()">
+        <ion-datetime displayFormat="h:mm a" pickerFormat="h:mm a" [(ngModel)]="endDate" (ngModelChange)="calcDuration()">
         </ion-datetime>
       </ion-col>
       <!-- <ion-col col-2></ion-col> -->
