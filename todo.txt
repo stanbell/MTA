@@ -1,3 +1,6 @@
+!! build a renew and recharge function for server
+
+
 bugs
 x native calendar elements in settings, not needed
 X tries to use native calendar without respect to setting
