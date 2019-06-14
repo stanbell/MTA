@@ -81,6 +81,7 @@ interface SystemUserType {
     _id: string,
     pwd: string,
     businessName: string,
+    term: string,
     billing: UserBillingInfoType,
     expires: string,
     cancelled: string

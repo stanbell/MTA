@@ -9,7 +9,8 @@
 
 <ion-content padding>
   <ion-item>
-    <p>Signing up with My Therapy Assistant is easy. And cost-effective. MTA costs 9.99 USD each month.</p>
+    <p>Signing up with My Therapy Assistant is easy. And cost-effective. </p>
+    <p>MTA costs 9.99 USD each month, or 27 USD for 3 months, or 100 USD for 1 year.</p>
     <ul>
       <li>To get started, on the Sign Up page, name your business, enter your credit card details, and choose a user id.
       </li>
@@ -37,6 +38,23 @@
     <ion-input type="text" [(ngModel)]="nu.businessName">
     </ion-input>
   </ion-item>
+  <ion-item>
+    <ion-label class="checkOption">Choose Your Term</ion-label>
+  </ion-item>
+  <ion-list radio-group [(ngModel)]="nu.term">
+    <ion-item>
+      <ion-label class="checkOption">1 Month, 9.99</ion-label>
+      <ion-radio value="1mo"></ion-radio>
+    </ion-item>
+    <ion-item>
+      <ion-label class="checkOption">3 Months, 27.00</ion-label>
+      <ion-radio value="3mo" checked></ion-radio>
+    </ion-item>
+    <ion-item>
+      <ion-label class="checkOption">1 Year, 100.00</ion-label>
+      <ion-radio value="1yr"></ion-radio>
+    </ion-item>
+  </ion-list>
   <ion-item>
     <ion-label class="checkOption">Credit Card Information</ion-label>
   </ion-item>

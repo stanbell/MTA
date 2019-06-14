@@ -50,6 +50,7 @@ export class EmptiesProvider {
       _id: "",
       pwd: "",
       businessName: "",
+      term: "",
       billing: this.getEmptyUserBillingInfo(),
       expires: "",
       cancelled: "",
