@@ -37,7 +37,6 @@ export class EmptiesProvider {
 
   getEmptyUserBillingInfo(): UserBillingInfoType {
     const mt = {
-      term: "",
       ccName: "",  // holder's name
       cc: "",
       expDate: "",  // mmyy
@@ -45,12 +44,14 @@ export class EmptiesProvider {
     }
     return mt;
   }
-
+  
   getEmptyNewUser(): SystemUserType {
     const mt = {
       _id: "",
       pwd: "",
       businessName: "",
+      term: "",
+      price: 0,
       billing: this.getEmptyUserBillingInfo(),
       expires: "",
       cancelled: "",
