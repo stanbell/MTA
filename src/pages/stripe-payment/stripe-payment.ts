@@ -1,13 +1,11 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { HttpHeaders } from '@angular/common/http';
+// import { HttpHeaders } from '@angular/common/http';
 import { UserDataProvider } from '../../providers/user-data/user-data';
-import { CCAPI } from '../../providers/ccapi/ccapi';
+// import { CCAPI } from '../../providers/ccapi/ccapi';
 import { HelpersProvider } from '../../providers/helpers/helpers';
 import '../../types/types';
-
-const CC_SERVER_ROUTE = 'payments';
-const CRYPTO_KEY = "Twas brillig, and the slithy toves Did gyre and gimble in the wabe: All mimsy were the borogoves, And the mome raths outgrabe."
+import { StripeProvider } from '../../providers/stripe/stripe';
 
 @IonicPage()
 @Component({
@@ -34,7 +32,8 @@ export class StripePaymentPage {
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
     public helpers: HelpersProvider,
-    private api: CCAPI,
+    private stripe: StripeProvider,
+    // private api: CCAPI,
     public ud: UserDataProvider) {
     this.event = this.navParams.get('event');
     this.price = this.navParams.get('price');
@@ -48,76 +47,67 @@ export class StripePaymentPage {
   }
 
   verify() {
-    this.ccDataValid = this.checkCCDataValid();
+    this.ccDataValid =
+    this.stripe.checkCCDataValid(
+        this.ccName,
+        this.ccNumber,
+        this.ccExpireMM.toString(),
+        this.ccExpireYY.toString());
   }
 
-  submit() {
-    this.ccDataValid = this.checkCCDataValid();
-    if (this.ccDataValid) {
-      // go to our pmt processing api?
-      console.log('submit');
+  async submit() {
+    // console.log('submit');
+    // console.log('methodData', this.ud.userData.user[this.ud.userData.user.acceptPayments]);
 
-      console.log('methodData', this.ud.userData.user[this.ud.userData.user.acceptPayments]);
-
-      let charge: PaymentRequestType = {
-        accountId: this.ud.userData._id,
-        client: this.event.clientName,
-        service: this.event.serviceDescription,
-        statementDescription: this.ud.userData.user.businessName + ' ' + this.event.serviceDescription,
-        transId: this.helpers.newGuid(),
-        method: this.ud.userData.user.acceptPayments,
-        methodData: this.ud.userData.user[this.ud.userData.user.acceptPayments],
-        amount: this.totalCharge,
-        card: {
-          number: this.ccNumber,
-          expMonth: this.ccExpireMM.toString(),
-          expYear: (2000 + this.ccExpireYY).toString(),
-          cvc: this.ccCVC.toString()
-        },
-        cardNonce: ''  // not used with stripe
-      }
+    let charge: PaymentRequestType = {
+      accountId: this.ud.userData._id,
+      client: this.event.clientName,
+      service: this.event.serviceDescription,
+      statementDescription: this.ud.userData.user.businessName + ' ' + this.event.serviceDescription,
+      transId: this.helpers.newGuid(),
+      method: this.ud.userData.user.acceptPayments,
+      methodData: this.ud.userData.user[this.ud.userData.user.acceptPayments],
+      amount: this.totalCharge,
+      card: {
+        number: this.ccNumber,
+        expMonth: this.ccExpireMM.toString(),
+        expYear: (2000 + this.ccExpireYY).toString(),
+        cvc: this.ccCVC.toString()
+      },
+      cardNonce: ''  // not used with stripe
+    }
+    // console.log('charge', charge);
+    try {
       // TODO:  package and encrypt before send
-      console.log('charge', charge);
-      try {
-        console.log('writing ' + CC_SERVER_ROUTE);
-        let httpHeaders = new HttpHeaders({
-          'Content-Type': 'application/json',
-          'Cache-Control': 'no-cache',
-          'Authorization': 'Bearer ' + charge.methodData['secretKey']  // stripe specific==========
+      let returnedCharge: PaymentRequestResponseType = 
+        await this.stripe.submit(charge);
+      if (returnedCharge.paid) {
+        // if paid, compute the transactions
+        let trans = this.composeTrans(returnedCharge, charge.methodData['fee']);
+        // console.log(trans);
+        trans.forEach((t) => {
+          // add the transactions to the client, and...
+          this.ud.userData.transactions.push(t);
+          // ...add the transactions' unique id to the appt
+          this.event.transactions.push({ uniqueId: t.uniqueId });
         });
-        this.api.putData(CC_SERVER_ROUTE, httpHeaders, charge)
-          .then((returnedCharge: PaymentRequestResponseType) => {
-            console.log('returned ', returnedCharge);
-            if (returnedCharge.paid) {
-              // if paid, compute the transactions
-              let trans = this.composeTrans(returnedCharge, charge.methodData['fee']);
-              console.log(trans);
-              trans.forEach((t) => {
-                // add the transactions to the client, and...
-                this.ud.userData.transactions.push(t);
-                // ...add the transactions' unique id to the appt
-                this.event.transactions.push({ uniqueId: t.uniqueId });
-              });
-              this.event.pd = true;
-              this.event.completionState = 'Completed';
-              this.ud.writeData();
-              alert('Payment request completed');
-            } else {  // paid = false, expect a failure code  //TEST
-              alert('transaction failed with stripe failure code ' + returnedCharge.failure_code + ' ' + returnedCharge.failure_message);
-            }
-            this.navCtrl.removeView(this.navCtrl.getPrevious())
-              .then(() => {
-                this.navCtrl.pop(); // go back to event page
-              });
-          });
-      }
-      catch (err) {
-        // card charge problem, or
-        // api http etc problem
-        console.log('writeLocal mtaapi.putData error', err);
+        this.event.pd = true;
+        this.event.completionState = 'Completed';
+        this.ud.writeData();
+        alert('Payment request completed');
+      } else {  // paid = false, expect a failure code  //TEST
+        alert('transaction failed with stripe failure code ' + returnedCharge.failure_code + ' ' + returnedCharge.failure_message);
       }
     }
-
+    catch (err) {
+      // card charge problem, or
+      // api http etc problem
+      console.log('stripe payment request', err);
+    }
+    this.navCtrl.removeView(this.navCtrl.getPrevious())
+      .then(() => {
+        this.navCtrl.pop(); // go back to event page
+      });
   }
 
 

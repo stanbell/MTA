@@ -15,8 +15,14 @@ X today stats not showing payment/receipts
 x sign up from web page "identifier ok has already been declared"
 _ if api connections fail
 x fix date display format sign up page
+_ fix size of entry fields on payment screen
+_ revenue on appt (event) after payment shows 0
+    --probably because the charge showed 0
+    -- but i changed to 50, so rev should be 50
+    --      or whatever you chaange it to, even if not initially 0
 
 TODO
+_ charge our user on sign up
 y prevent time overlap in appts/calendar  // well, show
 _ filter calendar & client appts for cancelled
 x search in lookup client & service

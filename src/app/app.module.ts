@@ -82,6 +82,7 @@ import { BiznavPage } from '../pages/biznav/biznav';
 import { BiztodayPage } from '../pages/biztoday/biztoday';
 import { AccountPage } from '../pages/account/account';
 import { DownloadPage } from '../pages/download/download';
+import { StripeProvider } from '../providers/stripe/stripe';
 
 
 @NgModule({
@@ -196,6 +197,7 @@ import { DownloadPage } from '../pages/download/download';
     ClientsProvider,
     TransactionsProvider,
     ScheduleProvider,
+    StripeProvider,
   ]
 })
 export class AppModule {}
