@@ -192,10 +192,17 @@
       <ion-input type="text" [(ngModel)]="biz.stripe.secretKey"></ion-input>
     </ion-item>
     <ion-item>
+      <ion-label class="advise">This value is provided to you by Stripe, and identifies you as the payee for card
+        transactions.</ion-label>
+    </ion-item>
+    <ion-item>
       <ion-label class="checkOption">Transaction Fee (%)</ion-label>
     </ion-item>
     <ion-item no-lines>
       <ion-input type="text" [(ngModel)]="biz.stripe.fee"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label class="advise">The fee Stripe charges you for processing transactions.</ion-label>
     </ion-item>
   </div>
   <div *ngIf="biz.acceptPayments=='paypal'">
@@ -285,13 +292,13 @@
     </ion-row>
     <ion-row>
       <ion-col col-1>
-          <ion-icon class="checkOption" name="add-circle" (click)="addService()"></ion-icon>
+        <ion-icon class="checkOption" name="add-circle" (click)="addService()"></ion-icon>
       </ion-col>
       <ion-col col-5 align-self-start>
-          <p>Add a Service</p>
+        <p>Add a Service</p>
       </ion-col>
       <ion-col col-6 align-self-end>
-          <p><em>Save after removing a Service</em></p>
+        <p><em>Please Save after removing a Service</em></p>
       </ion-col>
     </ion-row>
   </ion-grid>

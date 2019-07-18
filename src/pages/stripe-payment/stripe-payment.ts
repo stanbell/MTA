@@ -76,7 +76,7 @@ export class StripePaymentPage {
       },
       cardNonce: ''  // not used with stripe
     }
-    // console.log('charge', charge);
+    // console.log('charge', charge); 
     try {
       // TODO:  package and encrypt before send
       let returnedCharge: PaymentRequestResponseType = 
