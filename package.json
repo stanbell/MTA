@@ -31,7 +31,7 @@
     "@ionic/pro": "2.0.4",
     "@ionic/storage": "2.2.0",
     "@types/crypto-js": "^3.1.43",
-    "cordova-android": "7.1.4",
+    "cordova-android": "8.0.0",
     "cordova-browser": "6.0.0",
     "cordova-ios": "4.5.5",
     "cordova-plugin-calendar": "5.1.4",
@@ -94,8 +94,7 @@
       "cordova-plugin-file": {}
     },
     "platforms": [
-      "ios",
-      "android"
+      "ios"
     ]
   }
 }

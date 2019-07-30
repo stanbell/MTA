@@ -14,13 +14,13 @@
     <allow-intent href="com.dcsb.mta:*" />
     <allow-intent href="com.dcsb.mta2:*" />
     <preference name="ScrollEnabled" value="false" />
-    <preference name="android-minSdkVersion" value="28" />
     <preference name="BackupWebStorage" value="none" />
     <preference name="SplashMaintainAspectRatio" value="true" />
     <preference name="FadeSplashScreenDuration" value="300" />
     <preference name="SplashShowOnlyFirstTime" value="false" />
     <preference name="SplashScreen" value="screen" />
     <preference name="SplashScreenDelay" value="3000" />
+    <preference name="android-minSdkVersion" value="28" />
     <platform name="android">
         <allow-intent href="market:*" />
         <icon density="ldpi" src="resources/android/icon/drawable-ldpi-icon.png" />
@@ -99,6 +99,5 @@
     <plugin name="cordova-plugin-stripe" spec="1.5.3" />
     <plugin name="cordova-sqlite-storage" spec="^2.6.0" />
     <engine name="ios" spec="4.5.5" />
-    <engine name="android" spec="7.1.4" />
     <allow-navigation href="http://192.168.1.5:8100" />
 </widget>
