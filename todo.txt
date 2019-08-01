@@ -1,3 +1,6 @@
+    <plugin name="cordova-sqlite-storage" spec="^2.6.0" />
+  (from package.json "dependencies" --"cordova-sqlite-storage": "^3.2.0",
+
 !! build a renew and recharge function for server
 
 

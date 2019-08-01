@@ -97,7 +97,7 @@
         <variable name="CONTACTS_USAGE_DESCRIPTION" value="Does not use contacts." />
     </plugin>
     <plugin name="cordova-plugin-stripe" spec="1.5.3" />
-    <plugin name="cordova-sqlite-storage" spec="^2.6.0" />
     <engine name="ios" spec="4.5.5" />
+    <engine name="android" spec="8.0.0" />
     <allow-navigation href="http://192.168.1.5:8100" />
 </widget>
